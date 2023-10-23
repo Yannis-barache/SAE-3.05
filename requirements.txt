@@ -22,3 +22,7 @@ visitor==0.1.3
 Werkzeug==2.3.7
 WTForms==3.0.1
 zipp==3.17.0
+mypy
+pylint
+yapf
+coverage
