@@ -27,6 +27,8 @@ clean:
 	find . -type d -name __pycache__ | xargs rm -fr
 	find . -type d -name .mypy_cache | xargs rm -fr
 	find . -type f -name .coverage | xargs rm -fr
+	find . -type f -name .flaskenv | xargs rm -fr
+	find . -type f -name .idea/ | xargs rm -fr
 
 .PHONY: verif
 verif: clean typehint tests lint coverage format clean
