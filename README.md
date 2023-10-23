@@ -97,7 +97,7 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
   
 - [ ] Réaliser les maquettes de l'application
 
-<strong>TODO: Ajouter les tâches à faire</strong>
+<strong>TODO : Ajouter les tâches à faire</strong>
 
 
 
