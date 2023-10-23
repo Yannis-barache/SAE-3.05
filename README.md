@@ -2,7 +2,7 @@
 
 # SAE-3.05
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; justify-content:space-evenly">
     <img src="https://assets.onthehub.com/attachments/15/bf1336cd-799b-e011-969d-0030487d8897/40d4e299-03ff-4c99-94a8-7a100f07837c.jpg" alt="Logo IUT Orléans" width="275"/>
     <img src="https://blois-escrime.fr/wp-content/uploads/2015/07/cropped-logo-CEB_accueil.jpg" alt="Logo Université Orléans" width="200" />
 </div>
