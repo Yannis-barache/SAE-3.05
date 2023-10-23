@@ -22,8 +22,8 @@ CREATE TABLE CATEGORIE(
 
 CREATE TABLE CLUB(
     idClub INT(10) AUTO_INCREMENT,
-    nomClub VARCHAR(50),
-    adresse VARCHAR(50),
+    nomClub VARCHAR(100),
+    adresse VARCHAR(100),
     mdpClub VARCHAR(100),
     PRIMARY KEY (idClub)
 );
