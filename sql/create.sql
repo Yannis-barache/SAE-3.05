@@ -57,6 +57,7 @@ CREATE TABLE MATCHS(
     idEscrimeur1 INT(10),
     idEscrimeur2 INT(10),
     idPhase INT(10),
+    idMatch INT(10),
     PRIMARY KEY (idEscrimeur1,idEscrimeur2,idPhase),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
@@ -66,8 +67,9 @@ CREATE TABLE MATCHS(
 CREATE TABLE TOUCHE(
     idMatch INT(10),
     idEscrimeur INT(10),
-    numTouches INT(10),
-    PRIMARY KEY (idMatch, idEscrimeur,numTouches),
+    numT INT(10),
+    PRIMARY KEY (idMatch, idEscrimeur, numT),
+    FOREIGN KEY (idMatch) REFERENCES MATCHS(idMatch),
     FOREIGN KEY (idEscrimeur) REFERENCES ESCRIMEUR(idEscrimeur)
 );
 
@@ -106,6 +108,4 @@ CREATE TABLE ETRE_DANS(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idPoule) references POULE(idPoule)
 );
-
-
 
