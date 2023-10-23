@@ -4,6 +4,16 @@ CREATE TABLE ARMES(
     PRIMARY KEY (idArme)
 );
 
+CREATE TABLE ORGANISATEUR(
+    idOrganisateur INT(10) AUTO_INCREMENT,
+    nomOrganisateur VARCHAR(50),
+    prenomOrganisateur VARCHAR(50),
+    adresseMailOrganisateur VARCHAR(70),
+    mdpOrganisateur VARCHAR(100),
+    nomUtilisateur VARCHAR(50),
+    PRIMARY KEY (idOrganisateur)
+);
+
 CREATE TABLE CATEGORIE(
     idCategorie INT(10) AUTO_INCREMENT,
     nomCategorie VARCHAR(50),
@@ -14,6 +24,7 @@ CREATE TABLE CLUB(
     idClub INT(10) AUTO_INCREMENT,
     nomClub VARCHAR(50),
     adresse VARCHAR(50),
+    mdpClub VARCHAR(100),
     PRIMARY KEY (idClub)
 );
 
@@ -25,14 +36,29 @@ CREATE TABLE LIEU(
 
 );
 
+CREATE TABLE COMPETITION(
+    idCompetition INT(10) AUTO_INCREMENT,
+    nomCompetition VARCHAR(50),
+    dateCompetition DATE,
+    saisonCompetition VARCHAR(50),
+    idArme INT(10),
+    idCategorie INT(10),
+    dateFinInscription DATE,
+    PRIMARY KEY (idCompetition)
+);
+
+
 CREATE TABLE PHASE(
     idPhase INT(10) AUTO_INCREMENT,
-    PRIMARY KEY (idPhase)
+    idCompetition INT(10),
+    PRIMARY KEY (idPhase,idCompetition),
+    FOREIGN KEY (idCompetition) REFERENCES COMPETITION(idCompetition)
 );
 
 CREATE TABLE POULE(
     idPoule INT(10) AUTO_INCREMENT,
-    PRIMARY KEY (idPoule),
+    idArbitre INT(10),
+    PRIMARY KEY (idPoule,idArbitre),
     FOREIGN KEY (idPoule) REFERENCES PHASE(idPhase)
 );
 
@@ -48,17 +74,20 @@ CREATE TABLE ESCRIMEUR (
     liscence boolean,
     prenom VARCHAR(50),
     dateNaissance DATE,
-    nomUtilisateur VARCHAR(50),
+    nomUtilisateurEscrimeur VARCHAR(50),
+    mdpEscrimeur VARCHAR(100),
     classement INT(10),
-    PRIMARY KEY (idEscrimeur)
+    idClub INT(10),
+    PRIMARY KEY (idEscrimeur),
+    FOREIGN KEY (idClub) REFERENCES CLUB(idClub)
 );
 
 CREATE TABLE MATCHS(
+    idMatch INT(10) AUTO_INCREMENT,
     idEscrimeur1 INT(10),
     idEscrimeur2 INT(10),
     idPhase INT(10),
-    idMatch INT(10),
-    PRIMARY KEY (idEscrimeur1,idEscrimeur2,idPhase),
+    PRIMARY KEY (idMatch),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idPhase) REFERENCES PHASE(idPhase)
@@ -67,22 +96,12 @@ CREATE TABLE MATCHS(
 CREATE TABLE TOUCHE(
     idMatch INT(10),
     idEscrimeur INT(10),
-    numT INT(10),
-    PRIMARY KEY (idMatch, idEscrimeur, numT),
+    numTouche INT(10),
+    PRIMARY KEY (idMatch,numTouche),
     FOREIGN KEY (idMatch) REFERENCES MATCHS(idMatch),
     FOREIGN KEY (idEscrimeur) REFERENCES ESCRIMEUR(idEscrimeur)
 );
 
-CREATE TABLE COMPETITION(
-    idCompetition INT(10) AUTO_INCREMENT,
-    nomCompetition VARCHAR(50),
-    dateCompetition DATE,
-    saisonCompetition VARCHAR(50),
-    idArme INT(10),
-    idCategorie INT(10),
-    dateFinInscription DATE,
-    PRIMARY KEY (idCompetition)
-);
 
 
 CREATE TABLE ARBITRER(
@@ -100,12 +119,3 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
-
-CREATE TABLE ETRE_DANS(
-    idEscrimeur INT(10),
-    idPoule INT(10),
-    PRIMARY KEY (idEscrimeur,idPoule),
-    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur),
-    FOREIGN KEY (idPoule) references POULE(idPoule)
-);
-
