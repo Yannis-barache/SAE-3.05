@@ -27,14 +27,21 @@ CREATE TABLE LIEU(
 
 CREATE TABLE PHASE(
     idPhase INT(10) AUTO_INCREMENT,
-
     PRIMARY KEY (idPhase)
 );
 
 CREATE TABLE POULE(
     idPoule INT(10) AUTO_INCREMENT,
-    PRIMARY KEY (idPoule)
+    PRIMARY KEY (idPoule),
+    FOREIGN KEY (idPoule) REFERENCES PHASE(idPhase)
 );
+
+CREATE TABLE PHASE_FINALE(
+    idPhaseFinale INT(10) AUTO_INCREMENT,
+    PRIMARY KEY (idPhaseFinale),
+    FOREIGN KEY (idPhaseFinale) REFERENCES PHASE(idPhase)
+);
+
 CREATE TABLE ESCRIMEUR (
     idEscrimeur INT(10) AUTO_INCREMENT,
     nom VARCHAR(50),
@@ -49,11 +56,11 @@ CREATE TABLE ESCRIMEUR (
 CREATE TABLE MATCHS(
     idEscrimeur1 INT(10),
     idEscrimeur2 INT(10),
-    idPoule INT(10),
-    PRIMARY KEY (idEscrimeur1,idEscrimeur2,idPoule),
+    idPhase INT(10),
+    PRIMARY KEY (idEscrimeur1,idEscrimeur2,idPhase),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
-    FOREIGN KEY (idPoule) REFERENCES POULE(idPoule)
+    FOREIGN KEY (idPhase) REFERENCES PHASE(idPhase)
 );
 
 CREATE TABLE TOUCHE(
