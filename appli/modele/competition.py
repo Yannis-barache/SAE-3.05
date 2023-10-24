@@ -14,20 +14,7 @@ class Competition:
 
     def __init__(self, id_comp: int, nom: str, date: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
-                 arme: Arme, categorie: Categorie):
-        """
-        Constructeur de la classe Competition
-
-        Args:
-            id (int): L'id de la competition
-            nom (str): Le nom de la competition
-            date (str): La date de la competition
-            date_fin_inscription (str): La date de fin d'inscription de la competition
-            saison (str): La saison de la competition
-            lieu (Lieu): Le lieu de la competition
-            arme (Arme): L'arme de la competition
-            categorie (Categorie): La categorie de la competition
-        """
+                 arme: Arme, categorie: Categorie, coeficient: float):
         self.__id = id_comp
         self.__nom = nom
         self.__date = date
@@ -36,6 +23,7 @@ class Competition:
         self.__lieu = lieu
         self.__arme = arme
         self.__categorie = categorie
+        self.__coeficient = coeficient
 
     def get_id(self) -> int:
         """
@@ -109,6 +97,15 @@ class Competition:
         """
         return self.__categorie
 
+    def get_coeficient(self) -> float:
+        """
+        Fonction qui retourne le coeficient de la competition
+
+        Returns:
+            float: Le coeficient de la competition
+        """
+        return self.__coeficient
+
     def set_id(self, id_comp: int) -> None:
         """
         Fonction qui modifie l'id de la competition
@@ -180,6 +177,15 @@ class Competition:
             categorie (Categorie): categorie de la competition
         """
         self.__categorie = categorie
+
+    def set_coeficient(self, coeficient: float) -> None:
+        """
+        Fonction qui modifie le coeficient de la competition
+
+        Args:
+            coeficient (float): coeficient de la competition
+        """
+        self.__coeficient = coeficient
 
     def __str__(self) -> str:
         """

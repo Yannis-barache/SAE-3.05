@@ -31,7 +31,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertIsInstance(competition, Competition)
 
     def test_get_id(self):
@@ -42,7 +43,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_id(), 1)
 
     def test_get_nom(self):
@@ -53,7 +55,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_nom(), 'Escrime comp')
 
     def test_get_date(self):
@@ -64,7 +67,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_date(), '14-05-2004')
 
     def test_get_date_fin_inscription(self):
@@ -75,7 +79,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_date_fin_inscription(), '14-05-2004')
 
     def test_get_saison(self):
@@ -86,7 +91,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_saison(), 'été')
 
     def test_get_lieu(self):
@@ -97,7 +103,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_lieu(), lieu)
 
     def test_get_arme(self):
@@ -108,7 +115,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_arme(), arme)
 
     def test_get_categorie(self):
@@ -119,8 +127,21 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(competition.get_categorie(), categorie)
+
+    def test_get_coeficient(self):
+        """
+        Test de la fonction get_coeficient de la classe Competition
+        """
+        lieu = Lieu(1, 'Paris', 'Une grande ville', 'Paris France')
+        categorie = Categorie(2, 'U20')
+        arme = Arme(1, 'Epée Homme')
+        competition = Competition(1, 'Escrime comp', '14-05-2005',
+                                  '14-05-2005', 'hiver', lieu, arme, categorie,
+                                  0.5)
+        self.assertEqual(competition.get_coeficient(), 0.5)
 
     def test_set_id(self):
         """
@@ -130,7 +151,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_id(2)
         self.assertEqual(competition.get_id(), 2)
 
@@ -142,7 +164,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_nom('Escrime comp2')
         self.assertEqual(competition.get_nom(), 'Escrime comp2')
 
@@ -154,7 +177,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_date('15-05-2004')
         self.assertEqual(competition.get_date(), '15-05-2004')
 
@@ -166,7 +190,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_date_fin_inscription('15-05-2004')
         self.assertEqual(competition.get_date_fin_inscription(), '15-05-2004')
 
@@ -178,7 +203,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_saison('hiver')
         self.assertEqual(competition.get_saison(), 'hiver')
 
@@ -191,7 +217,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(1, 'U17')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_lieu(lieu2)
         self.assertEqual(competition.get_lieu(), lieu2)
 
@@ -204,7 +231,8 @@ class TestCompetition(unittest.TestCase):
         arme = Arme(1, 'Epée Homme')
         arme2 = Arme(2, 'Epée Femme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_arme(arme2)
         self.assertEqual(competition.get_arme(), arme2)
 
@@ -216,9 +244,23 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(2, 'U20')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         competition.set_categorie(categorie)
         self.assertEqual(competition.get_categorie(), categorie)
+
+    def test_set_coeficient(self):
+        """
+        Test de la fonction set_coeficient de la classe Competition
+        """
+        lieu = Lieu(1, 'Paris', 'Une grande ville', 'Paris France')
+        categorie = Categorie(2, 'U20')
+        arme = Arme(1, 'Epée Homme')
+        competition = Competition(1, 'Escrime comp', '14-05-2005',
+                                  '14-05-2005', 'hiver', lieu, arme, categorie,
+                                  0.5)
+        competition.set_coeficient(0.6)
+        self.assertEqual(competition.get_coeficient(), 0.6)
 
     def test_str(self):
         """
@@ -228,7 +270,8 @@ class TestCompetition(unittest.TestCase):
         categorie = Categorie(2, 'U20')
         arme = Arme(1, 'Epée Homme')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', lieu, arme, categorie)
+                                  '14-05-2004', 'été', lieu, arme, categorie,
+                                  0.5)
         self.assertEqual(
             str(competition),
             'Competition: 1, Escrime comp, 14-05-2004, 14-05-2004, été, '
