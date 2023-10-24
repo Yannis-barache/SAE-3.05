@@ -1,4 +1,4 @@
-MODULES = appli/*.py tests/*.py
+MODULES = appli/modele/*.py tests/*.py
 
 .PHONY: typehint
 typehint:  
