@@ -75,14 +75,15 @@ CREATE TABLE PHASE_FINALE(
 
 CREATE TABLE ESCRIMEUR (
     idEscrimeur INT(10) AUTO_INCREMENT,
-    nom VARCHAR(50),
+    nomEscrimeur VARCHAR(50),
     liscence boolean,
-    prenom VARCHAR(50),
+    prenomEscrimeur VARCHAR(50),
     dateNaissance DATE,
     nomUtilisateurEscrimeur VARCHAR(50),
     mdpEscrimeur VARCHAR(100),
     classement INT(10),
     idClub INT(10),
+    sexeEscrimeur VARCHAR(1),
     PRIMARY KEY (idEscrimeur),
     FOREIGN KEY (idClub) REFERENCES CLUB(idClub)
 );
