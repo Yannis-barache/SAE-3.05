@@ -3,6 +3,7 @@ Module contenant la classe Escrimeur
 """
 
 from club import Club
+from categorie import Categorie
 
 
 class Escrimeur:
@@ -10,12 +11,14 @@ class Escrimeur:
     Classe Escrimeur
     """
 
-    def __init__(self, id_escrim: int, nom: str, prenom: str,
+    def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, adresse_mail: str,
-                 mdp: str, licence: str, classement: int | None, club: Club):
+                 mdp: str, licence: str, classement: int | None, club: Club,
+                 categorie: Categorie):
         self.__id = id_escrim
         self.__nom = nom
         self.__prenom = prenom
+        self.__sexe = sexe
         self.__date_naissance = date_naissance
         self.__nom_utilisateur = nom_utilisateur
         self.__adresse_mail = adresse_mail
@@ -23,6 +26,7 @@ class Escrimeur:
         self.__licence = licence
         self.__classement = classement
         self.__club = club
+        self.__categorie = categorie
 
     def get_id(self) -> int:
         """
@@ -50,6 +54,15 @@ class Escrimeur:
             str: prenom de l'escrimeur
         """
         return self.__prenom
+
+    def get_sexe(self) -> str:
+        """
+        Fonction qui retourne le sexe de l'escrimeur
+
+        Returns:
+            str: sexe de l'escrimeur
+        """
+        return self.__sexe
 
     def get_date_naissance(self) -> str:
         """
@@ -114,6 +127,15 @@ class Escrimeur:
         """
         return self.__club
 
+    def get_categorie(self) -> Categorie:
+        """
+        Fonction qui retourne la categorie de l'escrimeur
+
+        Returns:
+            Categorie: categorie de l'escrimeur
+        """
+        return self.__categorie
+
     def set_id(self, id_escrim: int) -> None:
         """
         Fonction qui modifie l'id de l'escrimeur
@@ -140,6 +162,15 @@ class Escrimeur:
             prenom (str): prenom de l'escrimeur
         """
         self.__prenom = prenom
+
+    def set_sexe(self, sexe: str) -> None:
+        """
+        Fonction qui modifie le sexe de l'escrimeur
+
+        Args:
+            sexe (str): sexe de l'escrimeur
+        """
+        self.__sexe = sexe
 
     def set_date_naissance(self, date_naissance: str) -> None:
         """
@@ -204,6 +235,15 @@ class Escrimeur:
         """
         self.__club = club
 
+    def set_categorie(self, categorie: Categorie) -> None:
+        """
+        Fonction qui modifie la categorie de l'escrimeur
+
+        Args:
+            categorie (Categorie): categorie de l'escrimeur
+        """
+        self.__categorie = categorie
+
     def __str__(self) -> str:
         """
         Fonction qui retourne une chaine de caractere contenant les informations de l'escrimeur
@@ -213,4 +253,4 @@ class Escrimeur:
         """
         return f'{self.__id} - {self.__nom} - {self.__prenom} - {self.__date_naissance} - ' \
                 f'{self.__nom_utilisateur} - {self.__adresse_mail} - {self.__mdp} - ' \
-                f'{self.__licence} - {self.__classement} - {self.__club}'
+                f'{self.__licence} - {self.__classement} - {self.__club} - {self.__categorie}'
