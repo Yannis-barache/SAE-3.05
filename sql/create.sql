@@ -43,8 +43,12 @@ CREATE TABLE COMPETITION(
     saisonCompetition VARCHAR(50),
     idArme INT(10),
     idCategorie INT(10),
+    idLieu INT(10),
     dateFinInscription DATE,
-    PRIMARY KEY (idCompetition)
+    PRIMARY KEY (idCompetition),
+    FOREIGN KEY (idArme) REFERENCES ARMES(idArme),
+    FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie),
+    FOREIGN KEY (idLieu) REFERENCES LIEU(idLieu)
 );
 
 
