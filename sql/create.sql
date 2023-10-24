@@ -84,8 +84,10 @@ CREATE TABLE ESCRIMEUR (
     classement INT(10),
     idClub INT(10),
     sexeEscrimeur VARCHAR(1),
+    idCategorie INT(10),
     PRIMARY KEY (idEscrimeur),
-    FOREIGN KEY (idClub) REFERENCES CLUB(idClub)
+    FOREIGN KEY (idClub) REFERENCES CLUB(idClub),
+    FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie)
 );
 
 CREATE TABLE MATCHS(
