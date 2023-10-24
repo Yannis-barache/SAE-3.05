@@ -45,6 +45,7 @@ CREATE TABLE COMPETITION(
     idCategorie INT(10),
     idLieu INT(10),
     dateFinInscription DATE,
+    coefficientCompetition INT(10),
     PRIMARY KEY (idCompetition),
     FOREIGN KEY (idArme) REFERENCES ARMES(idArme),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie),
