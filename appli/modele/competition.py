@@ -9,12 +9,50 @@ from lieu import Lieu
 
 class Competition:
     """
-    Classe Competition
+    Une classe permettant de représenter une competition
+
+    Attributes:
+    ___________
+        id_comp : int
+            id de la competition
+        nom : str
+            nom de la competition
+        date : str
+            date de la competition
+        date_fin_inscription : str
+            date de fin d'inscription de la competition
+        saison : str
+            saison de la competition
+        lieu : Lieu
+            lieu de la competition
+        arme : Arme
+            arme de la competition
+        categorie : Categorie
+            categorie de la competition
+        coeficient : float
+            coeficient de la competition
+
+    Methods:
+    ________
+        les getters et setters de chaque attribut
     """
 
     def __init__(self, id_comp: int, nom: str, date: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
                  arme: Arme, categorie: Categorie, coeficient: float):
+        """Fonction constructeur de la classe Competition
+
+        Args:
+            id_comp (int): id de la competition
+            nom (str): nom de la competition
+            date (str): date de la competition
+            date_fin_inscription (str): date de fin d'inscription de la competition
+            saison (str): saison de la competition
+            lieu (Lieu): lieu de la competition
+            arme (Arme): arme de la competition
+            categorie (Categorie): categorie de la competition
+            coeficient (float): coeficient de la competition
+        """
         self.__id = id_comp
         self.__nom = nom
         self.__date = date
@@ -55,7 +93,7 @@ class Competition:
     def get_date_fin_inscription(self) -> str:
         """
         Fonction qui retourne la date de fin d'inscription de la competition
-        
+
         Returns:
             str: date de fin d'inscription de la competition
         """

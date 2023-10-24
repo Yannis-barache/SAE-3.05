@@ -5,10 +5,24 @@ Module contenant la classe Poule
 
 class Poule:
     """
-    Classe Poule
+    Une classe permettant de représenter une poule
+
+    Attributes:
+    ___________
+        id (int): id de la poule
+
+    Methods:
+    ________
+        get_id(self): retourne l'id de la poule
+        set_id(self, id_poule: int): modifie l'id de la poule
     """
 
-    def __init__(self, id_poule):
+    def __init__(self, id_poule: int):
+        """Fonction d'instanciation de la classe Poule
+
+        Args:
+            id_poule (int): id de la poule
+        """
         self.__id = id_poule
 
     def get_id(self) -> int:

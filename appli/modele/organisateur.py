@@ -5,11 +5,34 @@ Module contenant la classe Organisateur
 
 class Organisateur:
     """
-    Classe Organisateur
+    Une classe permettant de représenter un organisateur
+
+    Attributes:
+    ___________
+        id (int): id de l'organisateur
+        nom (str): nom de l'organisateur
+        prenom (str): prénom de l'organisateur
+        adresse_mail (str): adresse mail de l'organisateur
+        mdp (str): mot de passe de l'organisateur
+        nom_utilisateur (str): nom d'utilisateur de l'organisateur
+
+    Methods:
+    ________
+        les getters et setters de chaque attribut
     """
 
     def __init__(self, id_organisateur: int, nom: str, prenom: str,
                  adresse_mail: str, mdp: str, nom_utilisateur: str):
+        """Fonction d'instanciation de la classe Organisateur
+
+        Args:
+            id_organisateur (int): id de l'organisateur
+            nom (str): nom de l'organisateur
+            prenom (str): prenom de l'organisateur
+            adresse_mail (str): adresse mail de l'organisateur
+            mdp (str): mot de passe de l'organisateur
+            nom_utilisateur (str): nom d'utilisateur de l'organisateur
+        """
         self.__id = id_organisateur
         self.__nom = nom
         self.__prenom = prenom

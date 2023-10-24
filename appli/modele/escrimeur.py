@@ -8,13 +8,60 @@ from categorie import Categorie
 
 class Escrimeur:
     """
-    Classe Escrimeur
+    Une class permettant de représenter un escrimeur
+
+    Attributes:
+    ___________
+        id_escrim : int
+            id de l'escrimeur
+        nom : str
+            nom de l'escrimeur
+        prenom : str
+            prenom de l'escrimeur
+        sexe : str
+            sexe de l'escrimeur
+        date_naissance : str
+            date de naissance de l'escrimeur
+        nom_utilisateur : str
+            nom d'utilisateur de l'escrimeur
+        adresse_mail : str
+            adresse mail de l'escrimeur
+        mdp : str
+            mot de passe de l'escrimeur
+        licence : str
+            licence de l'escrimeur
+        classement : int
+            classement de l'escrimeur
+        club : Club
+            club de l'escrimeur
+        categorie : Categorie
+            categorie de l'escrimeur
+
+    Methods:
+    ________
+        les getters et setters de chaque attribut
     """
 
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, adresse_mail: str,
                  mdp: str, licence: str, classement: int | None, club: Club,
                  categorie: Categorie):
+        """Fonction constructeur de la classe Escrimeur
+
+        Args:
+            id_escrim (int): id de l'escrimeur
+            nom (str): nom de l'escrimeur
+            prenom (str): prenom de l'escrimeur
+            sexe (str): sexe de l'escrimeur
+            date_naissance (str): date de naissance de l'escrimeur
+            nom_utilisateur (str): nom d'utilisateur de l'escrimeur
+            adresse_mail (str): adresse mail de l'escrimeur
+            mdp (str): mot de passe de l'escrimeur
+            licence (str): licence de l'escrimeur
+            classement (int): classement de l'escrimeur
+            club (Club): club de l'escrimeur
+            categorie (Categorie): categorie de l'escrimeur
+        """
         self.__id = id_escrim
         self.__nom = nom
         self.__prenom = prenom

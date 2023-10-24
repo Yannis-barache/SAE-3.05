@@ -5,7 +5,32 @@ Module contenant la classe Categorie
 
 class Categorie:
     """
-    Classe Categorie
+    Classe Categorie permettant de créer une categorie en fonction de son id et de son nom
+
+    Attribute:
+    _________
+        id : int
+            id de la categorie
+        nom : str
+            nom de la categorie
+
+    Methodes:
+    _________
+
+        get_id(self):
+            Retourne l'id de la categorie
+
+        get_nom(self):
+            Retourne le nom de la categorie
+
+        set_id(self, id_cate: int):
+            Modifie l'id de la categorie
+
+        set_nom(self, nom: str):
+            Modifie le nom de la categorie
+
+        __str__(self):
+            Affiche l'objet Categorie
     """
 
     def __init__(self, id_cate: int, nom: str):

@@ -6,9 +6,33 @@ Module qui permet de gérer l'inscription d'un utilisateur à une compétition
 class Inscrire:
     """
     Classe qui permet de gérer l'inscription d'un utilisateur à une compétition
+
+    Attributes:
+    ___________
+        id_competition : int
+            id de la compétition
+        id_escrimeur : int
+            id de l'escrimeur
+
+    Methods:
+    _________
+        get_id_competition(self):
+            Retourne l'id de la compétition
+        get_id_escrimeur(self):
+            Retourne l'id de l'escrimeur
+        set_id_competition(self, id_competition: int):
+            Modifie l'id de la compétition
+        set_id_escrimeur(self, id_escrimeur: int):
+            Modifie l'id de l'escrimeur
     """
 
     def __init__(self, id_competition: int, id_escrimeur: int):
+        """Fonction d'instanciation de la classe Inscrire
+
+        Args:
+            id_competition (int): id de la compétition
+            id_escrimeur (int): id de l'escrimeur
+        """
         self.__id_competition = id_competition
         self.__id_escrimeur = id_escrimeur
 

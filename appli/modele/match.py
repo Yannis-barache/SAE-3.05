@@ -7,11 +7,30 @@ from escrimeur import Escrimeur
 
 class Match:
     """
-    Classe Match
+    Une classe permettant de représenter un match
+
+    Attributes:
+    ___________
+        id (int): id du match
+        id_phase (int): id de la phase
+        escrimeur1 (Escrimeur): premier escrimeur
+        escrimeur2 (Escrimeur): deuxième escrimeur
+
+    Methods:
+    ________
+        les getters et setters de chaque attribut
     """
 
     def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
                  escrimeur2: Escrimeur):
+        """Fonction d'instanciation de la classe Match
+
+        Args:
+            id_match (int): id du match
+            id_phase (int): id de la phase
+            escrimeur1 (Escrimeur): premier escrimeur
+            escrimeur2 (Escrimeur): deuxième escrimeur
+        """
         self.__id = id_match
         self.__id_phase = id_phase
         self.__escrimeur1 = escrimeur1

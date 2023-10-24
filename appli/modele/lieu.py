@@ -5,10 +5,33 @@ Module contenant la classe Lieu
 
 class Lieu:
     """
-    Classe Lieu
+    Une classe permettant de représenter un lieu
+
+    Attributes:
+    ___________
+        id : int
+            id du lieu
+        nom : str
+            nom du lieu
+        description : str
+            description du lieu
+        adresse : str
+            adresse du lieu
+
+    Methods:
+    ________
+        les getters et setters de chaque attribut
     """
 
     def __init__(self, id_lieu: int, nom: str, description: str, adresse: str):
+        """Fonction d'instanciation de la classe Lieu
+
+        Args:
+            id_lieu (int): id du lieu
+            nom (str): nom du lieu
+            description (str): description du lieu
+            adresse (str): adresse du lieu
+        """
         self.__id = id_lieu
         self.__nom = nom
         self.__description = description
