@@ -1,10 +1,10 @@
-INSERT INTO ARMES(idArme, nomArme) values
-        (1,'fleuret homme'),
-        (2,'fleuret femme'),
-        (3,'sabre homme'),
-        (4,'sabre femme'),
-        (5,'épée homme'),
-        (6,'épée femme');
+INSERT INTO ARMES(idArme, nomArme,sexeArme) values
+        (1,'fleuret homme','H'),
+        (2,'fleuret femme','F'),
+        (3,'sabre homme','H'),
+        (4,'sabre femme','F'),
+        (5,'épée homme','H'),
+        (6,'épée femme','F');
 
 INSERT INTO CATEGORIE(idCategorie, nomCategorie) values
         (1,'U13'),
