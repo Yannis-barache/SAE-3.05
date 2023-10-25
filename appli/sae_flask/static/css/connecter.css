@@ -11,26 +11,36 @@ header{
 
 }
 
+
 a{
     text-decoration: none;
     color: black;
 }
 
-img{
-    width: 2%;
+.aide{
+    width: 4vh;
     height: 2%;
-    margin: 30px;
+    
 }
 
 body{
-    background: url(../img/background-image.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url(../img/asize.jpg) no-repeat center center fixed; 
+
 
 }
 
-.aide{
-    margin: 0;
-}
+
+
+.ou {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5%;
+    font-weight: bold;
+  }
+  
+  .ou:after,
+  .ou:before{
+      content:"\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+      text-decoration:line-through;
+  }
