@@ -27,7 +27,7 @@ class TestMatch(unittest.TestCase):
         """
         Test du constructeur de la classe Match
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -42,7 +42,7 @@ class TestMatch(unittest.TestCase):
         """
         Test de la fonction get_id de la classe Match
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -58,7 +58,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction get_id_phase de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -73,7 +73,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction get_escrimeur1 de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -88,7 +88,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction get_escrimeur2 de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -103,7 +103,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction get_arbitre de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -118,7 +118,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction set_id de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -134,7 +134,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction set_id_phase de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -150,7 +150,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction set_escrimeur1 de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -166,7 +166,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction set_escrimeur2 de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -182,7 +182,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction set_arbitre de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
@@ -200,7 +200,7 @@ class TestMatch(unittest.TestCase):
         Test de la fonction __str__ de la classe Match
         """
         categorie = Categorie(1, 'U19')
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',

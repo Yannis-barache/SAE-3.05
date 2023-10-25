@@ -28,7 +28,7 @@ class TestTouche(unittest.TestCase):
         """
         Test du constructeur de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -44,7 +44,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction get_match de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -60,7 +60,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction get_escrimeur de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -76,7 +76,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction get_numero de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -92,7 +92,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction set_match de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -110,7 +110,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction set_escrimeur de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -127,7 +127,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction set_numero de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
@@ -144,7 +144,7 @@ class TestTouche(unittest.TestCase):
         """
         Test de la fonction __str__ de la classe Touche
         """
-        club = Club(1, 'Club 1', 'Adresse 1')
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
                                'baptched', 'mdp', 'AB21', 1, club, categorie)
