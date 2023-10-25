@@ -13,6 +13,8 @@ from competition import Competition
 from categorie import Categorie
 from arme import Arme
 from lieu import Lieu
+from escrimeur import Escrimeur
+from exceptions import PasAssezDArbitres
 
 
 class TestCompetition(unittest.TestCase):
@@ -261,6 +263,74 @@ class TestCompetition(unittest.TestCase):
                                   0.5)
         competition.set_coeficient(0.6)
         self.assertEqual(competition.get_coeficient(), 0.6)
+
+    def test_generation_poule(self):
+        """
+        Test de la fonction generation_poule de la classe Competition
+        """
+        escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                               'baptched', 'mdp', 'AB21', 1, None, None)
+        escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', 2, None, None)
+        escrimeur3 = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05',
+                               'yannou', 'mdp', 'AB01', 3, None, None)
+        escrimeur4 = Escrimeur(4, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB02', 4, None, None)
+        escrimeur5 = Escrimeur(5, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB03', 5, None, None)
+        escrimeur6 = Escrimeur(6, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB04', 6, None, None)
+        escrimeur7 = Escrimeur(7, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB05', 7, None, None)
+        escrimeur8 = Escrimeur(8, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB06', 8, None, None)
+        escrimeur9 = Escrimeur(9, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB07', 9, None, None)
+        escrimeur10 = Escrimeur(10, 'Dupont', 'Jean', 'M', '2004-14-05',
+                                'jeanjean', 'mdp', 'AB08', 10, None, None)
+
+        arbitre1 = Escrimeur(11, 'Dupont', 'Jean', 'M', '2004-14-05',
+                             'jeanjean', 'mdp', 'AB09', 11, None, None)
+        arbitre2 = Escrimeur(12, 'Dupont', 'Jean', 'M', '2004-14-05',
+                             'jeanjean', 'mdp', 'AB10', 12, None, None)
+
+        liste_escrimeur = [
+            escrimeur1, escrimeur2, escrimeur3, escrimeur4, escrimeur5,
+            escrimeur6, escrimeur7, escrimeur8, escrimeur9, escrimeur10
+        ]
+        liste_arbitre = [arbitre1, arbitre2]
+
+        dico = Competition.generation_poule(liste_escrimeur, liste_arbitre)
+        self.assertEqual(len(dico), 2)
+        dico2 = Competition.generation_poule(liste_escrimeur, [])
+        self.assertEqual(dico2, None)
+
+    def test_trie_classement_initial(self):
+        """
+        Test de la fonction trie_classement_initial de la classe Competition
+        """
+        escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                               'baptched', 'mdp', 'AB21', 1, None, None)
+        escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', 2, None, None)
+        escrimeur3 = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05',
+                               'yannou', 'mdp', 'AB01', 3, None, None)
+        escrimeur4 = Escrimeur(4, 'Dupont', 'Jean', 'M', '2004-14-05',
+                               'jeanjean', 'mdp', 'AB02', 4, None, None)
+        liste_trie = [escrimeur1, escrimeur2, escrimeur3, escrimeur4]
+        liste_non_trie = [escrimeur4, escrimeur3, escrimeur2, escrimeur1]
+        self.assertEqual(
+            Competition.trie_classement_inital(liste_non_trie.copy()),
+            liste_trie)
+
+    def test_nombre_poule(self):
+        """
+        Test de la fonction nombre_poule de la classe Competition
+        """
+        assert Competition.nombre_poule(10, 2) == (2, 5)
+        assert Competition.nombre_poule(11, 2) == (2, 6)
+        with self.assertRaises(PasAssezDArbitres):
+            Competition.nombre_poule(10, 1)
 
     def test_str(self):
         """

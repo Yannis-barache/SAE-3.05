@@ -229,6 +229,19 @@ class TestEscrimeur(unittest.TestCase):
         escrimeur.set_categorie(categorie2)
         self.assertEqual(escrimeur.get_categorie(), categorie2)
 
+    def test_lt(self):
+        """
+        Test de la fonction __lt__ de la classe Escrimeur
+        """
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
+        categorie1 = Categorie(1, 'U19')
+        categorie2 = Categorie(2, 'U20')
+        escrimeur1 = Escrimeur(2, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                               'baptched', 'mdp', 'AB21', 1, club, categorie1)
+        escrimeur2 = Escrimeur(3, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', 2, club, categorie2)
+        self.assertTrue(escrimeur1 < escrimeur2)
+
     def test_str(self):
         """
         Test de la fonction __str__ de la classe Escrimeur

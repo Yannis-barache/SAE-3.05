@@ -5,6 +5,11 @@ Module contenant la classe Competition
 from categorie import Categorie
 from arme import Arme
 from lieu import Lieu
+from escrimeur import Escrimeur
+import math
+import constantes as const
+from exceptions import PasAssezDArbitres
+from poule import Poule
 
 
 class Competition:
@@ -199,6 +204,84 @@ class Competition:
             coeficient (float): coeficient de la competition
         """
         self.__coeficient = coeficient
+
+    @staticmethod
+    def generation_poule(
+        liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None:
+        """
+        Fonction qui genere les poules de la competition
+
+        Args:
+            liste_escrimeur (list): liste des escrimeurs de la competition
+            liste_arbitre (list): liste des arbitres de la competition
+        
+        Returns:
+            dict[int, tuple[Escrimeur, list[Escrimeur]]]: 
+                dictionnaire contenant les poules de la competition
+            La clé est le numéro de la poule et la valeur est un tuple 
+            contenant l'arbitre de la poule et la liste des escrimeurs de la poule
+        """
+        try:
+            liste_escrimeur = Competition.trie_classement_inital(
+                liste_escrimeur)
+            nombre_poule = Competition.nombre_poule(len(liste_escrimeur),
+                                                    len(liste_arbitre))[0]
+            poule_int: dict[int, tuple[Escrimeur, list[Escrimeur]]] = {}
+
+            # On initialise les poules avec les arbitres
+            for i in range(nombre_poule):
+                poule_int[i] = (liste_arbitre[i], [])
+
+            # On ajoute les escrimeurs dans les poules
+            for i in range(len(liste_escrimeur)):
+                poule_int[i % nombre_poule][1].append(liste_escrimeur[i])
+
+            # On transforme les poules en poules de type Poule
+            poule: dict[Poule, tuple[Escrimeur, list[Escrimeur]]] = {}
+            for i in range(nombre_poule):
+                poule[Poule(-1)] = poule_int[i]
+            return poule
+        except PasAssezDArbitres:
+            return None
+
+    @staticmethod
+    def trie_classement_inital(
+            liste_escrimeur: list[Escrimeur]) -> list[Escrimeur]:
+        """
+        Fonction qui trie les escrimeurs par classement initial
+
+        Args:
+            liste_escrimeur (list[Escrimeur]): liste des escrimeurs de la competition
+
+        Returns:
+            list[Escrimeur]: liste des escrimeurs de la competition triee par classement initial
+        """
+        return sorted(liste_escrimeur,
+                      key=lambda escrimeur: escrimeur.get_classement())
+
+    @staticmethod
+    def nombre_poule(nombre_escrimeur: int,
+                     nombre_arbitre: int) -> tuple[int, int]:
+        """
+        Fonction qui retourne le nombre de poule et le nombre d'escrimeur par poule
+
+        Args:
+            nombre_escrimeur (int): nombre d'escrimeur de la competition
+            nombre_arbitre (int): nombre d'arbitre de la competition
+
+        Returns:
+            tuple[int, int]: Le nombre de poule et le nombre d'escrimeur par poule
+        """
+        min_arbitres_necessaires = math.ceil(
+            nombre_escrimeur / const.NOMBRE_MAXIMAL_ESCRIMEUR_POULE)
+        if nombre_arbitre < min_arbitres_necessaires:
+            raise PasAssezDArbitres(
+                "Pas assez d'arbitres pour couvrir chaque poule.")
+        nombre_poule = math.ceil(nombre_escrimeur /
+                                 const.NOMBRE_MAXIMAL_ESCRIMEUR_POULE)
+        nombre_escrimeur_par_poule = math.ceil(nombre_escrimeur / nombre_poule)
+        return nombre_poule, nombre_escrimeur_par_poule
 
     def __str__(self) -> str:
         """

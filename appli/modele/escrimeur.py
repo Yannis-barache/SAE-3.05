@@ -13,7 +13,7 @@ class Escrimeur:
 
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, mdp: str,
-                 licence: str, classement: int | None, club: Club,
+                 licence: str, classement: int, club: Club,
                  categorie: Categorie):
         self.__id = id_escrim
         self.__nom = nom
@@ -99,7 +99,7 @@ class Escrimeur:
         """
         return self.__licence
 
-    def get_classement(self) -> int | None:
+    def get_classement(self) -> int:
         """
         Fonction qui retourne le classement de l'escrimeur
 
@@ -198,7 +198,7 @@ class Escrimeur:
         """
         self.__licence = licence
 
-    def set_classement(self, classement: int | None) -> None:
+    def set_classement(self, classement: int) -> None:
         """
         Fonction qui modifie le classement de l'escrimeur
 
@@ -224,6 +224,18 @@ class Escrimeur:
             categorie (Categorie): categorie de l'escrimeur
         """
         self.__categorie = categorie
+
+    def __lt__(self, autre: 'Escrimeur') -> bool:
+        """
+        Fonction qui compare le classement de l'escrimeur avec un autre
+
+        Args:
+            autre (Escrimeur): autre escrimeur
+
+        Returns:
+            bool: True si le classement de l'escrimeur est inferieur a celui de l'autre, False sinon
+        """
+        return self.__classement < autre.__classement
 
     def __str__(self) -> str:
         """
