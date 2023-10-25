@@ -10,7 +10,7 @@ class EscrimeurBD:
 
     def get_all_escrimeur(self):
         try:
-            query = text("SELECT idEscrimeur, nomEscrimeur, liscence, prenomEscrimeur, dateNaissance, "
+            query = text("SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, dateNaissance, "
                          "nomUtilisateurEscrimeur, mdpEscrimeur, classement, sexeEscrimeur, "
                          "idClub, idCategorie FROM ESCRIMEUR")
             result = self.__connexion.execute(query)
@@ -26,7 +26,7 @@ class EscrimeurBD:
 
     def get_escrimeur_by_id(self, id):
         try:
-            query = text("SELECT idEscrimeur, nomEscrimeur, liscence, prenomEscrimeur, dateNaissance, "
+            query = text("SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, dateNaissance, "
                          "nomUtilisateurEscrimeur, mdpEscrimeur, classement, sexeEscrimeur, "
                          "idClub, idCategorie FROM ESCRIMEUR WHERE idEscrimeur = :id")
             result = self.__connexion.execute(query, id=id)
