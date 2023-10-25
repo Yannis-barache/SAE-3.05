@@ -1,10 +1,15 @@
 {% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
+{% endblock %}
+
 {% block header %}
 
-<a href="#">
-    <img src="{{ url_for('static', filename='static/images/fermer.png') }}" alt="croix">
-</a>
-<img src="{{ url_for('static', filename='static/images/Aide.PNG.png') }}" alt="aide">
-
-
+<img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="">
+<img class="aide" src="{{ url_for('static', filename='../static/img/Aide.png') }}" alt="user">
+<img class="aide" src="{{ url_for('static', filename='../static/img/baniere.jpg') }}" alt="baniere">
+    
 {% endblock %}
