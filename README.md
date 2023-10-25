@@ -111,7 +111,7 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 ### Yannis :
 
-- J'ai travaillé sur la réalisation du diagramme de cas d'utilisation et sur la réalisation du MCD mais également de son implémentation dans une base de données.
+- J'ai travaillé sur la réalisation du diagramme de cas d'utilisation et sur la réalisation du MCD, mais également de son implémentation dans une base de données.
 - J'ai donc travaillé sur la création des tables, des relations, des triggers, des procédures stockées et des fonctions.
 - J'ai réalisé le script `setup.sh` pour permettre une installation rapide et simple du projet.
 - J'ai aussi travaillé sur la réalisation du `README.md` et du rendu.
