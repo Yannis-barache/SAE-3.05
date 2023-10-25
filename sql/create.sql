@@ -263,7 +263,7 @@ DELIMITER |
 CREATE OR REPLACE trigger tireur_pasarbitre before insert on MATCHS
 for each row
 BEGIN
-    if (select count(*) from MATCHS where idEscrimeur1=new.idArbitre or idEscrimeur2=new.idArbitre and idArbitre=new.idArbitre and idPhase=new.idPhase) > 0 then
+    if (select count(*) from MATCHS where new.idEscrimeur1=new.idArbitre or new.idEscrimeur2=new.idArbitre) > 0 then
         signal sqlstate '45000' set message_text = 'Un tireur ne peut pas arbitrer un match';
     end if;
 END|
