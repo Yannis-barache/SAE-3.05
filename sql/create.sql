@@ -258,6 +258,17 @@ BEGIN
 END|
 DELIMITER ;
 
+
+DELIMITER |
+CREATE OR REPLACE trigger tireur_pasarbitre before insert on MATCHS
+for each row
+BEGIN
+    if (select count(*) from MATCHS where idEscrimeur1=new.idArbitre or idEscrimeur2=new.idArbitre and idArbitre=new.idArbitre and idPhase=new.idPhase) > 0 then
+        signal sqlstate '45000' set message_text = 'Un tireur ne peut pas arbitrer un match';
+    end if;
+END|
+DELIMITER ;
+
 -- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que tireur
 -- DELIMITER |
 -- CREATE OR REPLACE FUNCTION getCompetitionsTireur(escrimeur_id INT) RETURNS VARCHAR(1000)
