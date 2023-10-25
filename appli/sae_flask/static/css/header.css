@@ -28,7 +28,7 @@
     align-items: center;
     flex-direction: column;
     padding: 55px;
-    width: 42vh;
+    width: 53vh;
     background-color: #dbdbdb;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     margin-top: 2%;
@@ -112,7 +112,7 @@ main{
     font-family: Poppins-Bold;
     font-size: 4vh;
     font-weight: bold;
-    text-shadow: 1px 3px 3px BLACK;
+    text-shadow: 2px 3px 3px GRAY;
     /* color: #333333; */
     line-height: 1.2;
     text-align: center;
@@ -132,3 +132,11 @@ main{
     font-size: 2vh;
 }
 
+@media screen and (max-width: 450px) {
+    .rec-central{
+        width: 42vh;
+    }
+    .petit-titre{
+        text-align: center;
+    }
+    }
