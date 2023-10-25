@@ -1,20 +1,125 @@
 
-header{
+.infoconnecte{
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+#logo{
+    width: 83%;
+    height: 10%;
+    align-items: center;
+
+}
+
+.block-logo{
+    display: flex;
+    justify-content: center;
+}
+
+.rec-central{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 55px 33px 55px;
+    width: 390px;
+    background-color: #dbdbdb;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+
+button {
+    appearance: none;
+    background-color: transparent;
+    border-radius: 0.9375em;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 900;
+    line-height: normal;
+    margin: 0;
+    min-width: 0;
+    outline: none;
+    padding: 1em 2.3em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+    }
+    
+    button:disabled {
+    pointer-events: none;
+    }
+    
+    button:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    color: #3B3B3B;
+    }
+    
+    button:active {
+    box-shadow: none;
+    transform: translateY(0);
+    }
+
+
+.b_connecter{
+
+    background-color: black;
+
+}
+
+.b_inscrire{
+
+    background-color: #d2080a;
+
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carre-central{
+    margin: 10px;
+}
+
+
+.titre{
+    font-family: Poppins-Bold;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 1px 3px 3px BLACK;
+    /* color: #333333; */
+    line-height: 1.2;
+    text-align: center;
+    margin: 20px;
+}
+
+.lesbouton{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: black;
-    font-size: 52px;
-
+    align-items: center;
+    padding: 18px;
 }
 
-a{
-    text-decoration: none;
-    color: black;
-}
 
-img{
-    width: 4%;
-    height: 2%;
+.petit-titre{
+    font-weight: bold;
 }

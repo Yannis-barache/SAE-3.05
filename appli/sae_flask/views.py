@@ -4,7 +4,7 @@ from flask import render_template
 @app.route("/")
 def home():
     return render_template(
-        "home.html"
+        "page_connexion.html"
     )
 
 @app.route("/connexion")

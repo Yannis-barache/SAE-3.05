@@ -1,2 +1,2 @@
 from .app import app
-import sae_flask.views
+import flask.views
