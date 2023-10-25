@@ -100,3 +100,37 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
 
 
 
+## Liste des tâches réalisées lors de la première semaine
+
+
+### Tout le groupe :
+
+En cette première semaine, nous avons tous principalement travaillé sur la réalisation du MCD de la base de données.
+Nous nous sommes ensuite répartis les tâches à réaliser pour la première semaine. Ainsi chacun à travailler sur différentes choses individuellement ou en groupe.
+
+
+### Yannis :
+
+- J'ai travaillé sur la réalisation du diagramme de cas d'utilisation et sur la réalisation du MCD mais également de son implémentation dans une base de données.
+- J'ai donc travaillé sur la création des tables, des relations, des triggers, des procédures stockées et des fonctions.
+- J'ai réalisé le script `setup.sh` pour permettre une installation rapide et simple du projet.
+- J'ai aussi travaillé sur la réalisation du `README.md` et du rendu.
+
+
+
+### Hajar :
+
+TODO : Ajoute ce que tu as fait
+
+### Juliann :
+
+TODO : Ajoute ce que tu as fait
+
+### Abdoulahi :
+
+TODO : Ajoute ce que tu as fait
+
+### Baptiste :
+
+TODO : Ajoute ce que tu as fait
+
