@@ -80,8 +80,7 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
 ## Liste des tâches à faire
 
 ### Tâches à faire pour le 27/10/2023
-- [ ] Réaliser le diagramme de classe
-- [ ] Réaliser le diagramme de cas d'utilisation
+- [x] Réaliser le diagramme de cas d'utilisation
 - [ ] Réaliser le diagramme de séquence
 - [x] Réaliser le MCD (Modèle Conceptuel de Données) de la base de données
 
@@ -90,7 +89,7 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
   - [x] Création de create.sql
   - [x] Création de delete.sql
   - [x] Création d'insert.sql
-  - [ ] Création des relations
+  - [x] Création des relations
   - [ ] Création des triggers
   - [ ] Création des procédures stockées
   - [ ] Création des fonctions
