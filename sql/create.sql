@@ -76,7 +76,7 @@ CREATE TABLE PHASE_FINALE(
 CREATE TABLE ESCRIMEUR (
     idEscrimeur INT(10) AUTO_INCREMENT,
     nomEscrimeur VARCHAR(50),
-    liscence VARCHAR(50),
+    licence VARCHAR(50),
     prenomEscrimeur VARCHAR(50),
     dateNaissance DATE,
     nomUtilisateurEscrimeur VARCHAR(50),
