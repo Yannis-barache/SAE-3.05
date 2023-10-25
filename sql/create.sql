@@ -55,8 +55,8 @@ CREATE TABLE COMPETITION(
 
 CREATE TABLE PHASE(
     idPhase INT(10) AUTO_INCREMENT,
-    idCompetition INT(10),
-    PRIMARY KEY (idPhase,idCompetition),
+    idCompetition INT(10) NOT NULL,
+    PRIMARY KEY (idPhase),
     FOREIGN KEY (idCompetition) REFERENCES COMPETITION(idCompetition)
 );
 
@@ -129,6 +129,30 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
+
+
+-- TRIGGER qui va permettre de na pas ajouter dans phase_finale un id de phase déjà présent dans poule
+delimiter |
+CREATE OR REPLACE trigger meme_phase before insert on PHASE_FINALE
+for each row
+    begin
+        if (select count(*) from POULE where idPoule = new.idPhaseFinale) > 0 then
+            signal sqlstate '45000' set message_text = 'Une phase ne peut pas être à la fois une phase finale et une poule';
+    end if;
+    end |
+delimiter ;
+
+-- TRIGGER qui va permettre de na pas ajouter dans poule un id de phase déjà présent dans phase_finale
+delimiter |
+CREATE OR REPLACE trigger meme_phase2 before insert on POULE
+for each row
+    begin
+        if (select count(*) from PHASE_FINALE where idPhaseFinale = new.idPoule) > 0 then
+            signal sqlstate '45000' set message_text = 'Une phase ne peut pas être à la fois une phase finale et une poule';
+    end if;
+    end |
+delimiter ;
+
 
 
 -- TRIGGER qui permet de bloquer l'assignement d'un arbitre à une poule où un arbitre a deja été désigne. Une poule a un seul arbitre qui ne peut arbitrer dans une autre poule
