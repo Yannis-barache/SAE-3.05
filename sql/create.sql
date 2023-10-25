@@ -167,6 +167,28 @@ for each row
 delimiter ;
 
 
+-- TRIGGER qui va permettre de bloquer l'inscription en tant qu'arbitre si un escrimeur est deja inscrit en tant que tireur
+delimiter |
+CREATE OR REPLACE trigger meme_escrimeur before insert on ARBITRER
+for each row
+begin
+        if (select count(*) from INSCRIRE where idEscrimeur = new.idEscrimeur and idCompetition = new.idCompetition) > 0 then
+            signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas être à la fois tireur et arbitre';
+    end if;
+end |
+delimiter ;
+
+
+-- TRIGGER qui va permettre de bloquer l'inscription en tant que tireur si un escrimeur est deja inscrit en tant que arbitre
+delimiter |
+CREATE OR REPLACE trigger meme_escrimeur2 before insert on INSCRIRE
+for each row
+begin
+    if (select count(*) from ARBITRER where idEscrimeur = new.idEscrimeur and idCompetition = new.idCompetition) > 0 then
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas être à la fois tireur et arbitre';
+    end if;
+end |
+
 -- Procédure qui permet de créer une poule à partir d'une phase
 delimiter |
 CREATE OR REPLACE PROCEDURE creer_poule(IN idPhase INT(10))
