@@ -189,6 +189,28 @@ begin
     end if;
 end |
 
+-- TRIGGER qui bloque l'inscription par le sexe de l'escrimeur
+delimiter |
+CREATE OR REPLACE trigger meme_sexe before insert on INSCRIRE
+for each row
+begin
+    if (select sexeEscrimeur from ESCRIMEUR where idEscrimeur = new.idEscrimeur) <> (select sexeArme from COMPETITION natural join ARMES where idCompetition = new.idCompetition) then
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à son sexe';
+    end if;
+end |
+
+-- TRIGGER qui bloque l'inscription par la catégorie de l'escrimeur si la catégorie est inférieure (l'id correspond)
+delimiter |
+CREATE OR REPLACE trigger meme_categorie before insert on INSCRIRE
+for each row
+begin
+    if (select idCategorie from ESCRIMEUR where idEscrimeur = new.idEscrimeur) < (select idCategorie from COMPETITION where idCompetition = new.idCompetition) then
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à sa catégorie';
+    end if;
+end |
+
+
+
 -- Procédure qui permet de créer une poule à partir d'une phase
 delimiter |
 CREATE OR REPLACE PROCEDURE creer_poule(IN idPhase INT(10))
