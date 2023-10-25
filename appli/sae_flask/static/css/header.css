@@ -1,0 +1,20 @@
+
+header{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: black;
+    font-size: 52px;
+
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+img{
+    width: 4%;
+    height: 2%;
+}
