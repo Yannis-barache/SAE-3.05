@@ -12,8 +12,8 @@ class Escrimeur:
     """
 
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
-                 date_naissance: str, nom_utilisateur: str, adresse_mail: str,
-                 mdp: str, licence: str, classement: int | None, club: Club,
+                 date_naissance: str, nom_utilisateur: str, mdp: str,
+                 licence: str, classement: int | None, club: Club,
                  categorie: Categorie):
         self.__id = id_escrim
         self.__nom = nom
@@ -21,7 +21,6 @@ class Escrimeur:
         self.__sexe = sexe
         self.__date_naissance = date_naissance
         self.__nom_utilisateur = nom_utilisateur
-        self.__adresse_mail = adresse_mail
         self.__mdp = mdp
         self.__licence = licence
         self.__classement = classement
@@ -81,15 +80,6 @@ class Escrimeur:
             str: nom d'utilisateur de l'escrimeur
         """
         return self.__nom_utilisateur
-
-    def get_adresse_mail(self) -> str:
-        """
-        Fonction qui retourne l'adresse mail de l'escrimeur
-
-        Returns:
-            str: adresse mail de l'escrimeur
-        """
-        return self.__adresse_mail
 
     def get_mdp(self) -> str:
         """
@@ -190,15 +180,6 @@ class Escrimeur:
         """
         self.__nom_utilisateur = nom_utilisateur
 
-    def set_adresse_mail(self, adresse_mail: str) -> None:
-        """
-        Fonction qui modifie l'adresse mail de l'escrimeur
-
-        Args:
-            adresse_mail (str): adresse mail de l'escrimeur
-        """
-        self.__adresse_mail = adresse_mail
-
     def set_mdp(self, mdp: str) -> None:
         """
         Fonction qui modifie le mot de passe de l'escrimeur
@@ -252,5 +233,5 @@ class Escrimeur:
             str: informations de l'escrimeur
         """
         return f'{self.__id} - {self.__nom} - {self.__prenom} - {self.__date_naissance} - ' \
-                f'{self.__nom_utilisateur} - {self.__adresse_mail} - {self.__mdp} - ' \
+                f'{self.__nom_utilisateur} - {self.__mdp} - ' \
                 f'{self.__licence} - {self.__classement} - {self.__club} - {self.__categorie}'

@@ -1,9 +1,9 @@
 """
-Module contenant la classe Arbitrer
+Module contenant la classe InscrireArbitre
 """
 
 
-class Arbitrer:
+class InscrireArbitre:
     """
     Classe Arbitrer
     """
