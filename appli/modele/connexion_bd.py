@@ -1,5 +1,8 @@
 import sqlalchemy
+
+
 class ConnexionBD:
+
     def __init__(self):
         self.__connexion = None
         self.__user = "332948"
@@ -21,8 +24,11 @@ class ConnexionBD:
         """
         try:
             # creation de l'objet gérant les interactions avec le serveur de BD
-            engine = sqlalchemy.create_engine(
-                'mysql+mysqlconnector://' + self.__user + ':' + self.__passwd + '@' + self.__host + '/' + self.__database)
+            engine = sqlalchemy.create_engine('mysql+mysqlconnector://' +
+                                              self.__user + ':' +
+                                              self.__passwd + '@' +
+                                              self.__host + '/' +
+                                              self.__database)
             # creation de la connexion
             cnx = engine.connect()
             print("connexion réussie")
@@ -30,7 +36,6 @@ class ConnexionBD:
             print(err)
             raise err
         self.__connexion = cnx
-
 
     def get_connexion(self):
         return self.__connexion
