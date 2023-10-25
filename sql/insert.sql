@@ -85,23 +85,6 @@ INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCo
         (13,'Competition de Saint-Etienne', '2023-02-23', 'hiver', 2, 3, 12, '2023-02-13', 0.8);
 
 
-
-INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch) VALUES
-        (1, 1, 2, 1, 1, '10:20:00'),
-        (2, 3, 4, 1, 2, '23:00:00'),
-        (3, 5, 6, 1, 3, '08:20:00'),
-        (4, 7, 8, 1, 4, '10:34:00'),
-        (5, 9, 10, 1, 5, '16:21:00'),
-        (6, 1, 3, 2, 6, '09:00:00'),
-        (7, 2, 4, 2, 7, '20:30:00'),
-        (8, 5, 7, 2, 8, '11:00:00'),
-        (9, 6, 8, 2, 9, '12:45:00'),
-        (10, 9, 1, 2, 10, '20:45:00'),
-        (11, 10, 2, 2, 11, '18:49:00'),
-        (12, 3, 5, 2, 12, '10:00:00'),
-        (13, 4, 6, 2, 13, '08:10:00'),
-        (14, 7, 9, 2, 14, '13:20:00');
-
 INSERT INTO PHASE(idPhase, idCompetition) VALUES
         (1, 1),
         (2, 1),
@@ -141,3 +124,13 @@ INSERT INTO POULE(idPoule) VALUES
         (13),
         (14);
 
+INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch) VALUES
+        (1, 1, 2, 1, 10, '10:20:00'),
+        (2, 3, 4, 1, 2, '23:00:00'),
+        (3, 5, 6, 1, 3, '08:20:00'),
+        (4, 7, 8, 1, 4, '10:34:00'),
+        (5, 9, 10, 1, 5, '16:21:00'),
+        (6, 1, 3, 2, 6, '09:00:00'),
+        (7, 2, 4, 2, 7, '20:30:00'),
+        (8, 5, 7, 2, 8, '11:00:00'),
+        (9, 6, 8, 2, 9, '12:45:00');
