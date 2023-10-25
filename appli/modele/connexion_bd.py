@@ -45,10 +45,11 @@ class ConnexionBD:
             # creation de la connexion
             cnx = engine.connect()
             print("connexion réussie")
+            self.__connexion = cnx
         except Exception as err:
             print(err)
             raise err
-        self.__connexion = cnx
+
 
     def get_connexion(self):
         return self.__connexion

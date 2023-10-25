@@ -1,12 +1,23 @@
+"""
+    Fichier qui contient les requêtes SQL pour la table CATEGORIE
+"""
+
 from sqlalchemy.sql.expression import text
 from appli.modele.categorie import Categorie
 
 
 class CategorieBD:
-    def __int__(self, connexion):
+    """
+    Classe CategorieBD
+    """
+    def __init__(self, connexion):
         self.__connexion = connexion
 
     def get_all_categorie(self):
+        """
+        Fonction qui retourne toutes les categories
+        :return: liste de categorie
+        """
         try:
             query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE")
             result = self.__connexion.execute(query)
@@ -18,10 +29,16 @@ class CategorieBD:
             print(e)
             return None
 
-    def get_categorie_by_id(self, id):
+    def get_categorie_by_id(self, id_cat: int):
+        """
+        Fonction qui retourne une categorie en fonction de son id
+        :param id_cat: id de la categorie
+        :return: categorie
+        """
         try:
-            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE WHERE idCategorie = :id")
-            result = self.__connexion.execute(query, id=id)
+            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE "
+                         "WHERE idCategorie =" + str(id_cat))
+            result = self.__connexion.execute(query)
             for id_categorie, nom in result:
                 return Categorie(id_categorie, nom)
             return None

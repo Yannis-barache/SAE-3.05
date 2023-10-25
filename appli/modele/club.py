@@ -93,4 +93,4 @@ class Club:
         Returns:
             str: informations du club
         """
-        return f"{self.__id} - {self.__nom} - {self.__adresse}"
+        return f"{self.__id} - {self.__nom} - {self.__adresse} - {self.__mdp}"

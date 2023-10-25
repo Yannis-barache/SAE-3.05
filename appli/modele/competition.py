@@ -2,9 +2,9 @@
 Module contenant la classe Competition
 """
 
-from categorie import Categorie
-from arme import Arme
-from lieu import Lieu
+from appli.modele.categorie import Categorie
+from appli.modele.arme import Arme
+from appli.modele.lieu import Lieu
 
 
 class Competition:
