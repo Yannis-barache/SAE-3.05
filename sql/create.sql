@@ -41,9 +41,9 @@ CREATE TABLE COMPETITION(
     nomCompetition VARCHAR(50),
     dateCompetition DATE,
     saisonCompetition VARCHAR(50),
-    idArme INT(10),
-    idCategorie INT(10),
-    idLieu INT(10),
+    idArme INT(10) NOT NULL,
+    idCategorie INT(10) NOT NULL,
+    idLieu INT(10) NOT NULL,
     dateFinInscription DATE,
     coefficientCompetition INT(10),
     PRIMARY KEY (idCompetition),
@@ -61,9 +61,8 @@ CREATE TABLE PHASE(
 );
 
 CREATE TABLE POULE(
-    idPoule INT(10) AUTO_INCREMENT,
-    idArbitre INT(10),
-    PRIMARY KEY (idPoule,idArbitre),
+    idPoule INT(10) not null ,
+    PRIMARY KEY (idPoule),
     FOREIGN KEY (idPoule) REFERENCES PHASE(idPhase)
 );
 
@@ -76,34 +75,37 @@ CREATE TABLE PHASE_FINALE(
 CREATE TABLE ESCRIMEUR (
     idEscrimeur INT(10) AUTO_INCREMENT,
     nomEscrimeur VARCHAR(50),
-    liscence boolean,
+    liscence VARCHAR(50),
     prenomEscrimeur VARCHAR(50),
     dateNaissance DATE,
     nomUtilisateurEscrimeur VARCHAR(50),
     mdpEscrimeur VARCHAR(100),
     classement INT(10),
-    idClub INT(10),
+    idClub INT(10) NOT NULL,
     sexeEscrimeur VARCHAR(1),
-    idCategorie INT(10),
+    idCategorie INT(10) NOT NULL,
     PRIMARY KEY (idEscrimeur),
     FOREIGN KEY (idClub) REFERENCES CLUB(idClub),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie)
 );
 
 CREATE TABLE MATCHS(
-    idMatch INT(10) AUTO_INCREMENT,
-    idEscrimeur1 INT(10),
-    idEscrimeur2 INT(10),
-    idPhase INT(10),
+    idMatch INT(10) AUTO_INCREMENT NOT NULL,
+    idEscrimeur1 INT(10) NOT NULL,
+    idEscrimeur2 INT(10) NOT NULL,
+    idPhase INT(10) NOT NULL,
+    idArbitre INT(10) NOT NULL,
+    heureMatch TIME,
     PRIMARY KEY (idMatch),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
-    FOREIGN KEY (idPhase) REFERENCES PHASE(idPhase)
+    FOREIGN KEY (idPhase) REFERENCES PHASE(idPhase),
+    FOREIGN KEY (idArbitre) REFERENCES ESCRIMEUR(idEscrimeur)
 );
 
 CREATE TABLE TOUCHE(
-    idMatch INT(10),
-    idEscrimeur INT(10),
+    idMatch INT(10) NOT NULL,
+    idEscrimeur INT(10) NOT NULL ,
     numTouche INT(10),
     PRIMARY KEY (idMatch,numTouche),
     FOREIGN KEY (idMatch) REFERENCES MATCHS(idMatch),
@@ -113,17 +115,28 @@ CREATE TABLE TOUCHE(
 
 
 CREATE TABLE ARBITRER(
-    idEscrimeur INT(10),
-    idCompetition INT(10),
+    idEscrimeur INT(10) NOT NULL,
+    idCompetition INT(10) NOT NULL,
     PRIMARY KEY (idCompetition,idEscrimeur),
     FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
 CREATE TABLE INSCRIRE(
-    idEscrimeur INT(10),
-    idCompetition INT(10),
+    idEscrimeur INT(10) NOT NULL,
+    idCompetition INT(10) NOT NULL,
     PRIMARY KEY (idCompetition,idEscrimeur),
     FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
+
+
+-- TRIGGER qui permet de bloquer l'assignement d'un arbitre à une poule où un arbitre a deja été désigne. Une poule a un seul arbitre qui ne peut arbitrer dans une autre poule
+delimiter |
+CREATE OR REPLACE trigger meme_arbitre_poule before insert on MATCHS
+for each row
+    begin
+        if (select count(*) from MATCHS where idPhase = new.idPhase and idArbitre = new.idArbitre) > 0 then
+            signal sqlstate '45000' set message_text = 'Un arbitre ne peut pas arbitrer deux poules';
+    end if;
+    end |
