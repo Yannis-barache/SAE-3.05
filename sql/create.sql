@@ -164,3 +164,51 @@ for each row
             signal sqlstate '45000' set message_text = 'Un arbitre ne peut pas arbitrer deux poules';
     end if;
     end |
+delimiter ;
+
+
+-- Procédure qui permet de créer une poule à partir d'une phase
+delimiter |
+CREATE OR REPLACE PROCEDURE creer_poule(IN idPhase INT(10))
+begin
+    INSERT INTO POULE(idPoule) VALUES (idPhase);
+end |
+delimiter ;
+
+-- Procédure qui permet de créer une phase finale à partir d'une phase
+delimiter |
+CREATE OR REPLACE PROCEDURE creer_phase_finale(IN idPhase INT(10))
+begin
+    INSERT INTO PHASE_FINALE(idPhaseFinale) VALUES (idPhase);
+end |
+delimiter ;
+
+
+DELIMITER |
+CREATE FUNCTION CalculerClassementProvisoire(
+    escrimeur_id INT,
+    phase_id INT
+)
+RETURNS INT
+BEGIN
+    DECLARE victoires INT;
+    DECLARE touches_donnes INT;
+    DECLARE touches_recues INT;
+    DECLARE indice INT;
+
+    -- Calculer le nombre de victoires de l'escrimeur dans la phase
+    SET victoires = (SELECT COUNT(*) FROM MATCHS natural join TOUCHE WHERE (idEscrimeur1 = escrimeur_id OR idEscrimeur2 = escrimeur_id) AND idPhase = phase_id AND numTouche = 15);
+
+    -- Calculer les touches données et reçues par l'escrimeur dans la phase
+    SET touches_donnes = (SELECT COUNT(*) FROM TOUCHE WHERE idEscrimeur = escrimeur_id AND idMatch IN (SELECT idMatch FROM MATCHS WHERE idPhase = phase_id));
+    SET touches_recues = (SELECT COUNT(*) FROM TOUCHE WHERE idMatch IN (SELECT idMatch FROM MATCHS WHERE idPhase = phase_id) AND idEscrimeur <> escrimeur_id);
+
+    -- Calculer l'indice
+    SET indice = touches_donnes - touches_recues;
+
+    -- Calculer le classement provisoire
+    SET @classement_provisoire = (victoires * 3) + (CASE WHEN indice > 0 THEN 2 ELSE 0 END);
+
+    RETURN @classement_provisoire;
+END|
+DELIMITER ;
