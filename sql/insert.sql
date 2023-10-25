@@ -42,7 +42,7 @@ INSERT INTO ORGANISATEUR(idOrganisateur, nomOrganisateur, prenomOrganisateur, ad
         (6,'LECHOPIER','Christophe','christophe.lechopier@univ-orleans.fr','christophe','lechopier');
 
 
-INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, liscence, dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, idClub, sexeEscrimeur, idCategorie) values
+INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, idClub, sexeEscrimeur, idCategorie) values
         (1,'Barache', 'Yannis', '123456', '2004-09-30', 'yannis', 'barache', NULL, 1, 'M', 4),
         (2, 'Doe', 'John', '123456', '1999-01-01', 'johndoe', 'password', NULL, 2, 'M', 5),
         (3, 'Dark', 'Vador', '123456', '1999-01-01', 'etoile', 'noire', NULL, 3, 'M', 5),
@@ -134,3 +134,6 @@ INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heur
         (7, 2, 4, 2, 7, '20:30:00'),
         (8, 5, 7, 2, 8, '11:00:00'),
         (9, 6, 8, 2, 9, '12:45:00');
+
+
+
