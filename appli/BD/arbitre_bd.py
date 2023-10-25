@@ -9,21 +9,29 @@ class ArbitreBD:
         self.__connexion = connexion
 
     def get_all_arbitre(self):
-        query = text("SELECT idEscrimeur, idCompetition FROM ARBITRER")
-        result = self.__connexion.execute(query)
-        arbitres = []
-        for id_escrimeur, id_categorie in result:
-            escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-            competition = CompetitionBD.get_competition_by_id(self, id_categorie)
-            arbitres.append(Arbitrer(escrimeur, competition))
-        return arbitres
+        try:
+            query = text("SELECT idEscrimeur, idCompetition FROM ARBITRER")
+            result = self.__connexion.execute(query)
+            arbitres = []
+            for id_escrimeur, id_categorie in result:
+                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
+                competition = CompetitionBD.get_competition_by_id(self, id_categorie)
+                arbitres.append(Arbitrer(escrimeur, competition))
+            return arbitres
+        except Exception as e:
+            print(e)
+            return None
 
 
     def get_arbitre_by_id(self, id):
-        query = text("SELECT idEscrimeur, idCompetition FROM ARBITRER WHERE idEscrimeur = :id")
-        result = self.__connexion.execute(query, id=id)
-        for id_escrimeur, id_competition in result:
-            escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-            competition = CompetitionBD.get_competition_by_id(self, id_competition)
-            return Arbitrer(escrimeur, competition)
-        return None
+        try:
+            query = text("SELECT idEscrimeur, idCompetition FROM ARBITRER WHERE idEscrimeur = :id")
+            result = self.__connexion.execute(query, id=id)
+            for id_escrimeur, id_competition in result:
+                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
+                competition = CompetitionBD.get_competition_by_id(self, id_competition)
+                return Arbitrer(escrimeur, competition)
+            return None
+        except Exception as e:
+            print(e)
+            return None

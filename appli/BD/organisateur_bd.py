@@ -7,10 +7,14 @@ class OrganisateurBD:
         self.__connexion = connexion
 
     def get_all_organisateur(self):
-        query = text("SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
-                     "adresseMailOrganisateur, mdpOrganisateur, nomUtilisateur FROM ORGANISATEUR")
-        result = self.__connexion.execute(query)
-        organisateurs = []
-        for id_organisateur, nom, prenom, mail, mpd, nom_utilisateur in result:
-            organisateurs.append(Organisateur(id_organisateur, nom, prenom, mail, mpd, nom_utilisateur))
-        return organisateurs
+        try:
+            query = text("SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
+                         "adresseMailOrganisateur, mdpOrganisateur, nomUtilisateur FROM ORGANISATEUR")
+            result = self.__connexion.execute(query)
+            organisateurs = []
+            for id_organisateur, nom, prenom, mail, mpd, nom_utilisateur in result:
+                organisateurs.append(Organisateur(id_organisateur, nom, prenom, mail, mpd, nom_utilisateur))
+            return organisateurs
+        except Exception as e:
+            print(e)
+            return None

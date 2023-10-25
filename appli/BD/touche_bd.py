@@ -8,11 +8,15 @@ class ToucheBD:
         self.__connexion = connexion
 
     def get_all_touche(self):
-        query = text("SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE")
-        result = self.__connexion.execute(query)
-        touches = []
-        for id_match, id_escrimeur, num in result:
-            match = MatchBD.get_match_by_id(self, id_match)
-            escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-            touches.append(Touche(match, escrimeur, num))
-        return touches
+        try:
+            query = text("SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE")
+            result = self.__connexion.execute(query)
+            touches = []
+            for id_match, id_escrimeur, num in result:
+                match = MatchBD.get_match_by_id(self, id_match)
+                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
+                touches.append(Touche(match, escrimeur, num))
+            return touches
+        except Exception as e:
+            print(e)
+            return None

@@ -7,16 +7,24 @@ class ClubBD:
         self.__connexion = connexion
 
     def get_all_club(self):
-        query = text("SELECT idClub, nomClub, adresse, mdpClub FROM CLUB")
-        result = self.__connexion.execute(query)
-        clubs = []
-        for id_club, nom, adresse, mdp in result:
-            clubs.append(Club(id_club, nom, adresse, mdp))
-        return clubs
+        try:
+            query = text("SELECT idClub, nomClub, adresse, mdpClub FROM CLUB")
+            result = self.__connexion.execute(query)
+            clubs = []
+            for id_club, nom, adresse, mdp in result:
+                clubs.append(Club(id_club, nom, adresse, mdp))
+            return clubs
+        except Exception as e:
+            print(e)
+            return None
 
     def get_club_by_id(self, id):
-        query = text("SELECT idClub, nomClub, adresse, mdpClub FROM CLUB WHERE idClub = :id")
-        result = self.__connexion.execute(query, id=id)
-        for id_club, nom, adresse, mdp in result:
-            return Club(id_club, nom, adresse, mdp)
-        return None
+        try:
+            query = text("SELECT idClub, nomClub, adresse, mdpClub FROM CLUB WHERE idClub = :id")
+            result = self.__connexion.execute(query, id=id)
+            for id_club, nom, adresse, mdp in result:
+                return Club(id_club, nom, adresse, mdp)
+            return None
+        except Exception as e:
+            print(e)
+            return None
