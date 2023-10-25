@@ -1,6 +1,7 @@
 CREATE TABLE ARMES(
     idArme INT(10) AUTO_INCREMENT,
     nomArme VARCHAR(50),
+    sexeArme VARCHAR(1),
     PRIMARY KEY (idArme)
 );
 
@@ -229,7 +230,7 @@ delimiter ;
 
 
 DELIMITER |
-CREATE FUNCTION CalculerClassementProvisoire(
+CREATE OR REPLACE FUNCTION CalculerClassementProvisoire(
     escrimeur_id INT,
     phase_id INT
 )
@@ -257,47 +258,48 @@ BEGIN
 END|
 DELIMITER ;
 
--- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que tireur
-DELIMITER |
-CREATE FUNCTION getCompetitionsTireur(escrimeur_id INT) RETURNS VARCHAR(1000)
-BEGIN
-    DECLARE competitions VARCHAR(1000);
-    DECLARE competition_id INT;
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE inscription CURSOR FOR SELECT idCompetition FROM INSCRIRE WHERE idEscrimeur = escrimeur_id;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+-- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que tireur
+-- DELIMITER |
+-- CREATE OR REPLACE FUNCTION getCompetitionsTireur(escrimeur_id INT) RETURNS VARCHAR(1000)
+-- BEGIN
+--     DECLARE competitions VARCHAR(1000) DEFAULT '';
+--     DECLARE competition_id INT;
+--     DECLARE done INT DEFAULT FALSE;
+--     DECLARE inscription CURSOR FOR SELECT idCompetition FROM INSCRIRE WHERE idEscrimeur = escrimeur_id;
+--     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+--     OPEN inscription;
+--     while not done do
+--         FETCH inscription INTO competition_id;
+--         IF NOT done THEN
+--             SET competitions = CONCAT(competitions, competition_id, ' \n');
+--         END IF;
+--     end while;
+--     close inscription;
+--     select competitions;
+-- END|
+-- DELIMITER ;
 
-    SET competitions = '';
-    OPEN inscription;
-    while not done do
-        FETCH inscription INTO competition_id;
-        IF NOT done THEN
-            SET competitions = CONCAT(competitions, competition_id, ', ');
-        END IF;
-    end while;
-END|
-DELIMITER ;
+-- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que arbitre
+-- DELIMITER |
+-- CREATE OR REPLACE FUNCTION getCompetitionsArbitre(escrimeur_id INT) RETURNS VARCHAR(1000)
+-- begin
+--     DECLARE competitions VARCHAR(1000) DEFAULT '';
+--     DECLARE competition_id INT;
+--     DECLARE done boolean DEFAULT FALSE;
+--     DECLARE inscription CURSOR FOR SELECT idCompetition FROM ARBITRER WHERE idEscrimeur = escrimeur_id;
+--     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
--- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que arbitre
-DELIMITER |
-CREATE FUNCTION getCompetitionsArbitre(escrimeur_id INT) RETURNS VARCHAR(1000)
-begin
-    DECLARE competitions VARCHAR(1000);
-    DECLARE competition_id INT;
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE inscription CURSOR FOR SELECT idCompetition FROM ARBITRER WHERE idEscrimeur = escrimeur_id;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
-    SET competitions = '';
-    OPEN inscription;
-    while not done do
-        FETCH inscription INTO competition_id;
-        IF NOT done THEN
-            SET competitions = CONCAT(competitions, competition_id, ', ');
-        END IF;
-    end while;
-end |
-DELIMITER ;
+--     OPEN inscription;
+--     while not done do
+--         FETCH inscription INTO competition_id;
+--         IF NOT done THEN
+--             SET competitions = CONCAT(competitions, competition_id, '\n');
+--         END IF;
+--     end while;
+--     close inscription;
+--     select competitions;
+-- end |
+-- DELIMITER ;
 
 
 
