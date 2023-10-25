@@ -11,12 +11,13 @@ class Match:
     """
 
     def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
-                 escrimeur2: Escrimeur, arbitre: Escrimeur):
+                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float):
         self.__id = id_match
         self.__id_phase = id_phase
         self.__escrimeur1 = escrimeur1
         self.__escrimeur2 = escrimeur2
         self.__arbitre = arbitre
+        self.__heure = heure
 
     def get_id(self) -> int:
         """
@@ -63,6 +64,15 @@ class Match:
         """
         return self.__arbitre
 
+    def get_heure(self) -> float:
+        """
+        Fonction qui retourne l'heure du match
+
+        Returns:
+            float: heure du match
+        """
+        return self.__heure
+
     def set_id(self, id_match: int) -> None:
         """
         Fonction qui modifie l'id du match
@@ -107,6 +117,15 @@ class Match:
             arbitre (Escrimeur): arbitre
         """
         self.__arbitre = arbitre
+
+    def set_heure(self, heure: float) -> None:
+        """
+        Fonction qui modifie l'heure du match
+
+        Args:
+            heure (float): heure du match
+        """
+        self.__heure = heure
 
     def __str__(self):
         return f'{self.__id} - {self.__id_phase} - {self.__escrimeur1} - {self.__escrimeur2}'
