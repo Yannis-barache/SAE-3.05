@@ -1,7 +1,20 @@
+"""
+Module contenant la classe ConnexionBD qui permet de se connecter à la base de données
+"""
 import sqlalchemy
 
 
 class ConnexionBD:
+    """
+    Classe ConnexionBD
+
+    Attributes:
+        __connexion (sqlalchemy.engine.base.Connection): connexion à la base de données
+        __user (str): le login MySQL de l'utilsateur
+        __passwd (str): le mot de passe MySQL de l'utilisateur
+        __host (str): le nom ou l'adresse IP de la machine hébergeant le serveur MySQL
+        __database (str): le nom de la base de données à utiliser
+    """
 
     def __init__(self):
         self.__connexion = None
@@ -24,10 +37,10 @@ class ConnexionBD:
         """
         try:
             # creation de l'objet gérant les interactions avec le serveur de BD
-            engine = sqlalchemy.create_engine('mysql+mysqlconnector://' +
-                                              self.__user + ':' +
-                                              self.__passwd + '@' +
-                                              self.__host + '/' +
+            engine = sqlalchemy.create_engine("mysql+mysqlconnector://" +
+                                              self.__user + ":" +
+                                              self.__passwd + "@" +
+                                              self.__host + "/" +
                                               self.__database)
             # creation de la connexion
             cnx = engine.connect()
