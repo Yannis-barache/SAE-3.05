@@ -298,7 +298,7 @@ delimiter ;
 
 -- Procedure pour permettre d'ajouter une touche a la table TOUCHE
 delimiter |
-CREATE OR REPLACE procedure ajoute_touche(idMatchA int, idEscrimeurA int)
+CREATE OR REPLACE procedure ajoute_touche(IN idMatchA int, IN idEscrimeurA int)
 begin
     declare nbToucheMax int;
     set nbToucheMax= (select count(*) from TOUCHE where idMatch=idMatchA and idEscrimeur=idEscrimeurA);
