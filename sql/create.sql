@@ -293,6 +293,29 @@ BEGIN
 END|
 DELIMITER ;
 
+delimiter |
+CREATE OR REPLACE trigger num_licence before insert on ESCRIMEUR
+for each row
+begin
+    if (select count(*) from ESCRIMEUR where licence = new.licence) > 0 then
+        signal sqlstate '45000' set message_text = 'La licence est appartient à quelqu''un d''autre';
+    end if;
+end |
+delimiter ;
+
+delimiter |
+CREATE OR REPLACE procedure ajoute_touche(in idMatch int, in idEscrimeur int)
+begin
+    declare nbToucheMax int;
+    set nbToucheMax= (select max(numTouche) from TOUCHE where idMatch=idMatch and idEscrimeur=idEscrimeur);
+    if nbToucheMax is null then
+        set nbToucheMax=0;
+    end if;
+    insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatch,idEscrimeur,nbToucheMax+1);
+end |
+delimiter ;
+
+
 -- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que tireur
 -- DELIMITER |
 -- CREATE OR REPLACE FUNCTION getCompetitionsTireur(escrimeur_id INT) RETURNS VARCHAR(1000)
