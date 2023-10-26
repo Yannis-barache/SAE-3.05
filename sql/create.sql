@@ -90,6 +90,14 @@ CREATE TABLE ESCRIMEUR (
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie)
 );
 
+CREATE TABLE ARBITRER(
+    idEscrimeur INT(10) NOT NULL,
+    idCompetition INT(10) NOT NULL,
+    PRIMARY KEY (idCompetition,idEscrimeur),
+    FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
+    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
+);
+
 CREATE TABLE MATCHS(
     idMatch INT(10) AUTO_INCREMENT NOT NULL,
     idEscrimeur1 INT(10) NOT NULL,
@@ -115,13 +123,7 @@ CREATE TABLE TOUCHE(
 
 
 
-CREATE TABLE ARBITRER(
-    idEscrimeur INT(10) NOT NULL,
-    idCompetition INT(10) NOT NULL,
-    PRIMARY KEY (idCompetition,idEscrimeur),
-    FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
-    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
-);
+
 
 CREATE TABLE INSCRIRE(
     idEscrimeur INT(10) NOT NULL,
@@ -191,14 +193,16 @@ begin
 end |
 
 -- TRIGGER qui bloque l'inscription par le sexe de l'escrimeur
-delimiter |
-CREATE OR REPLACE trigger meme_sexe before insert on INSCRIRE
-for each row
-begin
-    if (select sexeEscrimeur from ESCRIMEUR where idEscrimeur = new.idEscrimeur) <> (select sexeArme from COMPETITION natural join ARMES where idCompetition = new.idCompetition) then
-        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à son sexe';
-    end if;
-end |
+DELIMITER |
+CREATE OR REPLACE TRIGGER meme_sexe BEFORE INSERT ON INSCRIRE
+FOR EACH ROW
+BEGIN
+    IF (SELECT sexeEscrimeur FROM ESCRIMEUR WHERE idEscrimeur = NEW.idEscrimeur) != (SELECT sexeArme FROM ARMES WHERE idArme = (SELECT idArme FROM COMPETITION WHERE idCompetition = NEW.idCompetition)) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à son sexe';
+    END IF;
+END|
+DELIMITER ;
 
 -- TRIGGER qui bloque l'inscription par la catégorie de l'escrimeur si la catégorie est inférieure (l'id correspond)
 delimiter |

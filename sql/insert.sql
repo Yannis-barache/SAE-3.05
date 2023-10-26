@@ -30,7 +30,7 @@ INSERT INTO CLUB(idClub, nomClub, adresse, mdpClub) values
         (10,'Club d''escrime de Rennes','8 Av. des Gayeulles, 35700 Rennes','villedeKnou'),
         (11,'Club d''escrime de Reims','Imp. Léo Lagrange, 51100 Reims','et'),
         (12,'Club d''escrime de Saint-Etienne','Rue du Dr Paul Michelon, 42000 Saint-Étienne','perdant'),
-        (13,'Cercle d''escrime de blois ','25 Rue Lucien Joubert, 41000 Blois','ceblois');
+        (13,'Cercle d''escrime de Blois ','25 Rue Lucien Joubert, 41000 Blois','ceblois');
 
 
 INSERT INTO ORGANISATEUR(idOrganisateur, nomOrganisateur, prenomOrganisateur, adresseMailOrganisateur, mdpOrganisateur, nomUtilisateur) values
@@ -43,16 +43,22 @@ INSERT INTO ORGANISATEUR(idOrganisateur, nomOrganisateur, prenomOrganisateur, ad
 
 
 INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, idClub, sexeEscrimeur, idCategorie) values
-        (1,'Barache', 'Yannis', '123456', '2004-09-30', 'yannis', 'barache', NULL, 1, 'M', 4),
-        (2, 'Doe', 'John', '123456', '1999-01-01', 'johndoe', 'password', NULL, 2, 'M', 5),
-        (3, 'Dark', 'Vador', '123456', '1999-01-01', 'etoile', 'noire', NULL, 3, 'M', 5),
-        (4, 'Skywalker', 'Luke', '123456', '1999-01-01', 'etoile', 'claire', NULL, 4, 'M', 5),
-        (5, 'Solo', 'Han', '123456', '1999-01-01', 'hansolo', 'password', NULL, 5, 'M', 5),
+        (1,'Barache', 'Yannis', '123456', '2004-09-30', 'yannis', 'barache', NULL, 1, 'H', 4),
+        (2, 'Doe', 'John', '123456', '1999-01-01', 'johndoe', 'password', NULL, 2, 'H', 5),
+        (3, 'Dark', 'Vador', '123456', '1999-01-01', 'etoile', 'noire', NULL, 3, 'H', 5),
+        (4, 'Skywalker', 'Luke', '123456', '1999-01-01', 'etoile', 'claire', NULL, 4, 'H', 5),
+        (5, 'Solo', 'Han', '123456', '1999-01-01', 'hansolo', 'password', NULL, 5, 'H', 5),
         (6, 'Organa', 'Leia', '123456', '1999-01-01', 'leiaorgana', 'password', NULL, 6, 'F', 5),
-        (7, 'Calrissian', 'Lando', '123456', '1999-01-01', 'landocalrissian', 'password', NULL, 7, 'M', 5),
-        (8, 'Chewbacca', 'Chewie', '123456', '1999-01-01', 'chewbacca', 'password', NULL, 8, 'M', 5),
-        (9, 'Fett', 'Boba', '123456', '1999-01-01', 'bobafett', 'password', NULL, 9, 'M', 5),
-        (10, 'Maul', 'Darth', '123456', '1999-01-01', 'darthmaul', 'password', NULL, 10, 'M', 5);
+        (7, 'Calrissian', 'Lando', '123456', '1999-01-01', 'landocalrissian', 'password', NULL, 7, 'H', 5),
+        (8, 'Chewbacca', 'Chewie', '123456', '1999-01-01', 'chewbacca', 'password', NULL, 8, 'H', 5),
+        (9, 'Fett', 'Boba', '123456', '1999-01-01', 'bobafett', 'password', NULL, 9, 'H', 5),
+        (10, 'Maul', 'Darth', '123456', '1999-01-01', 'darthmaul', 'password', NULL, 10, 'H', 5),
+        (11, 'Lechopier','Christophe', '123456', '1999-01-01', 'christophe', 'lechopier', NULL, 13, 'H', 5),
+        (12, 'Fofana','Abdoulahi', '123456', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5),
+        (13, 'Merit','Juliann', '123456', '1999-01-01', 'juliann', 'merit', NULL, 13, 'H', 5),
+        (14, 'Chedeville','Baptiste', '123456', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5),
+        (15, 'Elkasmi','Hajar', '123456', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5),
+        (16, 'Doe', 'Jane', '123456', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5);
 
 INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (1,'3 Quai Saint-Bernard 75005 Paris','Salle d''escrime de Paris quai de seine'),
@@ -70,7 +76,7 @@ INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (13,'25 Rue Lucien Joubert, 41000 Blois','Salle d''escrime de Blois');
 
 INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCompetition, idArme, idCategorie, idLieu, dateFinInscription, coefficientCompetition) values
-        (1,'Championnat de France', '2023-03-15', 'hiver', 2, 2, 1, '2023-03-01', 0.8),
+        (1,'Championnat de France', '2023-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
         (2,'Competition de Blois', '2023-02-20', 'été', 3, 3, 13, '2023-02-10', 0.6),
         (3,'Competition de Lyon', '2023-02-25', 'automne', 1, 2, 2, '2023-02-15', 0.7),
         (4,'Competition de Marseille', '2023-03-01', 'hiver', 2, 3, 3, '2023-02-20', 0.9),
@@ -124,6 +130,7 @@ INSERT INTO POULE(idPoule) VALUES
         (13),
         (14);
 
+
 INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch) VALUES
         (1, 1, 2, 1, 10, '10:20:00'),
         (2, 3, 4, 1, 2, '23:00:00'),
@@ -134,6 +141,9 @@ INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heur
         (7, 2, 4, 2, 7, '20:30:00'),
         (8, 5, 7, 2, 8, '11:00:00'),
         (9, 6, 8, 2, 9, '12:45:00');
+
+
+INSERT INTO
 
 
 
