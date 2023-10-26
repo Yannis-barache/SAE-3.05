@@ -133,7 +133,7 @@ INSERT INTO POULE(idPoule) VALUES
 
 
 INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch, fini) VALUES
-        (1, 1, 2, 1, 10, '10:20:00',true),
+        (1, 1, 2, 1, 10, '10:20:00',false),
         (2, 3, 4, 1, 2, '23:00:00',false),
         (3, 5, 6, 1, 3, '08:20:00',false),
         (4, 7, 8, 1, 4, '10:34:00',true),
