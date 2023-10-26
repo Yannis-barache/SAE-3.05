@@ -132,19 +132,16 @@ INSERT INTO POULE(idPoule) VALUES
         (14);
 
 
-INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch) VALUES
-        (1, 1, 2, 1, 10, '10:20:00'),
-        (2, 3, 4, 1, 2, '23:00:00'),
-        (3, 5, 6, 1, 3, '08:20:00'),
-        (4, 7, 8, 1, 4, '10:34:00'),
-        (5, 9, 10, 1, 5, '16:21:00'),
-        (6, 1, 3, 2, 6, '09:00:00'),
-        (7, 2, 4, 2, 7, '20:30:00'),
-        (8, 5, 7, 2, 8, '11:00:00'),
-        (9, 6, 8, 2, 9, '12:45:00');
-
-
-INSERT INTO
+INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch, fini) VALUES
+        (1, 1, 2, 1, 10, '10:20:00',true),
+        (2, 3, 4, 1, 2, '23:00:00',false),
+        (3, 5, 6, 1, 3, '08:20:00',false),
+        (4, 7, 8, 1, 4, '10:34:00',true),
+        (5, 9, 10, 1, 5, '16:21:00',true),
+        (6, 1, 3, 2, 6, '09:00:00',false),
+        (7, 2, 4, 2, 7, '20:30:00',true),
+        (8, 5, 7, 2, 8, '11:00:00',true),
+        (9, 6, 8, 2, 9, '12:45:00',false);
 
 
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES

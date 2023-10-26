@@ -106,6 +106,7 @@ CREATE TABLE MATCHS(
     idPhase INT(10) NOT NULL,
     idArbitre INT(10) NOT NULL,
     heureMatch TIME,
+    fini boolean,
     PRIMARY KEY (idMatch),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
