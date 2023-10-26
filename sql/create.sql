@@ -284,6 +284,14 @@ begin
     end if;
 end |
 
+-- Trigger qui bloque l'ajout d'une touche dans un match fini
+CREATE OR REPLACE trigger match_fini before insert on TOUCHE
+for each row
+begin
+    if (select fini from MATCHS where idMatch=new.idMatch) = true then
+        signal sqlstate '45000' set message_text = 'Le match est fini vous ne pouvez pas ajouter de touche';
+    end if;
+end |
 
 -- PROCEDURE
 
@@ -308,8 +316,8 @@ delimiter ;
 delimiter |
 CREATE OR REPLACE procedure ajoute_touche(IN idMatchA int, IN idEscrimeurA int)
 begin
-    declare nbToucheMax int;
-    set nbToucheMax= (select count(*) from TOUCHE where idMatch=idMatchA and idEscrimeur=idEscrimeurA);
-    insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatch,idEscrimeur,nbToucheMax+1);
+    declare nbTouche int;
+    set nbTouche= (select count(*) from TOUCHE where idMatch=idMatchA);
+    insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatchA,idEscrimeurA,nbTouche+1);
 end |
 delimiter ;
