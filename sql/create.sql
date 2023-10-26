@@ -253,57 +253,7 @@ begin
 end |
 delimiter ;
 
-
-DELIMITER |
-CREATE OR REPLACE FUNCTION CalculerClassementProvisoire(
-    escrimeur_id INT,
-    phase_id INT
-)
-RETURNS INT
-BEGIN
-    DECLARE victoires INT;
-    DECLARE touches_donnes INT;
-    DECLARE touches_recues INT;
-    DECLARE indice INT;
-
-    -- Calculer le nombre de victoires de l'escrimeur dans la phase
-    SET victoires = (SELECT COUNT(*) FROM MATCHS natural join TOUCHE WHERE (idEscrimeur1 = escrimeur_id OR idEscrimeur2 = escrimeur_id) AND idPhase = phase_id AND numTouche = 15);
-
-    -- Calculer les touches données et reçues par l'escrimeur dans la phase
-    SET touches_donnes = (SELECT COUNT(*) FROM TOUCHE WHERE idEscrimeur = escrimeur_id AND idMatch IN (SELECT idMatch FROM MATCHS WHERE idPhase = phase_id));
-    SET touches_recues = (SELECT COUNT(*) FROM TOUCHE WHERE idMatch IN (SELECT idMatch FROM MATCHS WHERE idPhase = phase_id) AND idEscrimeur <> escrimeur_id);
-
-    -- Calculer l'indice
-    SET indice = touches_donnes - touches_recues;
-
-    -- Calculer le classement provisoire
-    SET @classement_provisoire = (victoires * 3) + (CASE WHEN indice > 0 THEN 2 ELSE 0 END);
-
-    RETURN @classement_provisoire;
-END|
-DELIMITER ;
-
-
-DELIMITER |
-CREATE OR REPLACE trigger tireur_pasarbitre before insert on MATCHS
-for each row
-BEGIN
-    if (select count(*) from MATCHS where new.idEscrimeur1=new.idArbitre or new.idEscrimeur2=new.idArbitre) > 0 then
-        signal sqlstate '45000' set message_text = 'Un tireur ne peut pas arbitrer un match';
-    end if;
-END|
-DELIMITER ;
-
-delimiter |
-CREATE OR REPLACE trigger num_licence before insert on ESCRIMEUR
-for each row
-begin
-    if (select count(*) from ESCRIMEUR where licence = new.licence) > 0 then
-        signal sqlstate '45000' set message_text = 'La licence appartient à quelqu''un d''autre';
-    end if;
-end |
-delimiter ;
-
+-- Procedure pour permettre d'ajouter une touche a la table TOUCHE
 delimiter |
 CREATE OR REPLACE procedure ajoute_touche(in idMatch int, in idEscrimeur int)
 begin
@@ -315,50 +265,3 @@ begin
     insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatch,idEscrimeur,nbToucheMax+1);
 end |
 delimiter ;
-
-
--- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que tireur
--- DELIMITER |
--- CREATE OR REPLACE FUNCTION getCompetitionsTireur(escrimeur_id INT) RETURNS VARCHAR(1000)
--- BEGIN
---     DECLARE competitions VARCHAR(1000) DEFAULT '';
---     DECLARE competition_id INT;
---     DECLARE done INT DEFAULT FALSE;
---     DECLARE inscription CURSOR FOR SELECT idCompetition FROM INSCRIRE WHERE idEscrimeur = escrimeur_id;
---     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
---     OPEN inscription;
---     while not done do
---         FETCH inscription INTO competition_id;
---         IF NOT done THEN
---             SET competitions = CONCAT(competitions, competition_id, ' \n');
---         END IF;
---     end while;
---     close inscription;
---     select competitions;
--- END|
--- DELIMITER ;
-
--- -- Fonction qui renvoie l'id des compétitions auquel un escrimeur s'est inscrit en tant que arbitre
--- DELIMITER |
--- CREATE OR REPLACE FUNCTION getCompetitionsArbitre(escrimeur_id INT) RETURNS VARCHAR(1000)
--- begin
---     DECLARE competitions VARCHAR(1000) DEFAULT '';
---     DECLARE competition_id INT;
---     DECLARE done boolean DEFAULT FALSE;
---     DECLARE inscription CURSOR FOR SELECT idCompetition FROM ARBITRER WHERE idEscrimeur = escrimeur_id;
---     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
---     OPEN inscription;
---     while not done do
---         FETCH inscription INTO competition_id;
---         IF NOT done THEN
---             SET competitions = CONCAT(competitions, competition_id, '\n');
---         END IF;
---     end while;
---     close inscription;
---     select competitions;
--- end |
--- DELIMITER ;
-
-
-
