@@ -146,4 +146,20 @@ INSERT INTO MATCHS(idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heur
 INSERT INTO
 
 
+INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
+        (1,1),
+        (1,2),
+        (1,3);
 
+
+INSERT INTO ARBITRER(idEscrimeur, idCompetition) VALUES
+        (1,4),
+        (1,5),
+        (1,6),
+        (3,1),
+        (3,2),
+        (3,3),
+        (3,4),
+        (3,5),
+        (3,6),
+        (4,1);

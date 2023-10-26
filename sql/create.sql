@@ -298,7 +298,7 @@ CREATE OR REPLACE trigger num_licence before insert on ESCRIMEUR
 for each row
 begin
     if (select count(*) from ESCRIMEUR where licence = new.licence) > 0 then
-        signal sqlstate '45000' set message_text = 'La licence est appartient à quelqu''un d''autre';
+        signal sqlstate '45000' set message_text = 'La licence appartient à quelqu''un d''autre';
     end if;
 end |
 delimiter ;
