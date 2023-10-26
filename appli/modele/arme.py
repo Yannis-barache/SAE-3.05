@@ -74,4 +74,4 @@ class Arme:
         Returns:
             str: informations de l'arme
         """
-        return f"{self.__id} - {self.__nom} - {self.__sexe}"
+        return f"Arme : {self.__id} - {self.__nom} - {self.__sexe} |"

@@ -207,6 +207,6 @@ class Competition:
         Returns:
             str: informations de la competition
         """
-        return f"Competition: {self.__id}, {self.__nom}, {self.__date}, " \
+        return f"Competition : {self.__id}, {self.__nom}, {self.__date}, " \
         f"{self.__date_fin_inscription}, {self.__saison}, {self.__lieu}, " \
-        f"{self.__arme}, {self.__categorie}"
+        f"{self.__arme}, {self.__categorie} |"

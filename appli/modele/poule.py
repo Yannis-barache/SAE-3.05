@@ -30,4 +30,4 @@ class Poule:
         self.__id = id_poule
 
     def __str__(self):
-        return f'{self.__id}'
+        return f'Poule : {self.__id} |'
