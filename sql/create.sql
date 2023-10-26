@@ -135,6 +135,7 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
+-- TRIGGER
 
 -- TRIGGER qui va permettre de na pas ajouter dans phase_finale un id de phase déjà présent dans poule
 delimiter |
@@ -212,10 +213,11 @@ CREATE OR REPLACE trigger meme_categorie before insert on INSCRIRE
 for each row
 begin
     if (select idCategorie from ESCRIMEUR where idEscrimeur = new.idEscrimeur) < (select idCategorie from COMPETITION where idCompetition = new.idCompetition) then
-        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à sa catégorie';
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui une catégorie moins elevée que la sienne';
     end if;
 end |
 
+-- Trigger permettant une insertion seulement si l'escrimeur peut arbitrer
 delimiter |
 create or replace trigger peut_arbitrer before insert on ARBITRER
 for each row
@@ -225,7 +227,7 @@ begin
     end if;
 end |
 
-
+-- Trigger permettant une insertion seulement si le joueur est dans le match
 delimiter |
 create or replace trigger est_dans_match before insert on TOUCHE
 for each row
@@ -235,6 +237,47 @@ begin
     end if;
 end |
 
+-- Trigger qui bloque l'inscription d'un arbitre dans un match si il est déjà inscrit en tant qu'arbitre dans ce match
+DELIMITER |
+CREATE OR REPLACE trigger tireur_pasarbitre before insert on MATCHS
+for each row
+BEGIN
+    if (select count(*) from MATCHS where new.idEscrimeur1=new.idArbitre or new.idEscrimeur2=new.idArbitre) > 0 then
+        signal sqlstate '45000' set message_text = 'Un tireur ne peut pas arbitrer un match';
+    end if;
+END|
+DELIMITER ;
+
+-- Trigger qui permet de pas avoir de duplicat de licence
+delimiter |
+CREATE OR REPLACE trigger num_licence before insert on ESCRIMEUR
+for each row
+begin
+    if (select count(*) from ESCRIMEUR where licence = new.licence) > 0 then
+        signal sqlstate '45000' set message_text = 'La licence appartient à quelqu''un d''autre';
+    end if;
+end |
+delimiter ;
+
+-- Trigger qui permet de mettre à jour le match quand il est fini
+delimiter |
+CREATE OR REPLACE trigger update_fini after insert on TOUCHE
+for each row
+begin
+    declare nbTouchePhase int;
+    if ((select count(*) from MATCHS natural join PHASE natural join POULE)>0) then
+        set nbTouchePhase= 5;
+    else
+        set nbTouchePhase= 15;
+    end if;
+
+    if ((select count(*) from TOUCHE where idMatch=new.idMatch and idEscrimeur=new.idEscrimeur)=nbTouchePhase) then
+        update MATCHS set fini=true where idMatch=new.idMatch;
+    end if;
+end |
+
+
+-- PROCEDURE
 
 
 -- Procédure qui permet de créer une poule à partir d'une phase
@@ -255,13 +298,10 @@ delimiter ;
 
 -- Procedure pour permettre d'ajouter une touche a la table TOUCHE
 delimiter |
-CREATE OR REPLACE procedure ajoute_touche(in idMatch int, in idEscrimeur int)
+CREATE OR REPLACE procedure ajoute_touche(idMatchA int, idEscrimeurA int)
 begin
     declare nbToucheMax int;
-    set nbToucheMax= (select max(numTouche) from TOUCHE where idMatch=idMatch and idEscrimeur=idEscrimeur);
-    if nbToucheMax is null then
-        set nbToucheMax=0;
-    end if;
+    set nbToucheMax= (select count(*) from TOUCHE where idMatch=idMatchA and idEscrimeur=idEscrimeurA);
     insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatch,idEscrimeur,nbToucheMax+1);
 end |
 delimiter ;
