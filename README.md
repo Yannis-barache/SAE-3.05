@@ -127,8 +127,10 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 
 ### Hajar :
+- J'ai realisé l'enumeration  des fonctionnalité attendu sur l'application
+- J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil ..
+- Je travaille actuellemnt sur la realisation des pages HTML en Flask et du CSS
 
-TODO : Ajoute ce que tu as fait
 
 ### Juliann :
 
