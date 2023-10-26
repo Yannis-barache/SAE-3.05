@@ -42,23 +42,23 @@ INSERT INTO ORGANISATEUR(idOrganisateur, nomOrganisateur, prenomOrganisateur, ad
         (6,'LECHOPIER','Christophe','christophe.lechopier@univ-orleans.fr','christophe','lechopier');
 
 
-INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, idClub, sexeEscrimeur, idCategorie) values
-        (1,'Barache', 'Yannis', '123456', '2004-09-30', 'yannis', 'barache', NULL, 1, 'H', 4),
-        (2, 'Doe', 'John', '123456', '1999-01-01', 'johndoe', 'password', NULL, 2, 'H', 5),
-        (3, 'Dark', 'Vador', '123456', '1999-01-01', 'etoile', 'noire', NULL, 3, 'H', 5),
-        (4, 'Skywalker', 'Luke', '123456', '1999-01-01', 'etoile', 'claire', NULL, 4, 'H', 5),
-        (5, 'Solo', 'Han', '123456', '1999-01-01', 'hansolo', 'password', NULL, 5, 'H', 5),
-        (6, 'Organa', 'Leia', '123456', '1999-01-01', 'leiaorgana', 'password', NULL, 6, 'F', 5),
-        (7, 'Calrissian', 'Lando', '123456', '1999-01-01', 'landocalrissian', 'password', NULL, 7, 'H', 5),
-        (8, 'Chewbacca', 'Chewie', '123456', '1999-01-01', 'chewbacca', 'password', NULL, 8, 'H', 5),
-        (9, 'Fett', 'Boba', '123456', '1999-01-01', 'bobafett', 'password', NULL, 9, 'H', 5),
-        (10, 'Maul', 'Darth', '123456', '1999-01-01', 'darthmaul', 'password', NULL, 10, 'H', 5),
-        (11, 'Lechopier','Christophe', '123456', '1999-01-01', 'christophe', 'lechopier', NULL, 13, 'H', 5),
-        (12, 'Fofana','Abdoulahi', '123456', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5),
-        (13, 'Merit','Juliann', '123456', '1999-01-01', 'juliann', 'merit', NULL, 13, 'H', 5),
-        (14, 'Chedeville','Baptiste', '123456', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5),
-        (15, 'Elkasmi','Hajar', '123456', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5),
-        (16, 'Doe', 'Jane', '123456', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5);
+INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, idClub, sexeEscrimeur, idCategorie, arbitrage) values
+        (1,'Barache', 'Yannis', '123456', '2004-09-30', 'yannis', 'barache', NULL, 1, 'H', 4, true),
+        (2, 'Doe', 'John', '123456', '1999-01-01', 'johndoe', 'password', NULL, 2, 'H', 5, false),
+        (3, 'Dark', 'Vador', '123456', '1999-01-01', 'etoile', 'noire', NULL, 3, 'H', 5, true),
+        (4, 'Skywalker', 'Luke', '123456', '1999-01-01', 'etoile', 'claire', NULL, 4, 'H', 5, true),
+        (5, 'Solo', 'Han', '123456', '1999-01-01', 'hansolo', 'password', NULL, 5, 'H', 5, true),
+        (6, 'Organa', 'Leia', '123456', '1999-01-01', 'leiaorgana', 'password', NULL, 6, 'F', 5, true),
+        (7, 'Calrissian', 'Lando', '123456', '1999-01-01', 'landocalrissian', 'password', NULL, 7, 'H', 5, false),
+        (8, 'Chewbacca', 'Chewie', '123456', '1999-01-01', 'chewbacca', 'password', NULL, 8, 'H', 5, true),
+        (9, 'Fett', 'Boba', '123456', '1999-01-01', 'bobafett', 'password', NULL, 9, 'H', 5, false),
+        (10, 'Maul', 'Darth', '123456', '1999-01-01', 'darthmaul', 'password', NULL, 10, 'H', 5, true),
+        (11, 'Lechopier','Christophe', '123456', '1999-01-01', 'christophe', 'lechopier', NULL, 13, 'H', 5, true),
+        (12, 'Fofana','Abdoulahi', '123456', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5, true),
+        (13, 'Merit','Juliann', '123456', '1999-01-01', 'juliann', 'merit', NULL, 13, 'H', 5, false),
+        (14, 'Chedeville','Baptiste', '123456', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5, true),
+        (15, 'Elkasmi','Hajar', '123456', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5, false),
+        (16, 'Doe', 'Jane', '123456', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5, false);
 
 INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (1,'3 Quai Saint-Bernard 75005 Paris','Salle d''escrime de Paris quai de seine'),

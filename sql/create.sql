@@ -85,6 +85,7 @@ CREATE TABLE ESCRIMEUR (
     idClub INT(10) NOT NULL,
     sexeEscrimeur VARCHAR(1),
     idCategorie INT(10) NOT NULL,
+    arbitrage BOOLEAN default false,
     PRIMARY KEY (idEscrimeur),
     FOREIGN KEY (idClub) REFERENCES CLUB(idClub),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie)
@@ -211,6 +212,15 @@ for each row
 begin
     if (select idCategorie from ESCRIMEUR where idEscrimeur = new.idEscrimeur) < (select idCategorie from COMPETITION where idCompetition = new.idCompetition) then
         signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas s''inscrire dans une compétition qui ne correspond pas à sa catégorie';
+    end if;
+end |
+
+delimiter |
+create or replace trigger peut_arbitrer before insert on ARBITRER
+for each row
+begin
+    if (select arbitrage from ESCRIMEUR where idEscrimeur = new.idEscrimeur) = false then
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas arbitrer s''il n''est pas arbitre';
     end if;
 end |
 
