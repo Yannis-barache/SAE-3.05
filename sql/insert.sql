@@ -179,5 +179,3 @@ INSERT INTO TOUCHE(idMatch, idEscrimeur, numTouche) VALUES
         (2,3,4),
         (2,4,5),
         (2,3,6);
-
-SELECT * FROM MATCHS where idMatch=1;
