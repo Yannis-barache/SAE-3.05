@@ -1,0 +1,36 @@
+{% extends "base_authentification.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_connexion.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}"> 
+{% endblock %}
+
+
+{% block content %}
+
+<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
+            
+<div class="infoconnecte">
+    <span class="titre"> BIENVENUE </span>
+
+    <span class="petit-titre">Connecte toi ou crée un compte :</span>
+</div>
+
+
+
+<div class="lesboutons">
+    <a href="{{ url_for('inscription') }}"><Button class="b_inscrire">INSCRIPTION</Button></a>
+    
+
+    <div class="ou">
+        <hr>
+        <span>ou</span>
+        <hr>
+    </div>
+
+    <a href="{{ url_for('choisir_statut') }}"><Button class="b_connecter">CONNEXION</Button></a>
+</div>
+
+{% endblock %}

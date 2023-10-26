@@ -7,8 +7,28 @@ def home():
         "home.html"
     )
 
-@app.route("/connexion")
-def connexion():
+@app.route("/connexion_inscription")
+def choose_sign():
     return render_template(
-        "page_connexion.html"
+        "connexion_inscription.html"
     )
+
+
+@app.route("/choisir_statut")
+def choisir_statut():
+    return render_template(
+        "choisir_statut.html"
+    )
+
+
+@app.route("/inscription")
+def inscription():
+    return render_template(
+        "page_inscription.html"
+    )
+
+# @app.route("/connexion")
+# def connexion():
+#     return render_template(
+#         "page_connexion.html"
+#     )
