@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_authentification.html" %}
 
 {% block styles %}
 {{ super() }}
@@ -6,45 +6,31 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/connecter.css')}}"> 
 {% endblock %}
 
-{% block header %}
-
-<a href="#"> &#10006;</a>
-<img class="aide" src="{{ url_for('static', filename='../static/img/Aide.png') }}" alt="aide">
-
-{% endblock %}
 
 {% block content %}
 
-<div class="rec-central">
-        <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
-        
-        <div class="infoconnecte">
-            <span class="titre"> BIENVENUE </span>
-        
-            <span class="petit-titre">Connecte toi ou crée un compte :</span>
-        </div>
-        
-
-
-        <div class="lesbouton">
-            <Button class="b_inscrire">INSCRIPTION</Button>
+<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
             
+<div class="infoconnecte">
+    <span class="titre"> BIENVENUE </span>
 
-            <div class="ou">
-                <hr>
-                <span>ou</span>
-                <hr>
-
-            </div>
-
-
-            
-
-            <Button class="b_connecter">CONNEXION</Button>
-        </div>
-
-
-
+    <span class="petit-titre">Connecte toi ou crée un compte :</span>
 </div>
+
+
+
+<div class="lesbouton">
+    <Button class="b_inscrire">INSCRIPTION</Button>
+    
+
+    <div class="ou">
+        <hr>
+        <span>ou</span>
+        <hr>
+
+    </div>
+
+
+    <Button class="b_connecter">CONNEXION</Button>
 
 {% endblock %}

@@ -24,9 +24,7 @@ a{
 }
 
 body{
-    background: url(../img/asize.jpg) no-repeat center center fixed; 
-
-
+    background: url(../img/background_left.png) no-repeat left, url(../img/background_droite.png) no-repeat right bottom; 
 }
 
 
@@ -44,3 +42,7 @@ body{
       content:"\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
       text-decoration:line-through;
   }
+
+footer{
+    display: none;
+}

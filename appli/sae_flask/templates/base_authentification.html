@@ -12,14 +12,16 @@
 <body>
 
     <header>
-        {% block header %}
-        {% endblock %}
+        <a href="#"> &#10006;</a>
+        <img class="aide" src="{{ url_for('static', filename='../static/img/Aide.png') }}" alt="aide">
     </header>
     <main>
-        {% block content %}
-        {% endblock %}
+        <div class="rec-central">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
     </main>
-    
 
 </body>
 </html>
