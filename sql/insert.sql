@@ -161,3 +161,23 @@ INSERT INTO ARBITRER(idEscrimeur, idCompetition) VALUES
         (3,5),
         (3,6),
         (4,1);
+
+
+INSERT INTO TOUCHE(idMatch, idEscrimeur, numTouche) VALUES
+        (1,1,1),
+        (1,2,2),
+        (1,1,3),
+        (1,2,4),
+        (1,1,5),
+        (1,2,6),
+        (1,1,7),
+        (1,2,8),
+        (1,1,9),
+        (2,4,1),
+        (2,3,2),
+        (2,4,3),
+        (2,3,4),
+        (2,4,5),
+        (2,3,6);
+
+SELECT * FROM MATCHS where idMatch=1;
