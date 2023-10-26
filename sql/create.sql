@@ -225,6 +225,16 @@ begin
 end |
 
 
+delimiter |
+create or replace trigger est_dans_match before insert on TOUCHE
+for each row
+begin
+    if (select count(*) from MATCHS where idMatch = new.idMatch and (idEscrimeur1 = new.idEscrimeur or idEscrimeur2 = new.idEscrimeur)) = 0 then
+        signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas toucher dans un match où il n''est pas';
+    end if;
+end |
+
+
 
 -- Procédure qui permet de créer une poule à partir d'une phase
 delimiter |
