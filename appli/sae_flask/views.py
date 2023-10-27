@@ -14,12 +14,17 @@ def choose_sign():
     )
 
 
-@app.route("/choisir_statut")
-def choisir_statut():
+@app.route("/choisir_statut_connexion", methods=["GET", "POST"])
+def choisir_statut_connexion():
     return render_template(
-        "choisir_statut.html"
+        "choisir_statut_connexion.html"
     )
 
+@app.route("/choisir_statut_inscription")
+def choisir_statut_inscription():
+    return render_template(
+        "choisir_statut_inscription.html"
+    )
 
 @app.route("/inscription")
 def inscription():
@@ -27,8 +32,6 @@ def inscription():
         "page_inscription.html"
     )
 
-# @app.route("/connexion")
-# def connexion():
-#     return render_template(
-#         "page_connexion.html"
-#     )
+@app.route("/connexion/<nom>")
+def connexion(nom):
+    return render_template("page_connexion.html", nom=nom)
