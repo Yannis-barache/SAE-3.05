@@ -29,7 +29,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -41,7 +41,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -53,7 +53,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -65,7 +65,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -77,7 +77,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -89,7 +89,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -101,7 +101,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -113,7 +113,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -125,7 +125,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -137,7 +137,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2005',
                                   '14-05-2005', 'hiver', lieu, arme, categorie,
                                   0.5)
@@ -149,7 +149,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -162,7 +162,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -175,7 +175,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -188,7 +188,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -201,7 +201,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -215,7 +215,7 @@ class TestCompetition(unittest.TestCase):
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         lieu2 = Lieu(2, 'Une grande ville', 'Lyon France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -228,8 +228,8 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(1, 'U17')
-        arme = Arme(1, 'Epée Homme')
-        arme2 = Arme(2, 'Epée Femme')
+        arme = Arme(1, 'Epée Homme', 'M')
+        arme2 = Arme(2, 'Epée Femme', 'F')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -242,7 +242,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
@@ -255,7 +255,7 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2005',
                                   '14-05-2005', 'hiver', lieu, arme, categorie,
                                   0.5)
@@ -268,11 +268,12 @@ class TestCompetition(unittest.TestCase):
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
-        arme = Arme(1, 'Epée Homme')
+        arme = Arme(1, 'Epée Homme', 'M')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
                                   '14-05-2004', 'été', lieu, arme, categorie,
                                   0.5)
-        self.assertEqual(
-            str(competition),
-            'Competition: 1, Escrime comp, 14-05-2004, 14-05-2004, été, '
-            'Une grande ville Paris France 1, 1 - Epée Homme, 2 - U20')
+        sortie = (
+            'Competition : 1, Escrime comp, 14-05-2004, 14-05-2004, été, '
+            'Lieu : Une grande ville Paris France 1 |, Arme : 1 - '
+            'Epée Homme - M |, Catégorie : 2 - U20 | |')
+        self.assertEqual(str(competition), sortie)

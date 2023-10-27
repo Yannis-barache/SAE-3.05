@@ -74,4 +74,5 @@ class Lieu:
         Returns:
             str: informations de la categorie
         """
-        return "Lieu : "+self.__description + " " + self.__adresse + " " + str(self.__id) + " |"
+        return "Lieu : " + self.__description + " " + self.__adresse + " " + str(
+            self.__id) + " |"

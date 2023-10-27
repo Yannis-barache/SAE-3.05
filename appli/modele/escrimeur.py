@@ -251,7 +251,9 @@ class Escrimeur:
         Returns:
             str: informations de l'escrimeur
         """
-        return f'Escrimeur : {self.__id} - {self.__nom} - {self.__prenom} - {self.__date_naissance} - ' \
+        return f'Escrimeur : {self.__id} - {self.__nom} - {self.__prenom} - ' \
+            f'{self.__date_naissance} - ' \
             f'{self.__nom_utilisateur} - {self.__mdp} - ' \
-            f'{self.__licence} - {self.__classement} - {self.__club} - {self.__categorie}' \
+            f'{self.__licence} - {self.__classement} - '\
+            f'{self.__club} - {self.__categorie}' \
             f' - {self.__arbitrage} |'

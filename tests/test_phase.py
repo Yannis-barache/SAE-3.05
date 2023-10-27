@@ -62,4 +62,4 @@ class TestPhase(unittest.TestCase):
         Test de la fonction __str__ de la classe Phase
         """
         phase = Phase(1, 1)
-        self.assertEqual(str(phase), '1 - 1')
+        self.assertEqual(str(phase), 'Phase : 1 - 1 |')

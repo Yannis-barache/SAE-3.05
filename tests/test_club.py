@@ -89,4 +89,4 @@ class TestClub(unittest.TestCase):
         Test de la fonction __str__ de la classe Club
         """
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
-        self.assertEqual(str(club), '1 - Club 1 - Adresse 1')
+        self.assertEqual(str(club), 'Club : 1 - Club 1 - Adresse 1 - mdp |')

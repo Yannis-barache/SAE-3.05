@@ -92,4 +92,5 @@ class Organisateur:
     def __str__(self):
         return (
             f'Organisateur : {self.__id} - {self.__nom} - {self.__prenom} - '
-            f'{self.__adresse_mail} - {self.__mdp} - {self.__nom_utilisateur} |')
+            f'{self.__adresse_mail} - {self.__mdp} - {self.__nom_utilisateur} |'
+        )

@@ -50,7 +50,6 @@ class ConnexionBD:
             print(err)
             raise err
 
-
     def get_connexion(self):
         return self.__connexion
 

@@ -31,12 +31,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         self.assertIsInstance(touche, Touche)
 
@@ -47,12 +48,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_match(), match)
 
@@ -63,12 +65,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_escrimeur(), escrimeur1)
 
@@ -79,12 +82,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_numero(), 1)
 
@@ -95,13 +99,14 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
-        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         touche.set_match(match2)
         self.assertEqual(touche.get_match(), match2)
@@ -113,12 +118,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         touche.set_escrimeur(escrimeur2)
         self.assertEqual(touche.get_escrimeur(), escrimeur2)
@@ -130,12 +136,13 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
         touche.set_numero(2)
         self.assertEqual(touche.get_numero(), 2)
@@ -147,18 +154,25 @@ class TestTouche(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0)
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         touche = Touche(match, escrimeur1, 1)
-        self.assertEqual(
-            str(touche),
-            '1 - 1 - 1 - Chédeville - Baptiste - 2004-14-05 - baptched - '
-            'mdp - AB21 - 1 - 1 - Club 1 - Adresse 1 - '
-            '1 - U19 - 2 - Evelin - Colomban - 2004-14-05 - clb - '
-            'mdp - AB11 - 2 - 1 - Club 1 - Adresse 1 - '
-            '1 - U19 - 1 - Chédeville - Baptiste - 2004-14-05 - baptched - '
-            'mdp - AB21 - 1 - 1 - Club 1 - Adresse 1 - 1 - U19 - 1')
+        sortie = (
+            'Touche : Match : 1 - 1 - Escrimeur : 1 - Chédeville - Baptiste - '
+            '2004-14-05 - '
+            'baptched - mdp - AB21 - 1 - Club : 1 - Club 1 - Adresse 1 - mdp | - '
+            'Catégorie : 1 - U19 | - False | - '
+            'Escrimeur : 2 - Evelin - Colomban - 2004-14-05 - clb - mdp - AB11 - 2 - Club : '
+            '1 - Club 1 - Adresse 1 - mdp | - Catégorie : 1 - U19 | - False | - '
+            'Escrimeur : 3 - Dubois - Yann - 2004-14-05 - yannou - mdp - AB01 - 3 - Club : 1 - '
+            'Club 1 - Adresse 1 - mdp | - Catégorie : 1 - U19 | - True | - '
+            '10.0 - False| - Escrimeur : 1 - Chédeville - Baptiste - '
+            '2004-14-05 - baptched - mdp - '
+            'AB21 - 1 - Club : 1 - Club 1 - Adresse 1 - mdp | - Catégorie : '
+            '1 - U19 | - False | - 1  |')
+        self.assertEqual(str(touche), sortie)

@@ -148,6 +148,7 @@ class Match:
         self.__fini = fini
 
     def __str__(self):
-        return (f'Match : {self.__id} - {self.__id_phase} - {self.__escrimeur1} - '
-                f'{self.__escrimeur2} - {self.__arbitre} - {self.__heure} - '
-                f'{self.__fini}|')
+        return (
+            f'Match : {self.__id} - {self.__id_phase} - {self.__escrimeur1} - '
+            f'{self.__escrimeur2} - {self.__arbitre} - {self.__heure} - '
+            f'{self.__fini}|')

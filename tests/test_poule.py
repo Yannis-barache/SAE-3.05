@@ -47,4 +47,4 @@ class TestPoule(unittest.TestCase):
         Test de la fonction __str__ de la classe Poule
         """
         poule = Poule(1)
-        self.assertEqual(str(poule), '1')
+        self.assertEqual(str(poule), 'Poule : 1 |')
