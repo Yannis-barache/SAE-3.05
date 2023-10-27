@@ -2,8 +2,8 @@
 Module contenant la classe Touche
 """
 
-from match import Match
-from escrimeur import Escrimeur
+from appli.modele.match import Match
+from appli.modele.escrimeur import Escrimeur
 
 
 class Touche:
@@ -77,4 +77,4 @@ class Touche:
         Returns:
             str: Les informations de la touche
         """
-        return f"{self.__match} - {self.__escrimeur} - {self.__numero}"
+        return f"Touche : {self.__match} - {self.__escrimeur} - {self.__numero}  |"

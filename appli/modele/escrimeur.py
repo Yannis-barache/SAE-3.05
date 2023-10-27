@@ -2,8 +2,8 @@
 Module contenant la classe Escrimeur
 """
 
-from club import Club
-from categorie import Categorie
+from appli.modele.club import Club
+from appli.modele.categorie import Categorie
 
 
 class Escrimeur:
@@ -14,7 +14,7 @@ class Escrimeur:
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, mdp: str,
                  licence: str, classement: int | None, club: Club,
-                 categorie: Categorie):
+                 categorie: Categorie, arbitrage: bool):
         self.__id = id_escrim
         self.__nom = nom
         self.__prenom = prenom
@@ -26,6 +26,7 @@ class Escrimeur:
         self.__classement = classement
         self.__club = club
         self.__categorie = categorie
+        self.__arbitrage = arbitrage
 
     def get_id(self) -> int:
         """
@@ -126,12 +127,21 @@ class Escrimeur:
         """
         return self.__categorie
 
+    def get_arbitrage(self) -> bool:
+        """
+        Fonction qui retourne l'arbitrage de l'escrimeur
+
+        Returns:
+            bool: arbitrage de l'escrimeur
+        """
+        return self.__arbitrage
+
     def set_id(self, id_escrim: int) -> None:
         """
         Fonction qui modifie l'id de l'escrimeur
 
         Args:
-            id (int): id de l'escrimeur
+            id_escrim (int): id de l'escrimeur
         """
         self.__id = id_escrim
 
@@ -198,7 +208,7 @@ class Escrimeur:
         """
         self.__licence = licence
 
-    def set_classement(self, classement: int | None) -> None:
+    def set_classement(self, classement: int) -> None:
         """
         Fonction qui modifie le classement de l'escrimeur
 
@@ -225,6 +235,31 @@ class Escrimeur:
         """
         self.__categorie = categorie
 
+    def __lt__(self, autre: 'Escrimeur') -> bool:
+        """
+        Fonction qui compare le classement de l'escrimeur avec un autre
+
+        Args:
+            autre (Escrimeur): autre escrimeur
+
+        Returns:
+            bool: True si le classement de l'escrimeur est inferieur a celui de l'autre, False sinon
+        """
+        if self.__classement is None:
+            return False
+        if autre.__classement is None:
+            return True
+        return self.__classement < autre.__classement
+
+    def set_arbitrage(self, arbitrage: bool) -> None:
+        """
+        Fonction qui modifie l'arbitrage de l'escrimeur
+
+        Args:
+            arbitrage (bool): arbitrage de l'escrimeur
+        """
+        self.__arbitrage = arbitrage
+
     def __str__(self) -> str:
         """
         Fonction qui retourne une chaine de caractere contenant les informations de l'escrimeur
@@ -232,6 +267,9 @@ class Escrimeur:
         Returns:
             str: informations de l'escrimeur
         """
-        return f'{self.__id} - {self.__nom} - {self.__prenom} - {self.__date_naissance} - ' \
-                f'{self.__nom_utilisateur} - {self.__mdp} - ' \
-                f'{self.__licence} - {self.__classement} - {self.__club} - {self.__categorie}'
+        return f'Escrimeur : {self.__id} - {self.__nom} - {self.__prenom} - ' \
+            f'{self.__date_naissance} - ' \
+            f'{self.__nom_utilisateur} - {self.__mdp} - ' \
+            f'{self.__licence} - {self.__classement} - '\
+            f'{self.__club} - {self.__categorie}' \
+            f' - {self.__arbitrage} |'

@@ -6,7 +6,7 @@ import sys
 import os
 import unittest
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from club import Club
@@ -89,4 +89,4 @@ class TestClub(unittest.TestCase):
         Test de la fonction __str__ de la classe Club
         """
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
-        self.assertEqual(str(club), '1 - Club 1 - Adresse 1')
+        self.assertEqual(str(club), 'Club : 1 - Club 1 - Adresse 1 - mdp |')
