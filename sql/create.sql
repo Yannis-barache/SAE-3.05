@@ -321,3 +321,11 @@ begin
     insert into TOUCHE(idMatch,idEscrimeur,numTouche) values (idMatchA,idEscrimeurA,nbTouche+1);
 end |
 delimiter ;
+
+
+-- Procure permettant d'ajouter un escrimeur dans la base de données
+delimiter |
+CREATE OR REPLACE procedure ajoute_escrimeur(IN nomEscrimeurA varchar(50), IN licenceA varchar(50), IN prenomEscrimeurA varchar(50), IN dateNaissanceA date, IN nomUtilisateurEscrimeurA varchar(50), IN mdpEscrimeurA varchar(100), IN classementA int, IN idClubA int, IN sexeEscrimeurA varchar(1), IN idCategorieA int, IN arbitrageA boolean)
+begin
+    insert into ESCRIMEUR(nomEscrimeur,licence,prenomEscrimeur,dateNaissance,nomUtilisateurEscrimeur,mdpEscrimeur,classement,idClub,sexeEscrimeur,idCategorie,arbitrage) values (nomEscrimeurA,licenceA,prenomEscrimeurA,dateNaissanceA,nomUtilisateurEscrimeurA,mdpEscrimeurA,classementA,idClubA,sexeEscrimeurA,idCategorieA,arbitrageA);
+end |
