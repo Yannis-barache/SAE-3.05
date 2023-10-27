@@ -141,7 +141,9 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 ### Juliann :
 
-TODO : Ajoute ce que tu as fait
+- J'ai travaillé sur la réalisation du diagramme de cas d'utilisation.
+- J'ai réalisé les diagrammes d'activité.
+- J'ai travaillé sur la création des fichiers des requêtes pour la bd en python.
 
 ### Abdoulahi :
 
