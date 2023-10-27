@@ -293,7 +293,7 @@ class TestCompetition(unittest.TestCase):
         arbitre1 = Escrimeur(11, 'Dupont', 'Jean', 'M', '2004-14-05',
                              'jeanjean', 'mdp', 'AB09', 11, None, None, True)
         arbitre2 = Escrimeur(12, 'Dupont', 'Jean', 'M', '2004-14-05',
-                             'jeanjean', 'mdp', 'AB10', 12, None, None, True)
+                             'jeanjean', 'mdp', 'AB10', 12, None, None, False)
 
         liste_escrimeur = [
             escrimeur1, escrimeur2, escrimeur3, escrimeur4, escrimeur5,
