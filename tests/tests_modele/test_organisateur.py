@@ -6,7 +6,7 @@ import sys
 import os
 import unittest
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from organisateur import Organisateur
@@ -147,7 +147,6 @@ class TestOrganisateur(unittest.TestCase):
         organisateur = Organisateur(1, 'Baptiste', 'Chédeville',
                                     'baptiste.chedevill@gmail.com', 'mdp',
                                     'baptched')
-        self.assertEqual(
-            str(organisateur),
-            '1 - Baptiste - Chédeville - baptiste.chedevill@gmail.com - mdp - baptched'
-        )
+        sortie = ('Organisateur : 1 - Baptiste - Chédeville - '
+                  'baptiste.chedevill@gmail.com - mdp - baptched |')
+        self.assertEqual(str(organisateur), sortie)
