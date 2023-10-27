@@ -132,6 +132,7 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 
 ### Hajar :
+
 - J'ai realisé l'enumeration des fonctionnalités attendues sur l'application
 - J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil.
 - Je travaille actuellement sur la realisation des pages en Flask
@@ -152,5 +153,11 @@ TODO : Ajoute ce que tu as fait
 
 ### Baptiste :
 
-TODO : Ajoute ce que tu as fait
-
+- J'ai travaillé à l'analyse et à la conception de la base de donnée
+- J'ai participé à la réalisation du MCD.
+- J'ai travaillé sur le modele :
+- Implémenté toutes les tables de la base de données en class Python dans le modele
+- Implémenté l'automatisation de la génération des poules et des matchs ainsi que la génération d'un fichier pdf pour une poule
+- Implémentation des tests unitaires pour tester l'ensemble du modele avec un coverage de 100% sur le modèle
+- Implémentation de la liaison entre les classes de la base de données avec le modele
+- Implémentation des tests unitaires pour tester les classes de la base de données avec un coverage de à hauteur de 95%
