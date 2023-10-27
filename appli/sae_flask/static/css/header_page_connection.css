@@ -15,6 +15,9 @@ header{
 a{
     text-decoration: none;
     color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .aide{
@@ -22,6 +25,10 @@ a{
     height: 2%;
     
     /*! width: 10px; */
+}
+
+#logo-header{
+    display: none;
 }
 
 

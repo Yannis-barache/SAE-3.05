@@ -22,7 +22,7 @@ main{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 35px 55px 5px 55px;
+    padding: 35px 55px;
     width: 53vh;
     background-color: #dbdbdb;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -30,12 +30,6 @@ main{
 
 }
 
-.block-logo{
-    display: flex;
-    justify-content: center;
-    width: 29vh;
-    margin-bottom: 3vh;
-}
 
 
 #logo{
@@ -44,9 +38,9 @@ main{
 }
 
 .titre{
-    font-family: Poppins-Bold;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
     font-size: 4vh;
-    font-weight: bold;
     text-shadow: 2px 3px 3px GRAY;
     /* color: #333333; */
     line-height: 1.2;
@@ -112,7 +106,8 @@ button:active {
     justify-content: center;
     font-weight: bold;
     font-size: 2vh;
-    margin-top: 3vh;
+    margin-bottom: 1%;
+    margin-top: 8%;
 }
 
 .leback{
@@ -128,4 +123,11 @@ button:active {
 
     margin-top: 4%;
 
+}
+
+.block-logo{
+    display: flex;
+    justify-content: center;
+    width: 29vh;
+    margin-bottom: 1vh;
 }

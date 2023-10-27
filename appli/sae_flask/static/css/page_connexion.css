@@ -48,8 +48,8 @@
   
   .ou:after,
   .ou:before{
-      content:"\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
-      text-decoration:line-through;
+    content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+    text-decoration: line-through;
   }
 
 
@@ -64,4 +64,16 @@
         background-image: url(../img/background_left.png);
         background-size: 70vh;
     }
+}
+
+@media screen and (max-height : 400px) {
+    .ou:after,
+    .ou:before{
+      content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+      text-decoration: line-through;
+    }
+    .ou>span{
+        margin: 0 2%;
+    }
+    
 }
