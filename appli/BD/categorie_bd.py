@@ -1,15 +1,21 @@
 """
     Fichier qui contient les requêtes SQL pour la table CATEGORIE
 """
-
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.categorie import Categorie
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from categorie import Categorie
 
 
 class CategorieBD:
     """
     Classe CategorieBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -19,7 +25,7 @@ class CategorieBD:
         :return: liste de categorie
         """
         try:
-            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE")
+            query = text('SELECT idCategorie, nomCategorie FROM CATEGORIE')
             result = self.__connexion.execute(query)
             categories = []
             for id_categorie, nom in result:
@@ -36,8 +42,8 @@ class CategorieBD:
         :return: categorie
         """
         try:
-            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE "
-                         "WHERE idCategorie =" + str(id_cat))
+            query = text('SELECT idCategorie, nomCategorie FROM CATEGORIE '
+                         'WHERE idCategorie =' + str(id_cat))
             result = self.__connexion.execute(query)
             for id_categorie, nom in result:
                 return Categorie(id_categorie, nom)

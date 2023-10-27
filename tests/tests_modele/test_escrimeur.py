@@ -6,7 +6,7 @@ import sys
 import os
 import unittest
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from escrimeur import Escrimeur
@@ -116,6 +116,17 @@ class TestEscrimeur(unittest.TestCase):
                               'baptched', 'mdp', 'AB21', 1, club, categorie,
                               False)
         self.assertEqual(escrimeur.get_club(), club)
+
+    def test_get_arbitrage(self):
+        """
+        Test de la fonction get_arbitrage de la classe Escrimeur
+        """
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
+        categorie = Categorie(1, 'U19')
+        escrimeur = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                              'baptched', 'mdp', 'AB21', 1, club, categorie,
+                              False)
+        self.assertFalse(escrimeur.get_arbitrage())
 
     def test_set_id(self):
         """
@@ -250,6 +261,35 @@ class TestEscrimeur(unittest.TestCase):
                               False)
         escrimeur.set_categorie(categorie2)
         self.assertEqual(escrimeur.get_categorie(), categorie2)
+
+    def test_lt(self):
+        """
+        Test de la fonction __lt__ de la classe Escrimeur
+        """
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
+        categorie1 = Categorie(1, 'U19')
+        categorie2 = Categorie(2, 'U20')
+        escrimeur1 = Escrimeur(2, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                               'baptched', 'mdp', 'AB21', 1, club, categorie1,
+                               False)
+        escrimeur2 = Escrimeur(3, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', 2, club, categorie2,
+                               False)
+        escrimeur3 = Escrimeur(4, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', None, club, categorie2,
+                               False)
+        self.assertTrue(escrimeur1 < escrimeur2)
+        self.assertTrue(escrimeur2 < escrimeur3)
+        self.assertFalse(escrimeur3 < escrimeur1)
+
+    def test_set_arbitrage(self):
+        """
+        Test de la fonction set_arbitrage de la classe Escrimeur
+        """
+        escrimeur = Escrimeur(2, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                              'baptched', 'mdp', 'AB21', 1, None, None, False)
+        escrimeur.set_arbitrage(True)
+        self.assertTrue(escrimeur.get_arbitrage())
 
     def test_str(self):
         """

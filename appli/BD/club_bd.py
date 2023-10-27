@@ -2,14 +2,21 @@
     Fichier qui contient les requêtes SQL pour la table Club
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.club import Club
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from club import Club
 
 
 class ClubBD:
     """
     Classe ClubBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -19,7 +26,7 @@ class ClubBD:
         :return: liste de Club
         """
         try:
-            query = text("SELECT idClub, nomClub, adresse, mdpClub FROM CLUB")
+            query = text('SELECT idClub, nomClub, adresse, mdpClub FROM CLUB')
             result = self.__connexion.execute(query)
             clubs = []
             for id_club, nom, adresse, mdp in result:
@@ -36,8 +43,8 @@ class ClubBD:
         :return: club
         """
         try:
-            query = text("SELECT idClub, nomClub, adresse, mdpClub "
-                         "FROM CLUB WHERE idClub =" + str(id_cl))
+            query = text('SELECT idClub, nomClub, adresse, mdpClub '
+                         'FROM CLUB WHERE idClub =' + str(id_cl))
             result = self.__connexion.execute(query)
             for id_club, nom, adresse, mdp in result:
                 return Club(id_club, nom, adresse, mdp)

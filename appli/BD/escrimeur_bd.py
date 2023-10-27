@@ -3,15 +3,22 @@
 """
 
 from sqlalchemy import text
-from appli.modele.escrimeur import Escrimeur
-from appli.BD.club_bd import ClubBD
-from appli.BD.categorie_bd import CategorieBD
+import sys
+import os
+from club_bd import ClubBD
+from categorie_bd import CategorieBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from escrimeur import Escrimeur
 
 
 class EscrimeurBD:
     """
     Classe EscrimeurBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -21,26 +28,25 @@ class EscrimeurBD:
         :return: liste d'escrimeur
         """
         try:
-            query = text("SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, "
-                         "dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, "
-                         "sexeEscrimeur, idClub, idCategorie, arbitrage FROM ESCRIMEUR")
+            query = text(
+                'SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, '
+                'dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, '
+                'sexeEscrimeur, idClub, idCategorie, arbitrage FROM ESCRIMEUR')
             result = self.__connexion.execute(query)
             escrimeurs = []
 
-            for (id_escrimeur, nom, licence, prenom, date_naissance, nom_utilisateur, mdp,
-                 classement, sexe, id_club, id_categorie, arbitrage) in result:
-
-                if arbitrage == 1:
-                    arbitrage = True
-                else:
-                    arbitrage = False
-
+            for (id_escrimeur, nom, licence, prenom, date_naissance,
+                 nom_utilisateur, mdp, classement, sexe, id_club, id_categorie,
+                 arbitrage) in result:
+                arbitrage = arbitrage == 1
                 club = ClubBD(self.__connexion).get_club_by_id(id_club)
-                categorie = CategorieBD(self.__connexion).get_categorie_by_id(id_categorie)
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
 
-                escrimeurs.append(Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
-                                            nom_utilisateur, mdp, licence, classement,
-                                            club, categorie, arbitrage))
+                escrimeurs.append(
+                    Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
+                              nom_utilisateur, mdp, licence, classement, club,
+                              categorie, arbitrage))
             return escrimeurs
         except Exception as e:
             print(e)
@@ -53,26 +59,24 @@ class EscrimeurBD:
         :return: escrimeur
         """
         try:
-            query = text("SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, "
-                         "dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, "
-                         "sexeEscrimeur, idClub, idCategorie, arbitrage "
-                         "FROM ESCRIMEUR WHERE idEscrimeur = " + str(id_e))
+            query = text(
+                'SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, '
+                'dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, '
+                'sexeEscrimeur, idClub, idCategorie, arbitrage '
+                'FROM ESCRIMEUR WHERE idEscrimeur = ' + str(id_e))
             result = self.__connexion.execute(query)
 
-            for (id_escrimeur, nom, licence, prenom, date_naissance, nom_utilisateur,
-                 mdp, classement, sexe, id_club, id_categorie, arbitrage) in result:
-
-                if arbitrage == 1:
-                    arbitrage = True
-                else:
-                    arbitrage = False
-
+            for (id_escrimeur, nom, licence, prenom, date_naissance,
+                 nom_utilisateur, mdp, classement, sexe, id_club, id_categorie,
+                 arbitrage) in result:
+                arbitrage = arbitrage == 1
                 club = ClubBD(self.__connexion).get_club_by_id(id_club)
-                categorie = CategorieBD(self.__connexion).get_categorie_by_id(id_categorie)
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
 
-                return Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
-                                 nom_utilisateur, mdp, licence, classement, club,
-                                 categorie, arbitrage)
+                return Escrimeur(id_escrimeur, nom, prenom, sexe,
+                                 date_naissance, nom_utilisateur, mdp, licence,
+                                 classement, club, categorie, arbitrage)
             return None
         except Exception as e:
             print(e)

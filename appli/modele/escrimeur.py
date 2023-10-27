@@ -208,7 +208,7 @@ class Escrimeur:
         """
         self.__licence = licence
 
-    def set_classement(self, classement: int | None) -> None:
+    def set_classement(self, classement: int) -> None:
         """
         Fonction qui modifie le classement de l'escrimeur
 
@@ -234,6 +234,22 @@ class Escrimeur:
             categorie (Categorie): categorie de l'escrimeur
         """
         self.__categorie = categorie
+
+    def __lt__(self, autre: 'Escrimeur') -> bool:
+        """
+        Fonction qui compare le classement de l'escrimeur avec un autre
+
+        Args:
+            autre (Escrimeur): autre escrimeur
+
+        Returns:
+            bool: True si le classement de l'escrimeur est inferieur a celui de l'autre, False sinon
+        """
+        if self.__classement is None:
+            return False
+        if autre.__classement is None:
+            return True
+        return self.__classement < autre.__classement
 
     def set_arbitrage(self, arbitrage: bool) -> None:
         """

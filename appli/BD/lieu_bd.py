@@ -2,14 +2,21 @@
     Fichier qui contient les requêtes SQL pour la table Lieu
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.lieu import Lieu
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from lieu import Lieu
 
 
 class LieuBD:
     """
     Classe LieuBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -19,7 +26,8 @@ class LieuBD:
         :return: liste de Lieu
         """
         try:
-            query = text("SELECT idLieu, adresseLieu, descriptionLieu FROM LIEU")
+            query = text(
+                'SELECT idLieu, adresseLieu, descriptionLieu FROM LIEU')
             result = self.__connexion.execute(query)
             lieux = []
             for id_lieu, adresse, description in result:
@@ -36,8 +44,9 @@ class LieuBD:
         :return: lieu
         """
         try:
-            query = text("SELECT idLieu, adresseLieu, "
-                         "descriptionLieu FROM LIEU WHERE idLieu =" + str(id_l))
+            query = text('SELECT idLieu, adresseLieu, '
+                         'descriptionLieu FROM LIEU WHERE idLieu =' +
+                         str(id_l))
             result = self.__connexion.execute(query)
             for id_lieu, adresse, description in result:
                 return Lieu(id_lieu, description, adresse)
