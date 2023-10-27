@@ -136,7 +136,10 @@ TODO : Ajoute ce que tu as fait
 
 ### Abdoulahi :
 
-TODO : Ajoute ce que tu as fait
+- J'ai participé à la réalisation du diagramme de cas d'utilisation.
+- J'ai participé à la réalisation du mcd.
+- J'ai travaillé sur l'implémenter des maquettes.
+- Je travaille donc actuellement sur l'implémentation des pages de connexion et la page d'inscription. 
 
 ### Baptiste :
 
