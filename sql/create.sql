@@ -194,6 +194,7 @@ begin
         signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas être à la fois tireur et arbitre';
     end if;
 end |
+delimiter ;
 
 -- TRIGGER qui bloque l'inscription par le sexe de l'escrimeur
 DELIMITER |
@@ -226,6 +227,7 @@ begin
         signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas arbitrer s''il n''est pas arbitre';
     end if;
 end |
+delimiter ;
 
 -- Trigger permettant une insertion seulement si le joueur est dans le match
 delimiter |
@@ -244,6 +246,7 @@ begin
         signal sqlstate '45000' set message_text = 'Un escrimeur ne peut pas ajouter de touche dans un match où il n''est pas';
     end if;
 end |
+delimiter ;
 
 -- Trigger qui bloque l'inscription d'un arbitre dans un match si il est déjà inscrit en tant qu'arbitre dans ce match
 DELIMITER |
@@ -283,8 +286,10 @@ begin
         update MATCHS set fini=true where idMatch=new.idMatch;
     end if;
 end |
+delimiter ;
 
 -- Trigger qui bloque l'ajout d'une touche dans un match fini
+delimiter |
 CREATE OR REPLACE trigger match_fini before insert on TOUCHE
 for each row
 begin
@@ -292,15 +297,35 @@ begin
         signal sqlstate '45000' set message_text = 'Le match est fini vous ne pouvez pas ajouter de touche';
     end if;
 end |
+delimiter ;
 
 
--- Trigger qui crypte le mot de passe
+-- Trigger qui crypte le mot de passe de l'escrimeur
 delimiter |
 CREATE OR REPLACE trigger crypte_mdp before insert on ESCRIMEUR
 for each row
 begin
     set new.mdpEscrimeur=sha1(new.mdpEscrimeur);
 end |
+delimiter ;
+
+-- Trigger qui crypte le mot de passe de l'organisateur
+delimiter |
+CREATE OR REPLACE trigger crypte_mdp2 before insert on ORGANISATEUR
+for each row
+begin
+    set new.mdpOrganisateur=sha1(new.mdpOrganisateur);
+end |
+delimiter ;
+
+-- Trigger qui crypte le mot de passe du club
+delimiter |
+CREATE OR REPLACE trigger crypte_mdp3 before insert on CLUB
+for each row
+begin
+    set new.mdpClub=sha1(new.mdpClub);
+end |
+delimiter ;
 
 
 -- PROCEDURE
@@ -344,7 +369,7 @@ delimiter ;
 
 -- Fonction qui compare le mdp passée en paramètre avec le mdp de l'escrimeur
 delimiter |
-CREATE OR REPLACE function verif_mdp(idEscrimeurA int, mdpEscrimeurA varchar(100)) returns boolean
+CREATE OR REPLACE function verif_mdp_escrimeur(idEscrimeurA int, mdpEscrimeurA varchar(100)) returns boolean
 begin
     declare mdp varchar(100);
     set mdpEscrimeurA=sha1(mdpEscrimeurA);
@@ -356,4 +381,38 @@ begin
     end if;
 end |
 delimiter ;
+
+-- Fonction qui compare le mdp passée en paramètre avec le mdp de l'organisateur
+delimiter |
+CREATE OR REPLACE function verif_mdp_organisateur(idOrganisateurA int, mdpOrganisateurA varchar(100)) returns boolean
+begin
+    declare mdp varchar(100);
+    set mdpOrganisateurA=sha1(mdpOrganisateurA);
+    set mdp= (select mdpOrganisateur from ORGANISATEUR where idOrganisateur=idOrganisateurA);
+    if mdp=mdpOrganisateurA then
+        return true;
+    else
+        return false;
+    end if;
+end |
+delimiter ;
+
+-- Fonction qui compare le mdp passée en paramètre avec le mdp du club
+delimiter |
+CREATE OR REPLACE function verif_mdp_club(idClubA int, mdpClubA varchar(100)) returns boolean
+begin
+    declare mdp varchar(100);
+    set mdpClubA=sha1(mdpClubA);
+    set mdp= (select mdpClub from CLUB where idClub=idClubA);
+    if mdp=mdpClubA then
+        return true;
+    else
+        return false;
+    end if;
+end |
+delimiter ;
+
+
+
+
 
