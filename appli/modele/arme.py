@@ -8,9 +8,10 @@ class Arme:
     Classe Arme
     """
 
-    def __init__(self, id_arme: int, nom: str):
+    def __init__(self, id_arme: int, nom: str, sexe: str):
         self.__id = id_arme
         self.__nom = nom
+        self.__sexe = sexe
 
     def get_id(self):
         """
@@ -30,6 +31,15 @@ class Arme:
         """
         return self.__nom
 
+    def get_sexe(self):
+        """
+        Fonction qui retourne le sexe de l'arme
+
+        Returns:
+            str: sexe de l'arme
+        """
+        return self.__sexe
+
     def set_id(self, id_arme: int):
         """
         Fonction qui modifie l'id de l'arme
@@ -48,6 +58,15 @@ class Arme:
         """
         self.__nom = nom
 
+    def set_sexe(self, sexe: str):
+        """
+        Fonction qui modifie le sexe de l'arme
+
+        Args:
+            sexe (str): sexe de l'arme
+        """
+        self.__sexe = sexe
+
     def __str__(self):
         """
         Fonction qui retourne une chaine de caractere contenant les informations de l'arme
@@ -55,4 +74,4 @@ class Arme:
         Returns:
             str: informations de l'arme
         """
-        return f"{self.__id} - {self.__nom}"
+        return f"Arme : {self.__id} - {self.__nom} - {self.__sexe} |"

@@ -6,7 +6,7 @@ import sys
 import os
 import unittest
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from phase import Phase
@@ -62,4 +62,4 @@ class TestPhase(unittest.TestCase):
         Test de la fonction __str__ de la classe Phase
         """
         phase = Phase(1, 1)
-        self.assertEqual(str(phase), '1 - 1')
+        self.assertEqual(str(phase), 'Phase : 1 - 1 |')

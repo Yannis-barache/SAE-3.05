@@ -6,7 +6,7 @@ import sys
 import os
 import unittest
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from categorie import Categorie
@@ -62,4 +62,4 @@ class TestCategorie(unittest.TestCase):
         Test de la fonction __str__ de la classe Categorie
         """
         categorie = Categorie(1, 'U17')
-        self.assertEqual(str(categorie), '1 - U17')
+        self.assertEqual(str(categorie), 'Catégorie : 1 - U17 |')
