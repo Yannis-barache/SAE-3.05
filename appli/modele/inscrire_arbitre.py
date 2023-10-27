@@ -49,4 +49,4 @@ class InscrireArbitre:
         self.__id_competition = id_competition
 
     def __str__(self):
-        return f'{self.__id_arbitre} - {self.__id_competition}'
+        return f'Arbitre : {self.__id_arbitre} - {self.__id_competition} |'

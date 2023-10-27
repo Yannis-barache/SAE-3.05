@@ -59,4 +59,4 @@ class TestInscrireArbitre(unittest.TestCase):
         Test de la fonction __str__ de la classe InscrireArbitre
         """
         arbitrer = InscrireArbitre(1, 1)
-        self.assertEqual(str(arbitrer), '1 - 1')
+        self.assertEqual(str(arbitrer), 'Arbitre : 1 - 1 |')

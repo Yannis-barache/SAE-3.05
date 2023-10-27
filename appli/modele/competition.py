@@ -2,9 +2,9 @@
 Module contenant la classe Competition
 """
 
-from categorie import Categorie
-from arme import Arme
-from lieu import Lieu
+from appli.modele.categorie import Categorie
+from appli.modele.arme import Arme
+from appli.modele.lieu import Lieu
 
 
 class Competition:
@@ -15,6 +15,19 @@ class Competition:
     def __init__(self, id_comp: int, nom: str, date: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
                  arme: Arme, categorie: Categorie, coeficient: float):
+        """
+        Constructeur de la classe Competition
+
+        Args:
+            id (int): L'id de la competition
+            nom (str): Le nom de la competition
+            date (str): La date de la competition
+            date_fin_inscription (str): La date de fin d'inscription de la competition
+            saison (str): La saison de la competition
+            lieu (Lieu): Le lieu de la competition
+            arme (Arme): L'arme de la competition
+            categorie (Categorie): La categorie de la competition
+        """
         self.__id = id_comp
         self.__nom = nom
         self.__date = date
@@ -194,6 +207,6 @@ class Competition:
         Returns:
             str: informations de la competition
         """
-        return f"Competition: {self.__id}, {self.__nom}, {self.__date}, " \
+        return f"Competition : {self.__id}, {self.__nom}, {self.__date}, " \
         f"{self.__date_fin_inscription}, {self.__saison}, {self.__lieu}, " \
-        f"{self.__arme}, {self.__categorie}"
+        f"{self.__arme}, {self.__categorie} |"

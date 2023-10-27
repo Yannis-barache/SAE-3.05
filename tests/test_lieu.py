@@ -77,4 +77,4 @@ class TestLieu(unittest.TestCase):
         Test de la fonction __str__ de la classe Lieu
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
-        self.assertEqual(str(lieu), 'Une grande ville Paris France 1')
+        self.assertEqual(str(lieu), 'Lieu : Une grande ville Paris France 1 |')

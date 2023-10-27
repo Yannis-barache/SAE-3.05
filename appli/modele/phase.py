@@ -49,4 +49,4 @@ class Phase:
         self.__id_comp = id_comp
 
     def __str__(self):
-        return f'{self.__id_phase} - {self.__id_comp}'
+        return f'Phase : {self.__id_phase} - {self.__id_comp} |'

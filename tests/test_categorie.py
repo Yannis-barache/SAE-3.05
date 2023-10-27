@@ -62,4 +62,4 @@ class TestCategorie(unittest.TestCase):
         Test de la fonction __str__ de la classe Categorie
         """
         categorie = Categorie(1, 'U17')
-        self.assertEqual(str(categorie), '1 - U17')
+        self.assertEqual(str(categorie), 'Catégorie : 1 - U17 |')

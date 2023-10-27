@@ -2,7 +2,7 @@
 Module contenant la classe Match
 """
 
-from escrimeur import Escrimeur
+from appli.modele.escrimeur import Escrimeur
 
 
 class Match:
@@ -11,13 +11,15 @@ class Match:
     """
 
     def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
-                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float):
+                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float,
+                 fini: bool):
         self.__id = id_match
         self.__id_phase = id_phase
         self.__escrimeur1 = escrimeur1
         self.__escrimeur2 = escrimeur2
         self.__arbitre = arbitre
         self.__heure = heure
+        self.__fini = fini
 
     def get_id(self) -> int:
         """
@@ -73,6 +75,15 @@ class Match:
         """
         return self.__heure
 
+    def get_fini(self) -> bool:
+        """
+        Fonction qui retourne si le match est fini
+
+        Returns:
+            bool: fini
+        """
+        return self.__fini
+
     def set_id(self, id_match: int) -> None:
         """
         Fonction qui modifie l'id du match
@@ -127,5 +138,17 @@ class Match:
         """
         self.__heure = heure
 
+    def set_fini(self, fini: bool) -> None:
+        """
+        Fonction qui modifie si le match est fini
+
+        Args:
+            fini (bool): fini
+        """
+        self.__fini = fini
+
     def __str__(self):
-        return f'{self.__id} - {self.__id_phase} - {self.__escrimeur1} - {self.__escrimeur2}'
+        return (
+            f'Match : {self.__id} - {self.__id_phase} - {self.__escrimeur1} - '
+            f'{self.__escrimeur2} - {self.__arbitre} - {self.__heure} - '
+            f'{self.__fini}|')
