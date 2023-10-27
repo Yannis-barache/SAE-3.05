@@ -104,9 +104,7 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
 
 Après une lecture attentive du sujet, nous avons pu réaliser le MCD suivant :
 
-![MCD](./MCD.svg)
-
-
+![MCD de la base de données](./MCD.svg)
 
 ## Liste des tâches réalisées lors de la première semaine
 
