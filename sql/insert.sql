@@ -18,19 +18,20 @@ INSERT INTO CATEGORIE(idCategorie, nomCategorie) values
         (9,'V4');
 
 INSERT INTO CLUB(idClub, nomClub, adresse, mdpClub) values
-        (1,'Club d''escrime de Paris quai de seine','3 Quai Saint-Bernard 75005 Paris','lesquais'),
-        (2,'Club d''escrime de Lyon','215 Rue Paul Bert, 69003 Lyon','leslions'),
-        (3,'Club d''escrime de Marseille','33 Rue Crillon, 13005 Marseille','marseille'),
-        (4,'Club d''escrime de Bordeaux','53 Rue Pauline Kergomard, 33800 Bordeaux','levin'),
-        (5,'TUC Escrime','6 Rue Claudius Rougenet, 31500 Toulouse','lessaucisses'),
-        (6,'Académie vauban','Pl. Nouvelle Aventure, 59000 Lille','vauban'),
-        (7,'NEC','Rue Louis Joxe, 44200 Nantes','mantes'),
-        (8,'SUC','43 Av. du Rhin, 67100 Strasbourg','presqueallemagne'),
-        (9,'MUC','60 Pl. Jacques Mirouze, 34000 Montpellier','sud'),
-        (10,'Club d''escrime de Rennes','8 Av. des Gayeulles, 35700 Rennes','villedeKnou'),
-        (11,'Club d''escrime de Reims','Imp. Léo Lagrange, 51100 Reims','et'),
-        (12,'Club d''escrime de Saint-Etienne','Rue du Dr Paul Michelon, 42000 Saint-Étienne','perdant'),
-        (13,'Cercle d''escrime de Blois ','25 Rue Lucien Joubert, 41000 Blois','ceblois');
+        (1,'Escrimeur indépendant','Aucune','independant'),
+        (2,'Club d''escrime de Paris quai de seine','3 Quai Saint-Bernard 75005 Paris','lesquais'),
+        (3,'Club d''escrime de Lyon','215 Rue Paul Bert, 69003 Lyon','leslions'),
+        (4,'Club d''escrime de Marseille','33 Rue Crillon, 13005 Marseille','marseille'),
+        (5,'Club d''escrime de Bordeaux','53 Rue Pauline Kergomard, 33800 Bordeaux','levin'),
+        (6,'TUC Escrime','6 Rue Claudius Rougenet, 31500 Toulouse','lessaucisses'),
+        (7,'Académie vauban','Pl. Nouvelle Aventure, 59000 Lille','vauban'),
+        (8,'NEC','Rue Louis Joxe, 44200 Nantes','mantes'),
+        (9,'SUC','43 Av. du Rhin, 67100 Strasbourg','presqueallemagne'),
+        (10,'MUC','60 Pl. Jacques Mirouze, 34000 Montpellier','sud'),
+        (11,'Club d''escrime de Rennes','8 Av. des Gayeulles, 35700 Rennes','villedeKnou'),
+        (12,'Club d''escrime de Reims','Imp. Léo Lagrange, 51100 Reims','et'),
+        (13,'Club d''escrime de Saint-Etienne','Rue du Dr Paul Michelon, 42000 Saint-Étienne','perdant'),
+        (14,'Cercle d''escrime de Blois ','25 Rue Lucien Joubert, 41000 Blois','ceblois');
 
 
 INSERT INTO ORGANISATEUR(idOrganisateur, nomOrganisateur, prenomOrganisateur, adresseMailOrganisateur, mdpOrganisateur, nomUtilisateur) values
@@ -53,9 +54,9 @@ INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateN
         (8, 'Chewbacca', 'Chewie', '23232323', '1999-01-01', 'chewbacca', 'password', NULL, 8, 'H', 5, true),
         (9, 'Fett', 'Boba', '45454545', '1999-01-01', 'bobafett', 'password', NULL, 9, 'H', 5, false),
         (10, 'Maul', 'Darth', '8765', '1999-01-01', 'darthmaul', 'password', NULL, 10, 'H', 5, true),
-        (11, 'Lechopier','Christophe', '1', '1999-01-01', 'christophe', 'lechopier', NULL, 13, 'H', 5, true),
+        (11, 'Lechopier','Christophe', '1', '1999-01-01', 'christophe', 'lechopier', NULL, 14, 'H', 5, true),
         (12, 'Fofana','Abdoulahi', '224224', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5, true),
-        (13, 'Merit','Juliann', '963963', '1999-01-01', 'juliann', 'merit', NULL, 13, 'H', 5, false),
+        (13, 'Merit','Juliann', '963963', '1999-01-01', 'juliann', 'merit', NULL, 14, 'H', 5, false),
         (14, 'Chedeville','Baptiste', '33333333', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5, true),
         (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5, false),
         (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5, false),
