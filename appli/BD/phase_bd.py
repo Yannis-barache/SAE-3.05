@@ -59,7 +59,7 @@ class PhaseBD:
             print(e)
             return None
 
-    def insert_phase(self):
+    def insert_phase(self, phase: Phase):
         """
         Fonction qui insère une phase
         :param phase : phase
