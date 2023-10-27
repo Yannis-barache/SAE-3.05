@@ -93,7 +93,8 @@ class EscrimeurBD:
                          f"mdpEscrimeur, classement, sexeEscrimeur, idClub, idCategorie, "
                          f"arbitrage) VALUES ('{escrimeur.get_nom()}', "
                          f"'{escrimeur.get_licence()}', '{escrimeur.get_prenom()}', "
-                         f"'{escrimeur.get_date_naissance()}', '{escrimeur.get_nom_utilisateur()}', "
+                         f"'{escrimeur.get_date_naissance()}', "
+                         f"'{escrimeur.get_nom_utilisateur()}', "
                          f"'{escrimeur.get_mdp()}', {str(escrimeur.get_classement())}, "
                          f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
                          f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})")
