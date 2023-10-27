@@ -494,4 +494,4 @@ class Poule:
         return (-victoires, -indice)  # Tri décroissant
 
     def __str__(self):
-        return f'{self.__id}'
+        return f'Poule : {self.__id} |'

@@ -1,3 +1,7 @@
+"""
+Fichier qui contient les requêtes SQL pour la table ARBITRER
+"""
+
 from sqlalchemy.sql.expression import text
 from appli.modele.inscrire import Inscrire
 from appli.BD.escrimeur_bd import EscrimeurBD
@@ -5,10 +9,17 @@ from appli.BD.competition_bd import CompetitionBD
 
 
 class InscrireBD:
-    def __int__(self, connexion):
+    """
+    Classe InscrireBD
+    """
+    def __init__(self, connexion):
         self.__connexion = connexion
 
     def get_all_inscrire(self):
+        """
+        Fonction qui retourne tous les inscrire
+        :return: liste d'inscrire
+        """
         try:
             query = text("SELECT idEscrimeur, idCompetition FROM INSCRIRE")
             result = self.__connexion.execute(query)

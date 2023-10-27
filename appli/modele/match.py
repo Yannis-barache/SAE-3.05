@@ -2,7 +2,7 @@
 Module contenant la classe Match
 """
 
-from escrimeur import Escrimeur
+from appli.modele.escrimeur import Escrimeur
 
 
 class Match:
@@ -215,6 +215,7 @@ class Match:
         self.__finis = finis
 
     def __str__(self):
-        return (f'{self.__id} - {self.__id_phase} - '
-                f'{self.__escrimeur1} - {self.__escrimeur2} - '
-                f'{self.__les_touches}')
+        return (
+            f'Match : {self.__id} - {self.__id_phase} - {self.__escrimeur1} - '
+            f'{self.__escrimeur2} - {self.__arbitre} - {self.__heure} - '
+            f'{self.__finis}|')

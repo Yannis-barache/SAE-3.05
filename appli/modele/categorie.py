@@ -62,4 +62,4 @@ class Categorie:
         Returns:
             str: informations de la categorie
         """
-        return f"{self.__id} - {self.__nom}"
+        return f"Catégorie : {self.__id} - {self.__nom} |"

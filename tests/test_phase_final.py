@@ -47,4 +47,4 @@ class TestPhaseFinal(unittest.TestCase):
         Test de la fonction __str__ de la classe PhaseFinal
         """
         phase_final = PhaseFinal(1)
-        self.assertEqual(str(phase_final), '1')
+        self.assertEqual(str(phase_final), 'Phase finale : 1 |')

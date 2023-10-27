@@ -30,4 +30,4 @@ class PhaseFinal:
         self.id_phase_f = id_phase_f
 
     def __str__(self):
-        return f'{self.id_phase_f}'
+        return f'Phase finale : {self.id_phase_f} |'

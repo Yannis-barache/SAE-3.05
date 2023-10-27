@@ -147,7 +147,6 @@ class TestOrganisateur(unittest.TestCase):
         organisateur = Organisateur(1, 'Baptiste', 'Chédeville',
                                     'baptiste.chedevill@gmail.com', 'mdp',
                                     'baptched')
-        self.assertEqual(
-            str(organisateur),
-            '1 - Baptiste - Chédeville - baptiste.chedevill@gmail.com - mdp - baptched'
-        )
+        sortie = ('Organisateur : 1 - Baptiste - Chédeville - '
+                  'baptiste.chedevill@gmail.com - mdp - baptched |')
+        self.assertEqual(str(organisateur), sortie)

@@ -59,4 +59,4 @@ class TestInscrire(unittest.TestCase):
         Test de la fonction __str__ de la classe Inscrire
         """
         inscrire = Inscrire(1, 1)
-        self.assertEqual(str(inscrire), '1 - 1')
+        self.assertEqual(str(inscrire), 'Inscrire : 1 - 1 |')

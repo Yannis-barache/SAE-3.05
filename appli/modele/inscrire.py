@@ -49,4 +49,4 @@ class Inscrire:
         self.__id_escrimeur = id_escrimeur
 
     def __str__(self):
-        return f'{self.__id_competition} - {self.__id_escrimeur}'
+        return f'Inscrire : {self.__id_competition} - {self.__id_escrimeur} |'

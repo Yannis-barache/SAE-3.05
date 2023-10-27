@@ -31,11 +31,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertIsInstance(match, Match)
 
@@ -46,11 +47,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_id(), 1)
 
@@ -61,11 +63,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_id_phase(), 1)
 
@@ -76,11 +79,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_escrimeur1(), escrimeur1)
 
@@ -91,11 +95,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_escrimeur2(), escrimeur2)
 
@@ -106,11 +111,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_arbitre(), arbitre)
 
@@ -121,11 +127,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_heure(), 10.0)
 
@@ -136,11 +143,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True)
         self.assertEqual(match.est_finis(), True)
 
@@ -151,11 +159,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.est_commencer(), False)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
@@ -168,11 +177,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_les_touches(), [])
 
@@ -183,11 +193,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False)
         self.assertEqual(match.get_nb_touche(escrimeur1), 0)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
@@ -200,11 +211,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
         self.assertEqual(match.get_gagnant(), None)
@@ -222,11 +234,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_id(2)
         self.assertEqual(match.get_id(), 2)
@@ -238,11 +251,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_id_phase(2)
         self.assertEqual(match.get_id_phase(), 2)
@@ -254,11 +268,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_escrimeur1(escrimeur2)
         self.assertEqual(match.get_escrimeur1(), escrimeur2)
@@ -270,11 +285,12 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_escrimeur2(escrimeur1)
         self.assertEqual(match.get_escrimeur2(), escrimeur1)
@@ -286,13 +302,14 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         arbitre2 = Escrimeur(4, 'Dupont', 'Jean', 'M', '2004-14-05', 'jdupont',
-                             'mdp', 'AB02', 4, club, categorie)
+                             'mdp', 'AB02', 4, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_arbitre(arbitre2)
         self.assertEqual(match.get_arbitre(), arbitre2)
@@ -304,11 +321,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
         match.set_heure(11.0)
         self.assertEqual(match.get_heure(), 11.0)
@@ -320,11 +338,12 @@ class TestMatch(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
+                            'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False)
         match.set_finis(True)
         self.assertEqual(match.est_finis(), True)
@@ -336,15 +355,22 @@ class TestMatch(unittest.TestCase):
         categorie = Categorie(1, 'U19')
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                               'baptched', 'mdp', 'AB21', 1, club, categorie)
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
         escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
-                               'clb', 'mdp', 'AB11', 2, club, categorie)
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
-                            'mdp', 'AB01', 3, club, categorie)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
-        self.assertEqual(
-            str(match),
-            '1 - 1 - 1 - Chédeville - Baptiste - 2004-14-05 - baptched - '
-            'mdp - AB21 - 1 - 1 - Club 1 - Adresse 1 - '
-            '1 - U19 - 2 - Evelin - Colomban - 2004-14-05 - clb - '
-            'mdp - AB11 - 2 - 1 - Club 1 - Adresse 1 - 1 - U19 - []')
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True)
+        sortie = (
+            'Match : 1 - 1 - Escrimeur : 1 - Chédeville - Baptiste - 2004-14-05 - '
+            'baptched - mdp - '
+            'AB21 - 1 - Club : 1 - Club 1 - Adresse 1 - mdp | - Catégorie : '
+            '1 - U19 | - False | - Escrimeur'
+            ' : 2 - Evelin - Colomban - 2004-14-05 - clb - mdp - AB11 - 2 - '
+            'Club : 1 - Club 1 - Adresse 1 - mdp '
+            '| - Catégorie : 1 - U19 | - False | - Escrimeur : 3 - Dubois - '
+            'Yann - 2004-14-05 - yannou - mdp - AB01 '
+            '- 3 - Club : 1 - Club 1 - Adresse 1 - mdp | - Catégorie : 1 - U19 '
+            '| - True | - 10.0 - True|')
+        self.assertEqual(str(match), sortie)
