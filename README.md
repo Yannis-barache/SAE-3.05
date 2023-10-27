@@ -22,9 +22,11 @@
 
 Ce projet est le projet de fin de 1ère période de notre deuxième année à l'IUT d'Orléans.
 Il consiste à créer une application web de gestion de compétition d'escrime pour le cercle d'escrime de Blois.
-Cette application va permettre de gerer des compétitions d'escrime, via celle-ci
+Cette application va permettre de gérer des compétitions d'escrime, via celle-ci.
 Nous utiliserons le langage python avec le framework flask pour la réalisation de cette application lié à une base de données MySQL distante.
 
+<br><br>
+<br><br>
 ## Installation
 
 Pour installer le projet, il faut tout d'abord cloner le projet sur votre machine dont voici la commande :
@@ -62,7 +64,7 @@ L'utilisation du site va dépendre de votre rôle sur le site.
 
 ### Organisateur
 
-L'`organisateur  est la personne qui va gérer les compétitions.
+L'organisateur est la personne qui va gérer les compétitions.
 Il peut donc créer des compétitions, les modifier, les supprimer, etc.
 Il en va de même pour les catégories, les armes, les tireurs, etc.
 
@@ -83,30 +85,33 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
 - [x] Réaliser le diagramme de cas d'utilisation
 - [x] Réaliser le diagramme de séquence
 - [x] Réaliser le MCD (Modèle Conceptuel de Données) de la base de données
-- [x] Realiser les scenarios conceptuels et descriptifs
+- [x] Réaliser les scenarios conceptuels et descriptifs
 - [x] Réaliser les maquettes de l'application
-- [ ] Réaliser le rapport 
+- [x] Réaliser le rapport 
 
 ### Tâches à faire pour le rendu final
-- [ ] Création de la base de données
+- [x] Création de la base de données
   - [x] Création de create.sql
   - [x] Création de delete.sql
   - [x] Création d'insert.sql
   - [x] Création des relations
-  - [ ] Création des triggers
-  - [ ] Création des procédures stockées
-  - [ ] Création des fonctions
+  - [x] Création des triggers
+  - [x] Création des procédures stockées
+  - [x] Création des fonctions
 - [ ] Implémentation des pages de l'application en Flask
-
-<strong>TODO : Ajouter les tâches à faire</strong>
-
-
 
 ## MCD de la base de données
 
 Après une lecture attentive du sujet, nous avons pu réaliser le MCD suivant :
 
-![MCD de la base de données](./MCD.svg)
+![MCD de la base de données](Rendu/MCD.svg)
+
+## Diagramme de cas d'utilisation
+
+Après une lecture attentive du sujet, nous avons pu réaliser le diagramme de cas d'utilisation suivant :
+
+![Diagramme de cas d'utilisation](Rendu/Diagramme_de_cas_utilisation.svg)
+
 
 ## Liste des tâches réalisées lors de la première semaine
 
@@ -127,9 +132,9 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 
 ### Hajar :
-- J'ai realisé l'enumeration  des fonctionnalité attendu sur l'application
-- J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil ..
-- Je travaille actuellemnt sur la realisation des pages en Flask
+- J'ai realisé l'enumeration des fonctionnalités attendues sur l'application
+- J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil.
+- Je travaille actuellement sur la realisation des pages en Flask
 - J'ai travaillé sur le Readme
 - J'ai travaillé sur les scénarios alternatifs
 
@@ -141,8 +146,8 @@ TODO : Ajoute ce que tu as fait
 ### Abdoulahi :
 
 - J'ai participé à la réalisation du diagramme de cas d'utilisation.
-- J'ai participé à la réalisation du mcd.
-- J'ai travaillé sur l'implémentatio des maquettes en flask.
+- J'ai participé à la réalisation du MCD.
+- J'ai travaillé sur l'implémentation des maquettes en flask.
 - Je travaille donc actuellement sur l'implémentation des pages de connexion et la page d'inscription. 
 
 ### Baptiste :
