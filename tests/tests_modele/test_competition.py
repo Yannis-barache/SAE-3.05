@@ -133,9 +133,9 @@ class TestCompetition(unittest.TestCase):
                                   0.5)
         self.assertEqual(competition.get_categorie(), categorie)
 
-    def test_get_coeficient(self):
+    def test_get_coefficient(self):
         """
-        Test de la fonction get_coeficient de la classe Competition
+        Test de la fonction get_coefficient de la classe Competition
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
@@ -143,7 +143,7 @@ class TestCompetition(unittest.TestCase):
         competition = Competition(1, 'Escrime comp', '14-05-2005',
                                   '14-05-2005', 'hiver', lieu, arme, categorie,
                                   0.5)
-        self.assertEqual(competition.get_coeficient(), 0.5)
+        self.assertEqual(competition.get_coefficient(), 0.5)
 
     def test_set_id(self):
         """
@@ -251,9 +251,9 @@ class TestCompetition(unittest.TestCase):
         competition.set_categorie(categorie)
         self.assertEqual(competition.get_categorie(), categorie)
 
-    def test_set_coeficient(self):
+    def test_set_coefficient(self):
         """
-        Test de la fonction set_coeficient de la classe Competition
+        Test de la fonction set_coefficient de la classe Competition
         """
         lieu = Lieu(1, 'Une grande ville', 'Paris France')
         categorie = Categorie(2, 'U20')
@@ -261,8 +261,8 @@ class TestCompetition(unittest.TestCase):
         competition = Competition(1, 'Escrime comp', '14-05-2005',
                                   '14-05-2005', 'hiver', lieu, arme, categorie,
                                   0.5)
-        competition.set_coeficient(0.6)
-        self.assertEqual(competition.get_coeficient(), 0.6)
+        competition.set_coefficient(0.6)
+        self.assertEqual(competition.get_coefficient(), 0.6)
 
     def test_generation_poule(self):
         """

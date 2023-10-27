@@ -28,7 +28,7 @@ class InscrireArbitreBD:
         :return: liste d'arbitre
         """
         try:
-            query = text("SELECT idEscrimeur, idCompetition FROM ARBITRER")
+            query = text('SELECT idEscrimeur, idCompetition FROM ARBITRER')
             result = self.__connexion.execute(query)
             arbitres = []
             for id_escrimeur, id_categorie in result:
@@ -49,8 +49,8 @@ class InscrireArbitreBD:
         :return: arbitre
         """
         try:
-            query = text("SELECT idEscrimeur, idCompetition "
-                         "FROM ARBITRER WHERE idEscrimeur =" + str(id_a))
+            query = text('SELECT idEscrimeur, idCompetition '
+                         'FROM ARBITRER WHERE idEscrimeur =' + str(id_a))
             result = self.__connexion.execute(query)
             for id_escrimeur, id_competition in result:
                 escrimeur = EscrimeurBD(

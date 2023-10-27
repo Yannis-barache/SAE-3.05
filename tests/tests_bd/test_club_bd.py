@@ -17,6 +17,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from modele_appli import ModeleAppli
 from club import Club
 
+
 class TestClubBD(unittest.TestCase):
     """
     Classe de test de la classe ClubBD

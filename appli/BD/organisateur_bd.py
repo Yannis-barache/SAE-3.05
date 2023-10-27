@@ -27,9 +27,9 @@ class OrganisateurBD:
         """
         try:
             query = text(
-                "SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
-                "adresseMailOrganisateur, mdpOrganisateur, "
-                "nomUtilisateur FROM ORGANISATEUR")
+                'SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, '
+                'adresseMailOrganisateur, mdpOrganisateur, '
+                'nomUtilisateur FROM ORGANISATEUR')
             result = self.__connexion.execute(query)
             organisateurs = []
             for (id_organisateur, nom, prenom, mail, mpd,

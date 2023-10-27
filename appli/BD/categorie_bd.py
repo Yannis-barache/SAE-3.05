@@ -25,7 +25,7 @@ class CategorieBD:
         :return: liste de categorie
         """
         try:
-            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE")
+            query = text('SELECT idCategorie, nomCategorie FROM CATEGORIE')
             result = self.__connexion.execute(query)
             categories = []
             for id_categorie, nom in result:
@@ -42,8 +42,8 @@ class CategorieBD:
         :return: categorie
         """
         try:
-            query = text("SELECT idCategorie, nomCategorie FROM CATEGORIE "
-                         "WHERE idCategorie =" + str(id_cat))
+            query = text('SELECT idCategorie, nomCategorie FROM CATEGORIE '
+                         'WHERE idCategorie =' + str(id_cat))
             result = self.__connexion.execute(query)
             for id_categorie, nom in result:
                 return Categorie(id_categorie, nom)

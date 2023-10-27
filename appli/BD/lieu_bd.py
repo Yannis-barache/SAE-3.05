@@ -27,7 +27,7 @@ class LieuBD:
         """
         try:
             query = text(
-                "SELECT idLieu, adresseLieu, descriptionLieu FROM LIEU")
+                'SELECT idLieu, adresseLieu, descriptionLieu FROM LIEU')
             result = self.__connexion.execute(query)
             lieux = []
             for id_lieu, adresse, description in result:
@@ -44,8 +44,8 @@ class LieuBD:
         :return: lieu
         """
         try:
-            query = text("SELECT idLieu, adresseLieu, "
-                         "descriptionLieu FROM LIEU WHERE idLieu =" +
+            query = text('SELECT idLieu, adresseLieu, '
+                         'descriptionLieu FROM LIEU WHERE idLieu =' +
                          str(id_l))
             result = self.__connexion.execute(query)
             for id_lieu, adresse, description in result:

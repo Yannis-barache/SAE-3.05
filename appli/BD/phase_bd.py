@@ -27,7 +27,7 @@ class PhaseBD:
         :return: liste de phase
         """
         try:
-            query = text("SELECT idPhase, idCompetition FROM PHASE")
+            query = text('SELECT idPhase, idCompetition FROM PHASE')
             result = self.__connexion.execute(query)
             phases = []
             for id_phase, id_competition in result:
@@ -47,7 +47,7 @@ class PhaseBD:
         """
         try:
             query = text(
-                "SELECT idPhase, idCompetition FROM PHASE WHERE idPhase =" +
+                'SELECT idPhase, idCompetition FROM PHASE WHERE idPhase =' +
                 str(id_p))
             result = self.__connexion.execute(query)
             for id_phase, id_competition in result:

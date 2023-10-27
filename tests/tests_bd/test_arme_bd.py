@@ -2,7 +2,6 @@
 Module de test de la classe ArmeBD
 """
 
-
 import sys
 import os
 import unittest
@@ -17,6 +16,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from modele_appli import ModeleAppli
 from arme import Arme
+
 
 class TestArmeBD(unittest.TestCase):
     """

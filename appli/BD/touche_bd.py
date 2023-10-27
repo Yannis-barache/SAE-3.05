@@ -28,7 +28,7 @@ class ToucheBD:
         :return: liste de touche
         """
         try:
-            query = text("SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE")
+            query = text('SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE')
             result = self.__connexion.execute(query)
             touches = []
             for id_match, id_escrimeur, num in result:

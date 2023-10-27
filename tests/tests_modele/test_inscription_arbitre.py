@@ -24,12 +24,12 @@ class TestInscrireArbitre(unittest.TestCase):
         arbitrer = InscrireArbitre(1, 1)
         self.assertIsInstance(arbitrer, InscrireArbitre)
 
-    def test_get_id_arbitre(self):
+    def test_get_id_escrimeur(self):
         """
-        Test de la fonction get_id_arbitre de la classe InscrireArbitre
+        Test de la fonction get_id_escrimeur de la classe InscrireArbitre
         """
         arbitrer = InscrireArbitre(1, 1)
-        self.assertEqual(arbitrer.get_id_arbitre(), 1)
+        self.assertEqual(arbitrer.get_id_escrimeur(), 1)
 
     def test_get_id_competition(self):
         """
@@ -38,13 +38,13 @@ class TestInscrireArbitre(unittest.TestCase):
         arbitrer = InscrireArbitre(1, 1)
         self.assertEqual(arbitrer.get_id_competition(), 1)
 
-    def test_set_id_arbitre(self):
+    def test_set_id_escrimeur(self):
         """
-        Test de la fonction set_id_arbitre de la classe InscrireArbitre
+        Test de la fonction get_id_escrimeur de la classe InscrireArbitre
         """
         arbitrer = InscrireArbitre(1, 1)
-        arbitrer.set_id_arbitre(2)
-        self.assertEqual(arbitrer.get_id_arbitre(), 2)
+        arbitrer.set_id_escrimeur(2)
+        self.assertEqual(arbitrer.get_id_escrimeur(), 2)
 
     def test_set_id_competition(self):
         """

@@ -16,6 +16,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from modele_appli import ModeleAppli
 
+
 class TestPhaseFinaleBD(unittest.TestCase):
     """
     Classe de test de la classe PhaseFinalBD

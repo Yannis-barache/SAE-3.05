@@ -26,7 +26,7 @@ class PouleBD:
         :return: liste de poule
         """
         try:
-            query = text("SELECT idPoule FROM POULE")
+            query = text('SELECT idPoule FROM POULE')
             result = self.__connexion.execute(query)
             poules = []
             for id_poule in result:

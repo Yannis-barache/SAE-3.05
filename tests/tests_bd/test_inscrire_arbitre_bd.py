@@ -17,6 +17,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from modele_appli import ModeleAppli
 from inscrire_arbitre import InscrireArbitre
 
+
 class TestInscrireArbitreBD(unittest.TestCase):
     """
     Classe de test de la classe InscrireArbitreBD
@@ -30,7 +31,8 @@ class TestInscrireArbitreBD(unittest.TestCase):
         Test du constructeur de la classe InscrireArbitreBD
         """
         modele = ModeleAppli()
-        self.assertIsInstance(modele.get_inscrire_arbitre_bd(), InscrireArbitreBD)
+        self.assertIsInstance(modele.get_inscrire_arbitre_bd(),
+                              InscrireArbitreBD)
 
     def test_get_all_inscrire_arbitre(self):
         """
@@ -45,7 +47,9 @@ class TestInscrireArbitreBD(unittest.TestCase):
         Test de la méthode get_inscrire_arbitre_by_id
         """
         modele = ModeleAppli()
-        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(1)
+        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(
+            1)
         self.assertIsInstance(inscrire_arbitre, InscrireArbitre)
-        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(-1)
+        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(
+            -1)
         self.assertIsNone(inscrire_arbitre)

@@ -30,9 +30,9 @@ class CompetitionBD:
         """
         try:
             query = text(
-                "SELECT idCompetition, nomCompetition, dateCompetition, "
-                "dateFinInscription, saisonCompetition,idLieu, idArme, "
-                "idCategorie, coefficientCompetition FROM COMPETITION")
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition FROM COMPETITION')
             result = self.__connexion.execute(query)
             competitions = []
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
@@ -57,10 +57,10 @@ class CompetitionBD:
         """
         try:
             query = text(
-                "SELECT idCompetition, nomCompetition, dateCompetition, "
-                "dateFinInscription, saisonCompetition,idLieu, idArme, "
-                "idCategorie, coefficientCompetition FROM COMPETITION "
-                "WHERE idCompetition =" + str(id_c))
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition FROM COMPETITION '
+                'WHERE idCompetition =' + str(id_c))
             result = self.__connexion.execute(query)
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
                  id_categorie, coefficient) in result:

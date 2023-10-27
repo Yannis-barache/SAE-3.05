@@ -19,7 +19,7 @@ class Competition:
 
     def __init__(self, id_comp: int, nom: str, date: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
-                 arme: Arme, categorie: Categorie, coeficient: float):
+                 arme: Arme, categorie: Categorie, coefficient: float):
         """
         Constructeur de la classe Competition
 
@@ -41,7 +41,7 @@ class Competition:
         self.__lieu = lieu
         self.__arme = arme
         self.__categorie = categorie
-        self.__coeficient = coeficient
+        self.__coefficient = coefficient
 
     def get_id(self) -> int:
         """
@@ -115,14 +115,14 @@ class Competition:
         """
         return self.__categorie
 
-    def get_coeficient(self) -> float:
+    def get_coefficient(self) -> float:
         """
-        Fonction qui retourne le coeficient de la competition
+        Fonction qui retourne le coefficient de la competition
 
         Returns:
-            float: Le coeficient de la competition
+            float: Le coefficient de la competition
         """
-        return self.__coeficient
+        return self.__coefficient
 
     def set_id(self, id_comp: int) -> None:
         """
@@ -196,14 +196,14 @@ class Competition:
         """
         self.__categorie = categorie
 
-    def set_coeficient(self, coeficient: float) -> None:
+    def set_coefficient(self, coefficient: float) -> None:
         """
-        Fonction qui modifie le coeficient de la competition
+        Fonction qui modifie le coefficient de la competition
 
         Args:
-            coeficient (float): coeficient de la competition
+            coefficient (float): coefficient de la competition
         """
-        self.__coeficient = coeficient
+        self.__coefficient = coefficient
 
     @staticmethod
     def generation_poule(

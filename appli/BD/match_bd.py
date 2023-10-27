@@ -1,6 +1,6 @@
-"""
+'''
 Fichier qui contient les requêtes SQL pour la table MATCHS
-"""
+'''
 
 import sys
 import os
@@ -16,22 +16,22 @@ from match import Match
 
 
 class MatchBD:
-    """
+    '''
     Classe MatchBD
-    """
+    '''
 
     def __init__(self, connexion):
         self.__connexion = connexion
 
     def get_all_match(self):
-        """
+        '''
         Fonction qui retourne tous les matchs
         :return: liste de Match
-        """
+        '''
         try:
-            query = text("SELECT idMatch, idPhase, idEscrimeur1, "
-                         "idEscrimeur2, idArbitre, heureMatch, "
-                         "fini FROM MATCHS")
+            query = text('SELECT idMatch, idPhase, idEscrimeur1, '
+                         'idEscrimeur2, idArbitre, heureMatch, '
+                         'fini FROM MATCHS')
             result = self.__connexion.execute(query)
             matchs = []
             for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
@@ -53,16 +53,16 @@ class MatchBD:
             return None
 
     def get_match_by_id(self, id_m: int):
-        """
+        '''
         Fonction qui retourne un match en fonction de son id
         :param id_m: id du match
         :return: match
-        """
+        '''
         try:
             query = text(
-                "SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, "
-                "idArbitre, heureMatch, fini FROM MATCHS "
-                "WHERE idMatch = " + str(id_m))
+                'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
+                'idArbitre, heureMatch, fini FROM MATCHS '
+                'WHERE idMatch = ' + str(id_m))
             result = self.__connexion.execute(query)
             for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
                  heure, fini) in result:

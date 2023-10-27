@@ -26,7 +26,7 @@ class PhaseFinaleBD:
         :return: liste de phase finale
         """
         try:
-            query = text("SELECT idPhaseFinale FROM PHASE_FINALE")
+            query = text('SELECT idPhaseFinale FROM PHASE_FINALE')
             result = self.__connexion.execute(query)
             phase_finals = []
             for id_phase_finale in result:

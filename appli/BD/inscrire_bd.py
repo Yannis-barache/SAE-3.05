@@ -28,7 +28,7 @@ class InscrireBD:
         :return: liste d'inscrire
         """
         try:
-            query = text("SELECT idEscrimeur, idCompetition FROM INSCRIRE")
+            query = text('SELECT idEscrimeur, idCompetition FROM INSCRIRE')
             result = self.__connexion.execute(query)
             inscrires = []
             for id_escrimeur, id_competition in result:

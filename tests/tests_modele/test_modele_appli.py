@@ -29,6 +29,7 @@ from phase_finale_bd import PhaseFinaleBD
 from poule_bd import PouleBD
 from touche_bd import ToucheBD
 
+
 class TestModeleAppli(unittest.TestCase):
     """
     Classe de test de la classe ModeleAppli
@@ -81,7 +82,8 @@ class TestModeleAppli(unittest.TestCase):
         Teste la méthode get_inscrire_arbitre_bd
         """
         modele = ModeleAppli()
-        self.assertIsInstance(modele.get_inscrire_arbitre_bd(), InscrireArbitreBD)
+        self.assertIsInstance(modele.get_inscrire_arbitre_bd(),
+                              InscrireArbitreBD)
 
     def test_get_inscrire_bd(self):
         """

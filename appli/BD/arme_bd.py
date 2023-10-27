@@ -26,7 +26,7 @@ class ArmeBD:
         :return: Une liste d'objets Arme
         """
         try:
-            query = text("SELECT idArme, nomArme, sexeArme FROM ARMES")
+            query = text('SELECT idArme, nomArme, sexeArme FROM ARMES')
             result = self.__connexion.execute(query)
             armes = []
             for id_arme, nom, sexe in result:
@@ -44,7 +44,7 @@ class ArmeBD:
         """
         try:
             query = text(
-                "SELECT idArme, nomArme, sexeArme FROM ARMES WHERE idArme =" +
+                'SELECT idArme, nomArme, sexeArme FROM ARMES WHERE idArme =' +
                 str(id_ar))
             result = self.__connexion.execute(query)
             for id_arme, nom, sexe in result:
