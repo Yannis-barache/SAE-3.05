@@ -293,6 +293,16 @@ begin
     end if;
 end |
 
+
+-- Trigger qui crypte le mot de passe
+delimiter |
+CREATE OR REPLACE trigger crypte_mdp before insert on ESCRIMEUR
+for each row
+begin
+    set new.mdpEscrimeur=sha1(new.mdpEscrimeur);
+end |
+
+
 -- PROCEDURE
 
 
@@ -329,3 +339,21 @@ CREATE OR REPLACE procedure ajoute_escrimeur(IN nomEscrimeurA varchar(50), IN li
 begin
     insert into ESCRIMEUR(nomEscrimeur,licence,prenomEscrimeur,dateNaissance,nomUtilisateurEscrimeur,mdpEscrimeur,classement,idClub,sexeEscrimeur,idCategorie,arbitrage) values (nomEscrimeurA,licenceA,prenomEscrimeurA,dateNaissanceA,nomUtilisateurEscrimeurA,mdpEscrimeurA,classementA,idClubA,sexeEscrimeurA,idCategorieA,arbitrageA);
 end |
+delimiter ;
+-- FONCTIONS
+
+-- Fonction qui compare le mdp passée en paramètre avec le mdp de l'escrimeur
+delimiter |
+CREATE OR REPLACE function verif_mdp(idEscrimeurA int, mdpEscrimeurA varchar(100)) returns boolean
+begin
+    declare mdp varchar(100);
+    set mdpEscrimeurA=sha1(mdpEscrimeurA);
+    set mdp= (select mdpEscrimeur from ESCRIMEUR where idEscrimeur=idEscrimeurA);
+    if mdp=mdpEscrimeurA then
+        return true;
+    else
+        return false;
+    end if;
+end |
+delimiter ;
+
