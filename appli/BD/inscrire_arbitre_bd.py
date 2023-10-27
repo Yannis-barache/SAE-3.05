@@ -62,3 +62,18 @@ class InscrireArbitreBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_arbitre(self, arbitre: InscrireArbitre):
+        """
+        Fonction qui insère un arbitre
+        :param arbitre : arbitre
+        """
+        try:
+            query = text(f"INSERT INTO ARBITRER (idEscrimeur, idCompetition) VALUES "
+                         f"({str(arbitre.get_id_escrimeur())},"
+                         f"{str(arbitre.get_id_competition())})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

@@ -58,3 +58,16 @@ class PhaseBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_phase(self, phase: Phase):
+        """
+        Fonction qui insère une phase
+        :param phase : phase
+        """
+        try:
+            query = text(f"INSERT INTO PHASE (idCompetition) VALUES ({phase.get_id_comp()})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

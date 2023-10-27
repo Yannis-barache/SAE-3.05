@@ -54,3 +54,16 @@ class LieuBD:
         except Exception as e:
             print(e)
             return None
+    def insert_lieu(self, lieu: Lieu):
+        """
+        Fonction qui insère un lieu
+        :param lieu : lieu
+        """
+        try:
+            query = text(f"INSERT INTO LIEU (adresseLieu, descriptionLieu) VALUES "
+                         f"('{lieu.get_adresse()}','{lieu.get_description()}')")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

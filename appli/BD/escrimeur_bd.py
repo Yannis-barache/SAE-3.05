@@ -81,3 +81,25 @@ class EscrimeurBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_escrimeur(self, escrimeur: Escrimeur):
+        """
+        Fonction qui insère un escrimeur
+        :param escrimeur : escrimeur
+        """
+        try:
+            query = text(f"INSERT INTO ESCRIMEUR (nomEscrimeur, licence, "
+                         f"prenomEscrimeur, dateNaissance, nomUtilisateurEscrimeur, "
+                         f"mdpEscrimeur, classement, sexeEscrimeur, idClub, idCategorie, "
+                         f"arbitrage) VALUES ('{escrimeur.get_nom()}', "
+                         f"'{escrimeur.get_licence()}', '{escrimeur.get_prenom()}', "
+                         f"'{escrimeur.get_date_naissance()}', "
+                         f"'{escrimeur.get_nom_utilisateur()}', "
+                         f"'{escrimeur.get_mdp()}', {str(escrimeur.get_classement())}, "
+                         f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
+                         f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

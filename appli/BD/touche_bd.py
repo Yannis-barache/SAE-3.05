@@ -40,3 +40,17 @@ class ToucheBD:
         except Exception as e:
             print(e)
             return None
+
+
+    def insert_poule(self, touche):
+        """
+        Fonction qui insert une touche dans la table TOUCHE
+        :param touche: La touche à insérer
+        """
+        try :
+            query = text(f"call ajoute_touche({touche.get_match()},{touche.get_escrimeur()})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+
+        except Exception as e:
+            print(e)

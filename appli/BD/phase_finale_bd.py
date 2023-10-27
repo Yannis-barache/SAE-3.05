@@ -35,3 +35,15 @@ class PhaseFinaleBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_phase_finale(self):
+        """
+        Fonction qui insère une phase finale
+        """
+        try:
+            query = text("INSERT INTO PHASE_FINALE DEFAULT VALUES")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
