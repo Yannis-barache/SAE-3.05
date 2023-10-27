@@ -22,7 +22,7 @@
 
 Ce projet est le projet de fin de 1ère période de notre deuxième année à l'IUT d'Orléans.
 Il consiste à créer une application web de gestion de compétition d'escrime pour le cercle d'escrime de Blois.
-Cette application permettra de gérer les compétitions, les inscriptions, les résultats, les classements, etc.
+Cette application va permettre de gerer des compétitions d'escrime, via celle-ci
 Nous utiliserons le langage python avec le framework flask pour la réalisation de cette application lié à une base de données MySQL distante.
 
 ## Installation
@@ -62,7 +62,7 @@ L'utilisation du site va dépendre de votre rôle sur le site.
 
 ### Organisateur
 
-L'`organisateur` est la personne qui va gérer les compétitions.
+L'`organisateur  est la personne qui va gérer les compétitions.
 Il peut donc créer des compétitions, les modifier, les supprimer, etc.
 Il en va de même pour les catégories, les armes, les tireurs, etc.
 
@@ -81,8 +81,11 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
 
 ### Tâches à faire pour le 27/10/2023
 - [x] Réaliser le diagramme de cas d'utilisation
-- [ ] Réaliser le diagramme de séquence
+- [x] Réaliser le diagramme de séquence
 - [x] Réaliser le MCD (Modèle Conceptuel de Données) de la base de données
+- [x] Realiser les scenarios conceptuels et descriptifs
+- [x] Réaliser les maquettes de l'application
+- [ ] Réaliser le rapport 
 
 ### Tâches à faire pour le rendu final
 - [ ] Création de la base de données
@@ -93,8 +96,7 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
   - [ ] Création des triggers
   - [ ] Création des procédures stockées
   - [ ] Création des fonctions
-  
-- [ ] Réaliser les maquettes de l'application
+- [ ] Implémentation des pages de l'application en Flask
 
 <strong>TODO : Ajouter les tâches à faire</strong>
 
@@ -127,7 +129,9 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 ### Hajar :
 - J'ai realisé l'enumeration  des fonctionnalité attendu sur l'application
 - J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil ..
-- Je travaille actuellemnt sur la realisation des pages HTML en Flask et du CSS
+- Je travaille actuellemnt sur la realisation des pages en Flask
+- J'ai travaillé sur le Readme
+- J'ai travaillé sur les scénarios alternatifs
 
 
 ### Juliann :
@@ -138,7 +142,7 @@ TODO : Ajoute ce que tu as fait
 
 - J'ai participé à la réalisation du diagramme de cas d'utilisation.
 - J'ai participé à la réalisation du mcd.
-- J'ai travaillé sur l'implémenter des maquettes.
+- J'ai travaillé sur l'implémentatio des maquettes en flask.
 - Je travaille donc actuellement sur l'implémentation des pages de connexion et la page d'inscription. 
 
 ### Baptiste :
