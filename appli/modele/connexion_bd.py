@@ -25,7 +25,7 @@ class ConnexionBD:
 
         self.ouvrir_connexion()
 
-    def ouvrir_connexion(self):
+    def ouvrir_connexion(self, con: bool=True):
         """
         ouverture d'une connexion MySQL
         paramètres:
@@ -36,12 +36,13 @@ class ConnexionBD:
         résultat: l'objet qui gère le connection MySQL si tout s'est bien passé
         """
         try:
-            # creation de l'objet gérant les interactions avec le serveur de BD
-            engine = sqlalchemy.create_engine("mysql+mysqlconnector://" +
-                                              self.__user + ":" +
-                                              self.__passwd + "@" +
-                                              self.__host + "/" +
-                                              self.__database)
+            if con:
+                # creation de l'objet gérant les interactions avec le serveur de BD
+                engine = sqlalchemy.create_engine("mysql+mysqlconnector://" +
+                                                self.__user + ":" +
+                                                self.__passwd + "@" +
+                                                self.__host + "/" +
+                                                self.__database)
             # creation de la connexion
             cnx = engine.connect()
             print("connexion réussie")

@@ -38,6 +38,13 @@ class TestArme(unittest.TestCase):
         arme = Arme(1, 'Epée Homme', 'M')
         self.assertEqual(arme.get_nom(), 'Epée Homme')
 
+    def test_get_sexe(self):
+        """
+        Test de la fonction get_sexe de la classe Arme
+        """
+        arme = Arme(1, 'Epée Homme', 'M')
+        self.assertEqual(arme.get_sexe(), 'M')
+
     def test_set_id(self):
         """
         Test de la fonction set_id de la classe Arme
@@ -53,6 +60,14 @@ class TestArme(unittest.TestCase):
         arme = Arme(1, 'Epée Homme', 'M')
         arme.set_nom('Epée Femme')
         self.assertEqual(arme.get_nom(), 'Epée Femme')
+
+    def test_set_sexe(self):
+        """
+        Test de la fonction set_sexe de la classe Arme
+        """
+        arme = Arme(1, 'Epée Homme', 'M')
+        arme.set_sexe('F')
+        self.assertEqual(arme.get_sexe(), 'F')
 
     def test_str(self):
         """
