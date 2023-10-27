@@ -10,6 +10,7 @@ class CategorieBD:
     """
     Classe CategorieBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 

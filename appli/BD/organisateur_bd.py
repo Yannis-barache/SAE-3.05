@@ -10,6 +10,7 @@ class OrganisateurBD:
     """
     Classe OrganisateurBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -19,14 +20,17 @@ class OrganisateurBD:
         :return: liste d'organisateur
         """
         try:
-            query = text("SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
-                         "adresseMailOrganisateur, mdpOrganisateur, "
-                         "nomUtilisateur FROM ORGANISATEUR")
+            query = text(
+                "SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
+                "adresseMailOrganisateur, mdpOrganisateur, "
+                "nomUtilisateur FROM ORGANISATEUR")
             result = self.__connexion.execute(query)
             organisateurs = []
-            for (id_organisateur, nom, prenom, mail, mpd, nom_utilisateur) in result:
-                organisateurs.append(Organisateur(id_organisateur, nom, prenom, mail,
-                                                  mpd, nom_utilisateur))
+            for (id_organisateur, nom, prenom, mail, mpd,
+                 nom_utilisateur) in result:
+                organisateurs.append(
+                    Organisateur(id_organisateur, nom, prenom, mail, mpd,
+                                 nom_utilisateur))
             return organisateurs
         except Exception as e:
             print(e)

@@ -10,6 +10,7 @@ class ArmeBD:
     """
     Classe qui fait le lien entre les objets Arme et la BD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -36,7 +37,9 @@ class ArmeBD:
         :return: Un objet Arme
         """
         try:
-            query = text("SELECT idArme, nomArme, sexeArme FROM ARMES WHERE idArme =" + str(id_ar))
+            query = text(
+                "SELECT idArme, nomArme, sexeArme FROM ARMES WHERE idArme =" +
+                str(id_ar))
             result = self.__connexion.execute(query)
             for id_arme, nom, sexe in result:
                 return Arme(id_arme, nom, sexe)

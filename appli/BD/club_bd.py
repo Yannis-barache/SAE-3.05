@@ -10,6 +10,7 @@ class ClubBD:
     """
     Classe ClubBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 

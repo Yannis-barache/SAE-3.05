@@ -5,10 +5,12 @@
 from sqlalchemy import text
 from appli.modele.poule import Poule
 
+
 class PouleBD:
     """
     Classe PouleBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 

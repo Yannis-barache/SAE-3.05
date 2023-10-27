@@ -12,6 +12,7 @@ class InscrireBD:
     """
     Classe InscrireBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -26,7 +27,8 @@ class InscrireBD:
             inscrires = []
             for id_escrimeur, id_competition in result:
                 escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-                competition = CompetitionBD.get_competition_by_id(self, id_competition)
+                competition = CompetitionBD.get_competition_by_id(
+                    self, id_competition)
                 inscrires.append(Inscrire(escrimeur, competition))
             return inscrires
         except Exception as e:

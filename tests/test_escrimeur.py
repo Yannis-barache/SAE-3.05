@@ -124,8 +124,8 @@ class TestEscrimeur(unittest.TestCase):
         club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
         categorie = Categorie(1, 'U19')
         escrimeur = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                              'baptched', 'mdp',
-                              'AB21', 1, club, categorie, False)
+                              'baptched', 'mdp', 'AB21', 1, club, categorie,
+                              False)
         self.assertFalse(escrimeur.get_arbitrage())
 
     def test_set_id(self):
@@ -287,10 +287,9 @@ class TestEscrimeur(unittest.TestCase):
         Test de la fonction set_arbitrage de la classe Escrimeur
         """
         escrimeur = Escrimeur(2, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
-                              'baptched', 'mdp',
-                              'AB21', 1, None, None, False)
+                              'baptched', 'mdp', 'AB21', 1, None, None, False)
         escrimeur.set_arbitrage(True)
-        self.assertTrue(escrimeur.get_arbitrage()) 
+        self.assertTrue(escrimeur.get_arbitrage())
 
     def test_str(self):
         """

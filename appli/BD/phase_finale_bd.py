@@ -5,10 +5,12 @@
 from sqlalchemy import text
 from appli.modele.phase_final import PhaseFinal
 
+
 class PhaseFinaleBD:
     """
     Classe PhaseFinaleBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
