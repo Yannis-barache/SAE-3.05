@@ -2,9 +2,15 @@
 Fichier qui contient les requêtes SQL pour la table PHASE
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.phase import Phase
-from appli.BD.competition_bd import CompetitionBD
+from competition_bd import CompetitionBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from phase import Phase
 
 
 class PhaseBD:

@@ -2,8 +2,14 @@
     Fichier qui contient les requêtes SQL pour la table Club
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.club import Club
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from club import Club
 
 
 class ClubBD:

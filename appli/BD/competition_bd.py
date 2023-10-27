@@ -2,11 +2,17 @@
 Fichier qui contient les requêtes SQL pour la table COMPETITION
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.competition import Competition
-from appli.BD.categorie_bd import CategorieBD
-from appli.BD.lieu_bd import LieuBD
-from appli.BD.arme_bd import ArmeBD
+from categorie_bd import CategorieBD
+from lieu_bd import LieuBD
+from arme_bd import ArmeBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from competition import Competition
 
 
 class CompetitionBD:

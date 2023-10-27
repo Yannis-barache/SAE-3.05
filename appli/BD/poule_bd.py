@@ -2,8 +2,14 @@
     Fichier qui contient les requêtes SQL pour la table POULE
 """
 
+import sys
+import os
 from sqlalchemy import text
-from appli.modele.poule import Poule
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from poule import Poule
 
 
 class PouleBD:

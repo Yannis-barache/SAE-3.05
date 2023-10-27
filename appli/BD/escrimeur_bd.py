@@ -3,9 +3,15 @@
 """
 
 from sqlalchemy import text
-from appli.modele.escrimeur import Escrimeur
-from appli.BD.club_bd import ClubBD
-from appli.BD.categorie_bd import CategorieBD
+import sys
+import os
+from club_bd import ClubBD
+from categorie_bd import CategorieBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from escrimeur import Escrimeur
 
 
 class EscrimeurBD:

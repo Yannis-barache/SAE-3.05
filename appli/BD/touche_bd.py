@@ -2,10 +2,16 @@
 Fichier qui contient les requêtes SQL pour la table TOUCHE
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.touche import Touche
-from appli.BD.match_bd import MatchBD
-from appli.BD.escrimeur_bd import EscrimeurBD
+from match_bd import MatchBD
+from escrimeur_bd import EscrimeurBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from touche import Touche
 
 
 class ToucheBD:

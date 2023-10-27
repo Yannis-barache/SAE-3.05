@@ -2,11 +2,17 @@
 Fichier qui contient les requêtes SQL pour la table MATCHS
 """
 
+import sys
+import os
 from sqlalchemy import text
-from appli.modele.match import Match
-from appli.BD.phase_bd import PhaseBD
-from appli.BD.escrimeur_bd import EscrimeurBD
-from appli.BD.inscrire_arbitre_bd import InscrireArbitreBD
+from phase_bd import PhaseBD
+from escrimeur_bd import EscrimeurBD
+from inscrire_arbitre_bd import InscrireArbitreBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from match import Match
 
 
 class MatchBD:
@@ -38,7 +44,6 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
                 arbitre = InscrireArbitreBD(
                     self.__connexion).get_arbitre_by_id(id_arbitre)
-
                 matchs.append(
                     Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
                           heure, fini))
@@ -69,7 +74,6 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
                 arbitre = InscrireArbitreBD(
                     self.__connexion).get_arbitre_by_id(id_arbitre)
-
                 return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
                              heure, fini)
             return None

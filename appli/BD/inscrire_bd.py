@@ -2,10 +2,16 @@
 Fichier qui contient les requêtes SQL pour la table ARBITRER
 """
 
+import sys
+import os
 from sqlalchemy.sql.expression import text
-from appli.modele.inscrire import Inscrire
-from appli.BD.escrimeur_bd import EscrimeurBD
-from appli.BD.competition_bd import CompetitionBD
+from escrimeur_bd import EscrimeurBD
+from competition_bd import CompetitionBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from inscrire import Inscrire
 
 
 class InscrireBD:
