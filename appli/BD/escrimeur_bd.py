@@ -78,14 +78,23 @@ class EscrimeurBD:
             print(e)
             return None
 
-
-if __name__ == '__main__':
-    from appli.modele.connexion_bd import ConnexionBD
-    connexion = ConnexionBD().get_connexion()
-    escrimeur_bd = EscrimeurBD(connexion)
-    escrimeurs = escrimeur_bd.get_all_escrimeur()
-    for escrimeur in escrimeurs:
-        print(escrimeur)
-    print(escrimeur_bd.get_escrimeur_by_id(1))
-    print(escrimeur_bd.get_escrimeur_by_id(2))
-    connexion.close()
+    def insert_escrimeur(self, escrimeur: Escrimeur):
+        """
+        Fonction qui insère un escrimeur
+        :param escrimeur : escrimeur
+        """
+        try:
+            query = text(f"INSERT INTO ESCRIMEUR (nomEscrimeur, licence, "
+                         f"prenomEscrimeur, dateNaissance, nomUtilisateurEscrimeur, "
+                         f"mdpEscrimeur, classement, sexeEscrimeur, idClub, idCategorie, "
+                         f"arbitrage) VALUES ('{escrimeur.get_nom()}', "
+                         f"'{escrimeur.get_licence()}', '{escrimeur.get_prenom()}', "
+                         f"'{escrimeur.get_date_naissance()}', '{escrimeur.get_nom_utilisateur()}', "
+                         f"'{escrimeur.get_mdp()}', {str(escrimeur.get_classement())}, "
+                         f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
+                         f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

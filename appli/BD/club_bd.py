@@ -45,3 +45,19 @@ class ClubBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_club(self, club: Club):
+        """
+        Fonction qui insère un club
+        :param club : club
+        """
+        try:
+            query = text(f"INSERT INTO CLUB (nomClub, adresse, mdpClub) VALUES "
+                         f"('{club.get_nom()}','"
+                         f"{club.get_adresse()}','{club.get_mdp()}')")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+

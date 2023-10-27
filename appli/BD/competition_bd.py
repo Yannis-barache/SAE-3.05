@@ -63,3 +63,22 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_competition(self, competition: Competition):
+        """
+        Fonction qui insère une competition
+        :param competition : competition
+        """
+        try:
+            query = text(f"INSERT INTO COMPETITION (nomCompetition, dateCompetition, "
+                         f"dateFinInscription, saisonCompetition,idLieu, idArme, "
+                         f"idCategorie, coefficientCompetition) VALUES "
+                         f"('{competition.get_nom()}', '{competition.get_date()}', "
+                         f"'{competition.get_date_fin_inscription()}', '{competition.get_saison()}', "
+                         f"{competition.get_lieu()}, {competition.get_arme()}, "
+                         f"{competition.get_categorie()}, {competition.get_coeficient()})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
