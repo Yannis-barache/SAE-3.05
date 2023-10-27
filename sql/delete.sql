@@ -1,6 +1,5 @@
 -- Supprimer les contraintes de clé étrangère en premier
 -- Supprimer les tables d'association
-DROP TABLE IF EXISTS ETRE_DANS;
 DROP TABLE IF EXISTS INSCRIRE;
 DROP TABLE IF EXISTS ARBITRER;
 DROP TABLE IF EXISTS TOUCHE;

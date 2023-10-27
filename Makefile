@@ -1,4 +1,6 @@
-MODULES = appli/*.py tests/*.py
+TESTS = tests/tests_modele/*.py
+MODULES = appli/modele/*.py appli/BD/*.py tests/*/*.py
+
 
 .PHONY: typehint
 typehint:  
@@ -6,7 +8,7 @@ typehint:
 
 .PHONY: tests
 tests:  
-	python3 -m unittest -v -b tests/*.py
+	python3 -m unittest -v -b ${TESTS}
 
 .PHONY: lint
 lint:  
@@ -18,8 +20,8 @@ format:
 
 .PHONY: coverage
 coverage:
-	python3 -m coverage run -m unittest
-	python3 -m coverage report ${MODULES}
+	python3 -m coverage run -m unittest -v -b ${TESTS}
+	python3 -m coverage report -m ${MODULES}
 
 .PHONY: clean
 clean:  
@@ -28,7 +30,7 @@ clean:
 	find . -type d -name .mypy_cache | xargs rm -fr
 	find . -type f -name .coverage | xargs rm -fr
 	find . -type f -name .flaskenv | xargs rm -fr
-	find . -type f -name .idea/ | xargs rm -fr
+	find . -type d -name .idea/ | xargs rm -fr
 
 .PHONY: verif
-verif: clean typehint tests lint coverage format clean
+verif: clean typehint lint coverage format clean
