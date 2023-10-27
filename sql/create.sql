@@ -328,6 +328,58 @@ end |
 delimiter ;
 
 
+-- TRIGGER Supprimant tous les escrimeurs d'un club quand le club est supprimé
+delimiter |
+CREATE OR REPLACE trigger supp_escrimeur before delete on CLUB
+for each row
+begin
+    delete from ESCRIMEUR where idClub=old.idClub;
+end |
+delimiter ;
+
+
+
+
+-- TRIGGER Supprimant tous les matchs d'une phase quand la phase est supprimée
+delimiter |
+CREATE OR REPLACE trigger supp_dependence before delete on PHASE
+for each row
+begin
+    delete from POULE where idPoule=old.idPhase;
+    delete from PHASE_FINALE where idPhaseFinale=old.idPhase;
+end |
+delimiter ;
+
+-- TRIGGER Supprimant tous les matchs d'une poule quand la poule est supprimée
+delimiter |
+CREATE OR REPLACE trigger supp_match2 before delete on POULE
+for each row
+begin
+    delete from MATCHS where idPhase=old.idPoule;
+end |
+delimiter ;
+
+-- TRIGGER Supprimant tous les matchs d'une phase finale quand la phase finale est supprimée
+delimiter |
+CREATE OR REPLACE trigger supp_match3 before delete on PHASE_FINALE
+for each row
+begin
+    delete from MATCHS where idPhase=old.idPhaseFinale;
+end |
+delimiter ;
+
+-- TRIGGER Supprimant toutes les touches associés à un match quand le match est supprimé
+delimiter |
+CREATE OR REPLACE trigger supp_touche before delete on MATCHS
+for each row
+begin
+    delete from TOUCHE where idMatch=old.idMatch;
+end |
+delimiter ;
+
+
+
+
 -- PROCEDURE
 
 
