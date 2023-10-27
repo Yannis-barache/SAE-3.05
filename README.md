@@ -26,7 +26,6 @@ Cette application va permettre de gérer des compétitions d'escrime, via celle-
 Nous utiliserons le langage python avec le framework flask pour la réalisation de cette application lié à une base de données MySQL distante.
 
 <br><br>
-<br><br>
 ## Installation
 
 Pour installer le projet, il faut tout d'abord cloner le projet sur votre machine dont voici la commande :
@@ -112,6 +111,7 @@ Après une lecture attentive du sujet, nous avons pu réaliser le diagramme de c
 
 ![Diagramme de cas d'utilisation](Rendu/Diagramme_de_cas_utilisation.svg)
 
+<br>
 
 ## Liste des tâches réalisées lors de la première semaine
 
@@ -133,7 +133,7 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 
 ### Hajar :
 - J'ai realisé l'enumeration des fonctionnalités attendues sur l'application
-- J'ai réalisé l'ensemble les maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil.
+- J'ai réalisé l'ensemble des maquettes sur Canva, maquettes authentification, page de connexion, inscription, accueil, profil.
 - Je travaille actuellement sur la realisation des pages en Flask
 - J'ai travaillé sur le Readme
 - J'ai travaillé sur les scénarios alternatifs
