@@ -7,17 +7,17 @@ import os
 import unittest
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'tests/tests_bd'))
-
-from test_bd import TestBD
-
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/BD'))
 
 from poule_bd import PouleBD
 
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
-class TestPouleBD(TestBD, unittest.TestCase):
+from modele_appli import ModeleAppli
+
+
+class TestPouleBD(unittest.TestCase):
     """
     Classe de test de la classe PouleBD
 
@@ -29,12 +29,13 @@ class TestPouleBD(TestBD, unittest.TestCase):
         """
         Test du constructeur de la classe PouleBD
         """
-        self.assertIsInstance(self.modele.get_poule_bd(), PouleBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_poule_bd(), PouleBD)
 
     def test_get_all_poule(self):
         """
         Test de la méthode get_all_poule
         """
-        poules = self.modele.get_poule_bd().get_all_poule()
+        modele = ModeleAppli()
+        poules = modele.get_poule_bd().get_all_poule()
         self.assertIsInstance(poules, list)
-        self.modele.fermer_connexion()

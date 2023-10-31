@@ -2,7 +2,7 @@
 Module contenant la classe Match
 """
 
-from escrimeur import Escrimeur
+from appli.modele.escrimeur import Escrimeur
 
 
 class Match:
