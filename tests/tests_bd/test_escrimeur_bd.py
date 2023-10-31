@@ -7,6 +7,11 @@ import os
 import unittest
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'tests/tests_bd'))
+
+from test_bd import TestBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/BD'))
 
 from escrimeur_bd import EscrimeurBD
@@ -14,11 +19,10 @@ from escrimeur_bd import EscrimeurBD
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
-from modele_appli import ModeleAppli
 from escrimeur import Escrimeur
 
 
-class TestEscrimeurBD(unittest.TestCase):
+class TestEscrimeurBD(TestBD, unittest.TestCase):
     """
     Classe de test de la classe EscrimeurBD
 
@@ -30,23 +34,21 @@ class TestEscrimeurBD(unittest.TestCase):
         """
         Test du constructeur de la classe EscrimeurBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_escrimeur_bd(), EscrimeurBD)
+        self.assertIsInstance(self.modele.get_escrimeur_bd(), EscrimeurBD)
 
     def test_get_all_escrimeur(self):
         """
         Test de la méthode get_all_escrimeur
         """
-        modele = ModeleAppli()
-        escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur()
+        escrimeurs = self.modele.get_escrimeur_bd().get_all_escrimeur()
         self.assertIsInstance(escrimeurs, list)
 
     def test_get_escrimeur_by_id(self):
         """
         Test de la méthode get_escrimeur_by_id
         """
-        modele = ModeleAppli()
-        escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(1)
+        escrimeur = self.modele.get_escrimeur_bd().get_escrimeur_by_id(1)
         self.assertIsInstance(escrimeur, Escrimeur)
-        escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(-1)
+        escrimeur = self.modele.get_escrimeur_bd().get_escrimeur_by_id(-1)
         self.assertIsNone(escrimeur)
+        self.modele.fermer_connexion()

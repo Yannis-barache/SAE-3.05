@@ -2,8 +2,8 @@
 Module contenant la classe Touche
 """
 
-from appli.modele.match import Match
-from appli.modele.escrimeur import Escrimeur
+from match import Match
+from escrimeur import Escrimeur
 
 
 class Touche:

@@ -7,17 +7,17 @@ import os
 import unittest
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'tests/tests_bd'))
+
+from test_bd import TestBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/BD'))
 
 from touche_bd import ToucheBD
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
-from modele_appli import ModeleAppli
-
-
-class TestToucheBD(unittest.TestCase):
+class TestToucheBD(TestBD, unittest.TestCase):
     """
     Classe de test de la classe ToucheBD
 
@@ -29,13 +29,12 @@ class TestToucheBD(unittest.TestCase):
         """
         Test du constructeur de la classe ToucheBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_touche_bd(), ToucheBD)
+        self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
 
     def test_get_all_touche(self):
         """
         Test de la méthode get_all_touche
         """
-        modele = ModeleAppli()
-        touches = modele.get_touche_bd().get_all_touche()
+        touches = self.modele.get_touche_bd().get_all_touche()
         self.assertIsInstance(touches, list)
+        self.modele.fermer_connexion()

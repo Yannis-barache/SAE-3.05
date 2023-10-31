@@ -51,7 +51,7 @@ class TestModeleAppli(unittest.TestCase):
 
     def test_get_categorie_bd(self):
         """
-        Teste la méthode get_categorie_bd
+        Teste la méthode get_categorie_bdd
         """
         modele = ModeleAppli()
         self.assertIsInstance(modele.get_categorie_bd(), CategorieBD)

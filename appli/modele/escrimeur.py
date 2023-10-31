@@ -2,8 +2,8 @@
 Module contenant la classe Escrimeur
 """
 
-from appli.modele.club import Club
-from appli.modele.categorie import Categorie
+from club import Club
+from categorie import Categorie
 
 
 class Escrimeur:
