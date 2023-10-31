@@ -25,17 +25,20 @@ class TestInscrireBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.inscrire_bd = cls.modele.get_inscrire_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe InscrireBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_inscrire_bd(), InscrireBD)
+        self.assertIsInstance(self.inscrire_bd, InscrireBD)
 
     def test_get_all_inscrire(self):
         """
         Test de la méthode get_all_inscrire
         """
-        modele = ModeleAppli()
-        inscrires = modele.get_inscrire_bd().get_all_inscrire()
+        inscrires = self.inscrire_bd.get_all_inscrire()
         self.assertIsInstance(inscrires, list)

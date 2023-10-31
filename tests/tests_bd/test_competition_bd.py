@@ -26,27 +26,29 @@ class TestCompetitionBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.competition_bd = cls.modele.get_competition_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe CompetitionBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_competition_bd(), CompetitionBD)
+        self.assertIsInstance(self.competition_bd, CompetitionBD)
 
     def test_get_all_competition(self):
         """
         Test de la méthode get_all_competition
         """
-        modele = ModeleAppli()
-        competitions = modele.get_competition_bd().get_all_competition()
+        competitions = self.competition_bd.get_all_competition()
         self.assertIsInstance(competitions, list)
 
     def test_get_competition_by_id(self):
         """
         Test de la méthode get_competition_by_id
         """
-        modele = ModeleAppli()
-        competition = modele.get_competition_bd().get_competition_by_id(1)
+        competition = self.competition_bd.get_competition_by_id(1)
         self.assertIsInstance(competition, Competition)
-        competition = modele.get_competition_bd().get_competition_by_id(-1)
+        competition = self.competition_bd.get_competition_by_id(-1)
         self.assertIsNone(competition)

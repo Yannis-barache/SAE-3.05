@@ -26,27 +26,29 @@ class TestCategorieBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.categorie_bd = cls.modele.get_categorie_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe CategorieBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_categorie_bd(), CategorieBD)
+        self.assertIsInstance(self.categorie_bd, CategorieBD)
 
     def test_get_all_categorie(self):
         """
         Test de la méthode get_all_categorie
         """
-        modele = ModeleAppli()
-        categories = modele.get_categorie_bd().get_all_categorie()
+        categories = self.categorie_bd.get_all_categorie()
         self.assertIsInstance(categories, list)
 
     def test_get_categorie_by_id(self):
         """
         Test de la méthode get_categorie_by_id
         """
-        modele = ModeleAppli()
-        categorie = modele.get_categorie_bd().get_categorie_by_id(1)
+        categorie = self.categorie_bd.get_categorie_by_id(1)
         self.assertIsInstance(categorie, Categorie)
-        categorie = modele.get_categorie_bd().get_categorie_by_id(-1)
+        categorie = self.categorie_bd.get_categorie_by_id(-1)
         self.assertIsNone(categorie)

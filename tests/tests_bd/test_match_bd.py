@@ -26,27 +26,29 @@ class TestMatchBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.match_bd = cls.modele.get_match_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe MatchBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_match_bd(), MatchBD)
+        self.assertIsInstance(self.match_bd, MatchBD)
 
     def test_get_all_match(self):
         """
         Test de la méthode get_all_match
         """
-        modele = ModeleAppli()
-        matchs = modele.get_match_bd().get_all_match()
+        matchs = self.match_bd.get_all_match()
         self.assertIsInstance(matchs, list)
 
     def test_get_match_by_id(self):
         """
         Test de la méthode get_match_by_id
         """
-        modele = ModeleAppli()
-        match = modele.get_match_bd().get_match_by_id(1)
+        match = self.match_bd.get_match_by_id(1)
         self.assertIsInstance(match, Match)
-        match = modele.get_match_bd().get_match_by_id(-1)
+        match = self.match_bd.get_match_by_id(-1)
         self.assertIsNone(match)

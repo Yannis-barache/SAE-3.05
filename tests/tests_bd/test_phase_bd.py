@@ -26,27 +26,29 @@ class TestPhaseBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.phase_bd = cls.modele.get_phase_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe PhaseBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_phase_bd(), PhaseBD)
+        self.assertIsInstance(self.phase_bd, PhaseBD)
 
     def test_get_all_phase(self):
         """
         Test de la méthode get_all_phase
         """
-        modele = ModeleAppli()
-        phases = modele.get_phase_bd().get_all_phase()
+        phases = self.phase_bd.get_all_phase()
         self.assertIsInstance(phases, list)
 
     def test_get_phase_by_id(self):
         """
         Test de la méthode get_phase_by_id
         """
-        modele = ModeleAppli()
-        phase = modele.get_phase_bd().get_phase_by_id(1)
+        phase = self.phase_bd.get_phase_by_id(1)
         self.assertIsInstance(phase, Phase)
-        phase = modele.get_phase_bd().get_phase_by_id(-1)
+        phase = self.phase_bd.get_phase_by_id(-1)
         self.assertIsNone(phase)

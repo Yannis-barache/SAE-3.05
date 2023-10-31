@@ -25,17 +25,20 @@ class TestToucheBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.touche_bd = cls.modele.get_touche_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe ToucheBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_touche_bd(), ToucheBD)
+        self.assertIsInstance(self.touche_bd, ToucheBD)
 
     def test_get_all_touche(self):
         """
         Test de la méthode get_all_touche
         """
-        modele = ModeleAppli()
-        touches = modele.get_touche_bd().get_all_touche()
+        touches = self.touche_bd.get_all_touche()
         self.assertIsInstance(touches, list)

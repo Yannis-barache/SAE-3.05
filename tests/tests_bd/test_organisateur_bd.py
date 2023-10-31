@@ -25,17 +25,20 @@ class TestOrganisateurBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.organisateur_bd = cls.modele.get_organisateur_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe OrganisateurBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_organisateur_bd(), OrganisateurBD)
+        self.assertIsInstance(self.organisateur_bd, OrganisateurBD)
 
     def test_get_all_organisateur(self):
         """
         Test de la méthode get_all_organisateur
         """
-        modele = ModeleAppli()
-        organisateurs = modele.get_organisateur_bd().get_all_organisateur()
+        organisateurs = self.organisateur_bd.get_all_organisateur()
         self.assertIsInstance(organisateurs, list)

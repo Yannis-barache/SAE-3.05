@@ -26,30 +26,29 @@ class TestInscrireArbitreBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.inscrire_arbitre_bd = cls.modele.get_inscrire_arbitre_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe InscrireArbitreBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_inscrire_arbitre_bd(),
-                              InscrireArbitreBD)
+        self.assertIsInstance(self.inscrire_arbitre_bd, InscrireArbitreBD)
 
     def test_get_all_inscrire_arbitre(self):
         """
         Test de la méthode get_all_inscrire_arbitre
         """
-        modele = ModeleAppli()
-        inscrire_arbitres = modele.get_inscrire_arbitre_bd().get_all_arbitre()
+        inscrire_arbitres = self.inscrire_arbitre_bd.get_all_arbitre()
         self.assertIsInstance(inscrire_arbitres, list)
 
     def test_get_inscrire_arbitre_by_id(self):
         """
         Test de la méthode get_inscrire_arbitre_by_id
         """
-        modele = ModeleAppli()
-        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(
-            1)
+        inscrire_arbitre = self.inscrire_arbitre_bd.get_arbitre_by_id(1)
         self.assertIsInstance(inscrire_arbitre, InscrireArbitre)
-        inscrire_arbitre = modele.get_inscrire_arbitre_bd().get_arbitre_by_id(
-            -1)
+        inscrire_arbitre = self.inscrire_arbitre_bd.get_arbitre_by_id(-1)
         self.assertIsNone(inscrire_arbitre)

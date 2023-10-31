@@ -26,27 +26,29 @@ class TestArmeBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.arme_bd = cls.modele.get_arme_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe ArmeBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_arme_bd(), ArmeBD)
+        self.assertIsInstance(self.arme_bd, ArmeBD)
 
     def test_get_all_arme(self):
         """
         Test de la méthode get_all_arme
         """
-        modele = ModeleAppli()
-        armes = modele.get_arme_bd().get_all_arme()
+        armes = self.arme_bd.get_all_arme()
         self.assertIsInstance(armes, list)
 
     def test_get_arme_by_id(self):
         """
         Test de la méthode get_arme_by_id
         """
-        modele = ModeleAppli()
-        arme = modele.get_arme_bd().get_arme_by_id(1)
+        arme = self.arme_bd.get_arme_by_id(1)
         self.assertIsInstance(arme, Arme)
-        arme = modele.get_arme_bd().get_arme_by_id(-1)
+        arme = self.arme_bd.get_arme_by_id(-1)
         self.assertIsNone(arme)

@@ -26,27 +26,29 @@ class TestEscrimeurBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.escrimeur_bd = cls.modele.get_escrimeur_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe EscrimeurBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_escrimeur_bd(), EscrimeurBD)
+        self.assertIsInstance(self.escrimeur_bd, EscrimeurBD)
 
     def test_get_all_escrimeur(self):
         """
         Test de la méthode get_all_escrimeur
         """
-        modele = ModeleAppli()
-        escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur()
+        escrimeurs = self.escrimeur_bd.get_all_escrimeur()
         self.assertIsInstance(escrimeurs, list)
 
     def test_get_escrimeur_by_id(self):
         """
         Test de la méthode get_escrimeur_by_id
         """
-        modele = ModeleAppli()
-        escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(1)
+        escrimeur = self.escrimeur_bd.get_escrimeur_by_id(1)
         self.assertIsInstance(escrimeur, Escrimeur)
-        escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(-1)
+        escrimeur = self.escrimeur_bd.get_escrimeur_by_id(-1)
         self.assertIsNone(escrimeur)

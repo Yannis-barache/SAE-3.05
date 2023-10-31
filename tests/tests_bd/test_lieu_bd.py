@@ -26,27 +26,29 @@ class TestLieuBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.lieu_bd = cls.modele.get_lieu_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe LieuBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_lieu_bd(), LieuBD)
+        self.assertIsInstance(self.lieu_bd, LieuBD)
 
     def test_get_all_lieu(self):
         """
         Test de la méthode get_all_lieu
         """
-        modele = ModeleAppli()
-        lieus = modele.get_lieu_bd().get_all_lieu()
+        lieus = self.lieu_bd.get_all_lieu()
         self.assertIsInstance(lieus, list)
 
     def test_get_lieu_by_id(self):
         """
         Test de la méthode get_lieu_by_id
         """
-        modele = ModeleAppli()
-        lieu = modele.get_lieu_bd().get_lieu_by_id(1)
+        lieu = self.lieu_bd.get_lieu_by_id(1)
         self.assertIsInstance(lieu, Lieu)
-        lieu = modele.get_lieu_bd().get_lieu_by_id(-1)
+        lieu = self.lieu_bd.get_lieu_by_id(-1)
         self.assertIsNone(lieu)

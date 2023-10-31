@@ -25,17 +25,20 @@ class TestPouleBD(unittest.TestCase):
         unittest (unittest): La classe de test unitaire
     """
 
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = ModeleAppli()
+        cls.poule_bd = cls.modele.get_poule_bd()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe PouleBD
         """
-        modele = ModeleAppli()
-        self.assertIsInstance(modele.get_poule_bd(), PouleBD)
+        self.assertIsInstance(self.poule_bd, PouleBD)
 
     def test_get_all_poule(self):
         """
         Test de la méthode get_all_poule
         """
-        modele = ModeleAppli()
-        poules = modele.get_poule_bd().get_all_poule()
+        poules = self.poule_bd.get_all_poule()
         self.assertIsInstance(poules, list)
