@@ -34,99 +34,109 @@ class TestModeleAppli(unittest.TestCase):
     """
     Classe de test de la classe ModeleAppli
     """
-    
-    def __init__(self, methodName: str = "runTest") -> None:
-        super().__init__(methodName)
-        self.modele = ModeleAppli()
 
     def test_constructeur(self):
         """
         Teste le constructeur
         """
-        self.assertIsInstance(self.modele, ModeleAppli)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele, ModeleAppli)
 
     def test_get_arme_bd(self):
         """
         Teste la méthode get_arme_bd
         """
-        self.assertIsInstance(self.modele.get_arme_bd(), ArmeBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_arme_bd(), ArmeBD)
 
     def test_get_categorie_bd(self):
         """
         Teste la méthode get_categorie_bdd
         """
-        self.assertIsInstance(self.modele.get_categorie_bd(), CategorieBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_categorie_bd(), CategorieBD)
 
     def test_get_club_bd(self):
         """
         Teste la méthode get_club_bd
         """
-        self.assertIsInstance(self.modele.get_club_bd(), ClubBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_club_bd(), ClubBD)
 
     def test_get_competition_bd(self):
         """
         Teste la méthode get_competition_bd
         """
-        self.assertIsInstance(self.modele.get_competition_bd(), CompetitionBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_competition_bd(), CompetitionBD)
 
     def test_get_escrimeur_bd(self):
         """
         Teste la méthode get_escrimeur_bd
         """
-        self.assertIsInstance(self.modele.get_escrimeur_bd(), EscrimeurBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_escrimeur_bd(), EscrimeurBD)
 
     def test_get_inscrire_arbitre_bd(self):
         """
         Teste la méthode get_inscrire_arbitre_bd
         """
-        self.assertIsInstance(self.modele.get_inscrire_arbitre_bd(),
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_inscrire_arbitre_bd(),
                               InscrireArbitreBD)
 
     def test_get_inscrire_bd(self):
         """
         Teste la méthode get_inscrire_bd
         """
-        self.assertIsInstance(self.modele.get_inscrire_bd(), InscrireBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_inscrire_bd(), InscrireBD)
 
     def test_get_lieu_bd(self):
         """
         Teste la méthode get_lieu_bd
         """
-        self.assertIsInstance(self.modele.get_lieu_bd(), LieuBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_lieu_bd(), LieuBD)
 
     def test_get_match_bd(self):
         """
         Teste la méthode get_match_bd
         """
-        self.assertIsInstance(self.modele.get_match_bd(), MatchBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_match_bd(), MatchBD)
 
     def test_get_organisateur_bd(self):
         """
         Teste la méthode get_organisateur_bd
         """
-        self.assertIsInstance(self.modele.get_organisateur_bd(), OrganisateurBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_organisateur_bd(), OrganisateurBD)
 
     def test_get_phase_bd(self):
         """
         Teste la méthode get_phase_bd
         """
-        self.assertIsInstance(self.modele.get_phase_bd(), PhaseBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_phase_bd(), PhaseBD)
 
     def test_get_phase_finale_bd(self):
         """
         Teste la méthode get_phase_finale_bd
         """
-        self.assertIsInstance(self.modele.get_phase_finale_bd(), PhaseFinaleBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_phase_finale_bd(), PhaseFinaleBD)
 
     def test_get_poule_bd(self):
         """
         Teste la méthode get_poule_bd
         """
-        self.assertIsInstance(self.modele.get_poule_bd(), PouleBD)
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_poule_bd(), PouleBD)
 
     def test_get_touche_bd(self):
         """
         Teste la méthode get_touche_bd
         """
-        self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
-        self.modele.fermer_connexion()
+        modele = ModeleAppli()
+        self.assertIsInstance(modele.get_touche_bd(), ToucheBD)
