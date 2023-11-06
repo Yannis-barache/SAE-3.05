@@ -103,3 +103,42 @@ class EscrimeurBD:
         except Exception as e:
             print(e)
             return None
+
+    def login_escrimeur(self, login_escrimeur: int, login_mdp: str) -> Escrimeur:
+        """
+        Fonction qui permet de vérifier les identifiants d'un escrimeur
+        :param login_escrimeur: licence de l'escrimeur
+        :param login_mdp: mdp de l'escrimeur
+        :return: escrimeur
+        """
+        try:
+            query = text(
+                'SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, '
+                'dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, '
+                'sexeEscrimeur, idClub, idCategorie, arbitrage '
+                'FROM ESCRIMEUR WHERE licence = ' + str(login_escrimeur))
+            result = self.__connexion.execute(query)
+
+
+
+            for (id_escrimeur, nom, licence, prenom, date_naissance,
+                 nom_utilisateur, mdp, classement, sexe, id_club, id_categorie,
+                 arbitrage) in result:
+
+                fonction = text('SELECT verif_mdp_escrimeur(:id, :mdp)')
+                result = self.__connexion.execute(fonction, {"id": id_escrimeur, "mdp": login_mdp})
+                if result.fetchone()[0] == 0:
+                    return None
+
+                arbitrage = arbitrage == 1
+                club = ClubBD(self.__connexion).get_club_by_id(id_club)
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+
+                return Escrimeur(id_escrimeur, nom, prenom, sexe,
+                                 date_naissance, nom_utilisateur, mdp, licence,
+                                 classement, club, categorie, arbitrage)
+            return None
+        except Exception as e:
+            print(e)
+            return None
