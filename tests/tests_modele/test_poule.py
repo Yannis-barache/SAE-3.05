@@ -191,6 +191,85 @@ class TestPoule(unittest.TestCase):
                 liste.append(match)
             poule.generer_pdf()
 
+    def test_get_nb_escrimeurs(self):
+        """
+        Test de la fonction get_nb_escrimeurs de la classe Poule
+        """
+        poule = Poule(1)
+        self.assertEqual(poule.get_nb_escrimeurs(), 0)
+
+    def test_get_nb_matchs(self):
+        """
+        Test de la fonction get_nb_matchs de la classe Poule
+        """
+        poule = Poule(1)
+        self.assertEqual(poule.get_nb_matchs(), 0)
+
+    def test_get_nb_victoires(self):
+        """
+        Test de la fonction get_nb_victoires de la classe Poule
+        """
+        club = Club(1, 'nom', 'adresse', 'pays')
+        escrimeur1 = Escrimeur(1, 'nom', 'prenom', 'sexe', 'date_naissance',
+                               'pseudo', 'mdp', 'licence', 1, club, None,
+                               False)
+        escrimeur2 = Escrimeur(2, 'nom2', 'prenom2', 'sexe2',
+                               'date_naissance2', 'pseudo2', 'mdp2',
+                               'licence2', 2, club, None, False)
+        arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
+                             'date_naissance11', 'pseudo10', 'mdp11',
+                             'licence11', 11, club, None, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        poule = Poule(1)
+        poule.set_les_matchs([match])
+        touche = Touche(match, escrimeur1, 1)
+        match.ajouter_touche(touche)
+        self.assertEqual(poule.get_nb_victoires(escrimeur1), 1)
+
+    def test_get_nb_touche_marquee(self):
+        """
+        Test de la fonction get_nb_touche_marquee de la classe Poule
+        """
+        club = Club(1, 'nom', 'adresse', 'pays')
+        escrimeur1 = Escrimeur(1, 'nom', 'prenom', 'sexe', 'date_naissance',
+                               'pseudo', 'mdp', 'licence', 1, club, None,
+                               False)
+        escrimeur2 = Escrimeur(2, 'nom2', 'prenom2', 'sexe2',
+                               'date_naissance2', 'pseudo2', 'mdp2',
+                               'licence2', 2, club, None, False)
+        arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
+                             'date_naissance11', 'pseudo10', 'mdp11',
+                             'licence11', 11, club, None, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        poule = Poule(1)
+        poule.set_les_matchs([match])
+        touche = Touche(match, escrimeur1, 1)
+        match.ajouter_touche(touche)
+        self.assertEqual(poule.get_nb_touche_marquee(escrimeur1), 1)
+        self.assertEqual(poule.get_nb_touche_marquee(escrimeur2), 0)
+
+    def test_get_nb_touche_prise(self):
+        """
+        Test de la fonction get_nb_touche_prise de la classe Poule
+        """
+        club = Club(1, 'nom', 'adresse', 'pays')
+        escrimeur1 = Escrimeur(1, 'nom', 'prenom', 'sexe', 'date_naissance',
+                               'pseudo', 'mdp', 'licence', 1, club, None,
+                               False)
+        escrimeur2 = Escrimeur(2, 'nom2', 'prenom2', 'sexe2',
+                               'date_naissance2', 'pseudo2', 'mdp2',
+                               'licence2', 2, club, None, False)
+        arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
+                             'date_naissance11', 'pseudo10', 'mdp11',
+                             'licence11', 11, club, None, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        poule = Poule(1)
+        poule.set_les_matchs([match])
+        touche = Touche(match, escrimeur1, 1)
+        match.ajouter_touche(touche)
+        self.assertEqual(poule.get_nb_touche_prise(escrimeur1), 0)
+        self.assertEqual(poule.get_nb_touche_prise(escrimeur2), 1)
+
     def test_str(self):
         """
         Test de la fonction __str__ de la classe Poule
