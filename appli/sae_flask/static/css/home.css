@@ -1,0 +1,45 @@
+.menu{
+    height:10%;
+    width: 3%;
+    margin-right: 100%;
+    margin-top: -23%;
+  }
+
+header{
+  height: 100%;
+  width: 100%;
+  padding: 10%;
+  background-image: url(../img/baniere.jpg);
+  background-repeat: no-repeat;
+  background-size:100%;
+  
+ 
+}
+  
+
+  .user{
+    height: 10%;
+    width: 5%;
+    margin-left: 100%;
+    margin-top: -25%
+}
+
+.navigateur{
+  margin-top:12%;
+  margin-bottom: -8%;
+}
+
+.barre{
+  margin:30%;
+  text-align: center;
+}
+.authentif{
+  text-align: center;
+  width: auto;
+
+}
+
+.compet{
+
+  text-align: center;
+}
