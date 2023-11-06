@@ -12,10 +12,10 @@
         align-items: center;
         width: 142%;
         height: 100%;
-        margin-top: 6%  ;
+        margin-top: 6%;
     }
-    
-    
+
+
     .btn{
         align-self: center;
         color: black;
@@ -37,13 +37,13 @@
             <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
         </div>
         <button type="submit" class="btn btn-primary">Se connecter</button>
-    
-    
-    </form> 
-    
-    
+
+
+    </form>
+
+
     */
-    
+
     /*.form-control{
         background-color: #d2080a;
         border-radius: 2.9375em;
@@ -54,17 +54,17 @@
         text-align: center;
         width: 39vh;
     }*/
-    
-    
-    
-    
+
+
+
+
     .form-group{
         width: 71%;
     }
-    
+
     button{
-    
-        background-color: white;
+
+        background-color: red;
         /* border-radius: 0.9375em; */
         /* box-sizing: border-box; */
         width: 100%;
@@ -72,17 +72,34 @@
         /* border-block: none; */
         border: none;
         font-size: larger;
-    
     }
-    
+
+
     #black{
         background-color: black;
     }
-    
+
     input{
         color: white;
-    
     }
-    
+
+    .contexte {
+        display:inline;
+    }
+
+    .form-group label {
+        margin-left : 4%;
+    }
+
+    .form-group input {
+        margin-left:4%;
+    }
+
+    .form-group button {
+        margin-left : 2%;
+    }
+
+
+
     
     

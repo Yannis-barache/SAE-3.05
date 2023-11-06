@@ -3,5 +3,5 @@
 .coverage
 venv/
 .idea/
-.flaskenv
+appli/.flaskenv
 .vscode/
