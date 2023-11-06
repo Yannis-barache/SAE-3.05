@@ -42,3 +42,6 @@ jobs:
     - name: Analysing the code with mypy
       run: |
         make typehint
+
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3

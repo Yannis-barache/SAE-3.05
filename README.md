@@ -1,6 +1,7 @@
 <div style="text-align: center;">
 
 # SAE-3.05
+[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
 <div style="display: flex; align-items: center; justify-content:space-evenly">
     <img src="https://assets.onthehub.com/attachments/15/bf1336cd-799b-e011-969d-0030487d8897/40d4e299-03ff-4c99-94a8-7a100f07837c.jpg" alt="Logo IUT Orléans" width="275"/>
