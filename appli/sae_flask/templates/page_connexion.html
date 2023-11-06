@@ -2,22 +2,38 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}"> 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/authentification.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pp.css')}}"> 
 {% endblock %}
 
 
 {% block content %}
 
-<span class="block-logo"> <img id="user" src="{{ url_for('static', filename='img/user.png') }}" alt="logo"></span>
+
+<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='img/userAccunt.png') }}" alt="logo"></span>
             
 <div class="infoconnecte">
-<span class="titre"> {{ nom }} </span>
-
-    <span class="petit-titre">Connecte toi ou crée un compte :</span>
+    <span class="titre"> ECRIMEUR </span>
 </div>
 
+<form class="form" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Adresse email</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre adresse email" name="email">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Mot de passe</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Entrez votre mot de passe" name="password">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember">
+        <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
+    </div>
+    <button type="submit" class="btn btn-primary">SE CONNECTER</button>
+
+
+</form> 
 
 
 
