@@ -43,5 +43,16 @@ jobs:
       run: |
         make typehint
 
-    - name: Coveralls GitHub Action
-      uses: coverallsapp/github-action@v2.2.3
+  Send-to-coveralls:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          python-version: ["3.10"]
+    steps:
+      - name: Coveralls GitHub Action
+        run: |
+          pip install coveralls
+          make coverage
+        uses: coverallsapp/github-action@v2.2.3
+
+
