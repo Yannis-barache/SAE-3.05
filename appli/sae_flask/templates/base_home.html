@@ -12,7 +12,18 @@
 <body>
 
     <header>
-
+        {% block header %}
+        <nav>
+            <a href=""> AUTHENTIFICATION </a>
+            <a href=""> COMPÉTITION </a>
+            <a href=""> RÈGLES </a>
+        
+        </nav>
+        
+        <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
+        <img class="baniere" src="{{ url_for('static', filename='../static/img/baniere.jpg') }}" alt="baniere">
+        <img class="User" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+        {% endblock %}
     </header>
     <main>
         <div class="rec-central">

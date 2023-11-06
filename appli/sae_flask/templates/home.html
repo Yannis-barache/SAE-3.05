@@ -1,22 +1,8 @@
-{% extends "base_accueil.html" %}
+{% extends "base_home.html" %}
 
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
-{% endblock %}
-
-{% block header %}
-<nav>
-    <a href=""> AUTHENTIFICATION </a>
-    <a href=""> COMPÉTITION</a>
-    <a href=""> RÈGLES</a>
-
-</nav>
-
-<img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
-<img class="User" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
-<img class="baniere" src="{{ url_for('static', filename='../static/img/baniere.jpg') }}" alt="baniere">
-    
 {% endblock %}
 
 
@@ -41,11 +27,11 @@
           
       </tr>
         
-        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td> <td> 05/10/2023 </td> <td> Blois </td> <td>  TERMINÉ </td> <td> RÉSULTAT </td></tr>
-        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td> <td> 14/09/2024 </td> <td> Paris</td>  <td> À VENIR </td>  <td> S'INSCRIRE </td></tr>
-        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td> <td> 24/10/2023 </td> <td> Bruxelles   </td> <td> EN COURS </td> <td> RÉSULTAT </td></tr>
-        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td> <td> 12/12/2021 </td> <td> Barcelone   </td><td> TERMINÉ</td> <td> RÉSULTAT </td></tr>
-        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td> <td> 23/12/2022 </td> <td> Marseille   </td><td> TERMINÉ €</td> <td> RÉSULTAT </td></tr>        
+        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td>  <td> 05/10/2023 </td> <td> Blois </td> <td>  TERMINÉ </td> <td> RÉSULTAT </td></tr>
+        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td>  <td> 14/09/2024 </td> <td> Paris</td>  <td> À VENIR </td>  <td> S'INSCRIRE </td></tr>
+        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td>  <td> 24/10/2023 </td> <td> Bruxelles</td> <td> EN COURS </td> <td> RÉSULTAT </td></tr>
+        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td>  <td> 12/12/2021 </td> <td> Barcelone</td>  <td> TERMINÉ</td> <td> RÉSULTAT </td></tr>
+        <tr> <td>Neque porro quisquam est qui dolorem ipsum</td>  <td> 23/12/2022 </td> <td> Marseille</td>  <td> TERMINÉ </td> <td> RÉSULTAT </td></tr>        
         </table>
         
 </div>

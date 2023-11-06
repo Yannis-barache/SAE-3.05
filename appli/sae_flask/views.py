@@ -12,3 +12,5 @@ def connexion():
     return render_template(
         "page_connexion.html"
     )
+    
+    
