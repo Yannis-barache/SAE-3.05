@@ -147,7 +147,8 @@ disable=abstract-method,
         xrange-builtin,
         zip-builtin-not-iterating,
         protected-access,
-        wrong-import-position
+        wrong-import-position,
+        inconsistent-quotes
 
 [REPORTS]
 
