@@ -16,15 +16,13 @@
     <header>
         {% block header %}
         <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
-        <img class="user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+        <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
+        <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
         <nav class="navigateur">
             {% block nav %}
-            <div class="barre">
-                <a class="authentif" href=""> AUTHENTIFICATION </a> 
-                <a class="compet" href=""> COMPÉTITION </a> 
-                <a class="regles" href=""> RÈGLES </a> 
-            </div>
-         
+             <a class="authentif" href=""> AUTHENTIFICATION </a> 
+             <a class="compet" href=""> COMPÉTITION </a> 
+             <a class="regles" href=""> RÈGLES </a> 
             {% endblock %}
         </nav>
     
@@ -39,26 +37,18 @@
     </main>
     <footer>
         {% block footer %}
-        <a href=""></a>
-        <ul class="contactes">
-            <p>CONTACTES</p>
-            <li> 
-                <a href=""> 
-                    <img class="Insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
-                </a>
-            </li>
-            <li> 
-                <a href="">
-                     <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
-                    </a>
-            </li>
- 
-            <li> 
-                <a href=""> 
-                    <img class="Youtube" src="{{ url_for('static', filename='../static/img/Youtube.png') }}" alt="image logo youtube">
-                </a>
-            </li>
-        </ul>
+        <p>CONTACTES</p>
+        <a href="">
+            <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
+        </a>
+            
+        <a href="">
+            <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
+        </a>
+        
+        <a href=""> 
+            <img class="youtube" src="{{ url_for('static', filename='../static/img/Youtube.png') }}" alt="image logo youtube">
+        </a>
         {% endblock %}
 
     </footer>
