@@ -42,25 +42,6 @@ from phase import Phase
 
 modele = ModeleAppli()
 
-def change_variable(text):
-    if text == 'Locale':
-        text = True
-    elif text == 'Distante':
-        text = False
-    else:
-        text = "''"
-
-    # changer la viriable "locale" dans le fichier constante.py
-    with open('../../appli/modele/constantes.py', 'r') as file:
-        lines = file.readlines()
-    with open('../../appli/modele/constantes.py', 'w') as file:
-        for line in lines:
-            if line.startswith('locale = '):
-                file.write('locale = {}\n'.format(text))
-            else:
-                file.write(line)
-
-
 class TestArmeBD(unittest.TestCase):
     """
     Classe de test de la classe ArmeBD
@@ -71,13 +52,8 @@ class TestArmeBD(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        change_variable('Distante')
         cls.modele = modele
         cls.arme_bd = cls.modele.get_arme_bd()
-
-    @classmethod
-    def tearDownClass(cls):
-        change_variable('NOTHING')
 
     def test_constructeur(self):
         """
