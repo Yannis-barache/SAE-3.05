@@ -41,34 +41,16 @@ class InscrireBD:
             print(e)
             return None
 
-    def get_inscrire_by_id(self, id_i: int):
-        """
-        Fonction qui retourne un inscrire en fonction de son id
-        :param id_i: id de l'inscrire
-        :return: inscrire
-        """
-        try:
-            query = text("SELECT idEscrimeur, idCompetition "
-                         "FROM INSCRIRE WHERE idEscrimeur =" + str(id_i))
-            result = self.__connexion.execute(query)
-            for id_escrimeur, id_competition in result:
-                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-                competition = CompetitionBD.get_competition_by_id(self, id_competition)
-                return Inscrire(escrimeur, competition)
-            return None
-        except Exception as e:
-            print(e)
-            return None
-
     def insert_inscrire(self, inscrire: Inscrire):
         """
         Fonction qui insère un inscrire
         :param inscrire : inscrire
         """
         try:
-            query = text(f"INSERT INTO INSCRIRE (idEscrimeur, idCompetition) VALUES "
-                         f"({str(inscrire.get_id_escrimeur())},"
-                         f"{str(inscrire.get_id_competition())})")
+            query = text(
+                f"INSERT INTO INSCRIRE (idEscrimeur, idCompetition) VALUES "
+                f"({str(inscrire.get_id_escrimeur())},"
+                f"{str(inscrire.get_id_competition())})")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

@@ -41,14 +41,15 @@ class ToucheBD:
             print(e)
             return None
 
-
-    def insert_poule(self, touche):
+    def insert_poule(self, touche: Touche):
         """
         Fonction qui insert une touche dans la table TOUCHE
         :param touche: La touche à insérer
         """
-        try :
-            query = text(f"call ajoute_touche({touche.get_match()},{touche.get_escrimeur()})")
+        try:
+            query = text(
+                f"call ajoute_touche({touche.get_match()},{touche.get_escrimeur()})"
+            )
             self.__connexion.execute(query)
             self.__connexion.commit()
 
