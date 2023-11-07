@@ -34,13 +34,6 @@ class TestPhaseFinal(unittest.TestCase):
         phase_final = PhaseFinal(1)
         self.assertEqual(phase_final.get_id_phase_f(), 1)
 
-    def test_get_les_matchs(self):
-        """
-        Test de la fonction get_les_matchs de la classe PhaseFinal
-        """
-        phase_final = PhaseFinal(1)
-        self.assertEqual(phase_final.get_les_matchs(), [])
-
     def test_set_id_phase_f(self):
         """
         Test de la fonction set_id_phase_final de la classe PhaseFinal

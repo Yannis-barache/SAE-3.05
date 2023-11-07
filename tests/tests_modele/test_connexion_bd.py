@@ -20,35 +20,35 @@ class TestConnexionBD(unittest.TestCase):
         unittest (TestCase): classe de base pour les tests unitaires intégrés
     """
 
-    @classmethod
-    def setUpClass(cls):
-        cls.connexion = ConnexionBD()
-
     def test_creation_connexion(self):
         """
         Test de la création d'une connexion
         """
-        self.assertIsNotNone(self.connexion)
+        connexion = ConnexionBD()
+        self.assertIsNotNone(connexion)
 
     def test_ouverture_connexion(self):
         """
         Test de l'ouverture d'une connexion
         """
-        self.connexion.ouvrir_connexion()
-        self.assertIsNotNone(self.connexion.get_connexion())
+        connexion = ConnexionBD()
+        connexion.ouvrir_connexion()
+        self.assertIsNotNone(connexion.get_connexion())
         with self.assertRaises(Exception):
-            self.connexion.ouvrir_connexion(False)
+            connexion.ouvrir_connexion(False)
 
     def test_fermeture_connexion(self):
         """
         Test de la fermeture d'une connexion
         """
-        self.connexion.fermer_connexion()
-        self.assertIsNotNone(self.connexion.get_connexion())
+        connexion = ConnexionBD()
+        connexion.fermer_connexion()
+        self.assertIsNotNone(connexion.get_connexion())
 
     def test_get_connexion(self):
         """
         Test de la récupération de la connexion
         """
-        self.connexion.ouvrir_connexion()
-        self.assertIsNotNone(self.connexion.get_connexion())
+        connexion = ConnexionBD()
+        connexion.ouvrir_connexion()
+        self.assertIsNotNone(connexion.get_connexion())
