@@ -20,9 +20,9 @@ def change_variable(text):
         text = "''"
 
     # changer la viriable "locale" dans le fichier constante.py
-    with open('constantes.py', 'r') as file:
+    with open('../modele/constantes.py', 'r') as file:
         lines = file.readlines()
-    with open('constantes.py', 'w') as file:
+    with open('../modele/constantes.py', 'w') as file:
         for line in lines:
             if line.startswith('locale = '):
                 file.write('locale = {}\n'.format(text))
