@@ -352,7 +352,7 @@ class Competition:
         while len(liste_escrimeur) < 2**puissance:
             liste_escrimeur.append(None)
         phase_finale = PhaseFinal(-1)
-        les_matchs = phase_finale.generer_les_matchs(classement_provisoire,
+        les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)
         return (phase_finale, les_matchs)
 
