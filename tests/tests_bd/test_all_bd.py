@@ -56,6 +56,10 @@ class TestArmeBD(unittest.TestCase):
         cls.modele = modele
         cls.arme_bd = cls.modele.get_arme_bd()
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.modele.close_connexion()
+
     def test_constructeur(self):
         """
         Test du constructeur de la classe ArmeBD
@@ -149,6 +153,25 @@ class TestClubBD(unittest.TestCase):
         self.assertIsInstance(club, Club)
         club = self.club_bd.get_club_by_id(-1)
         self.assertIsNone(club)
+
+    def test_insert_club(self):
+        """
+        Test de la méthode insert_club
+        """
+        club = Club(-1, "test", "test", "test")
+        self.club_bd.insert_club(club)
+
+    def test_delete_club(self):
+        """
+        Test de la méthode delete_club
+        """
+        self.club_bd.delete_club(-1)
+
+    def test_delete_club_by_nom(self):
+        """
+        Test de la méthode delete_club_by_nom
+        """
+        self.club_bd.delete_club_by_nom("test")
 
 
 class TestCompetitionBD(unittest.TestCase):
