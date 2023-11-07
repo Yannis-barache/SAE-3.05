@@ -84,7 +84,7 @@ def inscription():
         num_licence = form.numLicence.data
         nom = form.nom.data
         prenom = form.prenom.data
-        date_naissance = form.age.data
+        date_naissance = form.date_naissance.data
         sexe = form.sexe.data
         categorie = form.categorie.data
         mdp = form.mdp.data
@@ -137,7 +137,6 @@ def connexion(nom):
     if nom == "ESCRIMEUR":
         form = ConnexionFormE()
     if form.validate_on_submit():
-        print("C'est là")
         identifiant = form.identifiant.data
         mdp = form.mdp.data
         if nom == "ESCRIMEUR":

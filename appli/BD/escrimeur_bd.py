@@ -88,9 +88,10 @@ class EscrimeurBD:
         :param escrimeur : escrimeur
         """
         try:
-            classement=escrimeur.get_classement()
-            if classement is None:
+            if escrimeur.get_classement() is None:
                 classement = "NULL"
+            else:
+                classement = str(escrimeur.get_classement())
             query = text(
                 f"INSERT INTO ESCRIMEUR (nomEscrimeur, licence, "
                 f"prenomEscrimeur, dateNaissance, nomUtilisateurEscrimeur, "
