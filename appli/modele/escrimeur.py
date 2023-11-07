@@ -1,14 +1,10 @@
-import os
-import sys
-
 """
 Module contenant la classe Escrimeur
 """
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
-from appli.modele.club import Club
-from appli.modele.categorie import Categorie
+from club import Club
+from categorie import Categorie
+
 
 class Escrimeur:
     """

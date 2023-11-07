@@ -42,7 +42,7 @@ class OrganisateurBD:
             print(e)
             return None
 
-    def login_organisateur(self, login_organisateur: str, login_mdp: str) -> Organisateur:
+    def login_organisateur(self, login_organisateur: str, login_mdp: str):
         """
         Fonction qui vérifie les identifiants de l'organisateur
         :param login_organisateur: nom de l'organisateur
@@ -53,19 +53,22 @@ class OrganisateurBD:
             query = text(
                 f"SELECT idOrganisateur, nomOrganisateur, prenomOrganisateur, "
                 f"adresseMailOrganisateur, mdpOrganisateur, nomUtilisateur "
-                f" FROM ORGANISATEUR WHERE nomUtilisateur = '{login_organisateur}'")
+                f" FROM ORGANISATEUR WHERE nomUtilisateur = '{login_organisateur}'"
+            )
             result = self.__connexion.execute(query)
             for (id_organisateur, nom, prenom, mail, mpd,
                  nom_utilisateur) in result:
 
                 fonction = text('SELECT verif_mdp_organisateur(:id, :mdp)')
-                resultat = self.__connexion.execute(fonction, {"id": id_organisateur, "mdp": login_mdp})
-
+                resultat = self.__connexion.execute(fonction, {
+                    "id": id_organisateur,
+                    "mdp": login_mdp
+                })
                 if resultat.fetchone()[0] == 0:
                     return None
 
                 return Organisateur(id_organisateur, nom, prenom, mail, mpd,
-                                 nom_utilisateur)
+                                    nom_utilisateur)
             return None
         except Exception as e:
             print(e)

@@ -87,12 +87,13 @@ class MatchBD:
         :param match : match
         """
         try:
-            query = text(f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
-                         f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
-                         f"({str(match.get_id_phase())},"
-                         f"{str(match.get_escrimeur1())},{str(match.get_escrimeur2())},"
-                         f"{str(match.get_arbitre())},'{match.get_heure()}',"
-                         f"{str(match.get_fini())})")
+            query = text(
+                f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
+                f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
+                f"({str(match.get_id_phase())},"
+                f"{str(match.get_escrimeur1())},{str(match.get_escrimeur2())},"
+                f"{str(match.get_arbitre())},'{match.get_heure()}',"
+                f"{str(match.est_finis())})")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

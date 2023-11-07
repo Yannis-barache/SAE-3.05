@@ -247,7 +247,7 @@ class Competition:
 
     @staticmethod
     def trie_classement_inital(
-            liste_escrimeur: list[Escrimeur]) -> list[Escrimeur]:
+            liste_escrimeur: list[Escrimeur]):
         """
         Fonction qui trie les escrimeurs par classement initial
 

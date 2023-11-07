@@ -88,23 +88,25 @@ class EscrimeurBD:
         :param escrimeur : escrimeur
         """
         try:
-            query = text(f"INSERT INTO ESCRIMEUR (nomEscrimeur, licence, "
-                         f"prenomEscrimeur, dateNaissance, nomUtilisateurEscrimeur, "
-                         f"mdpEscrimeur, classement, sexeEscrimeur, idClub, idCategorie, "
-                         f"arbitrage) VALUES ('{escrimeur.get_nom()}', "
-                         f"'{escrimeur.get_licence()}', '{escrimeur.get_prenom()}', "
-                         f"'{escrimeur.get_date_naissance()}', "
-                         f"'{escrimeur.get_nom_utilisateur()}', "
-                         f"'{escrimeur.get_mdp()}', {str(escrimeur.get_classement())}, "
-                         f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
-                         f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})")
+            query = text(
+                f"INSERT INTO ESCRIMEUR (nomEscrimeur, licence, "
+                f"prenomEscrimeur, dateNaissance, nomUtilisateurEscrimeur, "
+                f"mdpEscrimeur, classement, sexeEscrimeur, idClub, idCategorie, "
+                f"arbitrage) VALUES ('{escrimeur.get_nom()}', "
+                f"'{escrimeur.get_licence()}', '{escrimeur.get_prenom()}', "
+                f"'{escrimeur.get_date_naissance()}', "
+                f"'{escrimeur.get_nom_utilisateur()}', "
+                f"'{escrimeur.get_mdp()}', {str(escrimeur.get_classement())}, "
+                f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
+                f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})"
+            )
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
             print(e)
             return None
 
-    def login_escrimeur(self, login_escrimeur: int, login_mdp: str) -> Escrimeur:
+    def login_escrimeur(self, login_escrimeur: int, login_mdp: str):
         """
         Fonction qui permet de vérifier les identifiants d'un escrimeur
         :param login_escrimeur: licence de l'escrimeur
@@ -119,14 +121,15 @@ class EscrimeurBD:
                 'FROM ESCRIMEUR WHERE licence = ' + str(login_escrimeur))
             result = self.__connexion.execute(query)
 
-
-
             for (id_escrimeur, nom, licence, prenom, date_naissance,
                  nom_utilisateur, mdp, classement, sexe, id_club, id_categorie,
                  arbitrage) in result:
 
                 fonction = text('SELECT verif_mdp_escrimeur(:id, :mdp)')
-                result = self.__connexion.execute(fonction, {"id": id_escrimeur, "mdp": login_mdp})
+                result = self.__connexion.execute(fonction, {
+                    "id": id_escrimeur,
+                    "mdp": login_mdp
+                })
                 if result.fetchone()[0] == 0:
                     return None
 

@@ -59,16 +59,17 @@ class ClubBD:
         :param club : club
         """
         try:
-            query = text(f"INSERT INTO CLUB (nomClub, adresse, mdpClub) VALUES "
-                         f"('{club.get_nom()}','"
-                         f"{club.get_adresse()}','{club.get_mdp()}')")
+            query = text(
+                f"INSERT INTO CLUB (nomClub, adresse, mdpClub) VALUES "
+                f"('{club.get_nom()}','"
+                f"{club.get_adresse()}','{club.get_mdp()}')")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
             print(e)
             return None
 
-    def login_club(self, login_club: str, login_mdp: str) -> Club:
+    def login_club(self, login_club: str, login_mdp: str):
         """
         Fonction qui vérifie les identifiants d'un club
         :param login_club: nom du club
@@ -82,7 +83,10 @@ class ClubBD:
             for id_club, nom, adresse, mdp in result:
 
                 fonction = text("SELECT verif_mdp_club(:id, :mdp)")
-                result = self.__connexion.execute(fonction, {"id": id_club, "mdp": login_mdp})
+                result = self.__connexion.execute(fonction, {
+                    "id": id_club,
+                    "mdp": login_mdp
+                })
                 if result.fetchone()[0] == 0:
                     return None
 
