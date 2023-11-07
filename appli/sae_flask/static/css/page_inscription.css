@@ -1,4 +1,11 @@
+.Alerte{
+    color :red;
+}
 
+.Valide{
+    color :green;
+
+}
 ul{
     list-style-type: none;
     margin: 0;
