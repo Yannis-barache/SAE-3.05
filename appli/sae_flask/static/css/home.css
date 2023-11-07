@@ -1,13 +1,12 @@
 .menu{
-  height:10%;
-  width: 3%;
+  width: 2rem;
   margin: 1em;
   float: left;
 }
 
 header{
 
-width: 100%;
+
 background-image: url(../img/baniere.jpg);
 background-repeat: no-repeat;
 background-size:100%;
@@ -17,16 +16,18 @@ text-align: center;
 .logo{
   margin-top: 4em;
   height: 20vh;
+  margin-left: 8.5em;
 }
 
 body{
   height: 100vh;
+  margin: 0;
+  padding: 0;
  
 }
 
 .user{
-  height: 5%;
-  width: 5%;
+  width: 3rem;
   margin: 1em;
   float: right;
 
@@ -81,12 +82,10 @@ main{
 
 }
 footer{
-  position: absolute;
-  bottom: 0;
+
   background-color: black;
   text-align: center;
-  width: 100%;
-  position: sticky;
+
  
 }
 
@@ -116,10 +115,9 @@ footer > p{
 }
 
 table{
-  width:100%;
- 
- 
+  width: 100%;
 }
+
 
 th,td{
   border:  solid black;
