@@ -36,6 +36,7 @@ if os.name == "nt":
     list_reseau = ["eduroam", "exterieur", "eduspot"]
     for reaseau in list_reseau:
         if reaseau in data:
+            change_variable('Locale')
             showerror(title='Erreur',
                       message='Vous êtes connecté à un réseau de l\'IUT.\nVeillez vous connecter à un réseau personnel ou utiliser un ordinateur de l\'IUT !')
 
