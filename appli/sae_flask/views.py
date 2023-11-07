@@ -18,7 +18,7 @@ from escrimeur_bd import EscrimeurBD
 from organisateur_bd import OrganisateurBD
 from .models import load_user
 
-connexion_vers_bd = ConnexionBD()
+
 class ConnexionFormE(FlaskForm):
     identifiant = IntegerField("Votre numéro de licence",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
@@ -61,6 +61,7 @@ def inscription():
         "page_inscription.html"
     )
 
+connexion_vers_bd = ConnexionBD()
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
     connexion_vers_bd.ouvrir_connexion()
@@ -78,11 +79,13 @@ def connexion(nom):
             user = escrimeur.login_escrimeur(int(identifiant), mdp)
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
+
         elif nom == "ORGANISATEUR":
             organisateur = OrganisateurBD(connexion_vers_bd.get_connexion())
             user = organisateur.login_organisateur(identifiant, mdp)
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
+
         elif nom == "CLUB":
             club = ClubBD(connexion_vers_bd.get_connexion())
             user = club.login_club(identifiant, mdp)
