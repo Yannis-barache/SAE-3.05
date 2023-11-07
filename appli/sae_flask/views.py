@@ -1,3 +1,4 @@
+from datetime import date,timedelta
 import flask
 import sys
 import os
@@ -40,10 +41,11 @@ class ConnexionForm(FlaskForm):
     next = HiddenField()
 
 class InscriptionForm(FlaskForm):
+    dixhuit = date.today() - timedelta(days=18*365)
     numLicence = IntegerField("Votre numéro de licence",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
     nom = StringField("Votre nom",validators=[DataRequired()])
     prenom = StringField("Votre prénom",validators=[DataRequired()])
-    age = DateField("Votre date de naissance",validators=[DataRequired()])
+    date_naissance = DateField("Votre date de naissance",default=dixhuit,validators=[DataRequired()])
     sexe = SelectField("Votre sexe", choices=["H","F"] ,validators=[DataRequired()])
     categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
