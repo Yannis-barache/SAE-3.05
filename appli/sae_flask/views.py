@@ -57,12 +57,6 @@ def choisir_statut_connexion():
         "choisir_statut_connexion.html"
     )
 
-@app.route("/choisir_statut_inscription")
-def choisir_statut_inscription():
-    return render_template(
-        "choisir_statut_inscription.html"
-    )
-
 connexion_vers_bd = ConnexionBD()
 @app.route("/inscription", methods=["GET", "POST"]  )
 def inscription():
