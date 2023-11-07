@@ -346,8 +346,11 @@ class Competition:
         classement_provisoire = Competition.etablir_classement_provisoire(
             les_poules)
         puissance = Competition.get_puissance_sup(len(classement_provisoire))
-        while len(classement_provisoire) < 2**puissance:
-            classement_provisoire.append(None)
+        liste_escrimeur: list[Escrimeur | None] = []
+        for escrimeur in classement_provisoire:
+            liste_escrimeur.append(escrimeur)
+        while len(liste_escrimeur) < 2**puissance:
+            liste_escrimeur.append(None)
         phase_finale = PhaseFinal(-1)
         les_matchs = phase_finale.generer_les_matchs(classement_provisoire,
                                                      les_arbitres, heure_debut)
