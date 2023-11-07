@@ -1,4 +1,4 @@
-TESTS = tests/tests_modele/*.py
+TESTS = tests/*/*.py
 MODULES = appli/modele/*.py appli/BD/*.py tests/*/*.py
 
 
