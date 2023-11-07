@@ -1,0 +1,8 @@
+**/__pycache__/
+.mypy_cache/
+.coverage
+venv/
+.idea/
+.flaskenv
+.vscode/
+test.pdf
