@@ -1,10 +1,11 @@
-TESTS = tests/tests_modele/*.py
+TESTS = tests/*/*.py
 MODULES = appli/modele/*.py appli/BD/*.py tests/*/*.py
+MODULES_TESTED = appli/modele/*.py appli/BD/*.py
 
 
 .PHONY: typehint
 typehint:  
-	mypy --ignore-missing-imports ${MODULES}
+	mypy --ignore-missing-imports ${MODULES_TESTED}
 
 .PHONY: tests
 tests:  
@@ -21,7 +22,7 @@ format:
 .PHONY: coverage
 coverage:
 	python3 -m coverage run -m unittest -v -b ${TESTS}
-	python3 -m coverage report -m ${MODULES}
+	python3 -m coverage report -m ${MODULES_TESTED}
 
 .PHONY: clean
 clean:  

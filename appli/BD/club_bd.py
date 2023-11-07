@@ -59,12 +59,38 @@ class ClubBD:
         :param club : club
         """
         try:
-            query = text(f"INSERT INTO CLUB (nomClub, adresse, mdpClub) VALUES "
-                         f"('{club.get_nom()}','"
-                         f"{club.get_adresse()}','{club.get_mdp()}')")
+            query = text(
+                f"INSERT INTO CLUB (nomClub, adresse, mdpClub) VALUES "
+                f"('{club.get_nom()}','"
+                f"{club.get_adresse()}','{club.get_mdp()}')")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
             print(e)
             return None
 
+    def delete_club(self, id_cl: int):
+        """
+        Fonction qui supprime un club
+        :param id_cl: id du club
+        """
+        try:
+            query = text('DELETE FROM CLUB WHERE idClub =' + str(id_cl))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_club_by_nom(self, nom_cl: str):
+        """
+        Fonction qui supprime un club
+        :param nom_cl: nom du club
+        """
+        try:
+            query = text("DELETE FROM CLUB WHERE nomClub ='" + nom_cl + "'")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

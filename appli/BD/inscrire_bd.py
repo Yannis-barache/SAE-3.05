@@ -21,6 +21,8 @@ class InscrireBD:
 
     def __init__(self, connexion):
         self.__connexion = connexion
+        self.__competition_bd = CompetitionBD(connexion)
+        self.__escrimeur_bd = EscrimeurBD(connexion)
 
     def get_all_inscrire(self):
         """
@@ -32,30 +34,12 @@ class InscrireBD:
             result = self.__connexion.execute(query)
             inscrires = []
             for id_escrimeur, id_competition in result:
-                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-                competition = CompetitionBD.get_competition_by_id(
-                    self, id_competition)
+                escrimeur = self.__escrimeur_bd.get_escrimeur_by_id(
+                    id_escrimeur)
+                competition = self.__competition_bd.get_competition_by_id(
+                    id_competition)
                 inscrires.append(Inscrire(escrimeur, competition))
             return inscrires
-        except Exception as e:
-            print(e)
-            return None
-
-    def get_inscrire_by_id(self, id_i: int):
-        """
-        Fonction qui retourne un inscrire en fonction de son id
-        :param id_i: id de l'inscrire
-        :return: inscrire
-        """
-        try:
-            query = text("SELECT idEscrimeur, idCompetition "
-                         "FROM INSCRIRE WHERE idEscrimeur =" + str(id_i))
-            result = self.__connexion.execute(query)
-            for id_escrimeur, id_competition in result:
-                escrimeur = EscrimeurBD.get_escrimeur_by_id(self, id_escrimeur)
-                competition = CompetitionBD.get_competition_by_id(self, id_competition)
-                return Inscrire(escrimeur, competition)
-            return None
         except Exception as e:
             print(e)
             return None
@@ -66,9 +50,24 @@ class InscrireBD:
         :param inscrire : inscrire
         """
         try:
-            query = text(f"INSERT INTO INSCRIRE (idEscrimeur, idCompetition) VALUES "
-                         f"({str(inscrire.get_id_escrimeur())},"
-                         f"{str(inscrire.get_id_competition())})")
+            query = text(
+                f"INSERT INTO INSCRIRE (idEscrimeur, idCompetition) VALUES "
+                f"({str(inscrire.get_id_escrimeur())},"
+                f"{str(inscrire.get_id_competition())})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_inscrire(self, inscrire: Inscrire):
+        """
+        Fonction qui supprime un inscrire
+        :param inscrire: inscrire
+        """
+        try:
+            query = text("DELETE FROM INSCRIRE WHERE idEscrimeur =" +
+                         str(inscrire.get_id_escrimeur()))
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
