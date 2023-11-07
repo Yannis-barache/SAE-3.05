@@ -1,14 +1,15 @@
-import os
-import sys
-
 """
 Module contenant la classe Escrimeur
 """
+import sys
+import os
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from club import Club
 from categorie import Categorie
+
 
 class Escrimeur:
     """
@@ -17,7 +18,7 @@ class Escrimeur:
 
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, mdp: str,
-                 licence: str, classement: int , club: Club,
+                 licence: str, classement: int | None, club: Club,
                  categorie: Categorie, arbitrage: bool):
         self.__id = id_escrim
         self.__nom = nom
@@ -104,7 +105,7 @@ class Escrimeur:
         """
         return self.__licence
 
-    def get_classement(self) -> int :
+    def get_classement(self) -> int | None:
         """
         Fonction qui retourne le classement de l'escrimeur
 

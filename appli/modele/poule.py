@@ -95,7 +95,7 @@ class Poule:
         return les_matchs
 
     def get_match_by_escrimeurs(self, escrimeur1: Escrimeur,
-                                escrimeur2: Escrimeur) -> Match:
+                                escrimeur2: Escrimeur) -> Match | None:
         """
         Fonction qui retourne le match entre deux escrimeurs
 
@@ -321,8 +321,8 @@ class Poule:
                    fill=0)
         return largeur + 6
 
-    def gestion_match(self, le_match: Match, canva: canvas, i: int, j: int,
-                      hauteur: int, largeur: int) -> None:
+    def gestion_match(self, le_match: Match | None, canva: canvas, i: int,
+                      j: int, hauteur: int, largeur: int) -> None:
         """
         Fonction qui gere le match
 
