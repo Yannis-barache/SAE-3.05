@@ -27,11 +27,6 @@ from poule_bd import PouleBD
 from touche_bd import ToucheBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/sae_flask'))
-
-from menu_choix import change_variable
-
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from modele_appli import ModeleAppli
@@ -46,6 +41,24 @@ from match import Match
 from phase import Phase
 
 modele = ModeleAppli()
+
+def change_variable(text):
+    if text == 'Locale':
+        text = True
+    elif text == 'Distante':
+        text = False
+    else:
+        text = "''"
+
+    # changer la viriable "locale" dans le fichier constante.py
+    with open('../../appli/modele/constantes.py', 'r') as file:
+        lines = file.readlines()
+    with open('../../appli/modele/constantes.py', 'w') as file:
+        for line in lines:
+            if line.startswith('locale = '):
+                file.write('locale = {}\n'.format(text))
+            else:
+                file.write(line)
 
 
 class TestArmeBD(unittest.TestCase):
