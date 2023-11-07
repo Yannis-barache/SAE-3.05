@@ -36,32 +36,12 @@ class PhaseFinaleBD:
             print(e)
             return None
 
-    def insert_phase_finale(self, phase_finale: PhaseFinal):
+    def insert_phase_finale(self):
         """
         Fonction qui insère une phase finale
         """
         try:
-            if phase_finale.get_id_phase_f(
-            ) is None or phase_finale.get_id_phase_f() == -1:
-                return None
-            query = text("INSERT INTO PHASE_FINALE (idPhaseFinale) VALUES (" +
-                         str(phase_finale.get_id_phase_f()) + ")")
-            self.__connexion.execute(query)
-            self.__connexion.commit()
-        except Exception as e:
-            print(e)
-            return None
-
-    def delete_phase_finale(self, phase_finale: PhaseFinal):
-        """
-        Fonction qui supprime une phase finale
-        """
-        try:
-            if phase_finale.get_id_phase_f(
-            ) is None or phase_finale.get_id_phase_f() == -1:
-                return None
-            query = text("DELETE FROM PHASE_FINALE WHERE idPhaseFinale = " +
-                         str(phase_finale.get_id_phase_f()))
+            query = text("INSERT INTO PHASE_FINALE DEFAULT VALUES")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

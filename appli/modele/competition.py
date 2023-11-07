@@ -2,15 +2,14 @@
 Module contenant la classe Competition
 """
 
-import math
-import constantes as const
 from categorie import Categorie
 from arme import Arme
 from lieu import Lieu
 from escrimeur import Escrimeur
+import math
+import constantes as const
 from exceptions import PasAssezDArbitres
 from poule import Poule
-from phase_final import PhaseFinal
 
 
 class Competition:
@@ -283,75 +282,6 @@ class Competition:
                                  const.NOMBRE_MAXIMAL_ESCRIMEUR_POULE)
         nombre_escrimeur_par_poule = math.ceil(nombre_escrimeur / nombre_poule)
         return nombre_poule, nombre_escrimeur_par_poule
-
-    @staticmethod
-    def etablir_classement_provisoire(
-            les_poules: list[Poule]) -> list[Escrimeur]:
-        """
-        Fonction qui etablit le classement provisoir de la competition apres les poules
-
-        Args:
-            les_poules (list[Poule]): La liste des poules de la competition
-
-        Returns:
-            list[Escrimeur]: Le classement provisoir de la competition
-        """
-        infos = {}
-        for poule in les_poules:
-            for escrimeur in poule.get_les_escrimeurs():
-                indice_escrimeur = poule.get_nb_victoires(escrimeur) / (
-                    poule.get_nb_escrimeurs() - 1)
-                infos[escrimeur] = (indice_escrimeur,
-                                    poule.get_nb_touche_marquee(escrimeur),
-                                    poule.get_nb_touche_prise(escrimeur))
-        classement_provisoire = sorted(
-            infos.keys(),
-            key=lambda escrimeur:
-            (infos[escrimeur][0], infos[escrimeur][1], infos[escrimeur][2]),
-            reverse=True)
-        return classement_provisoire
-
-    @staticmethod
-    def get_puissance_sup(nb_escrimeur: int) -> int:
-        """
-        Fonction qui retourne la puissance superieur de 2
-
-        Args:
-            nb_escrimeur (int): Le nombre d'escrimeur de la competition
-
-        Returns:
-            int: La puissance superieur de 2
-        """
-        puissance = 0
-        while 2**puissance < nb_escrimeur:
-            puissance += 1
-        return puissance
-
-    @staticmethod
-    def generer_phase_finale(les_poules: list[Poule],
-                             les_arbitres: list[Escrimeur],
-                             heure_debut: float) -> tuple[PhaseFinal, list]:
-        """
-        Fonction qui genere la phase finale de la competition
-
-        Args:
-            les_poules (list[Poule]): La liste des poules de la competition
-            les_arbitres (list[Escrimeur]): La liste des arbitres de la competition
-            heure_debut (float): L'heure de debut de la competition
-
-        Returns:
-            PhaseFinal: La phase finale de la competition 
-            list[Match]: La liste des matchs de la phase finale de la competition 
-        """
-        classement_provisoire = Competition.etablir_classement_provisoire(
-            les_poules)
-        puissance = Competition.get_puissance_sup(len(classement_provisoire))
-        while len(classement_provisoire) < 2**puissance:
-            classement_provisoire.append(None)
-        phase_finale = PhaseFinal(-1)
-        les_matchs = phase_finale.generer_les_matchs(classement_provisoire,
-                                                     les_arbitres, heure_debut)
-        return (phase_finale, les_matchs)
 
     def __str__(self) -> str:
         """

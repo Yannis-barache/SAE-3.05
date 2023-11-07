@@ -5,4 +5,3 @@ venv/
 .idea/
 .flaskenv
 .vscode/
-test.pdf

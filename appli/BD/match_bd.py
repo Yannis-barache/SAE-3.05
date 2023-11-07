@@ -87,27 +87,12 @@ class MatchBD:
         :param match : match
         """
         try:
-            query = text(
-                f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
-                f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
-                f"({str(match.get_id_phase())},"
-                f"{str(match.get_escrimeur1().get_id())},{str(match.get_escrimeur2().get_id())},"
-                f"{str(match.get_arbitre().get_id())},'{match.get_heure()}',"
-                f"{str(match.est_finis())})")
-            self.__connexion.execute(query)
-            self.__connexion.commit()
-        except Exception as e:
-            print(e)
-            return None
-
-    def delete_match_by_arbitre(self, id_arbitre: int):
-        """
-        Fonction qui supprime un match en fonction de l'arbitre
-        :param id_arbitre : id de l'arbitre
-        """
-        try:
-            query = text(
-                f"DELETE FROM MATCHS WHERE idArbitre = {str(id_arbitre)}")
+            query = text(f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
+                         f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
+                         f"({str(match.get_id_phase())},"
+                         f"{str(match.get_escrimeur1())},{str(match.get_escrimeur2())},"
+                         f"{str(match.get_arbitre())},'{match.get_heure()}',"
+                         f"{str(match.get_fini())})")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

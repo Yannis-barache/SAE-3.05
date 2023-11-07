@@ -54,30 +54,14 @@ class LieuBD:
         except Exception as e:
             print(e)
             return None
-
     def insert_lieu(self, lieu: Lieu):
         """
         Fonction qui insère un lieu
         :param lieu : lieu
         """
         try:
-            query = text(
-                f"INSERT INTO LIEU (adresseLieu, descriptionLieu) VALUES "
-                f"('{lieu.get_adresse()}','{lieu.get_description()}')")
-            self.__connexion.execute(query)
-            self.__connexion.commit()
-        except Exception as e:
-            print(e)
-            return None
-
-    def delete_lieu_by_addresse(self, lieu: Lieu):
-        """
-        Fonction qui supprime un lieu en fonction de son adresse
-        :param lieu: lieu
-        """
-        try:
-            query = text(
-                f"DELETE FROM LIEU WHERE adresseLieu = '{lieu.get_adresse()}'")
+            query = text(f"INSERT INTO LIEU (adresseLieu, descriptionLieu) VALUES "
+                         f"('{lieu.get_adresse()}','{lieu.get_description()}')")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
