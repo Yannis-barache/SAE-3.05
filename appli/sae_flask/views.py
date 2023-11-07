@@ -1,12 +1,21 @@
 import flask
-from sqlalchemy import text
-
+import sys
+import os
 from .app import app
 from flask import render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField, PasswordField,IntegerField
 from wtforms.validators import DataRequired,NumberRange
-from modele.connexion_bd import ConnexionBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+from connexion_bd import ConnexionBD
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/BD'))
+from club_bd import ClubBD
+from escrimeur_bd import EscrimeurBD
+from organisateur_bd import OrganisateurBD
 from .models import load_user
 
 connexion_vers_bd = ConnexionBD()
@@ -55,6 +64,7 @@ def inscription():
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
     connexion_vers_bd.ouvrir_connexion()
+    user=""
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         flask.abort(404)
     form = ConnexionForm()
@@ -63,32 +73,24 @@ def connexion(nom):
     if form.validate_on_submit():
         identifiant = form.identifiant.data
         mdp = form.mdp.data
-        try:
-            if nom == "ESCRIMEUR":
-                # On vérifie que le mot de passe correspond à l'identifiant
-                query = text('SELECT * FROM ESCRIMEUR WHERE licence = :identifiant AND mdpEscrimeur = :mdp')
-                resultat = connexion_vers_bd.get_connexion().execute(query, {"identifiant": identifiant, "mdp": mdp})
-                if resultat.rowcount == 1:
-                    user=load_user(identifiant,nom)
-
-                print(user)
-            elif nom == "CLUB":
-                # Créez une requête SQL avec un paramètre nommé :identifiant
-                query = text('SELECT idClub FROM CLUB WHERE nomClub = :identifiant')
-
-                # Exécutez la requête en spécifiant les paramètres
-                resultat = connexion_vers_bd.get_connexion().execute(query, {"identifiant": identifiant})
-                identifiant = resultat.fetchone()[0]
-                print(identifiant)
-            else:
-                resultat = connexion_vers_bd.get_connexion().execute("SELECT * FROM ORGANISATEUR WHERE nomUtilisateur = %s", (identifiant))
-
-        except Exception as err:
-            print(err)
-            raise err
-
-        user = load_user(identifiant,nom)
+        if nom == "ESCRIMEUR":
+            escrimeur = EscrimeurBD(connexion_vers_bd.get_connexion())
+            user = escrimeur.login_escrimeur(int(identifiant), mdp)
+            if user is not None and user.get_mdp() == mdp:
+                return render_template("home.html", nom=user)
+        elif nom == "ORGANISATEUR":
+            organisateur = OrganisateurBD(connexion_vers_bd.get_connexion())
+            user = organisateur.login_organisateur(identifiant, mdp)
+            if user is not None and user.get_mdp() == mdp:
+                return render_template("home.html", nom=user)
+        elif nom == "CLUB":
+            club = ClubBD(connexion_vers_bd.get_connexion())
+            user = club.login_club(identifiant, mdp)
+            if user is not None and user.get_mdp() == mdp:
+                return render_template("home.html", nom=user)
         print("USER ",user)
+        if user is None:
+            return render_template("page_connexion.html",nom=nom,form=form,message="Identifiant ou mot de passe invalide")
         return render_template("home.html", nom=user)
 
     return render_template("page_connexion.html", nom=nom, form=form)
