@@ -30,67 +30,64 @@
  
      <li>
                  
-         <form>
+         <form class="form-horizontal" role="form" method="POST"
+        action="{{ url_for('connexion', nom=nom) }}">
+    {{ form.hidden_tag() }}
              <div class="form-row">
-                 <label for="NumLicence">N° de Licence </label>
-                 <input type="number" name="NumLicence" id="t" required>
+                 <label for="NumLicence">{{ form.numLicence.label }} </label>
+                 {{ form.numLicence(class_="form-control" , placeholder="N° de licence") }}
              </div>
  
              <div class="form-row">
-                 <label for="nom">Nom </label>
-                 <input type="text" name="Nom" id="nom" required>
+                 <label for="nom">{{ form.nom.label }}</label>
+                 {{ form.nom(class_="form-control" , placeholder="Nom") }}
              </div>
  
              <div class="form-row">
-                 <label for="P">Prenom</label>
-                 <input type="text" name="Prenom">
+                 <label for="prenom">{{ form.prenom.label }}</label>
+                 {{ form.prenom(class_="form-control" , placeholder="Prénom") }}
              </div>
-             
+
              <div class="form-row">
-                 <label for="age">Âge</label>
-                 <input type="number" name="age" id="age" min="0" max="100" required>
+                    <label for="mdp">{{ form.mdp.label }}</label>
+                    {{ form.mdp(class_="form-control" , placeholder="Mot de passe") }}
              </div>
- 
+
              <div class="form-row">
-                 <label for="sexe">Sexe</label>
-                 <select name="Sexe" id="sexe">
-                     <option value="Homme">Homme</option>
-                     <option value="Femme">Femme</option>
-                     <option value="Femme">Croissant</option>
-                     <option value="Femme">Singe</option>
-                 </select>
+                    <label for="conf_mdp">{{ form.conf_mdp.label }}</label>
+                    {{ form.conf_mdp(class_="form-control" , placeholder="Confirmez votre mdp") }}
              </div>
- 
+
              <div class="form-row">
-                 <label for="">Téléphone</label>
+                 <label for="age">{{ form.age.label }}</label>
+                 {{ form.age(class_="form-control" , placeholder="Âge") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="">{{ form.telephone.label }}</label>
                  <input type="tel" name="numero" id="" pattern="01 23 45 67 89" placeholder="01 23 45 67 89">
              </div>
+
+             <div class="form-row">
+                    <label for="categorie">{{ form.categorie.label }}</label>
+                    {{ form.categorie(class_="form-control" , placeholder="Catégorie") }}
+             </div>
+
+
  
              <div class="form-row">
-                 <label for="">Mail</label>
-                 <input type="email" name="email" id="">
+                 <label for="sexe">{{ form.sexe.label }}</label>
+                 {{ form.sexe(class_="form-control" , placeholder="Votre sexe") }}
              </div>
- 
+
              <div class="form-row">
-                 <label for="">Catégorie</label>
-                 <select name="categorie" id="">
-                     <option value="u13">u13</option>
-                     <option value="u15">u15</option>
-                     <option value="u13">U17</option>
-                     <option value="u20">U20</option>
-                     <option value="senior">SENIOR</option>
-                     <option value="v1">V1</option>
-                     <option value="v2">V2</option>
-                     <option value="v3">V3</option>
-                     <option value="v4">V4</option>
-                 </select>
+                 <label for="club">{{ form.club.label }}</label>
+                 {{ form.club(class_="form-control" , placeholder="Votre club") }}
              </div>
+
+
  
-             <div class="form-row">
-                 <label for="cls">Classement</label>
-                 <input type="number" name="Classement" id="">
-             </div>
-             
+
              
              <div class="form-button">
                  <button class="envoyer" type="submit">S'INSCRIRE</button>

@@ -4,7 +4,7 @@ import os
 from .app import app
 from flask import render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField , HiddenField, PasswordField,IntegerField
+from wtforms import StringField , HiddenField, PasswordField,IntegerField,SelectField,EmailField
 from wtforms.validators import DataRequired,NumberRange
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
@@ -16,6 +16,7 @@ sys.path.append(os.path.join(ROOT, 'appli/BD'))
 from club_bd import ClubBD
 from escrimeur_bd import EscrimeurBD
 from organisateur_bd import OrganisateurBD
+from categorie_bd import CategorieBD
 from .models import load_user
 
 
@@ -34,8 +35,12 @@ class InscriptionForm(FlaskForm):
     nom = StringField("Votre nom",validators=[DataRequired()])
     prenom = StringField("Votre prénom",validators=[DataRequired()])
     age = IntegerField("Votre âge",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
-    sexe = StringField("Votre sexe",validators=[DataRequired()])
-    
+    sexe = SelectField("Votre sexe", choices=["H","F"] ,validators=[DataRequired()])
+    categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
+    mdp = PasswordField("Mot de passe", validators=[DataRequired()])
+    conf_mdp = PasswordField("Confirmation du mot de passe", validators=[DataRequired()])
+    telephone = IntegerField("Votre numéro de téléphone",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
+    club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in ClubBD(ConnexionBD().get_connexion()).get_all_club()])
     next = HiddenField()
 
 # @app.route("/")
@@ -60,13 +65,12 @@ def choisir_statut_connexion():
 connexion_vers_bd = ConnexionBD()
 @app.route("/inscription", methods=["GET", "POST"]  )
 def inscription():
-    
     form = InscriptionForm()
     if form.validate_on_submit():
         print("carre")
     
     return render_template(
-        "page_inscription.html"
+        "page_inscription.html",form=form
     )
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
