@@ -1,0 +1,132 @@
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+display: grid;
+gap: 10px;
+}
+
+.form-row {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+label {
+    text-align: left;
+}
+
+input{
+    width: 100%;
+}
+select{
+    width: 105%;
+}
+
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+
+/* .envoyer{
+
+    align-items: center;
+    appearance: none;
+    background-color: black;
+    border-radius: 100px;
+    color: white;
+    cursor: pointer;
+
+
+} */
+
+button {
+    appearance: none;
+    background-color: #2e2e2e;
+    border-radius: 0.9375em;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 2vh;
+    font-weight: 900;
+    line-height: normal;
+    min-width: 0;
+    width: 100%;
+    outline: none;
+    padding: 1em 2.3em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+    height: 100%;
+    }
+    
+button:disabled {
+    pointer-events: none;
+    }
+    
+button:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    }
+    
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+    }
+
+    .form-button{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+
+    }
+
+
+    #logo{
+        width: 55%;
+        height: 10%;
+        margin: 5%;
+
+    }
+
+    .leback {
+        background-color: white;
+        color: black;
+    }
+
+    .titre{
+        font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 4vh;
+    text-shadow: 2px 3px 3px GRAY;
+    /* color: #333333; */
+    line-height: 1.2;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+    }

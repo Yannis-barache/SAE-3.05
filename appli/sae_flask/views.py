@@ -29,6 +29,14 @@ class ConnexionForm(FlaskForm):
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
     next = HiddenField()
 
+class InscriptionForm(FlaskForm):
+    numLicence = IntegerField("Votre numéro de licence",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
+    nom = StringField("Votre nom",validators=[DataRequired()])
+    prenom = StringField("Votre prénom",validators=[DataRequired()])
+    age = IntegerField("Votre âge",validators=[DataRequired(),NumberRange(min=0, max=999999999)])
+    sexe = StringField("Votre sexe",validators=[DataRequired()])
+    
+    next = HiddenField()
 
 # @app.route("/")
 # def home():
@@ -55,13 +63,18 @@ def choisir_statut_inscription():
         "choisir_statut_inscription.html"
     )
 
-@app.route("/inscription")
+connexion_vers_bd = ConnexionBD()
+@app.route("/inscription", methods=["GET", "POST"]  )
 def inscription():
+    
+    form = InscriptionForm()
+    if form.validate_on_submit():
+        print("carre")
+    
     return render_template(
         "page_inscription.html"
     )
 
-connexion_vers_bd = ConnexionBD()
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
     connexion_vers_bd.ouvrir_connexion()

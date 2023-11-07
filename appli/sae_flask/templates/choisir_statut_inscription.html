@@ -20,13 +20,13 @@
     <span class="petit-titre">Choisi un statut : </span>
     <ul class="lesboutons">
         <li>
-            <a href=""><Button class="choix-multiple">Escimeur</Button></a>
+            <a href="{{ url_for('inscription') }}"><Button class="choix-multiple">Escimeur</Button></a>
         </li>
         <li>
-            <a href=""><Button class="choix-multiple">Club</Button></a>
+            <a href="" disabled><Button class="choix-multiple" disabled>Club</Button></a>
         </li>
         <li>
-            <a href=""><Button class="choix-multiple">Organisateur</Button></a>
+            <a href="" disabled><Button class="choix-multiple">Organisateur</Button></a>
         </li>
     </ul>
 </form>

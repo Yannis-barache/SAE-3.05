@@ -3,11 +3,106 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/page_connexion.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_inscription.css')}}">
 {% endblock %}
 
 {% block content %}
 
+
+<ul>
+
+     <li class="les-img">
+     <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
+     </li>
+ 
+     <li>
+ 
+         <div class="infoconnecte leback">
+             <span class="titre"> Formulaire </span>
+         </div>
+ 
+     </li>
+ 
+     <li class="les-img">
+         <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo"></span>
+     </li>
+ 
+     <li>
+                 
+         <form>
+             <div class="form-row">
+                 <label for="NumLicence">N° de Licence </label>
+                 <input type="number" name="NumLicence" id="t" required>
+             </div>
+ 
+             <div class="form-row">
+                 <label for="nom">Nom </label>
+                 <input type="text" name="Nom" id="nom" required>
+             </div>
+ 
+             <div class="form-row">
+                 <label for="P">Prenom</label>
+                 <input type="text" name="Prenom">
+             </div>
+             
+             <div class="form-row">
+                 <label for="age">Âge</label>
+                 <input type="number" name="age" id="age" min="0" max="100" required>
+             </div>
+ 
+             <div class="form-row">
+                 <label for="sexe">Sexe</label>
+                 <select name="Sexe" id="sexe">
+                     <option value="Homme">Homme</option>
+                     <option value="Femme">Femme</option>
+                     <option value="Femme">Croissant</option>
+                     <option value="Femme">Singe</option>
+                 </select>
+             </div>
+ 
+             <div class="form-row">
+                 <label for="">Téléphone</label>
+                 <input type="tel" name="numero" id="" pattern="01 23 45 67 89" placeholder="01 23 45 67 89">
+             </div>
+ 
+             <div class="form-row">
+                 <label for="">Mail</label>
+                 <input type="email" name="email" id="">
+             </div>
+ 
+             <div class="form-row">
+                 <label for="">Catégorie</label>
+                 <select name="categorie" id="">
+                     <option value="u13">u13</option>
+                     <option value="u15">u15</option>
+                     <option value="u13">U17</option>
+                     <option value="u20">U20</option>
+                     <option value="senior">SENIOR</option>
+                     <option value="v1">V1</option>
+                     <option value="v2">V2</option>
+                     <option value="v3">V3</option>
+                     <option value="v4">V4</option>
+                 </select>
+             </div>
+ 
+             <div class="form-row">
+                 <label for="cls">Classement</label>
+                 <input type="number" name="Classement" id="">
+             </div>
+             
+             
+             <div class="form-button">
+                 <button class="envoyer" type="submit">S'INSCRIRE</button>
+             </div>
+ 
+         </form>
+ 
+     </li>
+ 
+ 
+ </ul>
+ 
 
 
 {% endblock %}
