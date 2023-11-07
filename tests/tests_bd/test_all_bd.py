@@ -27,6 +27,11 @@ from poule_bd import PouleBD
 from touche_bd import ToucheBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/sae_flask'))
+
+from menu_choix import change_variable
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from modele_appli import ModeleAppli
@@ -53,8 +58,13 @@ class TestArmeBD(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        change_variable('Distante')
         cls.modele = modele
         cls.arme_bd = cls.modele.get_arme_bd()
+
+    @classmethod
+    def tearDownClass(cls):
+        change_variable('NOTHING')
 
     def test_constructeur(self):
         """
