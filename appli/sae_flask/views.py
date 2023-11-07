@@ -5,7 +5,7 @@ from .app import app
 from flask import render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField, PasswordField,IntegerField,SelectField,TelField,DateField
-from wtforms.validators import DataRequired,NumberRange
+from wtforms.validators import DataRequired, NumberRange, Length, ValidationError
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -18,7 +18,15 @@ from club_bd import ClubBD
 from escrimeur_bd import EscrimeurBD
 from organisateur_bd import OrganisateurBD
 from categorie_bd import CategorieBD
-from .models import load_user
+
+
+def alpha():
+    def _alpha(form, field):
+        for element in field.data:
+            if not element.isdigit():
+                raise ValidationError("Le champ ne doit contenir que des chiffres")
+    return _alpha
+
 
 
 class ConnexionFormE(FlaskForm):
@@ -40,7 +48,7 @@ class InscriptionForm(FlaskForm):
     categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
     conf_mdp = PasswordField("Confirmation du mot de passe", validators=[DataRequired()])
-    telephone = TelField("Votre numéro de téléphone",validators=[DataRequired()])
+    telephone = TelField("Votre numéro de téléphone",validators=[DataRequired(),alpha(),Length(min=10,max=10)])
     club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in ClubBD(ConnexionBD().get_connexion()).get_all_club()])
     next = HiddenField()
 
@@ -106,6 +114,13 @@ def inscription():
                 return render_template(
                     "page_inscription.html",form=form,message=message
                 )
+
+    # Si le formulaire n'est pas valide on affiche les erreurs
+    if (form.errors):
+        if (form.errors["telephone"]):
+            message = form.errors["telephone"][0]
+            print("message", message)
+
     return render_template(
         "page_inscription.html",form=form,message=message
     )
