@@ -16,33 +16,34 @@
      <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
      </li>
  
+     {% if (message!="Inscription réussie") %}
      <li>
- 
+
          <div class="infoconnecte leback">
              <span class="titre"> Formulaire </span>
          </div>
- 
+
      </li>
- 
+
      <li class="les-img">
          <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo"></span>
      </li>
- 
+        <div class="Alerte">{{ message }}</div>
      <li>
-                 
+
          <form class="form-horizontal" role="form" method="POST"
-        action="{{ url_for('connexion', nom=nom) }}">
-    {{ form.hidden_tag() }}
+            action="{{ url_for('inscription') }}">
+             {{ form.hidden_tag() }}
              <div class="form-row">
                  <label for="NumLicence">{{ form.numLicence.label }} </label>
                  {{ form.numLicence(class_="form-control" , placeholder="N° de licence") }}
              </div>
- 
+
              <div class="form-row">
                  <label for="nom">{{ form.nom.label }}</label>
                  {{ form.nom(class_="form-control" , placeholder="Nom") }}
              </div>
- 
+
              <div class="form-row">
                  <label for="prenom">{{ form.prenom.label }}</label>
                  {{ form.prenom(class_="form-control" , placeholder="Prénom") }}
@@ -65,7 +66,7 @@
 
              <div class="form-row">
                  <label for="">{{ form.telephone.label }}</label>
-                 <input type="tel" name="numero" id="" pattern="01 23 45 67 89" placeholder="01 23 45 67 89">
+                 {{ form.telephone(class_="form-control" , placeholder="N° Tel") }}
              </div>
 
              <div class="form-row">
@@ -73,8 +74,6 @@
                     {{ form.categorie(class_="form-control" , placeholder="Catégorie") }}
              </div>
 
-
- 
              <div class="form-row">
                  <label for="sexe">{{ form.sexe.label }}</label>
                  {{ form.sexe(class_="form-control" , placeholder="Votre sexe") }}
@@ -85,17 +84,27 @@
                  {{ form.club(class_="form-control" , placeholder="Votre club") }}
              </div>
 
-
- 
-
-             
              <div class="form-button">
                  <button class="envoyer" type="submit">S'INSCRIRE</button>
              </div>
- 
+
          </form>
- 
+
      </li>
+     {% else %}
+        <li>
+
+            <div class="infoconnecte leback">
+                <span class="valide"> {{ message }} </span>
+            </div>
+        </li>
+
+        <div class="form-button">
+                 <button class="envoyer" onclick="window.location.href = '{{ url_for('connexion',nom = 'ESCRIMEUR')}}';">SE CONNECTER</button>
+             </div>
+     {% endif %}
+
+
  
  
  </ul>
