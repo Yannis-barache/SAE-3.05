@@ -42,7 +42,6 @@ from phase import Phase
 
 modele = ModeleAppli()
 
-
 class TestArmeBD(unittest.TestCase):
     """
     Classe de test de la classe ArmeBD

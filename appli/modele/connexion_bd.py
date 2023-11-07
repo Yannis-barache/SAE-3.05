@@ -2,6 +2,13 @@
 Module contenant la classe ConnexionBD qui permet de se connecter à la base de données
 """
 import sqlalchemy
+import os
+import sys
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from constantes import locale
 
 
 class ConnexionBD:
@@ -17,12 +24,20 @@ class ConnexionBD:
     """
 
     def __init__(self):
-        self.__connexion = None
-        self.__user = "332948"
-        self.__passwd = "SAE-EscrimeBUT2&"
-        self.__host = "mysql-sae-escrime.alwaysdata.net"
-        self.__database = "sae-escrime_sae"
-
+        if not locale:
+            self.__connexion = None
+            self.__user = "332948"
+            self.__passwd = "SAE-EscrimeBUT2&"
+            self.__host = "mysql-sae-escrime.alwaysdata.net"
+            self.__database = "sae-escrime_sae"
+        elif locale:
+            self.__connexion = None
+            self.__user = "barache"
+            self.__passwd = "barache"
+            self.__host = "servinfo-maria"
+            self.__database = "DBbarache"
+        else:
+            raise AttributeError("Erreur de configuration de la base de données")
         self.ouvrir_connexion()
 
     def ouvrir_connexion(self, con: bool = True):
