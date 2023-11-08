@@ -239,3 +239,8 @@ def connexion(nom):
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
 
+@app.route("/competition/id_competition")
+def competition(id_competition):
+    modele = ModeleAppli()
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    return render_template("competition.html", comp = la_competition)
