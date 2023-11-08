@@ -267,6 +267,18 @@ class TestCompetitionBD(unittest.TestCase):
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
+    def test_delete_competition_by_name(self):
+        """
+        Test de la méthode delete_competition_by_name
+        """
+        competition = Competition(-1, "test", "test", "test", "test", None,
+                                  None, None, 0.5)
+        self.competition_bd.delete_competition_by_name(competition)
+        try:
+            self.competition_bd.delete_competition_by_name("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
 
 class TestEscrimeurBD(unittest.TestCase):
     """
