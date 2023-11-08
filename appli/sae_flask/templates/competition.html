@@ -8,9 +8,44 @@
 {% block content %}
 
 
-    <div>
+    <div class="big-div">
 
-        <p>Competition de {{ compet.get }}</p>
+        <div class="grey-bg center">
+            <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+        </div>
+
+        <div>
+            <p class="description">DESCRIPTION DE LA COMPETÉTITION :</p>
+        </div>
+
+        <div class="center infos">
+            <div class="titre-info">
+
+                <p>TYPE D'ARME</p>
+                <p>SAISON</p>
+                <p>CATÉGORIE</p>
+                <p>FIN D'INSCRIPTION</p>
+                <p>COEFFICIENT</p>
+                <p>LIEU</p>
+
+            </div>
+
+            <div class="reponse-info">
+
+                <p>:    {{ compet.get_arme().get_nom() }}</p>
+                <p>:    {{ compet.get_saison() }}</p>
+                <p>:    {{ compet.get_categorie().get_nom() }} - {{ compet.get_arme().get_sexe() }}</p>
+                <p>:    {{ compet.get_date_fin_inscription() }}</p>
+                <p>:    {{ compet.get_coefficient() }}</p>
+                <p>:    {{ compet.get_lieu().get_adresse() }}</p>
+            </div>
+        </div>
+
+        <div class="div-btn center">
+            <button>voir les poules</button>
+
+            <button>voir la phase finale</button>
+        </div>
 
     </div>
 
