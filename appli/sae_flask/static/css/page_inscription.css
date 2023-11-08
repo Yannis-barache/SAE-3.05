@@ -143,5 +143,6 @@ button:active {
     @media (any-pointer: coarse) {
         .form-row {
             grid-template-columns: 1fr;
+            gap: 0;
         }   
     }
