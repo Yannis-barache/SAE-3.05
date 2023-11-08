@@ -55,7 +55,7 @@
 
 @media screen and (max-width: 450px) {
     .rec-central{
-        width: 42vh;
+        min-width: 200px;
     }
     .petit-titre{
         text-align: center;
@@ -63,6 +63,10 @@
     body{
         background-image: url(../img/background_left.png);
         background-size: 70vh;
+    }
+
+    .le-back{
+        width: 100%;
     }
 }
 

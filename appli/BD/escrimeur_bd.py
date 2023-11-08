@@ -107,8 +107,7 @@ class EscrimeurBD:
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
-            print(e)
-            return None
+            raise e
 
     def delete_escrimeur_by_nom(self, nom: str):
         """

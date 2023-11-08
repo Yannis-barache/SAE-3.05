@@ -22,8 +22,9 @@ main{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 35px 55px;
+    padding: 3%;
     width: 53vh;
+    min-width: 200px;
     background-color: #dbdbdb;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     margin-top: 2%;
@@ -130,4 +131,14 @@ button:active {
     justify-content: center;
     width: 29vh;
     margin-bottom: 1vh;
+}
+
+
+@media (max-width: 450px) {
+
+
+    .leback{
+        background-color: black;
+        width: 100%;
+    }
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
+    <title>Document</title>
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    {% endblock %}
+</head>
+<body>
+
+    <header>
+        {% block header %}
+        <a href="#">
+            <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
+        </a>
+       
+        <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
+        <a href="#">
+            <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+        </a>
+        
+        <nav class="navigateur">
+            {% block nav %}
+             <a class="authentif" href="#"> AUTHENTIFICATION </a> 
+             <a class="compet" href="#"> COMPÉTITION </a> 
+             <a class="regles" href="#"> RÈGLES </a> 
+            {% endblock %}
+        </nav>
+    
+        {% endblock %}
+    </header>
+    <main>
+        <div class="rec-central">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    </main>
+    <footer>
+        {% block footer %}
+        <p>CONTACTES : </p>
+        <a href="#">
+            <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
+        </a>
+            
+        <a href="#">
+            <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
+        </a>
+        
+        <a href="#"> 
+            <img class="youtube" src="{{ url_for('static', filename='../static/img/Youtube.png') }}" alt="image logo youtube">
+        </a>
+        <a href="#"> 
+            <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
+        </a>
+        <p class="paragfin"> @ Cette page à été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, Mérit Juilann, Chédeville Baptiste </p>
+
+        {% endblock %}
+
+    </footer>
+
+</body>
+</html>
