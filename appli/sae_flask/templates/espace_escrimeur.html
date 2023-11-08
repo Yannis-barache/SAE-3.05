@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+    <title>Espace Escrimeur</title>
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+        <a href="#">
+            <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
+        </a>
+
+        <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
+        <a href="#">
+            <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+        </a>
+
+        <nav class="navigateur">
+            {% block nav %}
+             <a class="information" href="#"> MES INFORMATION </a>
+             <a class="my-comp" href="#"> MES COMPÉTITION </a>
+             <a class="gest-comp" href="#"> GESTION COMPÉTITION </a>
+            {% endblock %}
+        </nav>
+
+        {% endblock %}
+    </header>
+    <main>
+        {% block main %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1> Bienvenue sur votre espace {{ nom.get_prenom() }} {{ nom.get_nom() }} </h1>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+
+</body>
+</html>

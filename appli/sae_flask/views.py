@@ -153,10 +153,26 @@ def choisir_statut_connexion():
         "choisir_statut_connexion.html", user=USER
     )
 
+
 @app.route("/page_poule")
 def page_poule():
     return render_template(
         "page_poule_compet.html"
+
+
+@app.route("/choisir_statut_inscription")
+def choisir_statut_inscription():
+    return render_template(
+        "choisir_statut_inscription.html",
+    )
+
+@app.route("/espace_escrimeur/<nom>")
+def espace_escrimeur(nom):
+    modele_appli = ModeleAppli()
+    user = modele_appli.get_escrimeur_bd().get_escrimeur_by_id(nom)
+    return render_template(
+        "espace_escrimeur.html", nom=user
+
     )
 
 @app.route("/inscription", methods=["GET", "POST"])

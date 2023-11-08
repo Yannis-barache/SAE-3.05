@@ -36,7 +36,7 @@
         </div>
        
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
-        <a href="#">
+        <a onclick="window.location.href = '{{ url_for('espace_escrimeur',nom = nom.get_id()) }}';">
             <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
         </a>
         
