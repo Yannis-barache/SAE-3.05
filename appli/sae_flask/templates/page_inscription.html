@@ -3,11 +3,116 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/page_connexion.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_inscription.css')}}">
 {% endblock %}
 
 {% block content %}
 
+
+<ul>
+
+     <li class="les-img">
+     <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
+     </li>
+ 
+     {% if (message!="Inscription réussie") %}
+     <li>
+
+         <div class="infoconnecte leback">
+             <span class="titre"> Formulaire </span>
+         </div>
+
+     </li>
+
+     <li class="les-img">
+         <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo"></span>
+     </li>
+        <div class="Alerte">
+        {% for erreur in message %}
+            <p class="erreur"> {{ erreur }} </p>
+        {% endfor %}
+        </div>
+     <li>
+
+         <form class="form-horizontal" role="form" method="POST"
+            action="{{ url_for('inscription') }}">
+             {{ form.hidden_tag() }}
+             <div class="form-row">
+                 <label for="NumLicence">{{ form.numLicence.label }} </label>
+                 {{ form.numLicence(class_="form-control" , placeholder="N° de licence") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="nom">{{ form.nom.label }}</label>
+                 {{ form.nom(class_="form-control" , placeholder="Nom") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="prenom">{{ form.prenom.label }}</label>
+                 {{ form.prenom(class_="form-control" , placeholder="Prénom") }}
+             </div>
+
+             <div class="form-row">
+                    <label for="mdp">{{ form.mdp.label }}</label>
+                    {{ form.mdp(class_="form-control" , placeholder="Mot de passe") }}
+             </div>
+
+             <div class="form-row">
+                    <label for="conf_mdp">{{ form.conf_mdp.label }}</label>
+                    {{ form.conf_mdp(class_="form-control" , placeholder="Confirmez votre mdp") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="date_naissance">{{ form.date_naissance.label }}</label>
+                 {{ form.date_naissance(class_="form-control" , placeholder="Date naissance") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="">{{ form.telephone.label }}</label>
+                 {{ form.telephone(class_="form-control" , placeholder="N° Tel") }}
+             </div>
+
+             <div class="form-row">
+                    <label for="categorie">{{ form.categorie.label }}</label>
+                    {{ form.categorie(class_="form-control" , placeholder="Catégorie") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="sexe">{{ form.sexe.label }}</label>
+                 {{ form.sexe(class_="form-control" , placeholder="Votre sexe") }}
+             </div>
+
+             <div class="form-row">
+                 <label for="club">{{ form.club.label }}</label>
+                 {{ form.club(class_="form-control" , placeholder="Votre club") }}
+             </div>
+
+             <div class="form-button">
+                 <button class="envoyer" type="submit">S'INSCRIRE</button>
+             </div>
+
+         </form>
+
+     </li>
+     {% else %}
+        <li>
+
+            <div class="infoconnecte leback">
+                <span class="Valide"> {{ message }} </span>
+            </div>
+        </li>
+
+        <div class="form-button">
+                 <button class="envoyer" onclick="window.location.href = '{{ url_for('connexion',nom = 'ESCRIMEUR')}}';">SE CONNECTER</button>
+             </div>
+     {% endif %}
+
+
+ 
+ 
+ </ul>
+ 
 
 
 {% endblock %}
