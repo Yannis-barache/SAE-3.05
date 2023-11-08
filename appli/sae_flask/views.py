@@ -10,9 +10,25 @@ from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopV
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
-from modele_appli import ModeleAppli
 from escrimeur import Escrimeur
+from modele_appli import ModeleAppli
+from competition import Competition
+from constantes import USER
 
+
+
+
+
+
+def statut(competition : Competition):
+    if competition.get_date_fin_inscription() == None:
+        return "Pas disponible"
+    if competition.get_date_fin_inscription() > date.today():
+        return "En cours d'inscription"
+    elif competition.get_date() > date.today():
+        return "En cours"
+    else:
+        return "Terminée"
 
 class Alpha:
 
@@ -122,23 +138,33 @@ class InscriptionForm(FlaskForm):
     next = HiddenField()
     modele_appli.close_connexion()
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
+    modele_appli = ModeleAppli()
+    print("USER ", USER)
+    competitions = modele_appli.get_competition_bd().get_all_competition()
+    print("competitions ", competitions)
+    modele_appli.close_connexion()
+    statuts = []
+    for competition in competitions:
+        statuts.append(statut(competition))
+
     return render_template(
-        "home.html"
+        "home.html",competitions=competitions, statuts=statuts,user=USER
     )
+
 
 
 @app.route("/choix")
 def choose_sign():
-    return render_template("connexion_inscription.html")
+    return render_template("connexion_inscription.html", user=USER)
 
 
 @app.route("/choisir_statut_connexion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template(
 
-        "choisir_statut_connexion.html"
+        "choisir_statut_connexion.html", user=USER
     )
 
 
