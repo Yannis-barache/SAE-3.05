@@ -86,12 +86,22 @@ class MatchBD:
         Fonction qui insère un match
         :param match : match
         """
+        if match.get_escrimeur1() is not None:
+            id_match_escrimeur = match.get_escrimeur1().get_id()
+        else:
+            id_match_escrimeur = match.get_escrimeur1()
+
+        if match.get_escrimeur2() is not None:
+            id_match_escrimeur2 = match.get_escrimeur2().get_id()
+        else:
+            id_match_escrimeur2 = match.get_escrimeur2()
+
         try:
             query = text(
                 f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
                 f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
                 f"({str(match.get_id_phase())},"
-                f"{str(match.get_escrimeur1().get_id())},{str(match.get_escrimeur2().get_id())},"
+                f"{str(id_match_escrimeur)}, {str(id_match_escrimeur2)},"
                 f"{str(match.get_arbitre().get_id())},'{match.get_heure()}',"
                 f"{str(match.est_finis())})")
             self.__connexion.execute(query)
