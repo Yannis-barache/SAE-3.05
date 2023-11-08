@@ -118,4 +118,6 @@ class ClubBD:
                     return None
 
                 return Club(id_club, nom, adresse, mdp)
+        except Exception as e:
+            print(e)
             return None
