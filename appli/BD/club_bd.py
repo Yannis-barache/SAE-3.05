@@ -95,7 +95,6 @@ class ClubBD:
             print(e)
             return None
 
-            
     def login_club(self, login_club: str, login_mdp: str):
         """
         Fonction qui vérifie les identifiants d'un club
