@@ -137,7 +137,10 @@ def choose_sign():
 
 @app.route("/choisir_statut_connexion", methods=["GET", "POST"])
 def choisir_statut_connexion():
-    return render_template("choisir_statut_connexion.html")
+    return render_template(
+
+        "choisir_statut_connexion.html"
+    )
 
 
 @app.route("/inscription", methods=["GET", "POST"])
@@ -235,3 +238,4 @@ def connexion(nom):
 
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
+
