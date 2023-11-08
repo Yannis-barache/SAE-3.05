@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
+
     <title>Document</title>
     {% block styles %}
     <!-- Bootstrap CSS -->
@@ -29,6 +30,7 @@
              <a class="authentif" href="{{ url_for('choose_sign')}}"> AUTHENTIFICATION </a>
              <a class="compet" href="{{ url_for('home') }}"> COMPÉTITIONS </a>
              <a class="regles" href="{{ url_for('regles') }}"> RÈGLES </a>
+             <a class="regles" href="{{ url_for('page_poule') }}"> Tempo Poule </a>
             {% endblock %}
         </nav>
     
