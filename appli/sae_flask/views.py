@@ -3,7 +3,7 @@ import flask
 import sys
 import os
 from .app import app
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
@@ -220,8 +220,10 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
+    global USER
     modele_appli = ModeleAppli()
-    user = ""
+    print("connexion ",USER)
+
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
@@ -232,35 +234,36 @@ def connexion(nom):
         identifiant = form.identifiant.data
         mdp = form.mdp.data
         if nom == "ESCRIMEUR":
-            user = modele_appli.get_escrimeur_bd().login_escrimeur(
+            USER = modele_appli.get_escrimeur_bd().login_escrimeur(
                 identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-
+            if USER is not None and USER.get_mdp() == mdp:
+                print("redirectzefdiz")
+                return redirect(url_for('home'))
         elif nom == "ORGANISATEUR":
-            organisateur = modele_appli.get_organisateur_bd(
+            USER = modele_appli.get_organisateur_bd(
             ).login_organisateur(identifiant, mdp)
-            user = organisateur 
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
 
         elif nom == "CLUB":
             club = modele_appli.get_club_bd().login_club(identifiant, mdp)
-            user = club.login_club(identifiant, mdp)
+            USER = club.login_club(identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-        print("USER ", user)
-        if user is None:
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
+        print("USER ", USER)
+        if USER is None:
             return render_template(
                 "page_connexion.html",
                 nom=nom,
                 form=form,
                 message="Identifiant ou mot de passe invalide")
-        return render_template("home.html", nom=user)
+
+        return redirect(url_for('home'))
 
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
+
 
