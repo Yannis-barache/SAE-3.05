@@ -10,8 +10,8 @@ class Match:
     Classe Match
     """
 
-    def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur | None,
-                 escrimeur2: Escrimeur | None, arbitre: Escrimeur, heure: float,
+    def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
+                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float,
                  finis: bool):
         self.__id = id_match
         self.__id_phase = id_phase
