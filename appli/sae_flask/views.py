@@ -122,15 +122,14 @@ class InscriptionForm(FlaskForm):
     next = HiddenField()
     modele_appli.close_connexion()
 
-
-# @app.route("/")
-# def home():
-#     return render_template(
-#         "home.html"
-#     )
-
-
 @app.route("/")
+def home():
+    return render_template(
+        "home.html"
+    )
+
+
+@app.route("/choix")
 def choose_sign():
     return render_template("connexion_inscription.html")
 

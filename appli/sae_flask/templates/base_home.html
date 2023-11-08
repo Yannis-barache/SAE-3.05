@@ -26,8 +26,8 @@
         
         <nav class="navigateur">
             {% block nav %}
-             <a class="authentif" href="#"> AUTHENTIFICATION </a> 
-             <a class="compet" href="#"> COMPÉTITION </a> 
+             <a class="authentif" href="{{ url_for('choose_sign')}}"> AUTHENTIFICATION </a>
+             <a class="compet" href="{{ url_for('home') }}"> COMPÉTITION </a>
              <a class="regles" href="#"> RÈGLES </a> 
             {% endblock %}
         </nav>
