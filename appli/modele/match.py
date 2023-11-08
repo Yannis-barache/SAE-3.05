@@ -10,8 +10,8 @@ class Match:
     Classe Match
     """
 
-    def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
-                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float,
+    def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur | None,
+                 escrimeur2: Escrimeur | None, arbitre: Escrimeur, heure: float,
                  finis: bool):
         self.__id = id_match
         self.__id_phase = id_phase
@@ -40,7 +40,7 @@ class Match:
         """
         return self.__id_phase
 
-    def get_escrimeur1(self) -> Escrimeur:
+    def get_escrimeur1(self) -> Escrimeur | None:
         """
         Fonction qui retourne le premier escrimeur
 
@@ -49,7 +49,7 @@ class Match:
         """
         return self.__escrimeur1
 
-    def get_escrimeur2(self) -> Escrimeur:
+    def get_escrimeur2(self) -> Escrimeur | None:
         """
         Fonction qui retourne le deuxième escrimeur
 
@@ -169,7 +169,7 @@ class Match:
         """
         self.__id_phase = id_phase
 
-    def set_escrimeur1(self, escrimeur1: Escrimeur) -> None:
+    def set_escrimeur1(self, escrimeur1: Escrimeur | None) -> None:
         """
         Fonction qui modifie le premier escrimeur
 
@@ -178,7 +178,7 @@ class Match:
         """
         self.__escrimeur1 = escrimeur1
 
-    def set_escrimeur2(self, escrimeur2: Escrimeur) -> None:
+    def set_escrimeur2(self, escrimeur2: Escrimeur | None) -> None:
         """
         Fonction qui modifie le deuxième escrimeur
 

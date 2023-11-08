@@ -94,3 +94,28 @@ class ClubBD:
         except Exception as e:
             print(e)
             return None
+
+            
+    def login_club(self, login_club: str, login_mdp: str):
+        """
+        Fonction qui vérifie les identifiants d'un club
+        :param login_club: nom du club
+        :param login_mdp: mot de passe du club
+        :return: club
+        """
+        try:
+            query = text(f"SELECT idClub, nomClub, adresse, mdpClub "
+                         f"FROM CLUB WHERE nomClub = '{login_club}'")
+            result = self.__connexion.execute(query)
+            for id_club, nom, adresse, mdp in result:
+
+                fonction = text("SELECT verif_mdp_club(:id, :mdp)")
+                result = self.__connexion.execute(fonction, {
+                    "id": id_club,
+                    "mdp": login_mdp
+                })
+                if result.fetchone()[0] == 0:
+                    return None
+
+                return Club(id_club, nom, adresse, mdp)
+            return None

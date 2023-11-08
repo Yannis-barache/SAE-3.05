@@ -41,6 +41,7 @@ class ToucheBD:
             print(e)
             return None
 
+          
     def insert_touche(self, touche: Touche):
         """
         Fonction qui insert une touche dans la table TOUCHE

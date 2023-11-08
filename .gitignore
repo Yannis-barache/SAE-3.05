@@ -3,6 +3,6 @@
 .coverage
 venv/
 .idea/
-.flaskenv
+appli/.flaskenv
 .vscode/
 test.pdf

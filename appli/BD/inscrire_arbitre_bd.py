@@ -88,6 +88,7 @@ class InscrireArbitreBD:
             query = text(
                 f"DELETE FROM ARBITRER WHERE idEscrimeur = {str(arbitre.get_id_escrimeur())} "
                 f"AND idCompetition = {str(arbitre.get_id_competition())}")
+
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
