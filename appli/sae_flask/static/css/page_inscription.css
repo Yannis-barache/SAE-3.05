@@ -138,3 +138,10 @@ button:active {
     margin: 20px;
     text-align: center;
     }
+
+
+    @media (any-pointer: coarse) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }   
+    }
