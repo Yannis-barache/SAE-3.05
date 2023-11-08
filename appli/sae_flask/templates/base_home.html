@@ -37,18 +37,23 @@
     </main>
     <footer>
         {% block footer %}
-        <p>CONTACTES</p>
-        <a href="">
+        <p>CONTACTES : </p>
+        <a href="#">
             <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
         </a>
             
-        <a href="">
+        <a href="#">
             <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
         </a>
         
-        <a href=""> 
+        <a href="#"> 
             <img class="youtube" src="{{ url_for('static', filename='../static/img/Youtube.png') }}" alt="image logo youtube">
         </a>
+        <a href="#"> 
+            <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
+        </a>
+        <p class="paragfin"> @ Cette page à été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, Mérit Juilann, Chédeville Baptiste </p>
+
         {% endblock %}
 
     </footer>

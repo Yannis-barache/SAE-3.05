@@ -74,7 +74,7 @@ body{
 }
 
 h1{
-  margin-top:3em;
+  margin-top:1em;
 }
 
 main{
@@ -86,22 +86,28 @@ footer{
   background-color: black;
   text-align: center;
 
+
  
 }
 
 .insta{
-  float: left;
   width: 3%;
   
 }
 
 .youtube{
-  float:right;
+
   width: 3%;
 }
 
 .twitter{
   width: 3%;;
+}
+
+.facebook{
+ 
+  width: 3%;
+
 }
 
 footer > p{
@@ -110,9 +116,6 @@ footer > p{
 
 }
 
-.tableau{
-  margin:0;
-}
 
 table{
   width: 100%;
@@ -122,4 +125,10 @@ table{
 th,td{
   border:  solid black;
   padding:1.5em;
+}
+
+.paragfin{
+  font-size: 0.7em;
+  padding-top: 1em;
+ 
 }
