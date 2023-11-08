@@ -7,7 +7,7 @@ from tkinter import ttk
 from tkinter.messagebox import showerror, askyesno, showinfo
 
 config = configparser.ConfigParser()
-config.read('../../config.ini')
+config.read('config.ini')
 is_locale = config['database']['locale']
 
 
@@ -19,9 +19,9 @@ def change_variable(text):
     else:
         text = "''"
     config = configparser.ConfigParser()
-    config.read('../../config.ini')
+    config.read('config.ini')
     config['database']['locale'] = text
-    with open('../../config.ini', 'w') as configfile:
+    with open('config.ini', 'w') as configfile:
         config.write(configfile)
 
 
