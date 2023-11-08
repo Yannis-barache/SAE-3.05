@@ -40,7 +40,7 @@ class Match:
         """
         return self.__id_phase
 
-    def get_escrimeur1(self) -> Escrimeur | None:
+    def get_escrimeur1(self) -> Escrimeur:
         """
         Fonction qui retourne le premier escrimeur
 
@@ -49,7 +49,7 @@ class Match:
         """
         return self.__escrimeur1
 
-    def get_escrimeur2(self) -> Escrimeur | None:
+    def get_escrimeur2(self) -> Escrimeur:
         """
         Fonction qui retourne le deuxième escrimeur
 
@@ -119,7 +119,7 @@ class Match:
                 cpt += 1
         return cpt
 
-    def get_gagnant(self) -> Escrimeur | None:
+    def get_gagnant(self) -> Escrimeur:
         """
         Fonction qui retourne le gagnant du match
 
@@ -169,7 +169,7 @@ class Match:
         """
         self.__id_phase = id_phase
 
-    def set_escrimeur1(self, escrimeur1: Escrimeur | None) -> None:
+    def set_escrimeur1(self, escrimeur1: Escrimeur) -> None:
         """
         Fonction qui modifie le premier escrimeur
 
@@ -178,7 +178,7 @@ class Match:
         """
         self.__escrimeur1 = escrimeur1
 
-    def set_escrimeur2(self, escrimeur2: Escrimeur | None) -> None:
+    def set_escrimeur2(self, escrimeur2: Escrimeur) -> None:
         """
         Fonction qui modifie le deuxième escrimeur
 
