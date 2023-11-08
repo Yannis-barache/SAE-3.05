@@ -6,7 +6,7 @@ from .app import app
 from flask import render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField, PasswordField,IntegerField,SelectField,TelField,DateField
-from wtforms.validators import DataRequired, NumberRange, Length, ValidationError
+from wtforms.validators import DataRequired, NumberRange, Length, ValidationError,EqualTo
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -66,7 +66,7 @@ class InscriptionForm(FlaskForm):
     date_naissance = DateField("Votre date de naissance",default=dixhuit,validators=[DataRequired()])
     sexe = SelectField("Votre sexe", choices=["H","F"] ,validators=[DataRequired()])
     categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
-    mdp = PasswordField("Mot de passe", validators=[DataRequired(),Length(min=8,max=50),valide_mdp()])
+    mdp = PasswordField("Mot de passe", validators=[DataRequired(),Length(min=8,max=50),valide_mdp(),EqualTo('conf_mdp',message="Les mots de passe ne correspondent pas")])
     conf_mdp = PasswordField("Confirmation du mot de passe", validators=[DataRequired()])
     telephone = TelField("Votre numéro de téléphone",validators=[DataRequired(),alpha(),Length(min=10,max=10)])
     club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in ClubBD(ConnexionBD().get_connexion()).get_all_club()])
@@ -96,7 +96,7 @@ connexion_vers_bd = ConnexionBD()
 def inscription():
     connexion_vers_bd.ouvrir_connexion()
     form = InscriptionForm()
-    message=""
+    message=[]
     print("On lance la page inscription")
     if form.validate_on_submit():
         num_licence = form.numLicence.data
@@ -109,36 +109,30 @@ def inscription():
         conf_mdp = form.conf_mdp.data
         telephone = form.telephone.data
         club = form.club.data
-        print("numLicence",num_licence,"\n","nom",nom,"\n","prenom",prenom,"\n","date de naissance",date_naissance,"\n","sexe",sexe,"\n","categorie",categorie,"\n","mdp",mdp,"\n","conf_mdp",conf_mdp,"\n","telephone",telephone,"\n","club",club,"\n")
 
-        if mdp != conf_mdp:
-            message="Les mots de passe ne correspondent pas"
+        escrimeur_a_inserer = Escrimeur(1,nom, prenom,sexe, date_naissance,prenom.lower(),mdp,num_licence,None,club, categorie, telephone )
+        print("escrimeur_a_inserer",escrimeur_a_inserer)
+        escrimeur = EscrimeurBD(connexion_vers_bd.get_connexion())
+        try:
+            print("On va insérer l'escrimeur")
+            escrimeur.insert_escrimeur(escrimeur_a_inserer)
+            connexion_vers_bd.fermer_connexion()
+            return render_template(
+                "page_inscription.html",form=form,message="Inscription réussie"
+            )
+        except Exception as e:
+            exception = str(e.__cause__)
+            exception = message.split(": ")[1]
+            message.append(exception)
+            connexion_vers_bd.fermer_connexion()
             return render_template(
                 "page_inscription.html",form=form,message=message
             )
-        else:
-            escrimeur_a_inserer = Escrimeur(1,nom, prenom,sexe, date_naissance,prenom.lower(),mdp,num_licence,None,club, categorie, telephone )
-            print("escrimeur_a_inserer",escrimeur_a_inserer)
-            escrimeur = EscrimeurBD(connexion_vers_bd.get_connexion())
-            try:
-                print("On va insérer l'escrimeur")
-                escrimeur.insert_escrimeur(escrimeur_a_inserer)
-                connexion_vers_bd.fermer_connexion()
-                return render_template(
-                    "page_inscription.html",form=form,message="Inscription réussie"
-                )
-            except Exception as e:
-                message = str(e.__cause__)
-                message = message.split(": ")[1]
-                connexion_vers_bd.fermer_connexion()
-                return render_template(
-                    "page_inscription.html",form=form,message=message
-                )
 
     # Si le formulaire n'est pas valide on affiche les erreurs
     if (form.errors):
         for erreur in form.errors:
-            message += form.errors[erreur][0] + "\n"
+            message.append(form.errors[erreur][0])
 
     return render_template(
         "page_inscription.html",form=form,message=message

@@ -28,7 +28,11 @@
      <li class="les-img">
          <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo"></span>
      </li>
-        <div class="Alerte">{{ message }}</div>
+        <div class="Alerte">
+        {% for erreur in message %}
+            <p class="erreur"> {{ erreur }} </p>
+        {% endfor %}
+        </div>
      <li>
 
          <form class="form-horizontal" role="form" method="POST"

@@ -1,11 +1,14 @@
 .Alerte{
     color :red;
+    text-align:center;
 }
 
 .Valide{
     color :green;
-
+    text-align:center;
 }
+
+
 ul{
     list-style-type: none;
     margin: 0;
@@ -87,6 +90,7 @@ button {
     touch-action: manipulation;
     will-change: transform;
     height: 100%;
+    margin-top:8%;
     }
     
 button:disabled {
@@ -108,9 +112,6 @@ button:active {
         display: flex;
         justify-content: center;
         align-items: center;
-
-
-
     }
 
 
