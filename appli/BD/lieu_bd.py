@@ -69,3 +69,17 @@ class LieuBD:
         except Exception as e:
             print(e)
             return None
+
+    def delete_lieu_by_addresse(self, lieu: Lieu):
+        """
+        Fonction qui supprime un lieu en fonction de son adresse
+        :param lieu: lieu
+        """
+        try:
+            query = text(
+                f"DELETE FROM LIEU WHERE adresseLieu = '{lieu.get_adresse()}'")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

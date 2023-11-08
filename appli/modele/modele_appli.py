@@ -31,22 +31,23 @@ class ModeleAppli:
     """
 
     def __init__(self):
-        connexion = ConnexionBD()
-        self.__arme_bd = ArmeBD(connexion.get_connexion())
-        self.__categorie_bd = CategorieBD(connexion.get_connexion())
-        self.__club_bd = ClubBD(connexion.get_connexion())
-        self.__competition_bd = CompetitionBD(connexion.get_connexion())
-        self.__escrimeur_bd = EscrimeurBD(connexion.get_connexion())
+        self.__connexion = ConnexionBD()
+        self.__arme_bd = ArmeBD(self.__connexion.get_connexion())
+        self.__categorie_bd = CategorieBD(self.__connexion.get_connexion())
+        self.__club_bd = ClubBD(self.__connexion.get_connexion())
+        self.__competition_bd = CompetitionBD(self.__connexion.get_connexion())
+        self.__escrimeur_bd = EscrimeurBD(self.__connexion.get_connexion())
         self.__inscrire_arbitre_bd = InscrireArbitreBD(
-            connexion.get_connexion())
-        self.__inscrire_bd = InscrireBD(connexion.get_connexion())
-        self.__lieu_bd = LieuBD(connexion.get_connexion())
-        self.__match_bd = MatchBD(connexion.get_connexion())
-        self.__organisateur_bd = OrganisateurBD(connexion.get_connexion())
-        self.__phase_bd = PhaseBD(connexion.get_connexion())
-        self.__phase_final_bd = PhaseFinaleBD(connexion.get_connexion())
-        self.__poule_bd = PouleBD(connexion.get_connexion())
-        self.__touche_bd = ToucheBD(connexion.get_connexion())
+            self.__connexion.get_connexion())
+        self.__inscrire_bd = InscrireBD(self.__connexion.get_connexion())
+        self.__lieu_bd = LieuBD(self.__connexion.get_connexion())
+        self.__match_bd = MatchBD(self.__connexion.get_connexion())
+        self.__organisateur_bd = OrganisateurBD(
+            self.__connexion.get_connexion())
+        self.__phase_bd = PhaseBD(self.__connexion.get_connexion())
+        self.__phase_final_bd = PhaseFinaleBD(self.__connexion.get_connexion())
+        self.__poule_bd = PouleBD(self.__connexion.get_connexion())
+        self.__touche_bd = ToucheBD(self.__connexion.get_connexion())
 
     def get_arme_bd(self) -> ArmeBD:
         """
@@ -173,3 +174,9 @@ class ModeleAppli:
             _type_: _description_
         """
         return self.__touche_bd
+
+    def close_connexion(self):
+        """
+        Ferme la connexion à la base de données
+        """
+        self.__connexion.fermer_connexion()

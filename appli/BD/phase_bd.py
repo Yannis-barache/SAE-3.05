@@ -73,3 +73,31 @@ class PhaseBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_phase_by_id(self, phase: Phase):
+        """
+        Fonction qui insère une phase en fonction de son id
+        :param phase : phase
+        """
+        try:
+            query = text(
+                f"INSERT INTO PHASE (idPhase, idCompetition) "
+                f"VALUES ({phase.get_id_phase()}, {phase.get_id_comp()})")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_phase_by_id(self, id_p: int):
+        """
+        Fonction qui supprime une phase en fonction de son id
+        :param id_p: id de la phase
+        """
+        try:
+            query = text(f"DELETE FROM PHASE WHERE idPhase = {id_p}")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None

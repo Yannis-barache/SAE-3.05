@@ -78,3 +78,19 @@ class InscrireArbitreBD:
         except Exception as e:
             print(e)
             return None
+
+    def delete_arbitre(self, arbitre: InscrireArbitre):
+        """
+        Fonction qui supprime un arbitre
+        :param arbitre : arbitre
+        """
+        try:
+            query = text(
+                f"DELETE FROM ARBITRER WHERE idEscrimeur = {str(arbitre.get_id_escrimeur())} "
+                f"AND idCompetition = {str(arbitre.get_id_competition())}")
+
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
