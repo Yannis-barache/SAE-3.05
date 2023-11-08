@@ -319,10 +319,8 @@ class TestEscrimeurBD(unittest.TestCase):
                                "test", "test2", 12, club, categorie, False)
         self.escrimeur_bd.insert_escrimeur(escrimeur)
         self.escrimeur_bd.insert_escrimeur(escrimeur2)
-        try:
+        with self.assertRaises(Exception):
             self.escrimeur_bd.insert_escrimeur("a")
-        except Exception as e:
-            self.assertIsInstance(e, TypeError)
 
     def test_delete_escrimeur_by_nom(self):
         """
