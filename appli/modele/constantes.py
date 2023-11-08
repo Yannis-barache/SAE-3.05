@@ -7,7 +7,7 @@ NOMBRE_MINIMAL_ESCRIMEUR_POULE = 3
 
 # BD
 
-locale = ''
+locale = False
 
 # PDF
 

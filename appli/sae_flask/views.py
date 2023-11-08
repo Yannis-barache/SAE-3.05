@@ -216,7 +216,7 @@ def connexion(nom):
         elif nom == "ORGANISATEUR":
             organisateur = modele_appli.get_organisateur_bd(
             ).login_organisateur(identifiant, mdp)
-            user = organisateur.login_organisateur(identifiant, mdp)
+            user = organisateur 
             modele_appli.close_connexion()
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
