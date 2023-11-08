@@ -25,8 +25,26 @@ def alpha():
     def _alpha(form, field):
         for element in field.data:
             if not element.isdigit():
-                raise ValidationError("Le champ ne doit contenir que des chiffres")
+                raise ValidationError("Le numéro de téléphone ne doit contenir que des chiffres")
     return _alpha
+
+def valide_mdp():
+
+    def _valide_mdp(form, field):
+        symbole= False
+        chiffre = False
+        majuscule = False
+        for element in field.data:
+            if element.isdigit():
+                chiffre = True
+            elif element.isupper():
+                majuscule = True
+            elif not element.isalnum():
+                symbole = True
+        if not symbole or not chiffre or not majuscule:
+            raise ValidationError("Le mot de passe doit contenir au moins une majuscule, un chiffre et un symbole")
+    return _valide_mdp
+
 
 
 
@@ -48,7 +66,7 @@ class InscriptionForm(FlaskForm):
     date_naissance = DateField("Votre date de naissance",default=dixhuit,validators=[DataRequired()])
     sexe = SelectField("Votre sexe", choices=["H","F"] ,validators=[DataRequired()])
     categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
-    mdp = PasswordField("Mot de passe", validators=[DataRequired()])
+    mdp = PasswordField("Mot de passe", validators=[DataRequired(),Length(min=8,max=50),valide_mdp()])
     conf_mdp = PasswordField("Confirmation du mot de passe", validators=[DataRequired()])
     telephone = TelField("Votre numéro de téléphone",validators=[DataRequired(),alpha(),Length(min=10,max=10)])
     club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in ClubBD(ConnexionBD().get_connexion()).get_all_club()])
@@ -119,9 +137,8 @@ def inscription():
 
     # Si le formulaire n'est pas valide on affiche les erreurs
     if (form.errors):
-        if (form.errors["telephone"]):
-            message = form.errors["telephone"][0]
-            print("message", message)
+        for erreur in form.errors:
+            message += form.errors[erreur][0] + "\n"
 
     return render_template(
         "page_inscription.html",form=form,message=message
