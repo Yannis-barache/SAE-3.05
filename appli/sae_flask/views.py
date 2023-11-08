@@ -10,17 +10,11 @@ from wtforms.validators import DataRequired, NumberRange, Length, ValidationErro
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
-from connexion_bd import ConnexionBD
+from modele_appli import ModeleAppli
 from escrimeur import Escrimeur
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/BD'))
-from club_bd import ClubBD
-from escrimeur_bd import EscrimeurBD
-from organisateur_bd import OrganisateurBD
-from categorie_bd import CategorieBD
 
-
+modele_appli = ModeleAppli()
 def alpha():
     def _alpha(form, field):
         for element in field.data:
@@ -65,11 +59,11 @@ class InscriptionForm(FlaskForm):
     prenom = StringField("Votre prénom",validators=[DataRequired()])
     date_naissance = DateField("Votre date de naissance",default=dixhuit,validators=[DataRequired()])
     sexe = SelectField("Votre sexe", choices=["H","F"] ,validators=[DataRequired()])
-    categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in CategorieBD(ConnexionBD().get_connexion()).get_all_categorie()])
+    categorie = SelectField("Votre catégorie",choices=[(categorie.get_id(),categorie.get_nom()) for categorie in modele_appli.get_categorie_bd().get_all_categorie()])
     mdp = PasswordField("Mot de passe", validators=[DataRequired(),Length(min=8,max=50),valide_mdp(),EqualTo('conf_mdp',message="Les mots de passe ne correspondent pas")])
     conf_mdp = PasswordField("Confirmation du mot de passe", validators=[DataRequired()])
     telephone = TelField("Votre numéro de téléphone",validators=[DataRequired(),alpha(),Length(min=10,max=10)])
-    club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in ClubBD(ConnexionBD().get_connexion()).get_all_club()])
+    club = SelectField("Votre club",choices=[(club.get_id(),club.get_nom()) for club in modele_appli.get_club_bd().get_all_club()])
     next = HiddenField()
 
 # @app.route("/")
@@ -91,10 +85,8 @@ def choisir_statut_connexion():
         "choisir_statut_connexion.html"
     )
 
-connexion_vers_bd = ConnexionBD()
 @app.route("/inscription", methods=["GET", "POST"]  )
 def inscription():
-    connexion_vers_bd.ouvrir_connexion()
     form = InscriptionForm()
     message=[]
     print("On lance la page inscription")
@@ -106,25 +98,25 @@ def inscription():
         sexe = form.sexe.data
         categorie = form.categorie.data
         mdp = form.mdp.data
-        conf_mdp = form.conf_mdp.data
         telephone = form.telephone.data
         club = form.club.data
 
         escrimeur_a_inserer = Escrimeur(1,nom, prenom,sexe, date_naissance,prenom.lower(),mdp,num_licence,None,club, categorie, telephone )
         print("escrimeur_a_inserer",escrimeur_a_inserer)
-        escrimeur = EscrimeurBD(connexion_vers_bd.get_connexion())
         try:
             print("On va insérer l'escrimeur")
-            escrimeur.insert_escrimeur(escrimeur_a_inserer)
-            connexion_vers_bd.fermer_connexion()
+            modele_appli.get_escrimeur_bd().insert_escrimeur(escrimeur_a_inserer)
+            modele_appli.close_connexion()
             return render_template(
                 "page_inscription.html",form=form,message="Inscription réussie"
             )
         except Exception as e:
             exception = str(e.__cause__)
-            exception = message.split(": ")[1]
+            print("exception",exception)
+            exception = exception.split(": ")[1]
+            print("exception",exception)
             message.append(exception)
-            connexion_vers_bd.fermer_connexion()
+            modele_appli.close_connexion()
             return render_template(
                 "page_inscription.html",form=form,message=message
             )
@@ -134,13 +126,14 @@ def inscription():
         for erreur in form.errors:
             message.append(form.errors[erreur][0])
 
+    modele_appli.close_connexion()
+
     return render_template(
         "page_inscription.html",form=form,message=message
     )
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
-    connexion_vers_bd.ouvrir_connexion()
     user=""
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         flask.abort(404)
@@ -151,20 +144,22 @@ def connexion(nom):
         identifiant = form.identifiant.data
         mdp = form.mdp.data
         if nom == "ESCRIMEUR":
-            escrimeur = EscrimeurBD(connexion_vers_bd.get_connexion())
-            user = escrimeur.login_escrimeur(int(identifiant), mdp)
+            user = modele_appli.get_escrimeur_bd().login_escrimeur(identifiant, mdp)
+            modele_appli.close_connexion()
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
 
         elif nom == "ORGANISATEUR":
-            organisateur = OrganisateurBD(connexion_vers_bd.get_connexion())
+            organisateur = modele_appli.get_organisateur_bd().login_organisateur(identifiant, mdp)
             user = organisateur.login_organisateur(identifiant, mdp)
+            modele_appli.close_connexion()
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
 
         elif nom == "CLUB":
-            club = ClubBD(connexion_vers_bd.get_connexion())
+            club = modele_appli.get_club_bd().login_club(identifiant, mdp)
             user = club.login_club(identifiant, mdp)
+            modele_appli.close_connexion()
             if user is not None and user.get_mdp() == mdp:
                 return render_template("home.html", nom=user)
         print("USER ",user)
@@ -174,3 +169,6 @@ def connexion(nom):
 
 
     return render_template("page_connexion.html", nom=nom, form=form)
+
+
+
