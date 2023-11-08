@@ -85,40 +85,44 @@ footer{
 
   background-color: black;
   text-align: center;
+  padding-top:1em;
+  padding-bottom: 1em;
 
 
  
 }
 
 .insta{
-  width: 3%;
+  width: 2%;
   
 }
 
 .youtube{
 
-  width: 3%;
+  width: 2%;
 }
 
 .twitter{
-  width: 3%;;
+  width: 2%;;
 }
 
 .facebook{
  
-  width: 3%;
+  width: 2%;
 
 }
 
 footer > p{
   color: white;
   font-weight: bold;
+  
 
 }
 
 
 table{
   width: 100%;
+  text-align:center;
 }
 
 
@@ -130,5 +134,13 @@ th,td{
 .paragfin{
   font-size: 0.7em;
   padding-top: 1em;
+  margin-bottom: 0;
  
+}
+
+th{
+  text-align: center;
+}
+.intro p {
+  padding-bottom: 1em;
 }
