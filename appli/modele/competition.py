@@ -11,6 +11,7 @@ from escrimeur import Escrimeur
 from exceptions import PasAssezDArbitres
 from poule import Poule
 from phase_final import PhaseFinal
+from club import Club
 
 
 class Competition:
@@ -247,8 +248,7 @@ class Competition:
             return None
 
     @staticmethod
-    def trie_classement_inital(
-            liste_escrimeur: list[Escrimeur]):
+    def trie_classement_inital(liste_escrimeur: list[Escrimeur]):
         """
         Fonction qui trie les escrimeurs par classement initial
 
@@ -343,14 +343,20 @@ class Competition:
             PhaseFinal: La phase finale de la competition 
             list[Match]: La liste des matchs de la phase finale de la competition 
         """
+        club_none = Club(-2, "None", "None", "None")
+        categorie_none = Categorie(-2, "None")
+        escrimeur_none = Escrimeur(-2, "None", "None", "None", "None", "None",
+                                   "None", "None", 0, club_none,
+                                   categorie_none, False)
+
         classement_provisoire = Competition.etablir_classement_provisoire(
             les_poules)
         puissance = Competition.get_puissance_sup(len(classement_provisoire))
-        liste_escrimeur: list[Escrimeur | None] = []
+        liste_escrimeur: list[Escrimeur] = []
         for escrimeur in classement_provisoire:
             liste_escrimeur.append(escrimeur)
         while len(liste_escrimeur) < 2**puissance:
-            liste_escrimeur.append(None)
+            liste_escrimeur.append(escrimeur_none)
         phase_finale = PhaseFinal(-1)
         les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)

@@ -24,6 +24,7 @@ class ConnexionBD:
     """
 
     def __init__(self):
+        print(locale)
         if not locale:
             self.__connexion = None
             self.__user = "332948"
@@ -37,7 +38,8 @@ class ConnexionBD:
             self.__host = "servinfo-maria"
             self.__database = "DBbarache"
         else:
-            raise AttributeError("Erreur de configuration de la base de données")
+            raise AttributeError(
+                "Erreur de configuration de la base de données")
         self.ouvrir_connexion()
 
     def ouvrir_connexion(self, con: bool = True):

@@ -41,17 +41,33 @@ class ToucheBD:
             print(e)
             return None
 
-    def insert_poule(self, touche: Touche):
+    def insert_touche(self, touche: Touche):
         """
         Fonction qui insert une touche dans la table TOUCHE
         :param touche: La touche à insérer
         """
         try:
             query = text(
-                f"call ajoute_touche({touche.get_match()},{touche.get_escrimeur()})"
-            )
+                f"call ajoute_touche("
+                f"{touche.get_match().get_id()}, {touche.get_escrimeur().get_id()}"
+                ")")
             self.__connexion.execute(query)
             self.__connexion.commit()
+        except Exception as e:
+            print(e)
 
+    def delete_touche(self, touche: Touche, num_touche: int):
+        """
+        Fonction qui supprime une touche dans la table TOUCHE
+        :param touche: La touche à supprimer
+        :param num_touche: Le numéro de la touche à supprimer
+        """
+        try:
+            query = text(
+                f"DELETE FROM TOUCHE WHERE idMatch = {touche.get_match().get_id()} "
+                f"AND idEscrimeur = {touche.get_escrimeur().get_id()} "
+                f"AND numTouche = {num_touche}")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
         except Exception as e:
             print(e)

@@ -87,9 +87,9 @@ class CompetitionBD:
                 f"idCategorie, coefficientCompetition) VALUES "
                 f"('{competition.get_nom()}', '{competition.get_date()}', "
                 f"'{competition.get_date_fin_inscription()}', "
-                f"'{competition.get_saison()}', {competition.get_lieu()}, "
-                f"{competition.get_arme()}, "
-                f"{competition.get_categorie()}, {competition.get_coefficient()})"
+                f"'{competition.get_saison()}', {competition.get_lieu().get_id()}, "
+                f"{competition.get_arme().get_id()}, "
+                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()})"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()

@@ -69,6 +69,32 @@ class ClubBD:
             print(e)
             return None
 
+    def delete_club(self, id_cl: int):
+        """
+        Fonction qui supprime un club
+        :param id_cl: id du club
+        """
+        try:
+            query = text('DELETE FROM CLUB WHERE idClub =' + str(id_cl))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_club_by_nom(self, nom_cl: str):
+        """
+        Fonction qui supprime un club
+        :param nom_cl: nom du club
+        """
+        try:
+            query = text("DELETE FROM CLUB WHERE nomClub ='" + nom_cl + "'")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
     def login_club(self, login_club: str, login_mdp: str):
         """
         Fonction qui vérifie les identifiants d'un club
@@ -91,7 +117,6 @@ class ClubBD:
                     return None
 
                 return Club(id_club, nom, adresse, mdp)
-            return None
         except Exception as e:
             print(e)
             return None

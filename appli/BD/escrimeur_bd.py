@@ -89,7 +89,7 @@ class EscrimeurBD:
         """
         try:
             if escrimeur.get_classement() is None:
-                classement = "NULL"
+                classement = 'NULL'
             else:
                 classement = str(escrimeur.get_classement())
             query = text(
@@ -101,13 +101,27 @@ class EscrimeurBD:
                 f"'{escrimeur.get_date_naissance()}', "
                 f"'{escrimeur.get_nom_utilisateur()}', "
                 f"'{escrimeur.get_mdp()}', {classement}, "
-                f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club())}, "
-                f"{str(escrimeur.get_categorie())}, {str(escrimeur.get_arbitrage())})"
+                f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club().get_id())}, "
+                f"{str(escrimeur.get_categorie().get_id())}, {str(escrimeur.get_arbitrage())})"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
             raise e
+
+    def delete_escrimeur_by_nom(self, nom: str):
+        """
+        Fonction qui supprime un escrimeur en fonction de son nom
+        :param nom: nom de l'escrimeur
+        """
+        try:
+            query = text("DELETE FROM ESCRIMEUR WHERE nomEscrimeur ='" + nom +
+                         "'")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
 
     def login_escrimeur(self, login_escrimeur: int, login_mdp: str):
         """
