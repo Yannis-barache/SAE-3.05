@@ -1,14 +1,16 @@
-<div style="text-align: center;">
+<div style="justify-content : space-evenly; align-items:center;">
 
 # SAE-3.05
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
-[![Coverage Status](https://coveralls.io/repos/github/Yannis-barache/SAE-3.05/badge.svg?branch=develop)](https://coveralls.io/github/Yannis-barache/SAE-3.05?branch=develop)
 
-<div style="display: flex; align-items: center; justify-content:space-evenly">
+
+  [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+  [![Coverage Status](https://coveralls.io/repos/github/Yannis-barache/SAE-3.05/badge.svg?branch=develop)](https://coveralls.io/github/Yannis-barache/SAE-3.05?branch=develop)
+
+</div>
+<div style="display: flex; align-items: center; justify-content:space-evenly; flex-wrap: nowrap">
     <img src="https://assets.onthehub.com/attachments/15/bf1336cd-799b-e011-969d-0030487d8897/40d4e299-03ff-4c99-94a8-7a100f07837c.jpg" alt="Logo IUT Orléans" width="275"/>
     <img src="https://blois-escrime.fr/wp-content/uploads/2015/07/cropped-logo-CEB_accueil.jpg" alt="Logo Université Orléans" width="200" />
-</div>
 </div>
 
 ## Membres du groupe
@@ -29,6 +31,7 @@ Cette application va permettre de gérer des compétitions d'escrime, via celle-
 Nous utiliserons le langage python avec le framework flask pour la réalisation de cette application lié à une base de données MySQL distante.
 
 <br><br>
+
 ## Installation
 
 Pour installer le projet, il faut tout d'abord cloner le projet sur votre machine dont voici la commande :
@@ -41,6 +44,9 @@ Ensuite, il faut installer les dépendances du projet et mettre en place l'envir
 Pour cela, un exécutable vous est mis à disposition nommée setup.sh qui mettra en place toutes les dépendances.
 Vous pouvez donc exécuter le script avec la commande suivante :
 
+
+### Linux
+
 ```bash
 ./setup.sh
 ```
@@ -49,6 +55,34 @@ Maintenant que tout est installé, il faut rentrer dans l'environnement virtuel 
 
 ```bash
 source venv/bin/activate
+```
+
+Vous pouvez donc maintenant lancer l'application avec la commande suivante :
+
+```bash
+flask run
+```
+
+Et voilà, l'application est lancée et vous pouvez vous y connecter en allant sur l'adresse suivante : http://127.0.0.1:5000/
+
+
+### Windows
+
+Il faut executer le fichier `setup.bat` pour installer les dépendances et mettre en place l'environnement virtuel.
+
+Maintenant que tout est installé, vous avez 2 possibilités pour lancer l'application.
+
+#### 1ère possibilité
+
+Il vous suffit d'exécuter le fichier `launch.bat` pour lancer l'application. L'exécutable vous ouvrira automatiquement 
+votre navigateur par défaut sur l'application.
+
+#### 2ème possibilité
+
+Il faut rentrer dans l'environnement virtuel avec la commande suivante :
+
+```bash
+venv\Scripts\activate
 ```
 
 Vous pouvez donc maintenant lancer l'application avec la commande suivante :
@@ -101,6 +135,19 @@ Il peut donc ajouter des escrimeurs, les modifier, les supprimer, etc.
   - [x] Création des procédures stockées
   - [x] Création des fonctions
 - [ ] Implémentation des pages de l'application en Flask
+  - Page d'accueil
+    - [x] Création de la page
+    - [x] Création de la route
+    - [x] Création du template
+  - Page de connexion
+    - [x] Création de la page
+    - [x] Création de la route
+    - [x] Création du template
+  - Page d'inscription
+    - [x] Création de la page
+    - [x] Création de la route
+    - [x] Création du template
+  
 
 ## MCD de la base de données
 
