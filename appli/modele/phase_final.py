@@ -43,7 +43,7 @@ class PhaseFinal:
         """
         self.__id_phase_f = id_phase_f
 
-    def generer_les_matchs(self, liste_escrimeurs: list[Escrimeur | None],
+    def generer_les_matchs(self, liste_escrimeurs: list[Escrimeur],
                            liste_arbitres: list[Escrimeur],
                            heure_debut: float) -> list[Match]:
         """
