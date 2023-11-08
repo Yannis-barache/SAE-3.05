@@ -1,0 +1,133 @@
+
+body{
+    background-image: url(../img/background_left.png) , url(../img/background_droite.png) ;
+    background-position: left,right bottom;
+    background-repeat: no-repeat;
+    background-size: 50%,20%;
+    
+    height: 100vh;
+    margin: 0; 
+    padding: 0;
+    
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rec-central{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 35px 55px;
+    width: 53vh;
+    background-color: #dbdbdb;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 2%;
+
+}
+
+
+
+#logo{
+    width: 83%;
+    height: 10%;
+}
+
+.titre{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 4vh;
+    text-shadow: 2px 3px 3px GRAY;
+    /* color: #333333; */
+    line-height: 1.2;
+    text-align: center;
+    margin: 20px;
+}
+
+
+button {
+    appearance: none;
+    background-color: #d2080a;
+    border-radius: 0.9375em;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 2vh;
+    font-weight: 900;
+    line-height: normal;
+    min-width: 0;
+    width: 26vh;
+    outline: none;
+    padding: 1em 2.3em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+    }
+    
+button:disabled {
+    pointer-events: none;
+    }
+    
+button:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    }
+    
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+    }
+
+.choix_statut{
+    text-align: center;
+    font-weight: bold;
+    margin: 1em;
+}
+
+.lesboutons{
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    list-style-type: none;
+}
+
+.petit-titre{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2vh;
+    margin-bottom: 1%;
+    margin-top: 8%;
+}
+
+.leback{
+  background-color: black;
+  width: 53vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.choix-multiple{
+
+    margin-top: 4%;
+
+}
+
+.block-logo{
+    display: flex;
+    justify-content: center;
+    width: 29vh;
+    margin-bottom: 1vh;
+}
