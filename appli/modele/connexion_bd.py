@@ -24,6 +24,7 @@ class ConnexionBD:
     """
 
     def __init__(self):
+        print(locale)
         if not locale:
             self.__connexion = None
             self.__user = "332948"

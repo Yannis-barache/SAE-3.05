@@ -47,6 +47,35 @@ class TestConnexionBD(unittest.TestCase):
                 else:
                     file.write(line)
 
+    def test_constructeur_connexion(self):
+        """
+        Test du constructeur de la classe ConnexionBD
+        """
+        self.assertIsNotNone(self.connexion)
+
+    def test_constructeur_connexion_iut(self):
+        """
+        Test du constructeur de la classe ConnexionBD en local
+        """
+        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
+            lines = file.readlines()
+        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
+            for line in lines:
+                if line.startswith('locale = '):
+                    file.write(f'locale = {True}\n')
+                else:
+                    file.write(line)
+        connexion = ConnexionBD()
+        self.assertIsNotNone(connexion)
+        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
+            lines = file.readlines()
+        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
+            for line in lines:
+                if line.startswith('locale = '):
+                    file.write(f'locale = {False}\n')
+                else:
+                    file.write(line)
+
     def test_creation_connexion(self):
         """
         Test de la création d'une connexion
@@ -75,3 +104,6 @@ class TestConnexionBD(unittest.TestCase):
         """
         self.connexion.ouvrir_connexion()
         self.assertIsNotNone(self.connexion.get_connexion())
+
+if __name__ == '__main__':
+    unittest.main()

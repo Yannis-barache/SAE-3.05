@@ -44,6 +44,7 @@ from touche import Touche
 from poule import Poule
 from inscrire import Inscrire
 from phase_final import PhaseFinal
+from organisateur import Organisateur
 
 modele = ModeleAppli()
 
@@ -198,6 +199,19 @@ class TestClubBD(unittest.TestCase):
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
+    def test_login_club(self):
+        """
+        Test de la méthode login_club
+        """
+        club = self.club_bd.login_club("TUC Escrime", "lessaucisses")
+        self.assertIsInstance(club, Club)
+        club = self.club_bd.login_club("test", "test2")
+        self.assertIsNone(club)
+        try:
+            self.club_bd.login_club(club, club)
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
 
 class TestCompetitionBD(unittest.TestCase):
     """
@@ -317,6 +331,19 @@ class TestEscrimeurBD(unittest.TestCase):
         self.escrimeur_bd.delete_escrimeur_by_nom("test")
         try:
             self.escrimeur_bd.delete_escrimeur_by_nom(1)
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_login_escrimeur(self):
+        """
+        Test de la méthode login_escrimeur
+        """
+        escrimeur = self.escrimeur_bd.login_escrimeur("33333333", "chedeville")
+        self.assertIsInstance(escrimeur, Escrimeur)
+        escrimeur = self.escrimeur_bd.login_escrimeur("a", "a")
+        self.assertIsNone(escrimeur)
+        try:
+            self.escrimeur_bd.login_escrimeur(1, "test")
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
@@ -587,6 +614,19 @@ class TestOrganisateurBD(unittest.TestCase):
         """
         organisateurs = self.organisateur_bd.get_all_organisateur()
         self.assertIsInstance(organisateurs, list)
+
+    def test_login_organisateur(self):
+        """
+        Test de la méthode login_organisateur
+        """
+        organisateur = self.organisateur_bd.login_organisateur("chedeville", "baptiste")
+        self.assertIsInstance(organisateur, Organisateur)
+        organisateur = self.organisateur_bd.login_organisateur("test", "test2")
+        self.assertIsNone(organisateur)
+        try:
+            self.organisateur_bd.login_organisateur(1, "test")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
 
 
 class TestPhaseBD(unittest.TestCase):
@@ -930,7 +970,6 @@ class TestModeleAppli(unittest.TestCase):
         self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
 
 
-#modele.close_connexion()
 
 
 class TestException(TestClubBD):
