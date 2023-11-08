@@ -2,35 +2,44 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css')}}"> 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/connecter.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pp.css')}}"> 
 {% endblock %}
 
 
 {% block content %}
 
-<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
+
+<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='img/userAccunt.png') }}" alt="logo"></span>
             
 <div class="infoconnecte">
-    <span class="titre"> BIENVENUE </span>
-
-    <span class="petit-titre">Connecte toi ou crée un compte :</span>
+    <span class="titre"> {{ nom }} </span>
 </div>
-
-
-
-<div class="lesbouton">
-    <Button class="b_inscrire">INSCRIPTION</Button>
-    
-
-    <div class="ou">
-        <hr>
-        <span>ou</span>
-        <hr>
-
+<form class="form-horizontal" role="form" method="POST"
+        action="{{ url_for('connexion', nom=nom) }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        <label for="id" class="contexte"
+            >{{ form.identifiant.label }}</label>
+        <div class="col-sm-10">
+            {{ form.identifiant(class_="form-control",
+                             placeholder="Identifiant") }}
+        </div>
     </div>
-
-
-    <Button class="b_connecter">CONNEXION</Button>
-
+    <div class="form-group">
+    <label for="mdp" class="contexte"
+        >{{ form.mdp.label }}</label>
+    <div class="col-sm-10">
+        {{ form.mdp(class_="form-control",
+                         placeholder="Password") }}
+    </div>
+    </div>
+<div class="form-group">
+    <div class="col-sm-offset -2 col-sm-10">
+        <button type="submit" class="connecte">Se connecter</button>
+    </div>
+</div>
+</form>
+<p class="Alerte">{{ message }}</p>
 {% endblock %}

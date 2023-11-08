@@ -2,9 +2,15 @@
 Module contenant la classe Competition
 """
 
+import math
+import constantes as const
 from categorie import Categorie
 from arme import Arme
 from lieu import Lieu
+from escrimeur import Escrimeur
+from exceptions import PasAssezDArbitres
+from poule import Poule
+from phase_final import PhaseFinal
 
 
 class Competition:
@@ -14,7 +20,20 @@ class Competition:
 
     def __init__(self, id_comp: int, nom: str, date: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
-                 arme: Arme, categorie: Categorie, coeficient: float):
+                 arme: Arme, categorie: Categorie, coefficient: float):
+        """
+        Constructeur de la classe Competition
+
+        Args:
+            id (int): L'id de la competition
+            nom (str): Le nom de la competition
+            date (str): La date de la competition
+            date_fin_inscription (str): La date de fin d'inscription de la competition
+            saison (str): La saison de la competition
+            lieu (Lieu): Le lieu de la competition
+            arme (Arme): L'arme de la competition
+            categorie (Categorie): La categorie de la competition
+        """
         self.__id = id_comp
         self.__nom = nom
         self.__date = date
@@ -23,7 +42,7 @@ class Competition:
         self.__lieu = lieu
         self.__arme = arme
         self.__categorie = categorie
-        self.__coeficient = coeficient
+        self.__coefficient = coefficient
 
     def get_id(self) -> int:
         """
@@ -97,14 +116,14 @@ class Competition:
         """
         return self.__categorie
 
-    def get_coeficient(self) -> float:
+    def get_coefficient(self) -> float:
         """
-        Fonction qui retourne le coeficient de la competition
+        Fonction qui retourne le coefficient de la competition
 
         Returns:
-            float: Le coeficient de la competition
+            float: Le coefficient de la competition
         """
-        return self.__coeficient
+        return self.__coefficient
 
     def set_id(self, id_comp: int) -> None:
         """
@@ -178,14 +197,164 @@ class Competition:
         """
         self.__categorie = categorie
 
-    def set_coeficient(self, coeficient: float) -> None:
+    def set_coefficient(self, coefficient: float) -> None:
         """
-        Fonction qui modifie le coeficient de la competition
+        Fonction qui modifie le coefficient de la competition
 
         Args:
-            coeficient (float): coeficient de la competition
+            coefficient (float): coefficient de la competition
         """
-        self.__coeficient = coeficient
+        self.__coefficient = coefficient
+
+    @staticmethod
+    def generation_poule(
+        liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None:
+        """
+        Fonction qui genere les poules de la competition
+
+        Args:
+            liste_escrimeur (list): liste des escrimeurs de la competition
+            liste_arbitre (list): liste des arbitres de la competition
+        
+        Returns:
+            dict[int, tuple[Escrimeur, list[Escrimeur]]]: 
+                dictionnaire contenant les poules de la competition
+            La clé est le numéro de la poule et la valeur est un tuple 
+            contenant l'arbitre de la poule et la liste des escrimeurs de la poule
+        """
+        try:
+            liste_escrimeur = Competition.trie_classement_inital(
+                liste_escrimeur)
+            nombre_poule = Competition.nombre_poule(len(liste_escrimeur),
+                                                    len(liste_arbitre))[0]
+            poule_int: dict[int, tuple[Escrimeur, list[Escrimeur]]] = {}
+
+            # On initialise les poules avec les arbitres
+            for i in range(nombre_poule):
+                poule_int[i] = (liste_arbitre[i], [])
+
+            # On ajoute les escrimeurs dans les poules
+            for i in range(len(liste_escrimeur)):
+                poule_int[i % nombre_poule][1].append(liste_escrimeur[i])
+
+            # On transforme les poules en poules de type Poule
+            poule: dict[Poule, tuple[Escrimeur, list[Escrimeur]]] = {}
+            for i in range(nombre_poule):
+                poule[Poule(-1)] = poule_int[i]
+            return poule
+        except PasAssezDArbitres:
+            return None
+
+    @staticmethod
+    def trie_classement_inital(
+            liste_escrimeur: list[Escrimeur]):
+        """
+        Fonction qui trie les escrimeurs par classement initial
+
+        Args:
+            liste_escrimeur (list[Escrimeur]): liste des escrimeurs de la competition
+
+        Returns:
+            list[Escrimeur]: liste des escrimeurs de la competition triee par classement initial
+        """
+        return sorted(liste_escrimeur,
+                      key=lambda escrimeur: escrimeur.get_classement())
+
+    @staticmethod
+    def nombre_poule(nombre_escrimeur: int,
+                     nombre_arbitre: int) -> tuple[int, int]:
+        """
+        Fonction qui retourne le nombre de poule et le nombre d'escrimeur par poule
+
+        Args:
+            nombre_escrimeur (int): nombre d'escrimeur de la competition
+            nombre_arbitre (int): nombre d'arbitre de la competition
+
+        Returns:
+            tuple[int, int]: Le nombre de poule et le nombre d'escrimeur par poule
+        """
+        min_arbitres_necessaires = math.ceil(
+            nombre_escrimeur / const.NOMBRE_MAXIMAL_ESCRIMEUR_POULE)
+        if nombre_arbitre < min_arbitres_necessaires:
+            raise PasAssezDArbitres(
+                "Pas assez d'arbitres pour couvrir chaque poule.")
+        nombre_poule = math.ceil(nombre_escrimeur /
+                                 const.NOMBRE_MAXIMAL_ESCRIMEUR_POULE)
+        nombre_escrimeur_par_poule = math.ceil(nombre_escrimeur / nombre_poule)
+        return nombre_poule, nombre_escrimeur_par_poule
+
+    @staticmethod
+    def etablir_classement_provisoire(
+            les_poules: list[Poule]) -> list[Escrimeur]:
+        """
+        Fonction qui etablit le classement provisoir de la competition apres les poules
+
+        Args:
+            les_poules (list[Poule]): La liste des poules de la competition
+
+        Returns:
+            list[Escrimeur]: Le classement provisoir de la competition
+        """
+        infos = {}
+        for poule in les_poules:
+            for escrimeur in poule.get_les_escrimeurs():
+                indice_escrimeur = poule.get_nb_victoires(escrimeur) / (
+                    poule.get_nb_escrimeurs() - 1)
+                infos[escrimeur] = (indice_escrimeur,
+                                    poule.get_nb_touche_marquee(escrimeur),
+                                    poule.get_nb_touche_prise(escrimeur))
+        classement_provisoire = sorted(
+            infos.keys(),
+            key=lambda escrimeur:
+            (infos[escrimeur][0], infos[escrimeur][1], infos[escrimeur][2]),
+            reverse=True)
+        return classement_provisoire
+
+    @staticmethod
+    def get_puissance_sup(nb_escrimeur: int) -> int:
+        """
+        Fonction qui retourne la puissance superieur de 2
+
+        Args:
+            nb_escrimeur (int): Le nombre d'escrimeur de la competition
+
+        Returns:
+            int: La puissance superieur de 2
+        """
+        puissance = 0
+        while 2**puissance < nb_escrimeur:
+            puissance += 1
+        return puissance
+
+    @staticmethod
+    def generer_phase_finale(les_poules: list[Poule],
+                             les_arbitres: list[Escrimeur],
+                             heure_debut: float) -> tuple[PhaseFinal, list]:
+        """
+        Fonction qui genere la phase finale de la competition
+
+        Args:
+            les_poules (list[Poule]): La liste des poules de la competition
+            les_arbitres (list[Escrimeur]): La liste des arbitres de la competition
+            heure_debut (float): L'heure de debut de la competition
+
+        Returns:
+            PhaseFinal: La phase finale de la competition 
+            list[Match]: La liste des matchs de la phase finale de la competition 
+        """
+        classement_provisoire = Competition.etablir_classement_provisoire(
+            les_poules)
+        puissance = Competition.get_puissance_sup(len(classement_provisoire))
+        liste_escrimeur: list[Escrimeur | None] = []
+        for escrimeur in classement_provisoire:
+            liste_escrimeur.append(escrimeur)
+        while len(liste_escrimeur) < 2**puissance:
+            liste_escrimeur.append(None)
+        phase_finale = PhaseFinal(-1)
+        les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
+                                                     les_arbitres, heure_debut)
+        return (phase_finale, les_matchs)
 
     def __str__(self) -> str:
         """
@@ -194,6 +363,6 @@ class Competition:
         Returns:
             str: informations de la competition
         """
-        return f"Competition: {self.__id}, {self.__nom}, {self.__date}, " \
+        return f"Competition : {self.__id}, {self.__nom}, {self.__date}, " \
         f"{self.__date_fin_inscription}, {self.__saison}, {self.__lieu}, " \
-        f"{self.__arme}, {self.__categorie}"
+        f"{self.__arme}, {self.__categorie} |"

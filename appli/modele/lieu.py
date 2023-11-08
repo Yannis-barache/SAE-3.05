@@ -8,9 +8,8 @@ class Lieu:
     Classe Lieu
     """
 
-    def __init__(self, id_lieu: int, nom: str, description: str, adresse: str):
+    def __init__(self, id_lieu: int, description: str, adresse: str):
         self.__id = id_lieu
-        self.__nom = nom
         self.__description = description
         self.__adresse = adresse
 
@@ -22,15 +21,6 @@ class Lieu:
             int: id de la categorie
         """
         return self.__id
-
-    def get_nom(self):
-        """
-        Fonction qui retourne le nom de la categorie
-
-        Returns:
-            str: nom de la categorie
-        """
-        return self.__nom
 
     def get_description(self):
         """
@@ -59,15 +49,6 @@ class Lieu:
         """
         self.__id = id_lieu
 
-    def set_nom(self, nom: str):
-        """
-        Fonction qui modifie le nom de la categorie
-
-        Args:
-            nom (str): nom de la categorie
-        """
-        self.__nom = nom
-
     def set_description(self, description: str):
         """
         Fonction qui modifie la description de la categorie
@@ -93,7 +74,5 @@ class Lieu:
         Returns:
             str: informations de la categorie
         """
-        return "id : " + str(
-            self.__id
-        ) + " nom : " + self.__nom + " description : " + self.__description + " adresse : " + str(
-            self.__adresse)
+        return "Lieu : " + self.__description + " " + self.__adresse + " " + str(
+            self.__id) + " |"

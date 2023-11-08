@@ -77,4 +77,4 @@ class Touche:
         Returns:
             str: Les informations de la touche
         """
-        return f"{self.__match} - {self.__escrimeur} - {self.__numero}"
+        return f"Touche : {self.__match} - {self.__escrimeur} - {self.__numero}  |"

@@ -1,0 +1,34 @@
+{% extends "base_authentification.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}">
+{% endblock %}
+
+{% block content %}
+<span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo"></span>
+
+<div class="infoconnecte leback">
+    <span class="titre"> Connexion </span>
+
+    
+</div>
+
+
+<span class="petit-titre">Choisi un statut : </span>
+<ul class="lesboutons">
+    <li>
+        <button class="choix-multiple" onclick="window.location.href = '{{ url_for('connexion',nom = 'ESCRIMEUR')}}';">Escrimeur</button>
+    </li>
+    <li>
+        <button class="choix-multiple" onclick="window.location.href = '{{ url_for('connexion',nom = 'CLUB')}}';">Club</button>
+    </li>
+    <li>
+        <button class="choix-multiple" onclick="window.location.href = '{{ url_for('connexion',nom = 'ORGANISATEUR')}}';">Organisateur</button>
+    </li>
+</ul>
+
+
+
+{% endblock %}
