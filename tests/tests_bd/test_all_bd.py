@@ -316,7 +316,7 @@ class TestEscrimeurBD(unittest.TestCase):
         escrimeur = Escrimeur(-1, "test", "test", "test", "test", "test",
                               "test", "test", None, club, categorie, False)
         escrimeur2 = Escrimeur(-1, "test", "test", "test", "test", "test",
-                               "test", "test", 12, club, categorie, False)
+                               "test", "test2", 12, club, categorie, False)
         self.escrimeur_bd.insert_escrimeur(escrimeur)
         self.escrimeur_bd.insert_escrimeur(escrimeur2)
         try:
