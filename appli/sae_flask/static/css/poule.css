@@ -1,12 +1,39 @@
 h2{
-    background-color: #ededed;
-   text-align: center;
+  background-color: #ededed;
+  text-align: center;
+ 
 }
 
 
 main{
-  margin-top:3%;
-  margin-bottom: 3%;
-  margin-right: 0%;
-  margin-left: 0%;
+ margin-top:3%;
+ margin-bottom: 3%;
+ margin-right: 0%;
+ margin-left: 0%;
+ 
+}
+
+section{
+ margin: 3%;
+}
+
+img.pdf{
+  
+    display: block;
+    width: 413px;
+    height: auto;
+  
+}
+
+.box{
+  display: flex;
+}
+
+.poules{
+  margin: 0;
+}
+
+.imprime{
+  display: flex;
+  flex-direction: column;
 }

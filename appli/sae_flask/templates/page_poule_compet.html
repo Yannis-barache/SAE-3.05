@@ -13,25 +13,32 @@
     <h2> COMPÉTITION DE BLOIS DU 04/05/2024</h2>
 </div>
 
-<section class="poules">
-    <h3> LES POULES : </h3>
-    <p> Arbitre : </p>
+<div class="box">
+    <section class="poules">
+        <h3> LES POULES : </h3>
+        <p> Arbitre : </p>
 
-    <ul class="listmatchs">
-        <h4> Ordre des matchs </h4>
-        <li> matchs 1 : 9h55</li>
-        <li> matchs 2 : 10h05</li>
-        <li> matchs 3 : 10h15</li>
-        <li> matchs 4 : 10h25</li>
-        <li> matchs 5 : 10h35</li>
-        <li> matchs 6 : 10h45</li>
-    </ul>
+        <ul class="listmatchs">
+            <h4> Ordre des matchs </h4>
+            <li> matchs 1 : 9h55</li>
+            <li> matchs 2 : 10h05</li>
+            <li> matchs 3 : 10h15</li>
+            <li> matchs 4 : 10h25</li>
+            <li> matchs 5 : 10h35</li>
+            <li> matchs 6 : 10h45</li>
+        </ul>
 
-    <button> Résultat <a href=""></a></button>
-</section>
-<img class= "pdf" src="{{ url_for('static', filename='../static/img/pdf.png') }}" alt="menu">
-<img class= "imprimante" src="{{ url_for('static', filename='../static/img/imprimante.png') }}" alt="menu">
-<a href="#"> Imprimer le pdf</a> 
+        <button> Résultat <a href=""></a></button>
+    </section>
+    <div class="imprime">
+        <img class= "pdf" src="{{ url_for('static', filename='../static/img/pdf.png') }}" alt="menu">
+        <div class="print">
+            <img class= "imprimante" src="{{ url_for('static', filename='../static/img/imprimante.png') }}" alt="menu">
+            <a href="#"> Imprimer le pdf</a> 
+        </div>
+    </div>
+    
+</div>
 
 {% endblock %}
 
