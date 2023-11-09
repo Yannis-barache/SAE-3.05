@@ -142,6 +142,12 @@ def home():
 
 
 
+@app.route("/home")
+def home():
+    return render_template(
+        "home.html"
+    )
+
 @app.route("/choix")
 def choose_sign():
     return render_template("connexion_inscription.html", user=USER)
@@ -257,4 +263,8 @@ def connexion(nom):
 def regles():
     return render_template("regles.html")
 
-
+@app.route("/competition/<id_competition>")
+def competition(id_competition):
+    modele = ModeleAppli()
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    return render_template("competition.html", compet = la_competition)

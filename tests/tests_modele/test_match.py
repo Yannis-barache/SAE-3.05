@@ -348,6 +348,55 @@ class TestMatch(unittest.TestCase):
         match.set_finis(True)
         self.assertEqual(match.est_finis(), True)
 
+    def test_get_type_phase(self):
+        """
+        Test de la fonction get_type_phase
+        """
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
+        categorie = Categorie(1, 'U19')
+        escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-05-14',
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
+        escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2005-05-14',
+                               'clb', 'mdp', 'AB11', None, club, categorie,
+                               False)
+        arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
+                            'mdp', 'AB01', 3, club, categorie, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False)
+        self.assertIsNone(match.get_type_phase())
+
+    def test_generer_pdf(self):
+        """
+        Test de la fonction generer_pdf de la classe Match
+        """
+        club = Club(1, 'Club 1', 'Adresse 1', 'mdp')
+        categorie = Categorie(1, 'U19')
+        escrimeur1 = Escrimeur(1, 'Chédeville', 'Baptiste', 'M', '2004-14-05',
+                               'baptched', 'mdp', 'AB21', 1, club, categorie,
+                               False)
+        escrimeur2 = Escrimeur(2, 'Evelin', 'Colomban', 'M', '2004-14-05',
+                               'clb', 'mdp', 'AB11', 2, club, categorie, False)
+        arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
+                            'mdp', 'AB01', 3, club, categorie, True)
+
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        touche1 = Touche(match, escrimeur1, 1)
+        touche2 = Touche(match, escrimeur1, 2)
+        touche3 = Touche(match, escrimeur1, 3)
+        touche4 = Touche(match, escrimeur2, 4)
+        touche5 = Touche(match, escrimeur1, 5)
+        match.set_touche([touche1, touche2, touche3, touche4, touche5])
+        match.set_finis(True)
+        match.set_type_phase('Poule')
+        match.generer_pdf()
+        match.set_type_phase("Poule")
+        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        escrimeur1.set_classement(None)
+        escrimeur2.set_classement(None)
+        match2.set_finis(False)
+        match2.set_type_phase('Phase finale')
+        match2.generer_pdf()
+
     def test_str(self):
         """
         Test de la fonction __str__ de la classe Match

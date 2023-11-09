@@ -267,6 +267,18 @@ class TestCompetitionBD(unittest.TestCase):
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
+    def test_delete_competition_by_name(self):
+        """
+        Test de la méthode delete_competition_by_name
+        """
+        competition = Competition(-1, "test", "test", "test", "test", None,
+                                  None, None, 0.5)
+        self.competition_bd.delete_competition_by_name(competition)
+        try:
+            self.competition_bd.delete_competition_by_name("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
 
 class TestEscrimeurBD(unittest.TestCase):
     """
@@ -617,7 +629,8 @@ class TestOrganisateurBD(unittest.TestCase):
         """
         Test de la méthode login_organisateur
         """
-        organisateur = self.organisateur_bd.login_organisateur("chedeville", "baptiste")
+        organisateur = self.organisateur_bd.login_organisateur(
+            "chedeville", "baptiste")
         self.assertIsInstance(organisateur, Organisateur)
         organisateur = self.organisateur_bd.login_organisateur("test", "test2")
         self.assertIsNone(organisateur)
@@ -966,8 +979,6 @@ class TestModeleAppli(unittest.TestCase):
         Teste la méthode get_touche_bd
         """
         self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
-
-
 
 
 class TestException(TestClubBD):

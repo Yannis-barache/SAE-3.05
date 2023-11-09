@@ -117,7 +117,8 @@ class Poule:
         """
         Fonction qui génère le PDF de la poule
         """
-        canva = canvas.Canvas('test.pdf', pagesize=letter)
+        canva = canvas.Canvas("poule_" + str(self.__id) + ".pdf",
+                              pagesize=letter)
         canva.setFont('Helvetica', 18)
         canva.drawCentredString(letter[0] / 2, 750,
                                 'Poule numéro ' + str(self.__id))

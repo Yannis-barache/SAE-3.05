@@ -4,15 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     {% block styles %}
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
     {% endblock %}
 </head>
 <body>
-
     <header>
         <a href="{{ url_for('home') }}"> &#10006;</a>
+        <div class="b-menu">
+            <input id="toggleChecker" type="checkbox">
+            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
+            <div class="checkboxtoggler">
+                <div class="line line-1"></div> 
+                <div class="line line-2"></div> 
+                <div class="line line-3"></div> 
+            </div> 
+            </label>    
+            <nav id="myDropdown" class="dropdown-content"> 
+                <ul> 
+                    <li><a href="#">Accueil</a></li> 
+                    <li><a href="#">Services</a></li> 
+                    <li><a href="#">À propos</a></li> 
+                    <li><a href="#">Contact</a></li> 
+                </ul> 
+            </nav> 
+
+        </div>
         <img id="logo-header" src="{{ url_for('static', filename='/img/logo.png') }}" alt="logo">
         <img class="aide" src="{{ url_for('static', filename='/img/Aide.png') }}" alt="aide">
     </header>
