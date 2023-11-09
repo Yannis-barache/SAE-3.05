@@ -29,8 +29,8 @@ def statut(competition : Competition):
     if competition.get_date_fin_inscription() == None:
         return "Pas disponible"
     if competition.get_date_fin_inscription() > date.today():
-        return "En cours d'inscription"
-    elif competition.get_date() > date.today():
+        return "Inscription ouverte"
+    elif competition.get_date() > date.today() and competition.get_date_fin_inscription() < date.today() :
         return "En cours"
     else:
         return "Terminée"
