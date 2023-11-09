@@ -148,6 +148,18 @@ class TestCompetition(unittest.TestCase):
                                   0.5)
         self.assertEqual(competition.get_coefficient(), 0.5)
 
+    def test_est_finis(self):
+        """
+        Test de la fonction est_finis de la classe Competition
+        """
+        lieu = Lieu(1, 'Une grande ville', 'Paris France')
+        categorie = Categorie(2, 'U20')
+        arme = Arme(1, 'Epée Homme', 'M')
+        competition = Competition(1, 'Escrime comp2', '14-05-2005',
+                                  '14-05-2005', 'hiver', lieu, arme, categorie,
+                                  0.5)
+        self.assertEqual(competition.est_finis(), True)
+
     def test_set_id(self):
         """
         Test de la fonction set_id de la classe Competition

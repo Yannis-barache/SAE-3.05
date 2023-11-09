@@ -12,6 +12,8 @@ from exceptions import PasAssezDArbitres
 from poule import Poule
 from phase_final import PhaseFinal
 from club import Club
+from datetime import date, datetime
+
 
 
 class Competition:
@@ -125,6 +127,15 @@ class Competition:
             float: Le coefficient de la competition
         """
         return self.__coefficient
+
+    def est_finis(self) -> bool:
+        """
+        Fonction qui retourne si la competition est finis ou non
+
+        Returns:
+            bool: True si la competition est finis, False sinon
+        """
+        return datetime.strptime(self.__date, "%d-%m-%Y").date() < date.today()
 
     def set_id(self, id_comp: int) -> None:
         """
