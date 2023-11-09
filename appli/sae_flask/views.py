@@ -15,7 +15,6 @@ from modele_appli import ModeleAppli
 from competition import Competition
 from constantes import USER
 
-
 USER = USER
 
 
@@ -96,6 +95,7 @@ class InscriptionForm(FlaskForm):
         "Votre catégorie",
         choices=[(categorie.get_id(), categorie.get_nom()) for categorie in
                  modele_appli.get_categorie_bd().get_all_categorie()])
+    modele_appli.close_connexion()
     mdp = PasswordField(
         "Mot de passe",
         validators=[
@@ -106,7 +106,7 @@ class InscriptionForm(FlaskForm):
         ])
     conf_mdp = PasswordField("Confirmation du mot de passe",
                              validators=[DataRequired()])
-
+    modele_appli = ModeleAppli()
     club = SelectField(
         "Votre club",
         choices=[(club.get_id(), club.get_nom())
@@ -117,11 +117,11 @@ class InscriptionForm(FlaskForm):
 @app.route("/", methods=["GET"])
 def home():
     modele_appli = ModeleAppli()
-    COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
+    competitions = modele_appli.get_competition_bd().get_all_competition()
     print("USER ", USER)
-
+    modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=COMPETITIONS, user=USER
+        "home.html",competitions=competitions, user=USER
     )
 
 
@@ -228,7 +228,6 @@ def connexion(nom):
             modele_appli.close_connexion()
             if USER is not None and USER.get_mdp() == mdp:
                 return redirect(url_for('home'))
-        print("USER ", USER)
         if USER is None:
             return render_template(
                 "page_connexion.html",
@@ -249,4 +248,5 @@ def regles():
 def competition(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    modele.close_connexion()
     return render_template("competition.html", compet = la_competition)
