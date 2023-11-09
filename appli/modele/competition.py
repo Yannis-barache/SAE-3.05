@@ -145,9 +145,14 @@ class Competition:
         Returns:
             str: L'etat de la competition
         """
+        if isinstance(self.__date, date):
+            self.__date = self.__date.strftime("%d-%m-%Y")
+        if isinstance(self.__date_fin_inscription, date):
+            self.__date_fin_inscription = self.__date_fin_inscription.strftime(
+                "%d-%m-%Y")
         if self.est_finis():
             return "Finis"
-        elif datetime.strptime(self.__date, "%d-%m-%Y").date() < date.today():
+        elif datetime.strptime(self.__date, "%d-%m-%Y").date() <= date.today():
             return "En cours"
         elif datetime.strptime(self.__date_fin_inscription, "%d-%m-%Y").date() < date.today():
             return "Inscription ouverte"
