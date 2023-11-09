@@ -218,11 +218,11 @@ class Competition:
             str : Le statut de la competition
         """
 
-        if self.__date_fin_inscription is None:
+        if str(self.__date_fin_inscription) is None:
             return "Pas disponible"
-        if self.__date_fin_inscription > date.today():
+        if str(self.__date_fin_inscription) > str(date.today()):
             return "Inscription ouverte"
-        if self.__date > date.today() > self.__date_fin_inscription:
+        if str(self.__date) > str(date.today()) > str(self.__date_fin_inscription):
             return "La compétition va bientôt commencer"
         elif self.__date == date.today():
             return "En cours"
@@ -233,7 +233,7 @@ class Competition:
     @staticmethod
     def generation_poule(
         liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
-    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]]:
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None:
         """
         Fonction qui genere les poules de la competition
 
