@@ -12,6 +12,7 @@
 </head>
 <body>
     <header>
+        <a href="{{ url_for('home') }}"> &#10006;</a>
         <div class="b-menu">
             <input id="toggleChecker" type="checkbox">
             <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
@@ -31,7 +32,6 @@
             </nav> 
 
         </div>
-
         <img id="logo-header" src="{{ url_for('static', filename='/img/logo.png') }}" alt="logo">
         <img class="aide" src="{{ url_for('static', filename='/img/Aide.png') }}" alt="aide">
     </header>

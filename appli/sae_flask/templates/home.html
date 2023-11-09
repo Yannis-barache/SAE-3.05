@@ -9,18 +9,21 @@
 
 {% block content %}
 <section class="intro">
+{% if user==None %}
     <h1> BIENVENUE À VOUS </h1>
-    <p> Le Cercle de Blois vous offre un moyen facile et pratique de gérer vos compétition. <br>
+{% elif user|is_escrimeur or user|is_organisateur %}
+    <h1> Bonjour {{ user.get_nom() }} {{ user.get_prenom() }} </h1>
+{% else %}
+    <h1> Vous etes le club {{ user.get_nom() }} </h1>
+{% endif %}
+    <p> Le Cercle de Blois vous offre un moyen facile et pratique de gérer vos compétitions. <br>
         Notre site va vous permettre de vous inscrire dans une competition 
-        si vous êtes escrimeur mais également de visionner les dates de matchs à venir. <br>
-        Vous pourrez églalement visioner les résultat si vous êtes un adepte de l'escrime ! </p>
-   
-
+        si vous êtes escrimeur, mais également de visionner les dates de matchs à venir. <br>
+        Vous pourrez également visionner les résultats si vous êtes un adepte de l'escrime ! </p>
     </section>
 
 <div class = "tableau">
     <table>
-
         <tr>
       
           <th>NOM COMPÉTITION </th>
@@ -28,44 +31,19 @@
           <th>DATE</th> 
           <th>STATUT</th> 
           <th>ACTION</th>
-          
-      </td>
-        
-        <tr> 
-            <td> <a href="#"> Compétition de Blois</a></td>
-            <td> 05/10/2023 </td>
-            <td> Blois </td> 
-            <td>  TERMINÉ </td>
-            <td> <a href="#">RÉSULTAT</a>  </td>
         </tr>
-        <tr> 
-            <td> <a href="#"> Meeting de Paris</a></td>
-            <td> 14/09/2024 </td>
-            <td> Paris</td>
-            <td> À VENIR </td>
-            <td> <a href="#"> S'INSCRIRE </a></td>
-        </tr>
-        <tr>
-            <td> <a href="#"> Tournois  inter de Bruxelles</a></td>
-            <td> 24/10/2023 </td>
-            <td> Bruxelles</td>
-            <td> EN COURS </td>
-            <td> <a href="#"> RÉSULTAT </a> </td>
-        </tr>
-        <tr>
-            <td> <a href="#"> Championnats inter de Barcelone </a></td>
-            <td> 12/12/2021 </td>
-            <td> Barcelone</td>
-            <td> TERMINÉ</td>
-            <td> <a href="#"> RÉSULTAT</a> </td>
-        </tr>
-        <tr>
-            <td> <a href="#"> Championnats de France à Marseille</a></td>
-            <td> 23/12/2022 </td>
-            <td> Marseille</td>
-            <td> TERMINÉ </td>
-            <td> <a href="#"> RÉSULTAT</a> </td>
-        </tr>        
+        {% set i = 0 %}
+        {% for competition in competitions %}
+            <tr>
+                <td> {{ competition.get_nom() }}</td>
+                <td> {{ competition.get_lieu().get_adresse() }} </td>
+                <td> {{ competition.get_date() }}</td>
+                <td> {{ statuts[i] }} </td>
+
+                <td> <a href="#"> S'INSCRIRE </a></td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}
         </table>
         
 </div>

@@ -3,27 +3,37 @@ import flask
 import sys
 import os
 from .app import app
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
-from modele_appli import ModeleAppli
 from escrimeur import Escrimeur
+from modele_appli import ModeleAppli
+from competition import Competition
+from constantes import USER
 
 
-class Alpha:
+USER = USER
 
-    def __init__(self, message=None):
-        self.__message = message
+modele_appli = ModeleAppli()
+print("On récupère les compétitions")
+COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
+print("fini")
+modele_appli.close_connexion()
 
-    def __call__(self, form, field):
-        for element in field.data:
-            if not element.isdigit():
-                raise StopValidation(
-                    "Le numéro de téléphone ne doit contenir que des chiffres")
+
+def statut(competition : Competition):
+    if competition.get_date_fin_inscription() == None:
+        return "Pas disponible"
+    if competition.get_date_fin_inscription() > date.today():
+        return "En cours d'inscription"
+    elif competition.get_date() > date.today():
+        return "En cours"
+    else:
+        return "Terminée"
 
 
 class ValideMdp:
@@ -111,16 +121,25 @@ class InscriptionForm(FlaskForm):
         ])
     conf_mdp = PasswordField("Confirmation du mot de passe",
                              validators=[DataRequired()])
-    telephone = TelField(
-        "Votre numéro de téléphone",
-        validators=[DataRequired(),
-                    Alpha(), Length(min=10, max=10)])
+
     club = SelectField(
         "Votre club",
         choices=[(club.get_id(), club.get_nom())
                  for club in modele_appli.get_club_bd().get_all_club()])
     next = HiddenField()
     modele_appli.close_connexion()
+
+@app.route("/", methods=["GET"])
+def home():
+    print("USER ", USER)
+    statuts = []
+    for competition in COMPETITIONS:
+        statuts.append(statut(competition))
+
+    return render_template(
+        "home.html",competitions=COMPETITIONS, statuts=statuts, user=USER
+    )
+
 
 
 @app.route("/home")
@@ -129,17 +148,16 @@ def home():
         "home.html"
     )
 
-
-@app.route("/")
+@app.route("/choix")
 def choose_sign():
-    return render_template("connexion_inscription.html")
+    return render_template("connexion_inscription.html", user=USER)
 
 
 @app.route("/choisir_statut_connexion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template(
 
-        "choisir_statut_connexion.html"
+        "choisir_statut_connexion.html", user=USER
     )
 
 
@@ -157,12 +175,11 @@ def inscription():
         sexe = form.sexe.data
         categorie = form.categorie.data
         mdp = form.mdp.data
-        telephone = form.telephone.data
         club = form.club.data
 
         escrimeur_a_inserer = Escrimeur(1, nom, prenom, sexe, date_naissance,
                                         prenom.lower(), mdp, num_licence, None,
-                                        club, categorie, telephone)
+                                        club, categorie, False)
         print("escrimeur_a_inserer", escrimeur_a_inserer)
         try:
             print("On va insérer l'escrimeur")
@@ -195,8 +212,10 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
+    global USER
     modele_appli = ModeleAppli()
-    user = ""
+    print("connexion ",USER)
+
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
@@ -207,37 +226,42 @@ def connexion(nom):
         identifiant = form.identifiant.data
         mdp = form.mdp.data
         if nom == "ESCRIMEUR":
-            user = modele_appli.get_escrimeur_bd().login_escrimeur(
+            USER = modele_appli.get_escrimeur_bd().login_escrimeur(
                 identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-
+            if USER is not None and USER.get_mdp() == mdp:
+                print("redirectzefdiz")
+                return redirect(url_for('home'))
         elif nom == "ORGANISATEUR":
-            organisateur = modele_appli.get_organisateur_bd(
+            USER = modele_appli.get_organisateur_bd(
             ).login_organisateur(identifiant, mdp)
-            user = organisateur 
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
 
         elif nom == "CLUB":
-            club = modele_appli.get_club_bd().login_club(identifiant, mdp)
-            user = club.login_club(identifiant, mdp)
+            USER = modele_appli.get_club_bd(
+
+            ).login_club(identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-        print("USER ", user)
-        if user is None:
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
+        print("USER ", USER)
+        if USER is None:
             return render_template(
                 "page_connexion.html",
                 nom=nom,
                 form=form,
                 message="Identifiant ou mot de passe invalide")
-        return render_template("home.html", nom=user)
+
+        return redirect(url_for('home'))
 
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
+
+@app.route("/regles")
+def regles():
+    return render_template("regles.html")
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
