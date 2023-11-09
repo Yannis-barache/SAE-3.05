@@ -105,5 +105,6 @@ class TestConnexionBD(unittest.TestCase):
         self.connexion.ouvrir_connexion()
         self.assertIsNotNone(self.connexion.get_connexion())
 
+
 if __name__ == '__main__':
     unittest.main()

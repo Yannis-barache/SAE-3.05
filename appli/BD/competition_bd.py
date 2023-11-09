@@ -96,3 +96,18 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
+
+    def delete_competition_by_name(self, cometition: Competition):
+        """
+        Fonction qui supprime une competition en fonction de son nom
+        :param nom: nom de la competition
+        """
+        try:
+            query = text(
+                f"DELETE FROM COMPETITION WHERE nomCompetition = '{cometition.get_nom()}'"
+            )
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
