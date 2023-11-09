@@ -11,15 +11,15 @@
 <section class="intro">
 {% if user==None %}
     <h1> BIENVENUE À VOUS </h1>
+{% elif user|is_escrimeur or user|is_organisateur %}
+    <h1> Bonjour {{ user.get_nom() }} {{ user.get_prenom() }} </h1>
 {% else %}
-    <h1> Connecté en tant que {{ user }} </h1>
+    <h1> Vous etes le club {{ user.get_nom() }} </h1>
 {% endif %}
     <p> Le Cercle de Blois vous offre un moyen facile et pratique de gérer vos compétitions. <br>
         Notre site va vous permettre de vous inscrire dans une competition 
         si vous êtes escrimeur, mais également de visionner les dates de matchs à venir. <br>
         Vous pourrez également visionner les résultats si vous êtes un adepte de l'escrime ! </p>
-   
-
     </section>
 
 <div class = "tableau">

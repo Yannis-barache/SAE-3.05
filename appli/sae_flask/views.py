@@ -30,6 +30,8 @@ def statut(competition : Competition):
     else:
         return "Terminée"
 
+
+
 class Alpha:
 
     def __init__(self, message=None):
@@ -248,8 +250,9 @@ def connexion(nom):
                 return redirect(url_for('home'))
 
         elif nom == "CLUB":
-            club = modele_appli.get_club_bd().login_club(identifiant, mdp)
-            USER = club.login_club(identifiant, mdp)
+            USER = modele_appli.get_club_bd(
+
+            ).login_club(identifiant, mdp)
             modele_appli.close_connexion()
             if USER is not None and USER.get_mdp() == mdp:
                 return redirect(url_for('home'))
