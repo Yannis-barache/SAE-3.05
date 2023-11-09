@@ -153,6 +153,11 @@ def choisir_statut_connexion():
         "choisir_statut_connexion.html", user=USER
     )
 
+@app.route("/page_poule")
+def page_poule():
+    return render_template(
+        "page_poule_compet.html"
+    )
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
