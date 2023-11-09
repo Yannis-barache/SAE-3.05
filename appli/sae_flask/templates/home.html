@@ -3,9 +3,8 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
     <!-- Link du fichier js-->
-    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+
 
 {% endblock %}
 
@@ -38,7 +37,7 @@
         {% set i = 0 %}
         {% for competition in competitions %}
             <tr>
-                <td> {{ competition.get_nom() }}</td>
+                <td>  <a href="{{ url_for('competition',id_competition = competition.get_id() ) }}"> {{ competition.get_nom() }}</a> </td>
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ statuts[i] }} </td>

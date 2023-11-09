@@ -259,5 +259,6 @@ def regles():
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
     modele = ModeleAppli()
+    print("id_competition", id_competition)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     return render_template("competition.html", compet = la_competition)
