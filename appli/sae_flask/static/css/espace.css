@@ -6,40 +6,42 @@ header {
 }
 
 .logo{
-    width: 12em;
+    width: 12vw;
     margin: 2em
 }
 
 .user{
-    width: 3em;
+    width: 5vw;
     float: right;
     margin: 0.5rem;
 }
 
 .menu{
-    width: 2em;
+    width: 3vw;
     float: left;
     margin: 0.5rem;
 }
 
 nav{
-    background-color: black;
+    background-color: white;
     padding: 0.5em;
 }
 
 nav > a{
     color: rgb(212, 8, 11);
     text-decoration: none;
-    font-size: 120%;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 
-nav > a:last-of-type{
+.gest-comp{
     float: right;
+    margin-right: 1em;
 }
 
-nav > a:first-child{
+.information{
     float: left;
+    margin-left: 1em;
 }
 
 .right{
@@ -51,13 +53,13 @@ nav > a:first-child{
 table {
     border-collapse: collapse;
     border: none;
-    width: 80%
+    width: 100%
 }
 
 td {
     border: none;
     padding: 0;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     font-weight: bold;
     text-align: left;
 }
@@ -78,14 +80,20 @@ button{
 main{
     background-color: lightgray;
     padding: 1em;
+    padding-left: 5em;
 }
 
-td:last-of-type{
-    width: 1em;
-}
 
 td:nth-child(2){
     width: 1em;
     padding-left: 4em;
     padding-right: 4em;
+}
+
+.image-td{
+    width: 20vw;
+}
+
+.image-back{
+    width: 20vw;
 }

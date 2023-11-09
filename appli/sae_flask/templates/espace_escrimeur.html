@@ -19,9 +19,9 @@
             <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
         </a>
 
-        <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
+        <img class= "logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo">
         <a href="#">
-            <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+            <img class= "user" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="user">
         </a>
 
         <nav class="navigateur">
@@ -41,55 +41,49 @@
                 <td class="left">N° de licence</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_licence() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
+
             <tr>
                 <td class="left">Nom</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_nom() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
-
             </tr>
+
             <tr>
                 <td class="left">Prénom</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_prenom() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
 
             <tr>
                 <td class="left">Sexe</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_sexe() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
 
             <tr>
                 <td class="left">Date de naissance</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_date_naissance() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
+                <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
             </tr>
 
             <tr>
                 <td class="left">Catégorie</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_categorie().get_nom() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
 
             <tr>
                 <td class="left">Classement</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_classement() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
 
             <tr>
                 <td class="left">Club</td>
                 <td>:</td>
                 <td class="right">{{ nom.get_club().get_nom() }}</td>
-                <td><a href="#"><Button class="edit"><img class="pen" src="{{ url_for('static', filename='../static/img/Pen.png') }}" alt="image de stylo"></Button></a></td>
             </tr>
         </table>
         {% endblock %}
