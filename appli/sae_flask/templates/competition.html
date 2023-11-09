@@ -44,12 +44,14 @@
         </div>
 
         <div class="div-btn center">
-            {{ if poule > 1 }}
-                <button class="btn-active">voir les poules</button>
-            {{ endif }}
-            {{ if poule == 1 }}
-                <button class="btn-disable">voir les poules</button>
-            {{ endif }}
+            {% if poule > 0 %}
+                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id()) }}" >
+                    <button type="submit" class="btn-active">voir les poules</button>
+                </form>
+                {% endif %}
+            {% if poule == 0 %}
+                <button class="btn-disable">voir les poules ?</button>
+            {% endif %}
 
             <button>voir la phase finale</button>
         </div>

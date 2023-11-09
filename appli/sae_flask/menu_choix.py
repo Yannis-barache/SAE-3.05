@@ -1,7 +1,7 @@
 import tkinter as tk
 import subprocess
 import os
-import syssour
+import sys
 from tkinter import ttk
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
