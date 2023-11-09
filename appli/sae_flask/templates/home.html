@@ -41,14 +41,14 @@
                 <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
-                <td> {{ statuts[loop.index - 1] }} </td>
-                {% if statuts[loop.index - 1]== 'Inscription ouverte' %}
+                <td> {{ competition.statut() }} </td>
+                {% if competition.statut() == 'Inscription ouverte' %}
                 <td> <a href="#"> S'INSCRIRE </a></td>
                 {% else %}
                 <td> Inscription terminée </td>
                 {% endif %}
 
-                {% if statuts[loop.index - 1] != 'En cours' and statuts[loop.index - 1] != 'Terminée' %}
+                {% if competition.statut() != 'En cours' and competition.statut() != 'Terminée' %}
                 <td>  Pas encore de résultats </td>
                 {% else %}
                 <td> <a href="#"> VOIR RESULTATS </a></td>
