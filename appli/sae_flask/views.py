@@ -20,7 +20,7 @@ USER = USER
 
 modele_appli = ModeleAppli()
 print("On récupère les compétitions")
-competition = modele_appli.get_competition_bd().get_all_competition()
+COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
 print("fini")
 modele_appli.close_connexion()
 
