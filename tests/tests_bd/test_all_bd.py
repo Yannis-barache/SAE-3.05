@@ -629,7 +629,8 @@ class TestOrganisateurBD(unittest.TestCase):
         """
         Test de la méthode login_organisateur
         """
-        organisateur = self.organisateur_bd.login_organisateur("chedeville", "baptiste")
+        organisateur = self.organisateur_bd.login_organisateur(
+            "chedeville", "baptiste")
         self.assertIsInstance(organisateur, Organisateur)
         organisateur = self.organisateur_bd.login_organisateur("test", "test2")
         self.assertIsNone(organisateur)
@@ -978,8 +979,6 @@ class TestModeleAppli(unittest.TestCase):
         Teste la méthode get_touche_bd
         """
         self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
-
-
 
 
 class TestException(TestClubBD):

@@ -104,7 +104,8 @@ class CompetitionBD:
         """
         try:
             query = text(
-                f"DELETE FROM COMPETITION WHERE nomCompetition = '{cometition.get_nom()}'")
+                f"DELETE FROM COMPETITION WHERE nomCompetition = '{cometition.get_nom()}'"
+            )
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

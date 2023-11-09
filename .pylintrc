@@ -149,7 +149,8 @@ disable=abstract-method,
         protected-access,
         wrong-import-position,
         inconsistent-quotes,
-        broad-exception-caught
+        broad-exception-caught,
+        line-too-long
 
 [REPORTS]
 
