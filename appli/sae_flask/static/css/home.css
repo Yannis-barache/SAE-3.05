@@ -145,3 +145,16 @@ th{
 .intro p {
   padding-bottom: 1em;
 }
+
+.navigateur a {
+    text-decoration: none;
+    color: rgb(212, 8, 11);
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.navigateur a:hover {
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+
+}
