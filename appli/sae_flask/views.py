@@ -141,13 +141,6 @@ def home():
     )
 
 
-
-@app.route("/home")
-def home():
-    return render_template(
-        "home.html"
-    )
-
 @app.route("/choix")
 def choose_sign():
     return render_template("connexion_inscription.html", user=USER)

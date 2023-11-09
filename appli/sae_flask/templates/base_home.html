@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
-
     <title>Document</title>
     {% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
     {% endblock %}
@@ -16,9 +15,25 @@
 
     <header>
         {% block header %}
-        <a href="#">
-            <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
-        </a>
+        <div class="b-menu">
+            <input id="toggleChecker" type="checkbox">
+            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
+            <div class="checkboxtoggler">
+                <div class="line line-1"></div>
+                <div class="line line-2"></div>
+                <div class="line line-3"></div>
+            </div>
+            </label>
+            <nav id="myDropdown" class="dropdown-content">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+
+        </div>
        
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
         <a href="#">
