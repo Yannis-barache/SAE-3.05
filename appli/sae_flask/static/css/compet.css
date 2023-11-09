@@ -105,3 +105,9 @@ button:hover {
     color: black;
     background-color: #fff;
 }
+
+.btn-disabled{
+    background-color: #d2080a;
+    color: white;
+    cursor: not-allowed;
+}

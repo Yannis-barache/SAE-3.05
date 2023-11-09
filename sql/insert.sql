@@ -78,7 +78,7 @@ INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (13,'25 Rue Lucien Joubert, 41000 Blois','Salle d''escrime de Blois');
 
 INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCompetition, idArme, idCategorie, idLieu, dateFinInscription, coefficientCompetition) values
-        (1,'Championnat de France', '2023-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
+        (1,'Championnat de France', '2024-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
         (2,'Competition de Blois', '2023-02-20', 'été', 3, 3, 13, '2023-02-10', 0.6),
         (3,'Competition de Lyon', '2023-02-25', 'automne', 1, 2, 2, '2023-02-15', 0.7),
         (4,'Competition de Marseille', '2023-03-01', 'hiver', 2, 3, 3, '2023-02-20', 0.9),

@@ -1,0 +1,83 @@
+{% extends "base_home.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+    <!-- Link du fichier js-->
+    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="description">
+        <h1>Description</h1>
+
+        <p>L'escrime est un sport de combat qui oppose deux adversaires munis d'une arme blanche appelée « fleuret », « épée » ou « sabre ».
+            L'escrime est l'un des cinq sports à avoir été présents à tous les Jeux olympiques de l'ère moderne, depuis la première édition en 1896 à Athènes.
+        </p>
+
+        <h1>Les différentes armes</h1>
+
+        <p>Il existe trois armes différentes en escrime : le fleuret, l'épée et le sabre. Chacune possède ses propres règles et sa propre histoire.
+            <ul>
+                <li>
+                    Le fleuret est une arme d'estoc, c'est-à-dire que l'on ne peut toucher que le tronc de l'adversaire. Il est le plus léger des trois, et la surface valable est la plus petite.
+                </li>
+                <li>
+                    L'épée est une arme d'estoc, comme le fleuret, mais elle est plus lourde et la surface valable est plus grande. Elle est la seule arme où l'on peut toucher avec la pointe et le tranchant.
+                </li>
+                <li>
+                    Le sabre est une arme de taille, ce qui veut dire que l'on peut toucher avec le tranchant et la pointe. La surface valable est la plus grande des trois armes.
+                </li>
+
+            </ul>
+             </p>
+
+        <h1>Les différentes phases</h1>
+
+        <p>Il existe trois phases en escrime : l'assaut, la touche et la reprise.
+            <ul>
+                <li>
+                    L'assaut est la phase où les deux tireurs se font face et se jaugent. C'est le moment où ils cherchent à trouver la faille chez l'adversaire.
+                </li>
+                <li>
+                    La touche est la phase où l'un des deux tireurs touche l'autre. C'est la phase la plus importante, car elle permet de marquer des points.
+                </li>
+                <li>
+                    La reprise est la phase qui suit la touche. C'est le moment où les deux tireurs se remettent en garde et se jaugent à nouveau.
+                </li>
+
+            </ul>
+         </p>
+
+
+        <h1>Les poules</h1>
+
+        <p>Les poules sont la première phase d'une compétition. Elles permettent de classer les tireurs pour la suite de la compétition.
+            Les poules sont composées de 5 à 7 tireurs. Chaque tireur affronte tous les autres tireurs de sa poule. Les tireurs sont classés en fonction du nombre de victoires et de défaites.
+            Les tireurs sont ensuite classés en fonction de leur classement dans les poules. Les tireurs classés 1er et 2ème sont qualifiés pour le tableau de 16, les tireurs classés 3ème et 4ème sont qualifiés pour le tableau de 32, et ainsi de suite.
+            <strong>Le nombre de touches nécessaires pour gagner un match est de 5.</strong>
+        </p>
+
+        <h3>Exemple</h3>
+
+        <img class="tableau" src="../static/img/tableau_poule.png" alt="Le tableau d'une poule fictive">
+
+
+        <h1>La phase finale</h1>
+
+        <p>La phase finale est la deuxième phase d'une compétition. Elle permet de déterminer le vainqueur de la compétition.
+            La phase finale est composée de plusieurs tableaux. Le tableau de 16, le tableau de 8, le tableau de 4, la demi-finale et la finale.
+            Le tableau de 16 est composé des tireurs classés 1er et 2ème des poules. Le tableau de 8 est composé des tireurs classés 1er et 2ème du tableau de 16. Le tableau de 4 est composé des tireurs classés 1er et 2ème du tableau de 8. La demi-finale est composée des tireurs classés 1er et 2ème du tableau de 4. La finale est composée des tireurs classés 1er et 2ème de la demi-finale.
+            <strong>Le nombre de touches nécessaires pour gagner un match est de 15.</strong>
+        </p>
+
+
+
+
+
+
+
+    </div>
+
+</div>
+{% endblock %}

@@ -23,15 +23,14 @@
             </label>    
             <nav id="myDropdown" class="dropdown-content"> 
                 <ul> 
-                    <li><a href="#">Accueil</a></li> 
-                    <li><a href="#">Services</a></li> 
-                    <li><a href="#">À propos</a></li> 
-                    <li><a href="#">Contact</a></li> 
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul> 
             </nav> 
 
         </div>
-
         <img id="logo-header" src="{{ url_for('static', filename='/img/logo.png') }}" alt="logo">
         <img class="aide" src="{{ url_for('static', filename='/img/Aide.png') }}" alt="aide">
     </header>
