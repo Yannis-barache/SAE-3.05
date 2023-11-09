@@ -265,4 +265,4 @@ def regles():
 def competition(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    return render_template("competition.html", compet = la_competition)
+    return render_template("competition.html", compet = la_competition, poule = modele.get_poule_bd().existe_poule_compet(id_competition))
