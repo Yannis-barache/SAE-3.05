@@ -6,7 +6,6 @@ python appli/sae_flask/menu_choix.py
 set "vide= True"
 for /f "tokens=2 delims==" %%i in ('findstr /i "locale" config.ini') do set "locale=%%i"
 if not "%locale%"=="%vide%" (
-    cd appli
     start http://127.0.0.1:5000
     flask run
 )
