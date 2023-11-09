@@ -1,50 +1,50 @@
 header {
     background-image: url(../img/baniere.jpg);
     background-repeat: no-repeat;
-    background-size:100%;
+    background-size: 100%;
     text-align: center;
 }
 
-.logo{
+.logo {
     width: 12vw;
     margin: 2em
 }
 
-.user{
+.user {
     width: 5vw;
     float: right;
     margin: 0.5rem;
 }
 
-.menu{
+.menu {
     width: 3vw;
     float: left;
     margin: 0.5rem;
 }
 
-nav{
+nav {
     background-color: white;
     padding: 0.5em;
 }
 
-nav > a{
+nav > a {
     color: rgb(212, 8, 11);
     text-decoration: none;
     font-size: 1.5vw;
     font-weight: bold;
 }
 
-.gest-comp{
+.gest-comp {
     float: right;
     margin-right: 1em;
 }
 
-.information{
+.information {
     float: left;
     margin-left: 1em;
 }
 
-.right{
+.right {
     background-color: white;
     border: solid lightgray 0.8em;
     padding: 0.2em
@@ -64,36 +64,36 @@ td {
     text-align: left;
 }
 
-.left{
+.left {
     width: 9em;
 }
 
-.pen{
+.pen {
     width: 1em;
 }
 
-button{
+button {
     border: none;
     background-color: transparent;
 }
 
-main{
+main {
     background-color: lightgray;
     padding: 1em;
     padding-left: 5em;
 }
 
 
-td:nth-child(2){
+td:nth-child(2) {
     width: 1em;
     padding-left: 4em;
     padding-right: 4em;
 }
 
-.image-td{
+.image-td {
     width: 20vw;
 }
 
-.image-back{
+.image-back {
     width: 20vw;
 }

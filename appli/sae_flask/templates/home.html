@@ -3,10 +3,21 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
     <!-- Link du fichier js-->
     <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
 
+{% endblock %}
+
+{% block user %}
+{% if user==None %}
+    <a href="{{ url_for('choose_sign')}}">
+        <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+    </a>
+{% elif user|is_escrimeur %}
+    <a href="{{ url_for('espace_escrimeur',nom = user.get_id()) }}">
+        <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+    </a>
+{% endif %}
 {% endblock %}
 
 

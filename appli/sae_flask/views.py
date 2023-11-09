@@ -158,6 +158,7 @@ def choisir_statut_connexion():
 def page_poule():
     return render_template(
         "page_poule_compet.html"
+    )
 
 
 @app.route("/choisir_statut_inscription")
