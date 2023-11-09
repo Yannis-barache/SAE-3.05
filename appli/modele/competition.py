@@ -20,7 +20,7 @@ class Competition:
     Classe Competition
     """
 
-    def __init__(self, id_comp: int, nom: str, date: str,
+    def __init__(self, id_comp: int, nom: str, date_comp: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
                  arme: Arme, categorie: Categorie, coefficient: float):
         """
@@ -38,7 +38,7 @@ class Competition:
         """
         self.__id = id_comp
         self.__nom = nom
-        self.__date = date
+        self.__date = date_comp
         self.__date_fin_inscription = date_fin_inscription
         self.__saison = saison
         self.__lieu = lieu
@@ -145,14 +145,14 @@ class Competition:
         """
         self.__nom = nom
 
-    def set_date(self, date: str) -> None:
+    def set_date(self, date_comp: str) -> None:
         """
         Fonction qui modifie la date de la competition
 
         Args :
             date (str) : date de la competition
         """
-        self.__date = date
+        self.__date = date_comp
 
     def set_date_fin_inscription(self, date_fin_inscription: str) -> None:
         """
@@ -220,9 +220,9 @@ class Competition:
 
         if self.__date_fin_inscription is None:
             return "Pas disponible"
-        if self.__date_fin_inscription > str(date.today()):
+        if self.__date_fin_inscription > date.today():
             return "Inscription ouverte"
-        if self.__date > str(date.today()) and self.__date_fin_inscription < str(date.today()):
+        if self.__date > date.today() > self.__date_fin_inscription:
             return "La compétition va bientôt commencer"
         elif self.__date == date.today():
             return "En cours"
@@ -233,7 +233,7 @@ class Competition:
     @staticmethod
     def generation_poule(
         liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
-    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None:
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]]:
         """
         Fonction qui genere les poules de la competition
 
