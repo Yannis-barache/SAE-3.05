@@ -16,8 +16,13 @@ from competition import Competition
 from constantes import USER
 
 
+USER = USER
 
-
+modele_appli = ModeleAppli()
+print("On récupère les compétitions")
+competition = modele_appli.get_competition_bd().get_all_competition()
+print("fini")
+modele_appli.close_connexion()
 
 
 def statut(competition : Competition):
@@ -29,19 +34,6 @@ def statut(competition : Competition):
         return "En cours"
     else:
         return "Terminée"
-
-
-
-class Alpha:
-
-    def __init__(self, message=None):
-        self.__message = message
-
-    def __call__(self, form, field):
-        for element in field.data:
-            if not element.isdigit():
-                raise StopValidation(
-                    "Le numéro de téléphone ne doit contenir que des chiffres")
 
 
 class ValideMdp:
@@ -129,10 +121,7 @@ class InscriptionForm(FlaskForm):
         ])
     conf_mdp = PasswordField("Confirmation du mot de passe",
                              validators=[DataRequired()])
-    telephone = TelField(
-        "Votre numéro de téléphone",
-        validators=[DataRequired(),
-                    Alpha(), Length(min=10, max=10)])
+
     club = SelectField(
         "Votre club",
         choices=[(club.get_id(), club.get_nom())
@@ -142,17 +131,13 @@ class InscriptionForm(FlaskForm):
 
 @app.route("/", methods=["GET"])
 def home():
-    modele_appli = ModeleAppli()
     print("USER ", USER)
-    competitions = modele_appli.get_competition_bd().get_all_competition()
-    print("competitions ", competitions)
-    modele_appli.close_connexion()
     statuts = []
-    for competition in competitions:
+    for competition in COMPETITIONS:
         statuts.append(statut(competition))
 
     return render_template(
-        "home.html",competitions=competitions, statuts=statuts,user=USER
+        "home.html",competitions=COMPETITIONS, statuts=statuts, user=USER
     )
 
 
@@ -184,12 +169,11 @@ def inscription():
         sexe = form.sexe.data
         categorie = form.categorie.data
         mdp = form.mdp.data
-        telephone = form.telephone.data
         club = form.club.data
 
         escrimeur_a_inserer = Escrimeur(1, nom, prenom, sexe, date_naissance,
                                         prenom.lower(), mdp, num_licence, None,
-                                        club, categorie, telephone)
+                                        club, categorie, False)
         print("escrimeur_a_inserer", escrimeur_a_inserer)
         try:
             print("On va insérer l'escrimeur")
