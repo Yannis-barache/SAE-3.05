@@ -38,7 +38,7 @@
 
         {% for competition in competitions %}
             <tr>
-                <td> {{ competition.get_nom() }}</td>
+                <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ statuts[loop.index - 1] }} </td>
@@ -47,7 +47,12 @@
                 {% else %}
                 <td> Inscription terminée </td>
                 {% endif %}
-                <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> VOIR RESULTATS </a></td>
+
+                {% if statuts[loop.index - 1] != 'En cours' and statuts[loop.index - 1] != 'Terminée' %}
+                <td>  Pas encore de résultats </td>
+                {% else %}
+                <td> <a href="#"> VOIR RESULTATS </a></td>
+                {% endif %}
             </tr>
 
         {% endfor %}

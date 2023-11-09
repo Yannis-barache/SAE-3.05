@@ -18,20 +18,16 @@ from constantes import USER
 
 USER = USER
 
-modele_appli = ModeleAppli()
-print("On récupère les compétitions")
-COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
-print("fini")
-modele_appli.close_connexion()
-
-
 def statut(competition : Competition):
     if competition.get_date_fin_inscription() == None:
         return "Pas disponible"
     if competition.get_date_fin_inscription() > date.today():
         return "Inscription ouverte"
-    elif competition.get_date() > date.today() and competition.get_date_fin_inscription() < date.today() :
+    if competition.get_date() > date.today() and competition.get_date_fin_inscription() < date.today() :
+        return "La compétition va bientôt commencer"
+    elif competition.get_date() == date.today():
         return "En cours"
+
     else:
         return "Terminée"
 
@@ -131,6 +127,8 @@ class InscriptionForm(FlaskForm):
 
 @app.route("/", methods=["GET"])
 def home():
+    modele_appli = ModeleAppli()
+    COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
     print("USER ", USER)
     statuts = []
     for competition in COMPETITIONS:
