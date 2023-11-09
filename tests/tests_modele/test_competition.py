@@ -2,6 +2,7 @@
 Module de test de la classe Competition
 """
 
+import datetime
 import sys
 import os
 import unittest
@@ -18,6 +19,8 @@ from exceptions import PasAssezDArbitres
 from club import Club
 from touche import Touche
 from phase_final import PhaseFinal
+from match import Match
+from datetime import date
 
 
 class TestCompetition(unittest.TestCase):
@@ -158,7 +161,7 @@ class TestCompetition(unittest.TestCase):
         competition = Competition(1, 'Escrime comp2', '14-05-2005',
                                   '14-05-2005', 'hiver', lieu, arme, categorie,
                                   0.5)
-        self.assertEqual(competition.est_finis(), True)
+        self.assertEqual(competition.est_finis(), False)
 
     def test_set_id(self):
         """
@@ -492,6 +495,26 @@ class TestCompetition(unittest.TestCase):
             poules, les_arbitres, 10.3)
         self.assertEqual(len(matchs_finaux), 8)
         self.assertIsInstance(phase, PhaseFinal)
+
+    def test_get_etat(self):
+        date_ojd_plus_1 = (date.today() + datetime.timedelta(days=1)).strftime('%d-%m-%Y')
+        date_ojd_moins_1 = (date.today() - datetime.timedelta(days=1)).strftime('%d-%m-%Y')
+        competition = Competition(1, 'Escrime comp', '14-05-2004',
+                                  '14-05-2004', 'été', None, None, None,
+                                  0.5)
+        phase = PhaseFinal(1)
+        competition.set_phase_final(phase)
+        match = Match(1, 1, None, None, None, 10.0, False)
+        phase.set_match(match)
+        self.assertEqual(competition.get_etat(), 'En cours')
+        match.set_finis(True)
+        self.assertEqual(competition.get_etat(), 'Finis')
+        competition.set_date(date_ojd_plus_1)
+        competition.set_date_fin_inscription(date_ojd_moins_1)
+        phase.clear_matchs()
+        self.assertEqual(competition.get_etat(), 'Inscription ouverte')
+        competition.set_date_fin_inscription(date_ojd_plus_1)
+        self.assertEqual(competition.get_etat(), 'A venir')
 
     def test_str(self):
         """
