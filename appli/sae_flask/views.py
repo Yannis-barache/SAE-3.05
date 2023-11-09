@@ -253,4 +253,8 @@ def connexion(nom):
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
 
+@app.route("/regles")
+def regles():
+    return render_template("regles.html")
+
 

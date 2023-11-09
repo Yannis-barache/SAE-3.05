@@ -1,0 +1,18 @@
+{% extends "base_home.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="description">
+        <h1>Description</h1>
+
+        <p>L'escrime est un sport de combat qui oppose deux adversaires munis d'une arme blanche appelée « fleuret », « épée » ou « sabre ».
+            L'escrime est l'un des cinq sports à avoir été présents à tous les Jeux olympiques de l'ère moderne, depuis la première édition en 1896 à Athènes.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

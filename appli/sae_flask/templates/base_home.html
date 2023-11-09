@@ -27,8 +27,8 @@
         <nav class="navigateur">
             {% block nav %}
              <a class="authentif" href="{{ url_for('choose_sign')}}"> AUTHENTIFICATION </a>
-             <a class="compet" href="{{ url_for('home') }}"> COMPÉTITION </a>
-             <a class="regles" href="#"> RÈGLES </a> 
+             <a class="compet" href="{{ url_for('home') }}"> COMPÉTITIONS </a>
+             <a class="regles" href="{{ url_for('regles') }}"> RÈGLES </a>
             {% endblock %}
         </nav>
     
@@ -43,7 +43,7 @@
     </main>
     <footer>
         {% block footer %}
-        <p>CONTACTES : </p>
+        <p>CONTACTS : </p>
         <a href="#">
             <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
         </a>
