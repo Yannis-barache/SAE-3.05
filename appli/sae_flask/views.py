@@ -123,11 +123,11 @@ class InscriptionForm(FlaskForm):
     modele_appli.close_connexion()
 
 
-# @app.route("/")
-# def home():
-#     return render_template(
-#         "home.html"
-#     )
+@app.route("/home")
+def home():
+    return render_template(
+        "home.html"
+    )
 
 
 @app.route("/")

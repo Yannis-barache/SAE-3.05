@@ -51,6 +51,8 @@ main{
 
 
 button {
+    display: flex;
+    justify-content: center;
     appearance: none;
     background-color: #d2080a;
     border-radius: 0.9375em;
