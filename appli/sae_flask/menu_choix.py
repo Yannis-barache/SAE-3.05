@@ -1,6 +1,5 @@
 import tkinter as tk
 import subprocess
-import os
 import configparser
 from tkinter import ttk
 
