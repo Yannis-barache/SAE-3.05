@@ -1,39 +1,53 @@
 {% extends "base_home.html" %}
 
+
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rec_match.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+
+{% endblock %}
+
 {% block content %}
-    <h1> <span> Matches du {{ compet.get_nom() }} </span> </h1>
+<div class="container">
+    <h1> Matches du {{ compet.get_nom() }} le {{ compet.get_date() }}  </h1>
 
 
-    <div>
+    <div >
+        {% for match in matchs %}
+            {% set i = loop.index %}
+            <div class="rec_match">
 
+                <div>
+                    <h2>
+                        Match {{ i }} : <span> {{ match.get_escrimeur1().get_prenom() }} </span> vs <span> {{ match.get_escrimeur2().get_prenom() }} </span>
+        
+                        {% if match.est_commencer() %}
+                            <p> En cours </p>
+                        {% elif match.est_finis() %}
+                            <p> Terminé </p>
+                        {% else %}
+                            <p> ... </p>
+                        {% endif %}
+                    </h2>
+                </div>
 
-    {% for match in matchs %}
+                <div class="les_boutons">
+                    <img src="{{ url_for('static', filename='img/imprimante.png') }}" alt="Image Escrimeur 1">
+                    
+                    {% if user.is %}
 
-        <div>
-            <h2>
-                {{ match.get_nom() }}
+                </div>
+            </div>
 
-                {% if match.est_commencer() %}
-                    <p> En cours </p>
-                
-                {% elif match.est_finis() %}
-                    <p> Terminer </p>
-                {% else %}
-                    <p> ... </p>
-
-                {% endif %}
-            </h2>
-        </div>
-        <div>
-        <img>
-        <img>
-        </div>
-
-
-
-    {% endfor %}
-
+        {% endfor %}
     </div>
+</div>
+
+    
 
 
 

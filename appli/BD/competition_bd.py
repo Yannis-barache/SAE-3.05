@@ -57,7 +57,7 @@ class CompetitionBD:
         result = self.__connexion.execute(query)
         
         matchs = []
-        for (id_match, id_tireur1, id_tireur2, id_phase, idArbitre, heureMatch, fini ) in result:
+        for (id_match, id_tireur1, id_tireur2, id_phase, idArbitre,idPiste, heureMatch, fini ) in result:
             Escrimeur1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
             Escrimeur2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
             arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(idArbitre)

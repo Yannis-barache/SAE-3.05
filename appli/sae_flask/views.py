@@ -269,4 +269,4 @@ def competition_match(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     matchs = modele.get_competition_bd().get_all_matchs(id_competition)
-    return render_template("competition_match.html" , compet = la_competition, matchs = matchs)
+    return render_template("competition_match.html" , compet = la_competition, matchs = matchs,user=USER)

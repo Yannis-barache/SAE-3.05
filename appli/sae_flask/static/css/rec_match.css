@@ -1,0 +1,51 @@
+
+main {
+    background-color: #DBDBDB;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recècentral{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.rec_match {
+    display: flex;
+    margin: 20px auto;
+    justify-content: space-between;
+    /*background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    padding: 8px 11px;
+    border-radius: 8px;
+}
+
+
+
+.rec_match h2 {
+    color: #333;
+}
+
+.rec_match span {
+    font-weight: bold;
+}
+
+.rec_match p {
+    margin: 10px 0;
+}
+
+.rec_match  img {
+    max-width: 35px;
+    height: auto;
+
+}
+
+/* Add more styles as needed */
