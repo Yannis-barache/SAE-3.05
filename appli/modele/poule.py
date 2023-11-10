@@ -21,7 +21,7 @@ class Poule:
         self.__les_matchs = []
         self.__les_escrimeurs = []
         self.__dico: dict[Escrimeur, list[int, int, int]] = {}
-        self.__les_pistes : list[Piste] = []
+        self.__les_pistes: list[Piste] = []
         self.__index_piste = 0
         self.__heure = 0
 
@@ -105,8 +105,12 @@ class Poule:
         self.__heure = heure_debut
         for escrimeur1 in les_escrimeurs:
             for escrimeur2 in les_escrimeurs:
-                if escrimeur1 != escrimeur2 and escrimeur1.get_id() < escrimeur2.get_id():
-                    les_matchs.append(Match(-1, self.__id, escrimeur1, escrimeur2, arbitre, heure_debut, False, self.__les_pistes[self.__index_piste]))
+                if escrimeur1 != escrimeur2 and escrimeur1.get_id(
+                ) < escrimeur2.get_id():
+                    les_matchs.append(
+                        Match(-1, self.__id, escrimeur1, escrimeur2, arbitre,
+                              heure_debut, False,
+                              self.__les_pistes[self.__index_piste]))
                     self.__index_piste += 1
                     if self.__index_piste == len(self.__les_pistes):
                         self.__index_piste = 0

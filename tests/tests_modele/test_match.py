@@ -407,7 +407,8 @@ class TestMatch(unittest.TestCase):
         match.set_type_phase('Poule')
         match.generer_pdf()
         match.set_type_phase("Poule")
-        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
+        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False,
+                       None)
         escrimeur1.set_classement(None)
         escrimeur2.set_classement(None)
         match2.set_finis(False)

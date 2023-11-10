@@ -2,6 +2,7 @@
 Module contenant la classe Piste
 """
 
+
 class Piste:
     """
     Classe Piste

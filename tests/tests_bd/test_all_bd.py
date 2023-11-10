@@ -26,6 +26,7 @@ from phase_bd import PhaseBD
 from phase_finale_bd import PhaseFinaleBD
 from poule_bd import PouleBD
 from touche_bd import ToucheBD
+from piste_bd import PisteBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -45,6 +46,7 @@ from poule import Poule
 from inscrire import Inscrire
 from phase_final import PhaseFinal
 from organisateur import Organisateur
+from piste import Piste
 
 modele = ModeleAppli()
 
@@ -207,8 +209,10 @@ class TestClubBD(unittest.TestCase):
         self.assertIsInstance(club, Club)
         club = self.club_bd.login_club("test", "test2")
         self.assertIsNone(club)
+        club = self.club_bd.login_club(";", ";")
+        self.assertIsNone(club)
         try:
-            self.club_bd.login_club(club, club)
+            self.club_bd.login_club(";", "test")
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
@@ -581,7 +585,9 @@ class TestMatchBD(unittest.TestCase):
                                "test", "test", None, None, None, False)
         arbitre = Escrimeur(3, "test", "test", "test", "test", "test", "test",
                             "test", None, None, None, True)
-        match = Match(-1, 1, escrimeur1, escrimeur2, arbitre, 10.3, False)
+        piste = Piste(1, 1, "Piste 1")
+        match = Match(-1, 1, escrimeur1, escrimeur2, arbitre, 10.3, False,
+                      piste)
         self.match_bd.insert_match(match)
         try:
             self.match_bd.insert_match("a")
@@ -595,6 +601,51 @@ class TestMatchBD(unittest.TestCase):
         self.match_bd.delete_match_by_arbitre(3)
         try:
             self.match_bd.delete_match_by_arbitre("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+
+class TestPisteBD(unittest.TestCase):
+    """
+    Classe de test de la classe PisteBD
+
+    Args:
+        unittest (unittest): La classe de test unitaire
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.modele = modele
+        cls.piste_bd = cls.modele.get_piste_bd()
+
+    def test_constructeur(self):
+        """
+        Test du constructeur de la classe PisteBD
+        """
+        self.assertIsInstance(self.piste_bd, PisteBD)
+
+    def test_get_piste_by_id(self):
+        """
+        Test de la méthode get_piste_by_id
+        """
+        piste = self.piste_bd.get_piste_by_id(1)
+        self.assertIsInstance(piste, Piste)
+        piste = self.piste_bd.get_piste_by_id(-1)
+        self.assertIsNone(piste)
+        try:
+            self.piste_bd.get_piste_by_id("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_get_piste_by_lieu(self):
+        """
+        Test de la méthode get_piste_by_lieu
+        """
+        lieu = Lieu(1, "test", "test")
+        pistes = self.piste_bd.get_piste_by_lieu(lieu)
+        self.assertIsInstance(pistes, list)
+        try:
+            self.piste_bd.get_piste_by_lieu("a")
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
@@ -633,6 +684,10 @@ class TestOrganisateurBD(unittest.TestCase):
             "chedeville", "baptiste")
         self.assertIsInstance(organisateur, Organisateur)
         organisateur = self.organisateur_bd.login_organisateur("test", "test2")
+        self.assertIsNone(organisateur)
+        organisateur = self.organisateur_bd.login_organisateur(
+            "chedeville", "test")
+        organisateur = self.organisateur_bd.login_organisateur(";", ";")
         self.assertIsNone(organisateur)
         try:
             self.organisateur_bd.login_organisateur(1, "test")
@@ -796,6 +851,33 @@ class TestPouleBD(unittest.TestCase):
         poules = self.poule_bd.get_all_poule()
         self.assertIsInstance(poules, list)
 
+    def test_get_poules_by_compet(self):
+        """
+        Test de la méthode get_poules_by_compet
+        """
+        poules = self.poule_bd.get_poules_by_compet(1)
+        self.assertIsInstance(poules, list)
+        poules = self.poule_bd.get_poules_by_compet(2)
+        print(poules)
+        self.assertIsInstance(poules, list)
+        try:
+            self.poule_bd.get_poules_by_compet(";")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_nb_poule_compet(self):
+        """
+        Test de la méthode nb_poule_compet
+        """
+        nb_poule = self.poule_bd.nb_poule_compet(1)
+        self.assertIsInstance(nb_poule, int)
+        nb_poule = self.poule_bd.nb_poule_compet(8)
+        self.assertIsInstance(nb_poule, int)
+        try:
+            self.poule_bd.nb_poule_compet(";")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
     def test_insert_poule(self):
         """
         Test de la méthode insert_poule
@@ -854,7 +936,7 @@ class TestToucheBD(unittest.TestCase):
         """
         Test de la méthode insert_touche
         """
-        match = Match(9, None, None, None, None, None, None)
+        match = Match(9, None, None, None, None, None, None, None)
         escrimeur = Escrimeur(6, None, None, None, None, None, None, None,
                               None, None, None, None)
         touche = Touche(match, escrimeur, 1)
@@ -868,7 +950,7 @@ class TestToucheBD(unittest.TestCase):
         """
         Test de la méthode delete_touche
         """
-        match = Match(9, None, None, None, None, None, None)
+        match = Match(9, None, None, None, None, None, None, None)
         escrimeur = Escrimeur(6, None, None, None, None, None, None, None,
                               None, None, None, None)
         touche = Touche(match, escrimeur, 1)
@@ -979,6 +1061,12 @@ class TestModeleAppli(unittest.TestCase):
         Teste la méthode get_touche_bd
         """
         self.assertIsInstance(self.modele.get_touche_bd(), ToucheBD)
+
+    def test_get_piste_bd(self):
+        """
+        Teste la méthode get_piste_bd
+        """
+        self.assertIsInstance(self.modele.get_piste_bd(), PisteBD)
 
 
 class TestException(TestClubBD):

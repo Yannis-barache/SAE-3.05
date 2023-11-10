@@ -136,7 +136,8 @@ class Competition:
         Returns:
             bool: True si la competition est finis, False sinon
         """
-        return self.__phase_final is not None and self.__phase_final.est_finis()
+        return self.__phase_final is not None and self.__phase_final.est_finis(
+        )
 
     def get_etat(self) -> str:
         """
@@ -154,7 +155,8 @@ class Competition:
             return "Terminée"
         elif datetime.strptime(self.__date, "%d-%m-%Y").date() <= date.today():
             return "En cours"
-        elif datetime.strptime(self.__date_fin_inscription, "%d-%m-%Y").date() < date.today():
+        elif datetime.strptime(self.__date_fin_inscription,
+                               "%d-%m-%Y").date() < date.today():
             return "Inscription ouverte"
         else:
             return "A venir"
@@ -239,7 +241,6 @@ class Competition:
             coefficient (float) : coefficient de la competition
         """
         self.__coefficient = coefficient
-
 
     def set_phase_final(self, phase_final: PhaseFinal) -> None:
         """

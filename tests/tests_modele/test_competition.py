@@ -509,11 +509,12 @@ class TestCompetition(unittest.TestCase):
         self.assertIsInstance(phase, PhaseFinal)
 
     def test_get_etat(self):
-        date_ojd_plus_1 = (date.today() + datetime.timedelta(days=1)).strftime('%d-%m-%Y')
-        date_ojd_moins_1 = (date.today() - datetime.timedelta(days=1)).strftime('%d-%m-%Y')
+        date_ojd_plus_1 = (date.today() +
+                           datetime.timedelta(days=1)).strftime('%d-%m-%Y')
+        date_ojd_moins_1 = (date.today() -
+                            datetime.timedelta(days=1)).strftime('%d-%m-%Y')
         competition = Competition(1, 'Escrime comp', '14-05-2004',
-                                  '14-05-2004', 'été', None, None, None,
-                                  0.5)
+                                  '14-05-2004', 'été', None, None, None, 0.5)
         phase = PhaseFinal(1)
         competition.set_phase_final(phase)
         match = Match(1, 1, None, None, None, 10.0, False, None)

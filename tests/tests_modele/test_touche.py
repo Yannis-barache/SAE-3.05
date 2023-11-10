@@ -106,7 +106,8 @@ class TestTouche(unittest.TestCase):
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
         match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
-        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
+        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0, False,
+                       None)
         touche = Touche(match, escrimeur1, 1)
         touche.set_match(match2)
         self.assertEqual(touche.get_match(), match2)

@@ -18,7 +18,7 @@ class PhaseFinal:
         self.__les_matchs: list[Match] = []
         self.__les_pistes: list[Piste] = []
         self.__index_piste = 0
-        self.__heure = 0
+        self.__heure: float = 0.0
 
     def get_id_phase_f(self) -> int:
         """
@@ -72,7 +72,7 @@ class PhaseFinal:
         Args:
             piste (Piste): piste
         """
-        self.__les_pistes.append(liste_pistes)
+        self.__les_pistes = liste_pistes
 
     def generer_les_matchs(self, liste_escrimeurs: list[Escrimeur],
                            liste_arbitres: list[Escrimeur],
@@ -95,7 +95,10 @@ class PhaseFinal:
             escrimeur1 = liste_escrimeurs[cpt]
             escrimeur2 = liste_escrimeurs[-(cpt + 1)]
             arbitre = random.choice(liste_arbitres)
-            liste_matchs.append(Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre, heure_debut, False, self.__les_pistes[self.__index_piste]))
+            liste_matchs.append(
+                Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
+                      heure_debut, False,
+                      self.__les_pistes[self.__index_piste]))
             self.__index_piste += 1
             if self.__index_piste == len(self.__les_pistes):
                 self.__index_piste = 0
