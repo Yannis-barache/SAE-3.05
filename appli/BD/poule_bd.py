@@ -110,15 +110,10 @@ class PouleBD:
                 str(id_compet))
             result = self.__connexion.execute(query)
             cpt = 0
-            for _ in result:
+            for row in result:
+                row =  row[0]
                 cpt += 1
             return cpt
         except Exception as e:
             print(e)
             return None
-
-if __name__ == "__main__":
-    from modele_appli import ModeleAppli
-    modele = ModeleAppli()
-    poule = modele.get_poule_bd()
-    print(poule.get_poules_by_compet(2)[0].get_les_matchs())
