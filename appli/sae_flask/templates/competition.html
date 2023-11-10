@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <p class="description">DESCRIPTION DE LA COMPETÉTITION :</p>
+            <p class="description">DESCRIPTION DE LA COMPÉTITION :</p>
         </div>
 
         <div class="center infos">
@@ -45,7 +45,7 @@
 
         <div class="div-btn center">
             {% if poule > 0 %}
-                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id()) }}" >
+                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
                     <button type="submit" class="btn-active">voir les poules</button>
                 </form>
                 {% endif %}

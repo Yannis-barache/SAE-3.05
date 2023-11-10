@@ -33,7 +33,7 @@ class PouleBD:
             query = text('SELECT idPoule FROM POULE')
             result = self.__connexion.execute(query)
             poules = []
-            for id_poule in result:
+            for (id_poule,) in result:
                 poules.append(Poule(id_poule))
             return poules
         except Exception as e:
@@ -81,16 +81,17 @@ class PouleBD:
                 str(id_compet))
             result = self.__connexion.execute(query)
             poules = []
-            for id_poule in result:
-                poules.append(Poule(id_poule))
+            for (id_poule,) in result:
                 query = text(
                     "SELECT idMatch FROM MATCHS WHERE idPhase = " +
                     str(id_poule))
                 result = self.__connexion.execute(query)
                 matches = []
-                for id_match in result:
+                for (id_match,) in result:
                     matches.append(MatchBD(self.__connexion).get_match_by_id(id_match))
-                poules[-1].set_les_matchs(matches)
+                la_poule = Poule(id_poule)
+                la_poule.set_les_matchs(matches)
+                poules.append(Poule(id_poule))
             return poules
         except Exception as e:
             print(e)
@@ -115,3 +116,9 @@ class PouleBD:
         except Exception as e:
             print(e)
             return None
+
+if __name__ == "__main__":
+    from modele_appli import ModeleAppli
+    modele = ModeleAppli()
+    poule = modele.get_poule_bd()
+    print(poule.get_poules_by_compet(2)[0].get_les_matchs())

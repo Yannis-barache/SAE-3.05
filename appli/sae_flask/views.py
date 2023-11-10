@@ -264,10 +264,13 @@ def competition(id_competition):
     modele.close_connexion()
     return render_template("competition.html", compet = la_competition, poule = nb_poule)
 
-@app.route("/poule/<id_competition>", methods=["GET", "POST"])
-def poule(id_competition):
-    les_poules = modele_appli.get_poule_bd().get_poules_by_compet(id_competition)
-    print(les_poules)
+@app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
+def poule(id_competition, nb):
+    modele = ModeleAppli()
+    les_poules = modele.get_poule_bd().get_poules_by_compet(int(id_competition))
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb = int(nb) % len(les_poules)
+    modele.close_connexion()
     return render_template(
-        "page_poule_compet.html", les_poules = les_poules
+        "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
     )
