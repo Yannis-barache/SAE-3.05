@@ -276,3 +276,10 @@ def poule(id_competition, nb):
     return render_template(
         "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
     )
+
+
+@app.route("/deconnexion")
+def deconnexion():
+    global USER
+    USER = None
+    return redirect(url_for('choose_sign'))
