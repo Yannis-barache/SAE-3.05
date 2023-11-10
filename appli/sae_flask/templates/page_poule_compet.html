@@ -17,20 +17,91 @@
         </div>
 
         <div>
-            <p class="description">POULE {{nb}}</p>
+            <p class="description">POULE {{ les_poules[nb].get_lettre_poule(nb + 1) }}</p>
         </div>
 
-        <div>
+        <div class="middle">
 
             <div class="matchs">
 
-                <p>Arbitre : {{ les_poules[nb].get_les_matchs()}}</p>
+                <p>Arbitre : {{ les_poules[nb].get_les_matchs()[0].get_arbitre().get_nom() }} {{ les_poules[nb].get_les_matchs()[0].get_arbitre().get_prenom() }}</p>
+
+                <p>Les prochains matchs :</p>
+
+                <div class="scroll-match">
+
+                    {% for match in les_poules[nb].get_les_matchs() %}
+                        {% if not match.est_finis() %}
+                            <p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
 
             </div>
 
             <div class="pdf">
 
+
+
+
+
+
+
                 <img class="pdf" src="{{ url_for('static', filename='../static/img/pdf.png') }}" alt="menu">
+
+
+
+                <table>
+                    <tr>
+                        <th>NOMS</th>
+                        <th>CLUBS</th>
+                        <th>Prénom</th>
+                        <th></th>
+                        
+                        {% for i in range(1, les_poules[nb].get_nb_matchs() + 1) %}
+                            <th class="bg-black">{{ i }}</th>
+                        {% endfor %}
+                        <th class="petit"></th>
+                        <th>Total victoire</th>
+                        <th>Indice</th>
+                        <th>Place</th>
+                    </tr>
+
+                    {% set cpt = 1 %}
+                    {% set les_escrimeurs = les_poules[nb].get_les_escrimeurs() %}
+                    {% for escrimeurs in les_escrimeurs %}
+                        <tr>
+                            <th>escrimeurs.get_nom()</th>
+                            <th>escrimeurs.get_club().get_nom()</th>
+                            <th class="bg-black">{{cpt}}</th>
+                            {% if escrimeurs == les_escrimeurs[cpt-1] %}
+                                <th class="bg-grey"></th>
+                            {% else %}
+
+                                {% set le_match = les_poules[nb].get_match_by_escrimeurs(escrimeurs, les_escrimeurs[cpt-1]) %}
+                                    {% if le_match is not None %}
+                                        {% if le_match.est_commencer() %}
+                                            {% if le_match.get_gagnant() == les_escrimeurs[cpt - 1] %}
+                                                <th>V</th>
+                                            {% else %}
+                                                <th>le_match.get_nb_touche(escrimeur)</th>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                            {% endif %}
+                            <th class="petit"></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        {% set cpt = cpt + 1 %}
+                    {% endfor %}
+
+
+
+                </table>
+
                 <div class="div-dow">
                     <img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">
                     <a href="#">Télécharger le PDF</a> 

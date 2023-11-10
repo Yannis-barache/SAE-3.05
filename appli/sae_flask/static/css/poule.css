@@ -63,3 +63,32 @@ a{
   align-items: center;
   margin-top : 10px;
 }
+
+.middle{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.matchs{
+  margin-left: 60px;
+}
+
+.scroll-match {
+  width: 300px; /* Ajustez la largeur selon vos besoins */
+  height: 200px; /* Ajustez la hauteur selon vos besoins */
+  overflow: auto; /* Permet le défilement si le contenu dépasse les dimensions définies */
+}
+
+.scroll-match p {
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.bg-blcak{
+  background-color: black;
+  color: white;
+}
+
+.bg-grey{
+  background-color: #EDEDED;
+}

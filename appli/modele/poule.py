@@ -48,6 +48,71 @@ class Poule:
         """
         return self.__les_escrimeurs
 
+    def get_lettre_poule(self, nombre : int) -> str:
+        """
+        Fonction qui retourne la lettre de la poule
+
+        Args:
+            nombre (int): le numero de poules
+
+        Returns:
+            str: la lettre de la poule
+        """
+        if nombre == 1:
+            return "A"
+        elif nombre == 2:
+            return "B"
+        elif nombre == 3:
+            return "C"
+        elif nombre == 4:
+            return "D"
+        elif nombre == 5:
+            return "E"
+        elif nombre == 6:
+            return "F"
+        elif nombre == 7:
+            return "G"
+        elif nombre == 8:
+            return "H"
+        elif nombre == 9:
+            return "I"
+        elif nombre == 10:
+            return "J"
+        elif nombre == 11:
+            return "K"
+        elif nombre == 12:
+            return "L"
+        elif nombre == 13:
+            return "M"
+        elif nombre == 14:
+            return "N"
+        elif nombre == 15:
+            return "O"
+        elif nombre == 16:
+            return "P"
+        elif nombre == 17:
+            return "Q"
+        elif nombre == 18:
+            return "R"
+        elif nombre == 19:
+            return "S"
+        elif nombre == 20:
+            return "T"
+        elif nombre == 21:
+            return "U"
+        elif nombre == 22:
+            return "V"
+        elif nombre == 23:
+            return "W"
+        elif nombre == 24:
+            return "X"
+        elif nombre == 25:
+            return "Y"
+        elif nombre == 26:
+            return "Z"
+        else:
+            return "Erreur"
+
     def set_id(self, id_poule) -> None:
         """
         Fonction qui modifie l'id de la poule

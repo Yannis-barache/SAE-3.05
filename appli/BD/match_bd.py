@@ -72,8 +72,8 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur1)
                 escrimeur2 = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
-                arbitre = InscrireArbitreBD(
-                    self.__connexion).get_arbitre_by_id(id_arbitre)
+                arbitre = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_arbitre)
                 return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
                              heure, fini)
             return None

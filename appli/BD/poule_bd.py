@@ -91,7 +91,7 @@ class PouleBD:
                     matches.append(MatchBD(self.__connexion).get_match_by_id(id_match))
                 la_poule = Poule(id_poule)
                 la_poule.set_les_matchs(matches)
-                poules.append(Poule(id_poule))
+                poules.append(la_poule)
             return poules
         except Exception as e:
             print(e)
@@ -117,3 +117,13 @@ class PouleBD:
         except Exception as e:
             print(e)
             return None
+
+if __name__ == "__main__":
+    from modele_appli import ModeleAppli
+    modele = ModeleAppli()
+    les_poules = modele.get_poule_bd().get_poules_by_compet(int(8))
+    les_matchs = les_poules[0].get_les_matchs()
+    le_match = les_matchs[0]
+    arbitre = le_match.get_arbitre()
+    prenom = arbitre.get_prenom()
+
