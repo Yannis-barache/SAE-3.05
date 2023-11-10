@@ -42,7 +42,9 @@
         </div>
 
         <div class="div-btn center">
-            <button>voir les poules</button>
+            <a href="{{ url_for('competition_match',id_competition=compet.get_id())  }}"> 
+                <button  >voir les poules</button>
+            </a>
 
             <button>voir la phase finale</button>
         </div>

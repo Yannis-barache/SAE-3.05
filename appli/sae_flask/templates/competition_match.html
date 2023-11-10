@@ -1,0 +1,46 @@
+{% extends "base_home.html" %}
+
+{% block content %}
+    <h1> <span> Matches du {{ compet.get_nom() }} </span> </h1>
+
+
+    <div>
+
+
+    {% for match in matchs %}
+
+        <div>
+            <h2>
+                {{ match.get_nom() }}
+
+                {% if match.est_commencer() %}
+                    <p> En cours </p>
+                
+                {% elif match.est_finis() %}
+                    <p> Terminer </p>
+                {% else %}
+                    <p> ... </p>
+
+                {% endif %}
+            </h2>
+        </div>
+        <div>
+        <img>
+        <img>
+        </div>
+
+
+
+    {% endfor %}
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+
+

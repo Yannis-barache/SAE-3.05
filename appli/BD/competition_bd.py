@@ -8,11 +8,13 @@ from sqlalchemy.sql.expression import text
 from categorie_bd import CategorieBD
 from lieu_bd import LieuBD
 from arme_bd import ArmeBD
+from escrimeur_bd import EscrimeurBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from competition import Competition
+from match import Match
 
 
 class CompetitionBD:
@@ -33,6 +35,7 @@ class CompetitionBD:
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
                 'idCategorie, coefficientCompetition FROM COMPETITION')
+            
             result = self.__connexion.execute(query)
             competitions = []
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
@@ -48,6 +51,20 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
+        
+    def get_all_matchs(self, id_competition: int):
+        query = text("SELECT * FROM MATCHS WHERE IDPHASE IN ( SELECT IDPHASE FROM PHASE WHERE IDCOMPETITION="+str(id_competition)+")")
+        result = self.__connexion.execute(query)
+        
+        matchs = []
+        for (id_match, id_tireur1, id_tireur2, id_phase, idArbitre, heureMatch, fini ) in result:
+            Escrimeur1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
+            Escrimeur2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
+            arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(idArbitre)
+            matchs.append(Match(id_match,id_phase, Escrimeur1, Escrimeur2, arbitre, heureMatch, fini))
+        
+        return matchs
+        
 
     def get_competition_by_id(self, id_c: int):
         """
