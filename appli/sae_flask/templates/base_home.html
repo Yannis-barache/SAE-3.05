@@ -35,8 +35,15 @@
         </div>
        
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
-        {% block user %}
-        {% endblock %}
+            {% if user==None %}
+            <a href="{{ url_for('choose_sign')}}">
+                <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+            </a>
+            {% else %}
+            <a href="{{ url_for('espace_personnel') }}">
+                <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
+            </a>
+            {% endif %}
         
         <nav class="navigateur">
             {% block nav %}
