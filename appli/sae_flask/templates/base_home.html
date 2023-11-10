@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
     <title>Document</title>
     {% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
     {% endblock %}
@@ -15,20 +15,45 @@
 
     <header>
         {% block header %}
-        <a href="#">
-            <img class= "menu" src="{{ url_for('static', filename='../static/img/Menu.png') }}" alt="menu">
-        </a>
+        <div class="b-menu2">
+            <input id="toggleChecker" type="checkbox">
+            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
+            <div class="checkboxtoggler">
+                <div class="line line-1"></div>
+                <div class="line line-2"></div>
+                <div class="line line-3"></div>
+            </div>
+            </label>
+            <nav id="myDropdown" class="dropdown-content2">
+                <ul class="menu-deroule">
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
        
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
-        <a href="#">
-            <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
-        </a>
-        
+            {% if user!=None %}
+            <a href="{{ url_for('deconnexion')}}">
+                <img class= "user" src="{{ url_for('static', filename='../static/img/logout.png') }}" alt="Déconnexion">
+            </a>
+            {% endif %}
+
         <nav class="navigateur">
             {% block nav %}
-             <a class="authentif" href="#"> AUTHENTIFICATION </a> 
-             <a class="compet" href="#"> COMPÉTITION </a> 
-             <a class="regles" href="#"> RÈGLES </a> 
+                {% if user==None %}
+                <a class="authentif" href="{{ url_for('choose_sign')}}"> AUTHENTIFICATION </a>
+                {% else %}
+                <a class="authentif" href="{{ url_for('espace_personnel') }}"> ESPACE PERSONNEL </a>
+                {% endif %}
+                <a class="compet" href="{{ url_for('home') }}"> COMPÉTITIONS </a>
+
+                {% if user|is_arbitre %}
+                <a class="compet" href="#">ARBITRAGE</a>
+                {% endif %}
+                <a class="regles" href="{{ url_for('regles') }}"> RÈGLES </a>
             {% endblock %}
         </nav>
     
@@ -43,7 +68,7 @@
     </main>
     <footer>
         {% block footer %}
-        <p>CONTACTES : </p>
+        <p>CONTACTS : </p>
         <a href="#">
             <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
         </a>
@@ -58,7 +83,7 @@
         <a href="#"> 
             <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
         </a>
-        <p class="paragfin"> @ Cette page à été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, Mérit Juilann, Chédeville Baptiste </p>
+        <p class="paragfin"> @ Cette page a été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, Merit Juliann, Chédeville Baptiste </p>
 
         {% endblock %}
 

@@ -1,0 +1,47 @@
+
+{% extends "base_home.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/poule.css')}}"> 
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="big-div">
+
+        <div class="grey-bg center">
+            <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+        </div>
+
+        <div>
+            <p class="description">POULE {{nb}}</p>
+        </div>
+
+        <div>
+
+            <div class="matchs">
+
+                <p>Arbitre : {{ les_poules[nb].get_les_matchs()}}</p>
+
+            </div>
+
+            <div class="pdf">
+
+                <img class="pdf" src="{{ url_for('static', filename='../static/img/pdf.png') }}" alt="menu">
+                <div class="div-dow">
+                    <img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">
+                    <a href="#">Télécharger le PDF</a> 
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
+

@@ -3,27 +3,21 @@ import flask
 import sys
 import os
 from .app import app
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
-from modele_appli import ModeleAppli
 from escrimeur import Escrimeur
+from modele_appli import ModeleAppli
+from competition import Competition
+from constantes import USER
+
+USER = USER
 
 
-class Alpha:
-
-    def __init__(self, message=None):
-        self.__message = message
-
-    def __call__(self, form, field):
-        for element in field.data:
-            if not element.isdigit():
-                raise StopValidation(
-                    "Le numéro de téléphone ne doit contenir que des chiffres")
 
 
 class ValideMdp:
@@ -101,6 +95,7 @@ class InscriptionForm(FlaskForm):
         "Votre catégorie",
         choices=[(categorie.get_id(), categorie.get_nom()) for categorie in
                  modele_appli.get_categorie_bd().get_all_categorie()])
+    modele_appli.close_connexion()
     mdp = PasswordField(
         "Mot de passe",
         validators=[
@@ -111,10 +106,7 @@ class InscriptionForm(FlaskForm):
         ])
     conf_mdp = PasswordField("Confirmation du mot de passe",
                              validators=[DataRequired()])
-    telephone = TelField(
-        "Votre numéro de téléphone",
-        validators=[DataRequired(),
-                    Alpha(), Length(min=10, max=10)])
+    modele_appli = ModeleAppli()
     club = SelectField(
         "Votre club",
         choices=[(club.get_id(), club.get_nom())
@@ -122,26 +114,49 @@ class InscriptionForm(FlaskForm):
     next = HiddenField()
     modele_appli.close_connexion()
 
+@app.route("/", methods=["GET"])
+def home():
+    modele_appli = ModeleAppli()
+    competitions = modele_appli.get_competition_bd().get_all_competition()
+    print("USER ", USER)
+    modele_appli.close_connexion()
+    return render_template(
+        "home.html",competitions=competitions, user=USER
+    )
 
-# @app.route("/")
-# def home():
-#     return render_template(
-#         "home.html"
-#     )
 
-
-@app.route("/")
+@app.route("/choix")
 def choose_sign():
-    return render_template("connexion_inscription.html")
+    return render_template("connexion_inscription.html", user=USER)
 
 
 @app.route("/choisir_statut_connexion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template(
 
-        "choisir_statut_connexion.html"
+        "choisir_statut_connexion.html", user=USER
     )
 
+
+@app.route("/page_poule")
+def page_poule():
+    return render_template(
+        "page_poule_compet.html"
+    )
+
+
+@app.route("/choisir_statut_inscription")
+def choisir_statut_inscription():
+    return render_template(
+        "choisir_statut_inscription.html",
+    )
+
+@app.route("/espace_personnel/")
+def espace_personnel():
+    user = USER
+    return render_template(
+        "espace.html", user=user
+    )
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
@@ -150,19 +165,17 @@ def inscription():
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
-        num_licence = form.numLicence.data
+        num_licence = int(form.numLicence.data)
         nom = form.nom.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
         sexe = form.sexe.data
-        categorie = form.categorie.data
+        categorie = modele_appli.get_categorie_bd().get_categorie_by_id(form.categorie.data)
         mdp = form.mdp.data
-        telephone = form.telephone.data
-        club = form.club.data
-
+        club = modele_appli.get_club_bd().get_club_by_id(form.club.data)
         escrimeur_a_inserer = Escrimeur(1, nom, prenom, sexe, date_naissance,
                                         prenom.lower(), mdp, num_licence, None,
-                                        club, categorie, telephone)
+                                        club, categorie, False)
         print("escrimeur_a_inserer", escrimeur_a_inserer)
         try:
             print("On va insérer l'escrimeur")
@@ -195,8 +208,10 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
+    global USER
     modele_appli = ModeleAppli()
-    user = ""
+    print("connexion ",USER)
+
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
@@ -207,35 +222,66 @@ def connexion(nom):
         identifiant = form.identifiant.data
         mdp = form.mdp.data
         if nom == "ESCRIMEUR":
-            user = modele_appli.get_escrimeur_bd().login_escrimeur(
+            USER = modele_appli.get_escrimeur_bd().login_escrimeur(
                 identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-
+            if USER is not None and USER.get_mdp() == mdp:
+                print("redirectzefdiz")
+                return redirect(url_for('home'))
         elif nom == "ORGANISATEUR":
-            organisateur = modele_appli.get_organisateur_bd(
+            USER = modele_appli.get_organisateur_bd(
             ).login_organisateur(identifiant, mdp)
-            user = organisateur 
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
 
         elif nom == "CLUB":
-            club = modele_appli.get_club_bd().login_club(identifiant, mdp)
-            user = club.login_club(identifiant, mdp)
+            USER = modele_appli.get_club_bd(
+
+            ).login_club(identifiant, mdp)
             modele_appli.close_connexion()
-            if user is not None and user.get_mdp() == mdp:
-                return render_template("home.html", nom=user)
-        print("USER ", user)
-        if user is None:
+            if USER is not None and USER.get_mdp() == mdp:
+                return redirect(url_for('home'))
+        if USER is None:
             return render_template(
                 "page_connexion.html",
                 nom=nom,
                 form=form,
                 message="Identifiant ou mot de passe invalide")
-        return render_template("home.html", nom=user)
+
+        return redirect(url_for('home'))
 
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
 
+@app.route("/regles")
+def regles():
+    return render_template("regles.html", user=USER)
+
+@app.route("/competition/<id_competition>")
+def competition(id_competition):
+    modele = ModeleAppli()
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    modele.close_connexion()
+    return render_template("competition.html", compet=la_competition,
+                           poule=nb_poule, user=USER)
+
+@app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
+def poule(id_competition, nb):
+    modele = ModeleAppli()
+    les_poules = modele.get_poule_bd().get_poules_by_compet(int(id_competition))
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb = int(nb) % len(les_poules)
+    modele.close_connexion()
+    return render_template(
+        "page_poule_compet.html", les_poules=les_poules,
+        compet=la_competition, nb=nb, user=USER
+    )
+
+
+@app.route("/deconnexion")
+def deconnexion():
+    global USER
+    USER = None
+    return redirect(url_for('choose_sign'))

@@ -150,7 +150,8 @@ disable=abstract-method,
         wrong-import-position,
         inconsistent-quotes,
         broad-exception-caught,
-        line-too-long
+        line-too-long,
+        redefined-outer-name
 
 [REPORTS]
 

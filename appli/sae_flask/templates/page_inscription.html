@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/page_inscription.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<!-- Link du fichier js-->
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -66,11 +69,6 @@
              <div class="form-row">
                  <label for="date_naissance">{{ form.date_naissance.label }}</label>
                  {{ form.date_naissance(class_="form-control" , placeholder="Date naissance") }}
-             </div>
-
-             <div class="form-row">
-                 <label for="">{{ form.telephone.label }}</label>
-                 {{ form.telephone(class_="form-control" , placeholder="N° Tel") }}
              </div>
 
              <div class="form-row">
