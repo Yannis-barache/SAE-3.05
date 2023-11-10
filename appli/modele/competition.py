@@ -260,7 +260,7 @@ class Competition:
             str : Le statut de la competition
         """
 
-        if str(self.__date_fin_inscription) is None:
+        if self.__date_fin_inscription is None:
             return "Pas disponible"
         if str(self.__date_fin_inscription) > str(date.today()):
             return "Inscription ouverte"
