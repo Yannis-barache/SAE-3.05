@@ -3,7 +3,6 @@ Module contenant la classe Competition
 """
 
 import math
-from datetime import date
 import constantes as const
 from categorie import Categorie
 from arme import Arme
@@ -13,6 +12,8 @@ from exceptions import PasAssezDArbitres
 from poule import Poule
 from phase_final import PhaseFinal
 from club import Club
+from datetime import date, datetime
+
 
 
 class Competition:
@@ -45,6 +46,7 @@ class Competition:
         self.__arme = arme
         self.__categorie = categorie
         self.__coefficient = coefficient
+        self.__phase_final: PhaseFinal | None = None
 
     def get_id(self) -> int:
         """
@@ -127,6 +129,36 @@ class Competition:
         """
         return self.__coefficient
 
+    def est_finis(self) -> bool:
+        """
+        Fonction qui retourne si la competition est finis ou non
+
+        Returns:
+            bool: True si la competition est finis, False sinon
+        """
+        return self.__phase_final is not None and self.__phase_final.est_finis()
+
+    def get_etat(self) -> str:
+        """
+        Fonction qui retourne l'etat de la competition
+
+        Returns:
+            str: L'etat de la competition
+        """
+        if isinstance(self.__date, date):
+            self.__date = self.__date.strftime("%d-%m-%Y")
+        if isinstance(self.__date_fin_inscription, date):
+            self.__date_fin_inscription = self.__date_fin_inscription.strftime(
+                "%d-%m-%Y")
+        if self.est_finis():
+            return "Finis"
+        elif datetime.strptime(self.__date, "%d-%m-%Y").date() <= date.today():
+            return "En cours"
+        elif datetime.strptime(self.__date_fin_inscription, "%d-%m-%Y").date() < date.today():
+            return "Inscription ouverte"
+        else:
+            return "A venir"
+
     def set_id(self, id_comp: int) -> None:
         """
         Fonction qui modifie l'id de la competition
@@ -207,6 +239,16 @@ class Competition:
             coefficient (float) : coefficient de la competition
         """
         self.__coefficient = coefficient
+
+
+    def set_phase_final(self, phase_final: PhaseFinal) -> None:
+        """
+        Fonction qui modifie la phase finale de la competition
+
+        Args:
+            phase_final (PhaseFinal): phase finale de la competition
+        """
+        self.__phase_final = phase_final
 
     def statut(self) -> str:
 
