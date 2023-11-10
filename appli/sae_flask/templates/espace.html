@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/espace.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+
+    <title>Espace</title>
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+        <div class="b-menu2">
+            <input id="toggleChecker" type="checkbox">
+            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
+            <div class="checkboxtoggler">
+                <div class="line line-1"></div>
+                <div class="line line-2"></div>
+                <div class="line line-3"></div>
+            </div>
+            </label>
+            <nav id="myDropdown" class="dropdown-content2">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <img class= "logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo">
+        <a href="{{ url_for('home') }}">
+            <img class= "user" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="user">
+        </a>
+
+        <nav class="navigateur">
+            {% block nav %}
+             <a class="information" href="#"> MES INFORMATION </a>
+             <a class="my-comp" href="#"> MES COMPÉTITION </a>
+             <a class="gest-comp" href="#"> GESTION COMPÉTITION </a>
+            {% endblock %}
+        </nav>
+
+        {% endblock %}
+    </header>
+    <main>
+        <table>
+            {% if user|is_escrimeur%}
+                <tr>
+                    <td class="left">N° de licence</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_licence() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Prénom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_prenom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Sexe</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_sexe() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Date de naissance</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_date_naissance() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+                </tr>
+
+                <tr>
+                    <td class="left">Catégorie</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_categorie().get_nom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Classement</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_classement() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Club</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_club().get_nom() }}</td>
+                </tr>
+            {% elif user|is_club %}
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+
+                </tr>
+
+                <tr>
+                    <td class="left">Adresse</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_adresse() }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+
+                </tr>
+
+                <tr>
+                    <td class="left">Prénom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_prenom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Adresse Mail</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_adresse_mail() }}</td>
+                </tr>
+
+            {% endif %}
+        </table>
+
+    </main>
+
+</body>
+</html>

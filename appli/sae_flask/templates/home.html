@@ -13,8 +13,8 @@
     <a href="{{ url_for('choose_sign')}}">
         <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
     </a>
-{% elif user|is_escrimeur %}
-    <a href="{{ url_for('espace_escrimeur',nom = user.get_id()) }}">
+{% else %}
+    <a href="{{ url_for('espace_personnel') }}">
         <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
     </a>
 {% endif %}

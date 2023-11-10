@@ -7,13 +7,15 @@ header {
 
 .logo {
     width: 12vw;
-    margin: 2em
+    margin: 2em;
+    margin-right:0;
 }
 
 .user {
     width: 5vw;
     float: right;
     margin: 0.5rem;
+    margin-left: 0;
 }
 
 .menu {
@@ -32,6 +34,11 @@ nav > a {
     text-decoration: none;
     font-size: 1.5vw;
     font-weight: bold;
+}
+
+nav a:hover {
+    color: black;
+    text-decoration: underline;
 }
 
 .gest-comp {

@@ -167,13 +167,11 @@ def choisir_statut_inscription():
         "choisir_statut_inscription.html",
     )
 
-@app.route("/espace_escrimeur/<nom>")
-def espace_escrimeur(nom):
-    modele_appli = ModeleAppli()
-    user = modele_appli.get_escrimeur_bd().get_escrimeur_by_id(nom)
+@app.route("/espace_personnel/")
+def espace_personnel():
+    user = USER
     return render_template(
-        "espace_escrimeur.html", nom=user
-
+        "espace.html", user=user
     )
 
 @app.route("/inscription", methods=["GET", "POST"])

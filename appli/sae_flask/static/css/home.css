@@ -7,13 +7,15 @@ header {
 
 .logo {
     width: 12vw;
-    margin: 2em
+    margin: 2em;
+    margin-right:0;
 }
 
 .user {
     width: 5vw;
     float: right;
-    margin: 0.5rem;
+    margin: 1rem;
+    margin-left: 0;
 }
 
 .navigateur {
