@@ -256,7 +256,7 @@ def connexion(nom):
 
 @app.route("/regles")
 def regles():
-    return render_template("regles.html")
+    return render_template("regles.html", user=USER)
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
@@ -264,7 +264,8 @@ def competition(id_competition):
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
     modele.close_connexion()
-    return render_template("competition.html", compet = la_competition, poule = nb_poule)
+    return render_template("competition.html", compet=la_competition,
+                           poule=nb_poule, user=USER)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -274,7 +275,8 @@ def poule(id_competition, nb):
     nb = int(nb) % len(les_poules)
     modele.close_connexion()
     return render_template(
-        "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
+        "page_poule_compet.html", les_poules=les_poules,
+        compet=la_competition, nb=nb, user=USER
     )
 
 
