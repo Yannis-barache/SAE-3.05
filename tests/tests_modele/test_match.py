@@ -14,6 +14,7 @@ from club import Club
 from escrimeur import Escrimeur
 from categorie import Categorie
 from touche import Touche
+from piste import Piste
 
 
 class TestMatch(unittest.TestCase):
@@ -37,7 +38,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertIsInstance(match, Match)
 
     def test_get_id(self):
@@ -53,7 +54,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_id(), 1)
 
     def test_get_id_phase(self):
@@ -69,7 +70,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_id_phase(), 1)
 
     def test_get_escrimeur1(self):
@@ -85,7 +86,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_escrimeur1(), escrimeur1)
 
     def test_get_escrimeur2(self):
@@ -101,7 +102,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_escrimeur2(), escrimeur2)
 
     def test_get_arbitre(self):
@@ -117,7 +118,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_arbitre(), arbitre)
 
     def test_get_heure(self):
@@ -133,7 +134,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_heure(), 10.0)
 
     def test_est_finis(self):
@@ -149,7 +150,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True, None)
         self.assertEqual(match.est_finis(), True)
 
     def test_est_commencer(self):
@@ -165,7 +166,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.est_commencer(), False)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
         self.assertEqual(match.est_commencer(), True)
@@ -183,7 +184,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_les_touches(), [])
 
     def test_get_nb_touche(self):
@@ -199,7 +200,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         self.assertEqual(match.get_nb_touche(escrimeur1), 0)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
         self.assertEqual(match.get_nb_touche(escrimeur1), 1)
@@ -217,7 +218,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 2, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.ajouter_touche(Touche(match, escrimeur1, 1))
         self.assertEqual(match.get_gagnant(), None)
         match.set_finis(True)
@@ -226,6 +227,22 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(match.get_gagnant(), None)
         match.ajouter_touche(Touche(match, escrimeur2, 3))
         self.assertEqual(match.get_gagnant(), escrimeur2)
+
+    def test_get_piste(self):
+        """
+        Test de la fonction get_piste de la classe Match
+        """
+        match = Match(1, 2, None, None, None, 10.0, False, None)
+        self.assertEqual(match.get_piste(), None)
+
+    def test_set_piste(self):
+        """
+        Test de la fonction set_piste de la classe Match
+        """
+        match = Match(1, 2, None, None, None, 10.0, False, None)
+        piste = Piste(1, 1, "Piste 1")
+        match.set_piste(piste)
+        self.assertEqual(match.get_piste(), piste)
 
     def test_set_id(self):
         """
@@ -240,7 +257,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_id(2)
         self.assertEqual(match.get_id(), 2)
 
@@ -257,7 +274,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_id_phase(2)
         self.assertEqual(match.get_id_phase(), 2)
 
@@ -274,7 +291,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_escrimeur1(escrimeur2)
         self.assertEqual(match.get_escrimeur1(), escrimeur2)
 
@@ -291,7 +308,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_escrimeur2(escrimeur1)
         self.assertEqual(match.get_escrimeur2(), escrimeur1)
 
@@ -310,7 +327,7 @@ class TestMatch(unittest.TestCase):
                             'mdp', 'AB01', 3, club, categorie, True)
         arbitre2 = Escrimeur(4, 'Dupont', 'Jean', 'M', '2004-14-05', 'jdupont',
                              'mdp', 'AB02', 4, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_arbitre(arbitre2)
         self.assertEqual(match.get_arbitre(), arbitre2)
 
@@ -327,7 +344,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         match.set_heure(11.0)
         self.assertEqual(match.get_heure(), 11.0)
 
@@ -344,7 +361,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False, None)
         match.set_finis(True)
         self.assertEqual(match.est_finis(), True)
 
@@ -362,7 +379,7 @@ class TestMatch(unittest.TestCase):
                                False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2006-05-14', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 11.0, False, None)
         self.assertIsNone(match.get_type_phase())
 
     def test_generer_pdf(self):
@@ -379,7 +396,7 @@ class TestMatch(unittest.TestCase):
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
 
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche1 = Touche(match, escrimeur1, 1)
         touche2 = Touche(match, escrimeur1, 2)
         touche3 = Touche(match, escrimeur1, 3)
@@ -390,7 +407,7 @@ class TestMatch(unittest.TestCase):
         match.set_type_phase('Poule')
         match.generer_pdf()
         match.set_type_phase("Poule")
-        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         escrimeur1.set_classement(None)
         escrimeur2.set_classement(None)
         match2.set_finis(False)
@@ -410,7 +427,7 @@ class TestMatch(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, True, None)
         sortie = (
             'Match : 1 - 1 - Escrimeur : 1 - Chédeville - Baptiste - 2004-14-05 - '
             'baptched - mdp - '

@@ -4,6 +4,7 @@ Module contenant la classe PhaseFinal
 
 from match import Match
 from escrimeur import Escrimeur
+from piste import Piste
 import random
 
 
@@ -15,6 +16,9 @@ class PhaseFinal:
     def __init__(self, id_phase_f: int):
         self.__id_phase_f = id_phase_f
         self.__les_matchs: list[Match] = []
+        self.__les_pistes: list[Piste] = []
+        self.__index_piste = 0
+        self.__heure = 0
 
     def get_id_phase_f(self) -> int:
         """
@@ -34,6 +38,15 @@ class PhaseFinal:
         """
         return self.__les_matchs
 
+    def get_les_pistes(self) -> list[Piste]:
+        """
+        Fonction qui retourne la liste des pistes
+
+        Returns:
+            list: liste des pistes
+        """
+        return self.__les_pistes
+
     def set_id_phase_f(self, id_phase_f: int) -> None:
         """
         Fonction qui modifie l'id de la phase finale
@@ -52,6 +65,15 @@ class PhaseFinal:
         """
         self.__les_matchs.append(match)
 
+    def set_les_pistes(self, liste_pistes: list[Piste]) -> None:
+        """
+        Fonction qui ajoute une piste à la liste des pistes
+
+        Args:
+            piste (Piste): piste
+        """
+        self.__les_pistes.append(liste_pistes)
+
     def generer_les_matchs(self, liste_escrimeurs: list[Escrimeur],
                            liste_arbitres: list[Escrimeur],
                            heure_debut: float) -> list[Match]:
@@ -66,18 +88,20 @@ class PhaseFinal:
         Returns:
             list: liste des matchs
         """
+        self.__heure = heure_debut
         cpt = 0
         liste_matchs = []
         while cpt < len(liste_escrimeurs) / 2:
             escrimeur1 = liste_escrimeurs[cpt]
             escrimeur2 = liste_escrimeurs[-(cpt + 1)]
             arbitre = random.choice(liste_arbitres)
-            liste_matchs.append(
-                Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
-                      heure_debut, False))
-            heure_debut += 0.25
-            if heure_debut % 1 >= 0.6:
-                heure_debut += 0.4
+            liste_matchs.append(Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre, heure_debut, False, self.__les_pistes[self.__index_piste]))
+            self.__index_piste += 1
+            if self.__index_piste == len(self.__les_pistes):
+                self.__index_piste = 0
+                self.__heure += 0.25
+                if self.__heure % 1 >= 0.6:
+                    self.__heure += 0.4
             cpt += 1
         self.__les_matchs = liste_matchs
         return liste_matchs

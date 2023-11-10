@@ -37,7 +37,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         self.assertIsInstance(touche, Touche)
 
@@ -54,7 +54,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_match(), match)
 
@@ -71,7 +71,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_escrimeur(), escrimeur1)
 
@@ -88,7 +88,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         self.assertEqual(touche.get_numero(), 1)
 
@@ -105,8 +105,8 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
-        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
+        match2 = Match(2, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         touche.set_match(match2)
         self.assertEqual(touche.get_match(), match2)
@@ -124,7 +124,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         touche.set_escrimeur(escrimeur2)
         self.assertEqual(touche.get_escrimeur(), escrimeur2)
@@ -142,7 +142,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         touche.set_numero(2)
         self.assertEqual(touche.get_numero(), 2)
@@ -160,7 +160,7 @@ class TestTouche(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         touche = Touche(match, escrimeur1, 1)
         sortie = (
             'Touche : Match : 1 - 1 - Escrimeur : 1 - Chédeville - Baptiste - '
