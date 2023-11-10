@@ -2,6 +2,7 @@ import tkinter as tk
 import subprocess
 import configparser
 from tkinter import ttk
+import os
 
 from tkinter.messagebox import showerror, askyesno, showinfo
 

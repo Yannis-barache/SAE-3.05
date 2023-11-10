@@ -165,15 +165,14 @@ def inscription():
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
-        num_licence = form.numLicence.data
+        num_licence = int(form.numLicence.data)
         nom = form.nom.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
         sexe = form.sexe.data
-        categorie = form.categorie.data
+        categorie = modele_appli.get_categorie_bd().get_categorie_by_id(form.categorie.data)
         mdp = form.mdp.data
-        club = form.club.data
-
+        club = modele_appli.get_club_bd().get_club_by_id(form.club.data)
         escrimeur_a_inserer = Escrimeur(1, nom, prenom, sexe, date_naissance,
                                         prenom.lower(), mdp, num_licence, None,
                                         club, categorie, False)
