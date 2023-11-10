@@ -81,6 +81,37 @@ class MatchBD:
             print(e)
             return None
 
+    def get_match_by_phase(self, id_p: int):
+        '''
+        Fonction qui retourne les matchs en fonction de la phase
+        :param id_p: id de la phase
+        :return: liste de match
+        '''
+        try:
+            query = text(
+                'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
+                'idArbitre, heureMatch, fini FROM MATCHS '
+                'WHERE idPhase = ' + str(id_p))
+            result = self.__connexion.execute(query)
+            matchs = []
+            for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
+                 heure, fini) in result:
+                fini = fini == 1
+                phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
+                escrimeur1 = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur1)
+                escrimeur2 = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur2)
+                arbitre = InscrireArbitreBD(
+                    self.__connexion).get_arbitre_by_id(id_arbitre)
+                matchs.append(
+                    Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
+                          heure, fini))
+            return matchs
+        except Exception as e:
+            print(e)
+            return None
+
     def insert_match(self, match: Match):
         """
         Fonction qui insère un match
