@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <p class="description">DESCRIPTION DE LA COMPETÉTITION :</p>
+            <p class="description">DESCRIPTION DE LA COMPÉTITION :</p>
         </div>
 
         <div class="center infos">
@@ -27,6 +27,7 @@
                 <p>FIN D'INSCRIPTION</p>
                 <p>COEFFICIENT</p>
                 <p>LIEU</p>
+                <p>ETAT</p>
 
             </div>
 
@@ -38,11 +39,19 @@
                 <p>:    {{ compet.get_date_fin_inscription() }}</p>
                 <p>:    {{ compet.get_coefficient() }}</p>
                 <p>:    {{ compet.get_lieu().get_adresse() }}</p>
+                <p>:    {{ compet.get_etat() }}</p>
             </div>
         </div>
 
         <div class="div-btn center">
-            <button>voir les poules</button>
+            {% if poule > 0 %}
+                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
+                    <button type="submit" class="btn-active">voir les poules</button>
+                </form>
+                {% endif %}
+            {% if poule == 0 %}
+                <button class="btn-disable">voir les poules ?</button>
+            {% endif %}
 
             <button>voir la phase finale</button>
         </div>

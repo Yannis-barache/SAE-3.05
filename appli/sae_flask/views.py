@@ -137,11 +137,6 @@ def choisir_statut_connexion():
         "choisir_statut_connexion.html", user=USER
     )
 
-@app.route("/page_poule")
-def page_poule():
-    return render_template(
-        "page_poule_compet.html"
-    )
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
@@ -248,5 +243,17 @@ def regles():
 def competition(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
     modele.close_connexion()
-    return render_template("competition.html", compet = la_competition)
+    return render_template("competition.html", compet = la_competition, poule = nb_poule)
+
+@app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
+def poule(id_competition, nb):
+    modele = ModeleAppli()
+    les_poules = modele.get_poule_bd().get_poules_by_compet(int(id_competition))
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb = int(nb) % len(les_poules)
+    modele.close_connexion()
+    return render_template(
+        "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
+    )

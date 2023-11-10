@@ -32,7 +32,6 @@ main{
 .center{
     justify-content: center;
     align-items: center;
-
 }
 
 .description{
@@ -104,4 +103,10 @@ button:hover {
     transform: translateY(-2px);
     color: black;
     background-color: #fff;
+}
+
+.btn-disabled{
+    background-color: #d2080a;
+    color: white;
+    cursor: not-allowed;
 }

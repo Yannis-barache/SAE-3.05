@@ -43,6 +43,15 @@ class PhaseFinal:
         """
         self.__id_phase_f = id_phase_f
 
+    def set_match(self, match: Match) -> None:
+        """
+        Fonction qui ajoute un match à la liste des matchs
+
+        Args:
+            match (Match): match
+        """
+        self.__les_matchs.append(match)
+
     def generer_les_matchs(self, liste_escrimeurs: list[Escrimeur],
                            liste_arbitres: list[Escrimeur],
                            heure_debut: float) -> list[Match]:
@@ -72,6 +81,26 @@ class PhaseFinal:
             cpt += 1
         self.__les_matchs = liste_matchs
         return liste_matchs
+
+    def est_finis(self) -> bool:
+        """
+        Fonction qui vérifie si la phase finale est finis
+
+        Returns:
+            bool: True si la phase finale est finis, False sinon
+        """
+        if len(self.__les_matchs) == 0:
+            return False
+        for match in self.__les_matchs:
+            if not match.est_finis():
+                return False
+        return True
+
+    def clear_matchs(self) -> None:
+        """
+        Fonction qui vide la liste des matchs
+        """
+        self.__les_matchs = []
 
     def __str__(self):
         return f'Phase finale : {self.__id_phase_f} |'
