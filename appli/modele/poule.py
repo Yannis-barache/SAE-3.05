@@ -90,6 +90,7 @@ class Poule:
                     heure_debut += 0.05
                     if heure_debut % 1 >= 0.6:
                         heure_debut += 0.4
+                    heure_debut = round(heure_debut, 2)
         self.__les_matchs = les_matchs
         self.set_les_escrimeurs()
         return les_matchs

@@ -287,6 +287,7 @@ class Competition:
                 poule[Poule(-1)] = poule_int[i]
             return poule
         except PasAssezDArbitres:
+            print("Pas assez d'arbitres pour couvrir chaque poule.")
             return None
 
     @staticmethod
@@ -300,8 +301,7 @@ class Competition:
         Returns:
             list[Escrimeur]: liste des escrimeurs de la competition triee par classement initial
         """
-        return sorted(liste_escrimeur,
-                      key=lambda escrimeur: escrimeur.get_classement())
+        return sorted(liste_escrimeur, key=lambda escrimeur: (escrimeur.get_classement() is not None, escrimeur.get_classement()))
 
     @staticmethod
     def nombre_poule(nombre_escrimeur: int,

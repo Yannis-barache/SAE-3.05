@@ -5,8 +5,6 @@ Fichier qui contient les requêtes SQL pour la table ARBITRER
 import sys
 import os
 from sqlalchemy.sql.expression import text
-from escrimeur_bd import EscrimeurBD
-from competition_bd import CompetitionBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -21,8 +19,6 @@ class InscrireBD:
 
     def __init__(self, connexion):
         self.__connexion = connexion
-        self.__competition_bd = CompetitionBD(connexion)
-        self.__escrimeur_bd = EscrimeurBD(connexion)
 
     def get_all_inscrire(self):
         """
@@ -33,12 +29,27 @@ class InscrireBD:
             query = text('SELECT idEscrimeur, idCompetition FROM INSCRIRE')
             result = self.__connexion.execute(query)
             inscrires = []
-            for id_escrimeur, id_competition in result:
-                escrimeur = self.__escrimeur_bd.get_escrimeur_by_id(
-                    id_escrimeur)
-                competition = self.__competition_bd.get_competition_by_id(
-                    id_competition)
-                inscrires.append(Inscrire(escrimeur, competition))
+            for (id_escrimeur, id_competition) in result:
+                inscrires.append(Inscrire(id_escrimeur, id_competition))
+            return inscrires
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_all_inscrit_compet(self, competition):
+        """
+        Fonction qui retourne tous les inscrits à une compétition
+
+        Args:
+            competition (Competition): compétition
+        """
+        try:
+            query = text(
+                f'SELECT idEscrimeur FROM INSCRIRE WHERE idCompetition = {competition.get_id()}')
+            result = self.__connexion.execute(query)
+            inscrires = []
+            for (id_escrimeur,) in result:
+                inscrires.append(Inscrire(competition.get_id() ,id_escrimeur))
             return inscrires
         except Exception as e:
             print(e)

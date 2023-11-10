@@ -271,6 +271,7 @@ def poule(id_competition, nb):
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb = int(nb) % len(les_poules)
     modele.close_connexion()
+    print(les_poules)
     return render_template(
         "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
     )
