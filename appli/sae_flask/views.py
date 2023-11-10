@@ -15,25 +15,9 @@ from modele_appli import ModeleAppli
 from competition import Competition
 from constantes import USER
 
-
 USER = USER
 
-modele_appli = ModeleAppli()
-print("On récupère les compétitions")
-COMPETITIONS = modele_appli.get_competition_bd().get_all_competition()
-print("fini")
-modele_appli.close_connexion()
 
-
-def statut(competition : Competition):
-    if competition.get_date_fin_inscription() == None:
-        return "Pas disponible"
-    if competition.get_date_fin_inscription() > date.today():
-        return "En cours d'inscription"
-    elif competition.get_date() > date.today():
-        return "En cours"
-    else:
-        return "Terminée"
 
 
 class ValideMdp:
@@ -111,6 +95,7 @@ class InscriptionForm(FlaskForm):
         "Votre catégorie",
         choices=[(categorie.get_id(), categorie.get_nom()) for categorie in
                  modele_appli.get_categorie_bd().get_all_categorie()])
+    modele_appli.close_connexion()
     mdp = PasswordField(
         "Mot de passe",
         validators=[
@@ -121,7 +106,7 @@ class InscriptionForm(FlaskForm):
         ])
     conf_mdp = PasswordField("Confirmation du mot de passe",
                              validators=[DataRequired()])
-
+    modele_appli = ModeleAppli()
     club = SelectField(
         "Votre club",
         choices=[(club.get_id(), club.get_nom())
@@ -131,13 +116,12 @@ class InscriptionForm(FlaskForm):
 
 @app.route("/", methods=["GET"])
 def home():
+    modele_appli = ModeleAppli()
+    competitions = modele_appli.get_competition_bd().get_all_competition()
     print("USER ", USER)
-    statuts = []
-    for competition in COMPETITIONS:
-        statuts.append(statut(competition))
-
+    modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=COMPETITIONS, statuts=statuts, user=USER
+        "home.html",competitions=competitions, user=USER
     )
 
 
@@ -239,7 +223,6 @@ def connexion(nom):
             modele_appli.close_connexion()
             if USER is not None and USER.get_mdp() == mdp:
                 return redirect(url_for('home'))
-        print("USER ", USER)
         if USER is None:
             return render_template(
                 "page_connexion.html",

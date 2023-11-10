@@ -17,7 +17,7 @@
 {% elif user|is_escrimeur or user|is_organisateur %}
     <h1> Bonjour {{ user.get_nom() }} {{ user.get_prenom() }} </h1>
 {% else %}
-    <h1> Vous etes le club {{ user.get_nom() }} </h1>
+    <h1> Vous êtes le club {{ user.get_nom() }} </h1>
 {% endif %}
     <p> Le Cercle de Blois vous offre un moyen facile et pratique de gérer vos compétitions. <br>
         Notre site va vous permettre de vous inscrire dans une competition 
@@ -33,19 +33,28 @@
           <th>LIEUX</th> 
           <th>DATE</th> 
           <th>STATUT</th> 
-          <th>ACTION</th>
+          <th colspan="2">ACTION</th>
         </tr>
-        {% set i = 0 %}
+
         {% for competition in competitions %}
             <tr>
-                <td> {{ competition.get_nom() }}</td>
+                <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
-                <td> {{ statuts[i] }} </td>
-
+                <td> {{ competition.statut() }} </td>
+                {% if competition.statut() == 'Inscription ouverte' %}
                 <td> <a href="#"> S'INSCRIRE </a></td>
+                {% else %}
+                <td> Inscription terminée </td>
+                {% endif %}
+
+                {% if competition.statut() != 'En cours' and competition.statut() != 'Terminée' %}
+                <td>  Pas encore de résultats </td>
+                {% else %}
+                <td> <a href="#"> VOIR RESULTATS </a></td>
+                {% endif %}
             </tr>
-            {% set i = i + 1 %}
+
         {% endfor %}
         </table>
         
