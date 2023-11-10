@@ -13,12 +13,12 @@ class ConnexionBD:
     """
     Classe ConnexionBD
 
-    Attributes:
-        __connexion (sqlalchemy.engine.base.Connection): connexion à la base de données
-        __user (str): le login MySQL de l'utilsateur
-        __passwd (str): le mot de passe MySQL de l'utilisateur
-        __host (str): le nom ou l'adresse IP de la machine hébergeant le serveur MySQL
-        __database (str): le nom de la base de données à utiliser
+    Attributes :
+        __connexion (sqlalchemy.engine.base.Connection) :  connexion à la base de données
+        __user (str) : le login MySQL de l'utilsateur
+        __passwd (str) : le mot de passe MySQL de l'utilisateur
+        __host (str) : le nom ou l'adresse IP de la machine hébergeant le serveur MySQL
+        __database (str) : le nom de la base de données à utiliser
     """
 
     def __init__(self):
@@ -41,13 +41,10 @@ class ConnexionBD:
 
     def ouvrir_connexion(self, con: bool = True):
         """
-        ouverture d'une connexion MySQL
-        paramètres:
-           user     (str) le login MySQL de l'utilsateur
-           passwd   (str) le mot de passe MySQL de l'utilisateur
-           host     (str) le nom ou l'adresse IP de la machine hébergeant le serveur MySQL
-           database (str) le nom de la base de données à utiliser
-        résultat: l'objet qui gère le connection MySQL si tout s'est bien passé
+        Ouverture d'une connexion MySQL
+        paramètres :
+            con (bool) : True si on veut utiliser la base de données locale, False sinon
+        résultat : l'objet qui gère le connection MySQL si tout s'est bien passé
         """
         try:
             if con:

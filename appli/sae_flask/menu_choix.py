@@ -1,5 +1,6 @@
 import tkinter as tk
 import subprocess
+import os
 import configparser
 from tkinter import ttk
 
@@ -30,7 +31,7 @@ if os.name == "nt":
     list_reseau = ["eduroam", "exterieur", "eduspot"]
     for reaseau in list_reseau:
         if reaseau in data:
-            change_variable('Locale')
+            change_variable('Nothing')
             showerror(title='Erreur',
                       message='Vous êtes connecté à un réseau de l\'IUT.\nVeillez vous connecter à un réseau personnel ou utiliser un ordinateur de l\'IUT !')
 
@@ -87,7 +88,7 @@ else:
 
     def change():
         # fenetre qui demande si l'utilisateur veut changer de configuration
-        if is_locale:
+        if is_locale == 'True':
             text = 'Locale'
         else:
             text = 'Distante'
