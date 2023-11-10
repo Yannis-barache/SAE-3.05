@@ -3,7 +3,6 @@ Module contenant la classe Competition
 """
 
 import math
-from datetime import date
 import constantes as const
 from categorie import Categorie
 from arme import Arme
