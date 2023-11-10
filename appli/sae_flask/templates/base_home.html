@@ -15,7 +15,7 @@
 
     <header>
         {% block header %}
-        <div class="b-menu">
+        <div class="b-menu2">
             <input id="toggleChecker" type="checkbox">
             <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
             <div class="checkboxtoggler">
@@ -24,7 +24,7 @@
                 <div class="line line-3"></div>
             </div>
             </label>
-            <nav id="myDropdown" class="dropdown-content">
+            <nav id="myDropdown" class="dropdown-content2">
                 <ul>
                     <li><a href="{{ url_for('home') }}">Accueil</a></li>
                     <li><a href="#">Services</a></li>
@@ -32,13 +32,11 @@
                     <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
-
         </div>
        
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
-        <a href="#">
-            <img class= "user" src="{{ url_for('static', filename='../static/img/User.png') }}" alt="user">
-        </a>
+        {% block user %}
+        {% endblock %}
         
         <nav class="navigateur">
             {% block nav %}

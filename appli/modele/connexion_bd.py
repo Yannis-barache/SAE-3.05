@@ -2,13 +2,11 @@
 Module contenant la classe ConnexionBD qui permet de se connecter à la base de données
 """
 import sqlalchemy
-import os
-import sys
+import configparser
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/modele'))
-
-from constantes import locale
+config = configparser.ConfigParser()
+config.read('config.ini')
+locale = config['database']['locale']
 
 
 class ConnexionBD:
@@ -24,14 +22,13 @@ class ConnexionBD:
     """
 
     def __init__(self):
-        print(locale)
-        if not locale:
+        if locale == "False":
             self.__connexion = None
             self.__user = "332948"
             self.__passwd = "SAE-EscrimeBUT2&"
             self.__host = "mysql-sae-escrime.alwaysdata.net"
             self.__database = "sae-escrime_sae"
-        elif locale:
+        elif locale == "True":
             self.__connexion = None
             self.__user = "barache"
             self.__passwd = "barache"

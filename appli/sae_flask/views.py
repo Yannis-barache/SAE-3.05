@@ -138,6 +138,26 @@ def choisir_statut_connexion():
     )
 
 
+@app.route("/page_poule")
+def page_poule():
+    return render_template(
+        "page_poule_compet.html"
+    )
+
+
+@app.route("/choisir_statut_inscription")
+def choisir_statut_inscription():
+    return render_template(
+        "choisir_statut_inscription.html",
+    )
+
+@app.route("/espace_personnel/")
+def espace_personnel():
+    user = USER
+    return render_template(
+        "espace.html", user=user
+    )
+
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
     modele_appli = ModeleAppli()
