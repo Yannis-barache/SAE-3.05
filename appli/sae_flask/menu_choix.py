@@ -1,33 +1,28 @@
 import tkinter as tk
 import subprocess
 import os
-import sys
+import configparser
 from tkinter import ttk
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
-sys.path.append(os.path.join(ROOT, 'appli/modele'))
-
-from constantes import locale as is_locale
 from tkinter.messagebox import showerror, askyesno, showinfo
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+is_locale = config['database']['locale']
 
 
 def change_variable(text):
     if text == 'Locale':
-        text = True
+        text = 'True'
     elif text == 'Distante':
-        text = False
+        text = 'False'
     else:
         text = "''"
-
-    # changer la viriable "locale" dans le fichier constante.py
-    with open('../modele/constantes.py', 'r') as file:
-        lines = file.readlines()
-    with open('../modele/constantes.py', 'w') as file:
-        for line in lines:
-            if line.startswith('locale = '):
-                file.write('locale = {}\n'.format(text))
-            else:
-                file.write(line)
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    config['database']['locale'] = text
+    with open('config.ini', 'w') as configfile:
+        config.write(configfile)
 
 
 if os.name == "nt":
@@ -36,7 +31,7 @@ if os.name == "nt":
     list_reseau = ["eduroam", "exterieur", "eduspot"]
     for reaseau in list_reseau:
         if reaseau in data:
-            change_variable('Locale')
+            change_variable('Nothing')
             showerror(title='Erreur',
                       message='Vous êtes connecté à un réseau de l\'IUT.\nVeillez vous connecter à un réseau personnel ou utiliser un ordinateur de l\'IUT !')
 
@@ -93,7 +88,7 @@ else:
 
     def change():
         # fenetre qui demande si l'utilisateur veut changer de configuration
-        if is_locale:
+        if is_locale == 'True':
             text = 'Locale'
         else:
             text = 'Distante'

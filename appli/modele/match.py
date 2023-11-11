@@ -3,6 +3,7 @@ Module contenant la classe Match
 """
 
 from escrimeur import Escrimeur
+from piste import Piste
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -16,7 +17,7 @@ class Match:
 
     def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
                  escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float,
-                 finis: bool):
+                 finis: bool, piste: Piste):
         self.__id = id_match
         self.__id_phase = id_phase
         self.__escrimeur1 = escrimeur1
@@ -24,6 +25,7 @@ class Match:
         self.__arbitre = arbitre
         self.__heure = heure
         self.__finis = finis
+        self.__piste = piste
         self.__les_touches: list = []
         self.__type_phase: str | None = None
 
@@ -156,6 +158,15 @@ class Match:
         else:
             return None
 
+    def get_piste(self) -> Piste:
+        """
+        Fonction qui retourne la piste du match
+
+        Returns:
+            Piste: piste du match
+        """
+        return self.__piste
+
     def ajouter_touche(self, touche) -> None:
         """
         Fonction qui ajoute une touche au match
@@ -245,6 +256,15 @@ class Match:
             type_phase (str): type de la phase
         """
         self.__type_phase = type_phase
+
+    def set_piste(self, piste: Piste) -> None:
+        """
+        Fonction qui modifie la piste du match
+
+        Args:
+            piste (Piste): piste du match
+        """
+        self.__piste = piste
 
     def generer_pdf(self) -> None:
         """

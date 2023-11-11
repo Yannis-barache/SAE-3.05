@@ -46,7 +46,7 @@ CREATE TABLE COMPETITION(
     idCategorie INT(10) NOT NULL,
     idLieu INT(10) NOT NULL,
     dateFinInscription DATE,
-    coefficientCompetition INT(10),
+    coefficientCompetition decimal(3,3),
     PRIMARY KEY (idCompetition),
     FOREIGN KEY (idArme) REFERENCES ARMES(idArme),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie),
@@ -162,15 +162,15 @@ delimiter ;
 
 
 -- TRIGGER qui permet de bloquer l'assignement d'un arbitre à une poule où un arbitre a deja été désigne. Une poule a un seul arbitre qui ne peut arbitrer dans une autre poule
-delimiter |
-CREATE OR REPLACE trigger meme_arbitre_poule before insert on MATCHS
-for each row
-    begin
-        if (select count(*) from MATCHS where idPhase = new.idPhase and idArbitre = new.idArbitre) > 0 then
-            signal sqlstate '45000' set message_text = 'Un arbitre ne peut pas arbitrer deux poules';
-    end if;
-    end |
-delimiter ;
+-- delimiter |
+-- CREATE OR REPLACE trigger meme_arbitre_poule before insert on MATCHS
+-- for each row
+--  begin
+--        if (select count(*) from MATCHS where idPhase = new.idPhase and idArbitre = new.idArbitre) > 0 then
+--            signal sqlstate '45000' set message_text = 'Un arbitre ne peut pas arbitrer deux poules';
+--    end if;
+--    end |
+-- delimiter ;
 
 
 -- TRIGGER qui va permettre de bloquer l'inscription en tant qu'arbitre si un escrimeur est deja inscrit en tant que tireur

@@ -45,6 +45,13 @@ class TestPhaseFinal(unittest.TestCase):
         phase_final = PhaseFinal(1)
         self.assertEqual(phase_final.get_les_matchs(), [])
 
+    def test_get_les_pistes(self):
+        """
+        Test de la fonction get_les_pistes de la classe PhaseFinal
+        """
+        phase_final = PhaseFinal(1)
+        self.assertEqual(phase_final.get_les_pistes(), [])
+
     def test_set_id_phase_f(self):
         """
         Test de la fonction set_id_phase_final de la classe PhaseFinal
@@ -68,7 +75,7 @@ class TestPhaseFinal(unittest.TestCase):
                                'clb', 'mdp', 'AB11', 2, club, categorie, False)
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
         phase_final.set_match(match)
         self.assertFalse(phase_final.est_finis())
 

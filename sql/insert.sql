@@ -79,12 +79,12 @@ INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
 
 INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCompetition, idArme, idCategorie, idLieu, dateFinInscription, coefficientCompetition) values
         (1,'Championnat de France', '2024-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
-        (2,'Competition de Blois', '2023-02-20', 'été', 3, 3, 13, '2023-02-10', 0.6),
+        (2,'Competition de Blois', '2024-03-15', 'été', 3, 3, 13, '2023-12-10', 0.6),
         (3,'Competition de Lyon', '2023-02-25', 'automne', 1, 2, 2, '2023-02-15', 0.7),
-        (4,'Competition de Marseille', '2023-03-01', 'hiver', 2, 3, 3, '2023-02-20', 0.9),
-        (5,'Competition de Bordeaux', '2023-02-18', 'hiver', 3, 1, 4, '2023-02-08', 0.5),
-        (6,'Competition de Toulouse', '2023-02-22', 'été', 1, 3, 5, '2023-02-12', 0.6),
-        (7,'Competition de Lille', '2023-02-27', 'été', 2, 1, 6, '2023-02-17', 0.7),
+        (4,'Competition de Marseille', '2025-03-01', 'hiver', 2, 3, 3, '2025-02-20', 0.9),
+        (5,'Competition de Bordeaux', '2021-02-18', 'hiver', 3, 1, 4, '2021-02-08', 0.5),
+        (6,'Competition de Toulouse', '2023-11-10', 'été', 1, 3, 5, '2023-02-12', 0.6),
+        (7,'Competition de Lille', '2023-11-09', 'été', 2, 1, 6, '2023-02-17', 0.7),
         (8,'Competition de Nantes', '2023-03-03', 'printemps', 3, 2, 7, '2023-02-23', 0.8),
         (9,'Competition de Strasbourg', '2023-02-16', 'printemps', 1, 3, 8, '2023-02-06', 0.4),
         (10,'Competition de Montpellier', '2023-02-21', 'hiver', 2, 1, 9, '2023-02-11', 0.5),
@@ -142,7 +142,8 @@ INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heure
         (6, 1, 3, 2, 6, '09:00:00',false),
         (7, 2, 4, 2, 7, '20:30:00',true),
         (8, 5, 7, 2, 8, '11:00:00',true),
-        (9, 6, 8, 2, 9, '12:45:00',false);
+        (9, 6, 8, 2, 9, '12:45:00',false),
+        (10, 1, 2, 6, 10, 1, '10:20:00',false);
 
 
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
