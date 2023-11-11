@@ -138,6 +138,26 @@ def choisir_statut_connexion():
     )
 
 
+@app.route("/page_poule")
+def page_poule():
+    return render_template(
+        "page_poule_compet.html"
+    )
+
+
+@app.route("/choisir_statut_inscription")
+def choisir_statut_inscription():
+    return render_template(
+        "choisir_statut_inscription.html",
+    )
+
+@app.route("/espace_personnel/")
+def espace_personnel():
+    user = USER
+    return render_template(
+        "espace.html", user=user
+    )
+
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
     modele_appli = ModeleAppli()
@@ -145,15 +165,14 @@ def inscription():
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
-        num_licence = form.numLicence.data
+        num_licence = int(form.numLicence.data)
         nom = form.nom.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
         sexe = form.sexe.data
-        categorie = form.categorie.data
+        categorie = modele_appli.get_categorie_bd().get_categorie_by_id(form.categorie.data)
         mdp = form.mdp.data
-        club = form.club.data
-
+        club = modele_appli.get_club_bd().get_club_by_id(form.club.data)
         escrimeur_a_inserer = Escrimeur(1, nom, prenom, sexe, date_naissance,
                                         prenom.lower(), mdp, num_licence, None,
                                         club, categorie, False)
@@ -237,7 +256,7 @@ def connexion(nom):
 
 @app.route("/regles")
 def regles():
-    return render_template("regles.html")
+    return render_template("regles.html", user=USER)
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
@@ -245,7 +264,8 @@ def competition(id_competition):
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
     modele.close_connexion()
-    return render_template("competition.html", compet = la_competition, poule = nb_poule)
+    return render_template("competition.html", compet=la_competition,
+                           poule=nb_poule, user=USER)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -255,5 +275,13 @@ def poule(id_competition, nb):
     nb = int(nb) % len(les_poules)
     modele.close_connexion()
     return render_template(
-        "page_poule_compet.html", les_poules=les_poules, compet=la_competition, nb=nb
+        "page_poule_compet.html", les_poules=les_poules,
+        compet=la_competition, nb=nb, user=USER
     )
+
+
+@app.route("/deconnexion")
+def deconnexion():
+    global USER
+    USER = None
+    return redirect(url_for('choose_sign'))

@@ -8,6 +8,7 @@ from sqlalchemy import text
 from phase_bd import PhaseBD
 from escrimeur_bd import EscrimeurBD
 from inscrire_arbitre_bd import InscrireArbitreBD
+from piste_bd import PisteBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -30,12 +31,12 @@ class MatchBD:
         '''
         try:
             query = text('SELECT idMatch, idPhase, idEscrimeur1, '
-                         'idEscrimeur2, idArbitre, heureMatch, '
+                         'idEscrimeur2, idArbitre, idPiste, heureMatch, '
                          'fini FROM MATCHS')
             result = self.__connexion.execute(query)
             matchs = []
             for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
-                 heure, fini) in result:
+                 id_piste, heure, fini) in result:
                 fini = fini == 1
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
                 escrimeur1 = EscrimeurBD(
@@ -44,9 +45,10 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
                 arbitre = InscrireArbitreBD(
                     self.__connexion).get_arbitre_by_id(id_arbitre)
+                piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
                 matchs.append(
                     Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
-                          heure, fini))
+                          heure, fini, piste))
             return matchs
         except Exception as e:
             print(e)
@@ -61,11 +63,11 @@ class MatchBD:
         try:
             query = text(
                 'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
-                'idArbitre, heureMatch, fini FROM MATCHS '
+                'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
                 'WHERE idMatch = ' + str(id_m))
             result = self.__connexion.execute(query)
             for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
-                 heure, fini) in result:
+                 id_piste, heure, fini) in result:
                 fini = fini == 1
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
                 escrimeur1 = EscrimeurBD(
@@ -74,8 +76,9 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
                 arbitre = InscrireArbitreBD(
                     self.__connexion).get_arbitre_by_id(id_arbitre)
+                piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
                 return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
-                             heure, fini)
+                             heure, fini, piste)
             return None
         except Exception as e:
             print(e)
@@ -89,11 +92,11 @@ class MatchBD:
         try:
             query = text(
                 f"INSERT INTO MATCHS (idPhase, idEscrimeur1, "
-                f"idEscrimeur2, idArbitre, heureMatch, fini) VALUES "
+                f"idEscrimeur2, idArbitre, idPiste, heureMatch, fini) VALUES "
                 f"({str(match.get_id_phase())},"
                 f"{str(match.get_escrimeur1().get_id())},{str(match.get_escrimeur2().get_id())},"
-                f"{str(match.get_arbitre().get_id())},'{match.get_heure()}',"
-                f"{str(match.est_finis())})")
+                f"{str(match.get_arbitre().get_id())}, {str(match.get_piste().get_id_piste())},"
+                f"'{match.get_heure()}', {str(int(match.est_finis()))})")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

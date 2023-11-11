@@ -142,7 +142,8 @@ INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heure
         (6, 1, 3, 2, 6, '09:00:00',false),
         (7, 2, 4, 2, 7, '20:30:00',true),
         (8, 5, 7, 2, 8, '11:00:00',true),
-        (9, 6, 8, 2, 9, '12:45:00',false);
+        (9, 6, 8, 2, 9, '12:45:00',false),
+        (10, 1, 2, 6, 10, 1, '10:20:00',false);
 
 
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES

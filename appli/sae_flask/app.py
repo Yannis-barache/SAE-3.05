@@ -31,7 +31,19 @@ def is_organisateur(user):
 
 @app.template_filter("is_club")
 def is_club(user):
+    """
+    Renvoie si le user est un club
+    :param user:
+    :return:
+    """
     return isinstance(user, Club)
+
+
+@app.template_filter("is_arbitre")
+def is_arbitre(user):
+    if not isinstance(user, Escrimeur):
+        return False
+    return user.get_arbitrage()
 
 
 
