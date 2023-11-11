@@ -23,6 +23,7 @@ from phase_bd import PhaseBD
 from phase_finale_bd import PhaseFinaleBD
 from poule_bd import PouleBD
 from touche_bd import ToucheBD
+from piste_bd import PisteBD
 
 
 class ModeleAppli:
@@ -48,6 +49,7 @@ class ModeleAppli:
         self.__phase_final_bd = PhaseFinaleBD(self.__connexion.get_connexion())
         self.__poule_bd = PouleBD(self.__connexion.get_connexion())
         self.__touche_bd = ToucheBD(self.__connexion.get_connexion())
+        self.__piste_bd = PisteBD(self.__connexion.get_connexion())
 
     def get_arme_bd(self) -> ArmeBD:
         """
@@ -174,6 +176,15 @@ class ModeleAppli:
             _type_: _description_
         """
         return self.__touche_bd
+
+    def get_piste_bd(self) -> PisteBD:
+        """
+        Retourne l'objet qui gère les interactions avec la table piste
+
+        Returns:
+            _type_: _description_
+        """
+        return self.__piste_bd
 
     def close_connexion(self):
         """

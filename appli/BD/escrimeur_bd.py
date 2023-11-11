@@ -158,7 +158,6 @@ class EscrimeurBD:
                 return Escrimeur(id_escrimeur, nom, prenom, sexe,
                                  date_naissance, nom_utilisateur, mdp, licence,
                                  classement, club, categorie, arbitrage)
-            return None
         except Exception as e:
             print(e)
             return None
