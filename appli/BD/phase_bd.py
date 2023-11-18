@@ -29,7 +29,10 @@ class PhaseBD:
             query = text('SELECT idPhase, idCompetition FROM PHASE')
             result = self.__connexion.execute(query)
             phases = []
-            for (id_phase, id_competition,) in result:
+            for (
+                    id_phase,
+                    id_competition,
+            ) in result:
                 phases.append(Phase(id_phase, id_competition))
             return phases
         except Exception as e:
@@ -47,7 +50,10 @@ class PhaseBD:
                 'SELECT idPhase, idCompetition FROM PHASE WHERE idPhase =' +
                 str(id_p))
             result = self.__connexion.execute(query)
-            for (id_phase, id_competition,) in result:
+            for (
+                    id_phase,
+                    id_competition,
+            ) in result:
                 return Phase(id_phase, id_competition)
             return None
         except Exception as e:
@@ -61,15 +67,13 @@ class PhaseBD:
         return : id de la phase
         """
         try:
-            query = text(
-                f"INSERT INTO PHASE (idCompetition) "
-                f"VALUES ({phase.get_id_comp()})")
+            query = text(f"INSERT INTO PHASE (idCompetition) "
+                         f"VALUES ({phase.get_id_comp()})")
             self.__connexion.execute(query)
             self.__connexion.commit()
-            query = text(
-                "SELECT LAST_INSERT_ID()")
+            query = text("SELECT LAST_INSERT_ID()")
             result = self.__connexion.execute(query)
-            for (id_phase,) in result:
+            for (id_phase, ) in result:
                 return id_phase
         except Exception as e:
             print(e)

@@ -32,7 +32,11 @@ class ToucheBD:
             query = text('SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE')
             result = self.__connexion.execute(query)
             touches = []
-            for (id_match, id_escrimeur, num, ) in result:
+            for (
+                    id_match,
+                    id_escrimeur,
+                    num,
+            ) in result:
                 match = MatchBD(self.__connexion).get_match_by_id(id_match)
                 escrimeur = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_escrimeur)
@@ -55,8 +59,11 @@ class ToucheBD:
             )
             result = self.__connexion.execute(query)
             touches = []
-            for (_, id_escrimeur, num) in result:
-                escrimeur = match.get_escrimeur1() if id_escrimeur == match.get_escrimeur1().get_id() else match.get_escrimeur2()
+            for (id_match, id_escrimeur, num) in result:
+                match.set_id(id_match)
+                escrimeur = match.get_escrimeur1(
+                ) if id_escrimeur == match.get_escrimeur1().get_id(
+                ) else match.get_escrimeur2()
                 touches.append(Touche(match, escrimeur, num))
             return touches
         except Exception as e:

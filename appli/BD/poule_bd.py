@@ -26,7 +26,7 @@ class PouleBD:
     def __init__(self, connexion):
         self.__connexion = connexion
 
-    def get_poule_by_id(self, id_poule: int):
+    def get_poule_by_id(self, id_poulee: int):
         """
         Fonction qui retourne une poule par son id
 
@@ -35,7 +35,7 @@ class PouleBD:
         """
         try:
             query = text("SELECT idPoule FROM POULE WHERE idPoule = " +
-                         str(id_poule))
+                         str(id_poulee))
             result = self.__connexion.execute(query)
             for (id_poule, ) in result:
                 query = text("SELECT idMatch FROM MATCHS WHERE idPhase = " +
@@ -44,7 +44,8 @@ class PouleBD:
                 matches = []
                 for (id_match, ) in result:
                     match = MatchBD(self.__connexion).get_match_by_id(id_match)
-                    match.set_touche(ToucheBD(self.__connexion).get_by_match(match))
+                    match.set_touche(
+                        ToucheBD(self.__connexion).get_by_match(match))
                     matches.append(match)
                 la_poule = Poule(id_poule)
                 la_poule.set_les_matchs(matches)
@@ -117,7 +118,8 @@ class PouleBD:
                 matches = []
                 for (id_match, ) in result:
                     match = MatchBD(self.__connexion).get_match_by_id(id_match)
-                    match.set_touche(ToucheBD(self.__connexion).get_by_match(match))
+                    match.set_touche(
+                        ToucheBD(self.__connexion).get_by_match(match))
                     matches.append(match)
                 la_poule = Poule(id_poule)
                 la_poule.set_les_matchs(matches)
@@ -143,13 +145,16 @@ class PouleBD:
             cpt = 0
             for (id_poule, ) in result:
                 if cpt == nb:
-                    query = text("SELECT idMatch FROM MATCHS WHERE idPhase = " +
-                                 str(id_poule))
+                    query = text(
+                        "SELECT idMatch FROM MATCHS WHERE idPhase = " +
+                        str(id_poule))
                     result = self.__connexion.execute(query)
                     matches = []
                     for (id_match, ) in result:
-                        match = MatchBD(self.__connexion).get_match_by_id(id_match)
-                        match.set_touche(ToucheBD(self.__connexion).get_by_match(match))
+                        match = MatchBD(
+                            self.__connexion).get_match_by_id(id_match)
+                        match.set_touche(
+                            ToucheBD(self.__connexion).get_by_match(match))
                         matches.append(match)
                     la_poule = Poule(id_poule)
                     la_poule.set_les_matchs(matches)

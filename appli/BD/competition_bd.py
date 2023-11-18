@@ -20,8 +20,8 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from competition import Competition
-from inscrire import Inscrire
 from phase import Phase
+
 
 class CompetitionBD:
     """
@@ -159,22 +159,29 @@ class CompetitionBD:
             les_inscriptions = inscire_bd.get_all_inscrit_compet(la_compet)
             les_escrimeurs = []
             for inscrire in les_inscriptions:
-                les_escrimeurs.append(escrimeur_bd.get_escrimeur_by_id(inscrire.get_id_escrimeur()))
-            les_inscriptions_arbitres = inscrire_arbitre.get_arbitre_by_competition(la_compet)
+                les_escrimeurs.append(
+                    escrimeur_bd.get_escrimeur_by_id(
+                        inscrire.get_id_escrimeur()))
+            les_inscriptions_arbitres = inscrire_arbitre.get_arbitre_by_competition(
+                la_compet)
             les_arbitres = []
             for inscrire in les_inscriptions_arbitres:
-                les_arbitres.append(escrimeur_bd.get_escrimeur_by_id(inscrire.get_id_escrimeur()))
+                les_arbitres.append(
+                    escrimeur_bd.get_escrimeur_by_id(
+                        inscrire.get_id_escrimeur()))
             poules = Competition.generation_poule(les_escrimeurs, les_arbitres)
             les_pistes = piste_bd.get_piste_by_lieu(la_compet.get_lieu())
-            for poule in poules:
-                phase = Phase(-1, id_compet)
-                id_phase = phase_bd.insert_phase(phase)
-                poule.set_id(id_phase)
-                poule.set_les_pistes(les_pistes)
-                poule_bd.insert_poule(poule)
-                matchs = poule.generer_matchs(poules.get(poule), 10.5)
-                for match in matchs:
-                    match_bd.insert_match(match)
+            if poules is not None:
+                for poule in poules:
+                    phase = Phase(-1, id_compet)
+                    id_phase = phase_bd.insert_phase(phase)
+                    poule.set_id(id_phase)
+                    poule.set_les_pistes(les_pistes)
+                    poule_bd.insert_poule(poule)
+                    matchs = poule.generer_matchs(poules.get(poule), 10.5)
+                    for match in matchs:
+                        match_bd.insert_match(match)
+            return poules
         except Exception as e:
             print(e)
             return None

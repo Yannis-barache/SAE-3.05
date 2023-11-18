@@ -97,7 +97,8 @@ class MatchBD:
                 'WHERE idPhase = ' + str(id_p))
             result = self.__connexion.execute(query)
             matchs = []
-            for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre, id_piste, heure, fini) in result:
+            for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
+                 id_piste, heure, fini) in result:
                 fini = fini == 1
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
                 escrimeur1 = EscrimeurBD(

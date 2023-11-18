@@ -52,7 +52,7 @@ class Poule:
         """
         return self.__les_escrimeurs
 
-    def get_lettre_poule(self, nombre : int) -> str:
+    def get_lettre_poule(self, nombre: int) -> str:
         """
         Fonction qui retourne la lettre de la poule
 
@@ -154,17 +154,20 @@ class Poule:
         """
         self.__les_pistes = les_pistes
 
-    def generer_matchs(self, infos: tuple[Escrimeur, list[Escrimeur]],
+    def generer_matchs(self, infos: tuple[Escrimeur, list[Escrimeur]] | None,
                        heure_debut: float) -> list[Match]:
         """
         Fonction qui genere les matchs de la poule
 
         Args:
             infos (tuple[Escrimeur, list[Escrimeur]]): Les infos de la poule
+            heure_debut (float): l'heure de debut de la poule
 
         Returns:
             list[Match]: liste des matchs de la poule
         """
+        if infos is None:
+            return []
         les_matchs = []
         arbitre, les_escrimeurs = infos
         self.__heure = heure_debut
@@ -200,7 +203,10 @@ class Poule:
             Match: le match entre les deux escrimeurs
         """
         for match in self.__les_matchs:
-            if match.get_escrimeur1().get_id() == escrimeur1.get_id() and match.get_escrimeur2().get_id() == escrimeur2.get_id() or match.get_escrimeur1().get_id() == escrimeur2.get_id() and match.get_escrimeur2().get_id() == escrimeur1.get_id():
+            if match.get_escrimeur1().get_id() == escrimeur1.get_id(
+            ) and match.get_escrimeur2().get_id() == escrimeur2.get_id(
+            ) or match.get_escrimeur1().get_id() == escrimeur2.get_id(
+            ) and match.get_escrimeur2().get_id() == escrimeur1.get_id():
                 return match
         return None
 
@@ -679,8 +685,8 @@ class Poule:
         Returns:
             int: l'indice de l'escrimeur
         """
-        return self.get_nb_touche_marquee(escrimeur) - self.get_nb_touche_prise(
-            escrimeur)
+        return self.get_nb_touche_marquee(
+            escrimeur) - self.get_nb_touche_prise(escrimeur)
 
     def get_place(self, escrimeur: Escrimeur) -> int:
         """
@@ -697,6 +703,7 @@ class Poule:
             if escrimeur.get_id() == escrimeur2.get_id():
                 return cpt
             cpt += 1
+        return -1
 
     def __str__(self):
         return f'Poule : {self.__id} |'

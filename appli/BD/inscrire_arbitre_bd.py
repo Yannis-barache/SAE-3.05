@@ -5,7 +5,6 @@
 import sys
 import os
 from sqlalchemy.sql.expression import text
-from escrimeur_bd import EscrimeurBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -62,11 +61,13 @@ class InscrireArbitreBD:
         """
         try:
             query = text(
-                f'SELECT idEscrimeur FROM ARBITRER WHERE idCompetition = {competition.get_id()}')
+                f'SELECT idEscrimeur FROM ARBITRER WHERE idCompetition = {competition.get_id()}'
+            )
             result = self.__connexion.execute(query)
             arbitres = []
-            for (id_escrimeur,) in result:
-                arbitres.append(InscrireArbitre(id_escrimeur, competition.get_id()))
+            for (id_escrimeur, ) in result:
+                arbitres.append(
+                    InscrireArbitre(id_escrimeur, competition.get_id()))
             return arbitres
         except Exception as e:
             print(e)

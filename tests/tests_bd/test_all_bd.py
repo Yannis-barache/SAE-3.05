@@ -428,7 +428,8 @@ class TestInscrireArbitreBD(unittest.TestCase):
         """
         Test de la méthode get_arbitre_by_competition
         """
-        compet = Competition(8, "test", "test", "test", "test", None, None, None, 0.5)
+        compet = Competition(8, "test", "test", "test", "test", None, None,
+                             None, 0.5)
         inscrire_arbitre = self.inscrire_arbitre_bd.get_arbitre_by_competition(
             compet)
         self.assertIsInstance(inscrire_arbitre, list)

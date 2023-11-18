@@ -116,6 +116,7 @@ class TestPoule(unittest.TestCase):
         infos = (arbitre, [escrimeur1, escrimeur2, escrimeur3, escrimeur4])
         heure_debut = 10.5
         self.assertEqual(len(poule.generer_matchs(infos, heure_debut)), 6)
+        self.assertEqual(len(poule.generer_matchs(None, heure_debut)), 0)
 
     def test_get_match_by_escrimeurs(self):
         """
@@ -371,7 +372,12 @@ class TestPoule(unittest.TestCase):
                 match.ajouter_touche(touche3)
                 match.set_finis(True)
                 liste.append(match)
+            escrimeur_inconu = Escrimeur(13, 'nom13', 'prenom13', 'sexe13',
+                                         'date_naissance13', 'pseudo13',
+                                         'mdp13', 'licence13', 13, club, None,
+                                         False)
             self.assertEqual(poule.get_place(escrimeur11), 4)
+            self.assertEqual(poule.get_place(escrimeur_inconu), -1)
 
     def test_get_lettre_poule(self):
         """

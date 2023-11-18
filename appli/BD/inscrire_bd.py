@@ -30,7 +30,7 @@ class InscrireBD:
             result = self.__connexion.execute(query)
             inscrires = []
             for (id_escrimeur, id_competition) in result:
-                inscrires.append(Inscrire(id_escrimeur, id_competition))
+                inscrires.append(Inscrire(id_competition, id_escrimeur))
             return inscrires
         except Exception as e:
             print(e)
@@ -45,11 +45,12 @@ class InscrireBD:
         """
         try:
             query = text(
-                f'SELECT idEscrimeur FROM INSCRIRE WHERE idCompetition = {competition.get_id()}')
+                f'SELECT idEscrimeur FROM INSCRIRE WHERE idCompetition = {competition.get_id()}'
+            )
             result = self.__connexion.execute(query)
             inscrires = []
-            for (id_escrimeur,) in result:
-                inscrires.append(Inscrire(competition.get_id() ,id_escrimeur))
+            for (id_escrimeur, ) in result:
+                inscrires.append(Inscrire(competition.get_id(), id_escrimeur))
             return inscrires
         except Exception as e:
             print(e)
