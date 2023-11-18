@@ -71,7 +71,6 @@ class PhaseBD:
             result = self.__connexion.execute(query)
             for (id_phase,) in result:
                 return id_phase
-            return None
         except Exception as e:
             print(e)
             return None

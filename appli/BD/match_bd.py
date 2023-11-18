@@ -93,7 +93,7 @@ class MatchBD:
         try:
             query = text(
                 'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
-                'idArbitre, heureMatch, fini FROM MATCHS '
+                'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
                 'WHERE idPhase = ' + str(id_p))
             result = self.__connexion.execute(query)
             matchs = []

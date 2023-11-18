@@ -200,9 +200,7 @@ class Poule:
             Match: le match entre les deux escrimeurs
         """
         for match in self.__les_matchs:
-            if match.get_escrimeur1() == escrimeur1 and match.get_escrimeur2(
-            ) == escrimeur2 or match.get_escrimeur1(
-            ) == escrimeur2 and match.get_escrimeur2() == escrimeur1:
+            if match.get_escrimeur1().get_id() == escrimeur1.get_id() and match.get_escrimeur2().get_id() == escrimeur2.get_id() or match.get_escrimeur1().get_id() == escrimeur2.get_id() and match.get_escrimeur2().get_id() == escrimeur1.get_id():
                 return match
         return None
 
@@ -248,13 +246,14 @@ class Poule:
         """
         Fonction qui modifie les escrimeurs de la poule selon les matchs
         """
-        escrimeurs = []
+        id_escrimeur = []
         for match in self.__les_matchs:
-            if match.get_escrimeur1() not in escrimeurs:
-                escrimeurs.append(match.get_escrimeur1())
-            if match.get_escrimeur2() not in escrimeurs:
-                escrimeurs.append(match.get_escrimeur2())
-        self.__les_escrimeurs = escrimeurs
+            if match.get_escrimeur1().get_id() not in id_escrimeur:
+                self.__les_escrimeurs.append(match.get_escrimeur1())
+                id_escrimeur.append(match.get_escrimeur1().get_id())
+            if match.get_escrimeur2().get_id() not in id_escrimeur:
+                self.__les_escrimeurs.append(match.get_escrimeur2())
+                id_escrimeur.append(match.get_escrimeur2().get_id())
 
     def dessiner_noms(self, canva: canvas) -> int:
         """
@@ -569,6 +568,17 @@ class Poule:
             const.DECALAGE_GAUCHE, height, 'Arbitre de la poule : ' +
             self.__les_matchs[0].get_arbitre().get_nom())
 
+    def genere_dico(self) -> None:
+        """
+        Fonction qui genere le dictionnaire des escrimeurs
+        """
+        for escrimeur in self.__les_escrimeurs:
+            self.__dico[escrimeur] = [
+                self.get_nb_victoires(escrimeur),
+                self.get_nb_touche_marquee(escrimeur),
+                self.get_nb_touche_prise(escrimeur)
+            ]
+
     def classement_poule(self) -> dict[Escrimeur, int]:
         """
         Fonction qui retourne le classement de la poule
@@ -576,6 +586,7 @@ class Poule:
         Returns:
             dict[Escrimeur, int]: le classement de la poule
         """
+        self.genere_dico()
         classement = sorted(self.__dico.keys(), key=self.comparer_escrimeurs)
         return {
             escrimeur: position
@@ -599,8 +610,9 @@ class Poule:
         """
         cpt = 0
         for match in self.__les_matchs:
-            if match.get_gagnant() == escrimeur:
-                cpt += 1
+            if match.est_commencer():
+                if match.get_gagnant().get_id() == escrimeur.get_id():
+                    cpt += 1
         return cpt
 
     def get_nb_escrimeurs(self) -> int:
@@ -633,9 +645,9 @@ class Poule:
         """
         cpt = 0
         for match in self.__les_matchs:
-            if match.get_escrimeur1() == escrimeur:
+            if match.get_escrimeur1().get_id() == escrimeur.get_id():
                 cpt += match.get_nb_touche(escrimeur)
-            elif match.get_escrimeur2() == escrimeur:
+            elif match.get_escrimeur2().get_id() == escrimeur.get_id():
                 cpt += match.get_nb_touche(escrimeur)
         return cpt
 
@@ -651,11 +663,40 @@ class Poule:
         """
         cpt = 0
         for match in self.__les_matchs:
-            if match.get_escrimeur1() == escrimeur:
+            if match.get_escrimeur1().get_id() == escrimeur.get_id():
                 cpt += match.get_nb_touche(match.get_escrimeur2())
-            elif match.get_escrimeur2() == escrimeur:
+            elif match.get_escrimeur2().get_id() == escrimeur.get_id():
                 cpt += match.get_nb_touche(match.get_escrimeur1())
         return cpt
+
+    def get_indice(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne l'indice d'un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: l'indice de l'escrimeur
+        """
+        return self.get_nb_touche_marquee(escrimeur) - self.get_nb_touche_prise(
+            escrimeur)
+
+    def get_place(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne la place d'un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: la place de l'escrimeur
+        """
+        cpt = 1
+        for escrimeur2 in self.classement_poule():
+            if escrimeur.get_id() == escrimeur2.get_id():
+                return cpt
+            cpt += 1
 
     def __str__(self):
         return f'Poule : {self.__id} |'

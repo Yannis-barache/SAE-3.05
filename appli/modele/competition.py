@@ -146,6 +146,8 @@ class Competition:
         Returns:
             str: L'etat de la competition
         """
+        if self.__date_fin_inscription is None:
+            return "Pas disponible"
         if isinstance(self.__date, date):
             self.__date = self.__date.strftime("%d-%m-%Y")
         if isinstance(self.__date_fin_inscription, date):

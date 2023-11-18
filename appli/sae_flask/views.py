@@ -3,7 +3,7 @@ import flask
 import sys
 import os
 from .app import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
@@ -12,7 +12,6 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
-from competition import Competition
 from constantes import USER
 
 USER = USER
@@ -270,15 +269,24 @@ def competition(id_competition):
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
     modele = ModeleAppli()
-    les_poules = modele.get_poule_bd().get_poules_by_compet(int(id_competition))
-    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    nb = int(nb) % len(les_poules)
+    nombre_poule = modele.get_poule_bd().nb_poule_compet(int(id_competition))
+    print("nombre_poule", nombre_poule)
+    nb = int(nb) % nombre_poule
+    la_competition = modele.get_competition_bd().get_competition_by_id_s(id_competition)
+    la_poule = modele.get_poule_bd().get_poules_by_compet_nb(int(id_competition), int(nb))
     modele.close_connexion()
     return render_template(
-        "page_poule_compet.html", les_poules=les_poules,
-        compet=la_competition, nb=nb, user=USER
+        "page_poule_compet.html", la_poule=la_poule,
+        compet=la_competition, nb=nb, user=USER, nb_poule = nombre_poule
     )
 
+@app.route('/telecharger_pdf_poule/<int:id_poule>')
+def telecharger_pdf_poule(id_poule):
+    modele = ModeleAppli()
+    la_poule = modele.get_poule_bd().get_poule_by_id(id_poule)
+    la_poule.generer_pdf()
+    modele.close_connexion()
+    return redirect(request.referrer)
 
 @app.route("/deconnexion")
 def deconnexion():

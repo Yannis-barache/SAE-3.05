@@ -131,7 +131,7 @@ class Match:
         """
         cpt = 0
         for touche in self.__les_touches:
-            if touche.get_escrimeur() == escrimeur:
+            if touche.get_escrimeur().get_id() == escrimeur.get_id():
                 cpt += 1
         return cpt
 
