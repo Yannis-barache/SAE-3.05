@@ -15,6 +15,7 @@ from match import Match
 from competition import Competition
 from club import Club
 from touche import Touche
+from piste import Piste
 
 
 class TestPoule(unittest.TestCase):
@@ -53,6 +54,13 @@ class TestPoule(unittest.TestCase):
         poule = Poule(1)
         self.assertEqual(poule.get_les_escrimeurs(), [])
 
+    def test_get_les_pistes(self):
+        """
+        Test de la fonction get_les_pistes de la classe Poule
+        """
+        poule = Poule(1)
+        self.assertEqual(poule.get_les_pistes(), [])
+
     def test_set_id(self):
         """
         Test de la fonction set_id de la classe Poule
@@ -75,7 +83,7 @@ class TestPoule(unittest.TestCase):
         arbitre = Escrimeur(3, 'nom3', 'prenom3', 'sexe3', 'date_naissance3',
                             'mdp3', 'email3', 'telephone3', 'licence3', None,
                             None, True)
-        match1 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10, False)
+        match1 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10, False, None)
         poule.set_les_matchs([match1])
         self.assertEqual(poule.get_les_matchs(), [match1])
 
@@ -84,6 +92,12 @@ class TestPoule(unittest.TestCase):
         Test de la fonction generer_matchs de la classe Poule
         """
         poule = Poule(1)
+        piste1 = Piste(1, 1, "piste1")
+        piste2 = Piste(2, 2, "piste2")
+        piste3 = Piste(3, 3, "piste3")
+        piste4 = Piste(4, 4, "piste4")
+        lsite_pistes = [piste1, piste2, piste3, piste4]
+        poule.set_les_pistes(lsite_pistes)
         arbitre = Escrimeur(1, 'nom', 'prenom', 'sexe', 'date_naissance',
                             'mdp', 'email', 'telephone', 'licence', None, None,
                             True)
@@ -117,7 +131,7 @@ class TestPoule(unittest.TestCase):
         arbitre = Escrimeur(3, 'nom3', 'prenom3', 'sexe3', 'date_naissance3',
                             'mdp3', 'email3', 'telephone3', 'licence3', None,
                             None, True)
-        match1 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10, False)
+        match1 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10, False, None)
         poule.set_les_matchs([match1])
         self.assertEqual(poule.get_match_by_escrimeurs(escrimeur1, escrimeur2),
                          match1)
@@ -175,7 +189,13 @@ class TestPoule(unittest.TestCase):
         les_arbitres = [arbitre1, arbitre2]
 
         poules = Competition.generation_poule(les_escrimeurs, les_arbitres)
+        piste1 = Piste(1, 1, "piste1")
+        piste2 = Piste(2, 2, "piste2")
+        piste3 = Piste(3, 3, "piste3")
+        piste4 = Piste(4, 4, "piste4")
+        lsite_pistes = [piste1, piste2, piste3, piste4]
         for poule in poules:
+            poule.set_les_pistes(lsite_pistes)
             matchs = poule.generer_matchs(poules.get(poule), 10.5)
             liste = []
             for match in matchs:
@@ -219,7 +239,7 @@ class TestPoule(unittest.TestCase):
         arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
                              'date_naissance11', 'pseudo10', 'mdp11',
                              'licence11', 11, club, None, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True, None)
         poule = Poule(1)
         poule.set_les_matchs([match])
         touche = Touche(match, escrimeur1, 1)
@@ -240,7 +260,7 @@ class TestPoule(unittest.TestCase):
         arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
                              'date_naissance11', 'pseudo10', 'mdp11',
                              'licence11', 11, club, None, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True, None)
         poule = Poule(1)
         poule.set_les_matchs([match])
         touche = Touche(match, escrimeur1, 1)
@@ -262,7 +282,7 @@ class TestPoule(unittest.TestCase):
         arbitre1 = Escrimeur(11, 'nom11', 'prenom11', 'sexe11',
                              'date_naissance11', 'pseudo10', 'mdp11',
                              'licence11', 11, club, None, True)
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre1, 10, True, None)
         poule = Poule(1)
         poule.set_les_matchs([match])
         touche = Touche(match, escrimeur1, 1)

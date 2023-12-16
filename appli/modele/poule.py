@@ -4,6 +4,7 @@ Module contenant la classe Poule
 
 from escrimeur import Escrimeur
 from match import Match
+from piste import Piste
 import constantes as const
 
 from reportlab.lib.pagesizes import letter
@@ -20,6 +21,9 @@ class Poule:
         self.__les_matchs = []
         self.__les_escrimeurs = []
         self.__dico: dict[Escrimeur, list[int, int, int]] = {}
+        self.__les_pistes: list[Piste] = []
+        self.__index_piste = 0
+        self.__heure = 0
 
     def get_id(self) -> int:
         """
@@ -48,6 +52,15 @@ class Poule:
         """
         return self.__les_escrimeurs
 
+    def get_les_pistes(self) -> list[Piste]:
+        """
+        Fonction qui retourne les pistes de la poule
+
+        Returns:
+            list[Piste]: les pistes de la poule
+        """
+        return self.__les_pistes
+
     def set_id(self, id_poule) -> None:
         """
         Fonction qui modifie l'id de la poule
@@ -67,6 +80,15 @@ class Poule:
         self.__les_matchs = les_matchs
         self.set_les_escrimeurs()
 
+    def set_les_pistes(self, les_pistes: list[Piste]) -> None:
+        """
+        Fonction qui modifie les pistes de la poule
+
+        Args:
+            les_pistes (list[Piste]): les pistes de la poule
+        """
+        self.__les_pistes = les_pistes
+
     def generer_matchs(self, infos: tuple[Escrimeur, list[Escrimeur]],
                        heure_debut: float) -> list[Match]:
         """
@@ -80,16 +102,21 @@ class Poule:
         """
         les_matchs = []
         arbitre, les_escrimeurs = infos
+        self.__heure = heure_debut
         for escrimeur1 in les_escrimeurs:
             for escrimeur2 in les_escrimeurs:
                 if escrimeur1 != escrimeur2 and escrimeur1.get_id(
                 ) < escrimeur2.get_id():
                     les_matchs.append(
                         Match(-1, self.__id, escrimeur1, escrimeur2, arbitre,
-                              heure_debut, False))
-                    heure_debut += 0.05
-                    if heure_debut % 1 >= 0.6:
-                        heure_debut += 0.4
+                              heure_debut, False,
+                              self.__les_pistes[self.__index_piste]))
+                    self.__index_piste += 1
+                    if self.__index_piste == len(self.__les_pistes):
+                        self.__index_piste = 0
+                        self.__heure += 0.05
+                        if self.__heure % 1 >= 0.6:
+                            self.__heure += 0.4
         self.__les_matchs = les_matchs
         self.set_les_escrimeurs()
         return les_matchs
