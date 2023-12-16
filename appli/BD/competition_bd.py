@@ -35,7 +35,7 @@ class CompetitionBD:
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
                 'idCategorie, coefficientCompetition FROM COMPETITION')
-            
+
             result = self.__connexion.execute(query)
             competitions = []
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
@@ -51,20 +51,20 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
-        
+
     def get_all_matchs(self, id_competition: int):
         query = text("SELECT * FROM MATCHS WHERE IDPHASE IN ( SELECT IDPHASE FROM PHASE WHERE IDCOMPETITION="+str(id_competition)+")")
         result = self.__connexion.execute(query)
-        
+
         matchs = []
-        for (id_match, id_tireur1, id_tireur2, id_phase, idArbitre,idPiste, heureMatch, fini ) in result:
-            Escrimeur1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
-            Escrimeur2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
-            arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(idArbitre)
-            matchs.append(Match(id_match,id_phase, Escrimeur1, Escrimeur2, arbitre, heureMatch, fini))
-        
+        for (id_match, id_tireur1, id_tireur2, id_phase, id_arbitre,_, heure_match, fini ) in result:
+            escrimeur_n1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
+            escrimeur_n2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
+            arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_arbitre)
+            matchs.append(Match(id_match,id_phase, escrimeur_n1, escrimeur_n2, arbitre, heure_match, fini))
+
         return matchs
-        
+
 
     def get_competition_by_id(self, id_c: int):
         """
