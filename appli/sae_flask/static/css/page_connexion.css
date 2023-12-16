@@ -32,42 +32,25 @@
 
 
 .carre-central{
-    margin: 10px;   
+    margin: 10px;
 }
 
 
-.ou{
-    font-weight: bold;
-}
 
-.ligne-ou {
+
+.ou {
     display: flex;
     align-items: center;
     text-align: center;
     margin: 5%;
+    font-weight: bold;
   }
   
-/*  .ou:after,
+  .ou:after,
   .ou:before{
     content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
     text-decoration: line-through;
   }
-*/
-
-.ligne{
-    /*Nous allons dessigner une ligne*/
-    border: 1px solid #000;
-    /*Nous allons définir la largeur de la ligne*/
-    width: 100%;
-    /*Nous allons définir la couleur de la ligne*/
-    color: #000;
-    /*Nous allons définir l'espacement entre les lignes*/
-    margin: 10px 6px;
-    /* Nous allons centrer la ligne*/
-    text-align: center;
-
-}
-  
 
 
 @media screen and (max-width: 450px) {
@@ -78,7 +61,7 @@
         text-align: center;
     }
     body{
-        background-image: url(../img/background_droite.png);
+        background-image: url(../img/background_left.png);
         background-size: 70vh;
     }
 
@@ -87,4 +70,14 @@
     }
 }
 
+@media screen and (max-height : 400px) {
+    .ou:after,
+    .ou:before{
+      content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+      text-decoration: line-through;
+    }
+    .ou>span{
+        margin: 0 2%;
+    }
     
+}
