@@ -1,5 +1,18 @@
 {% extends "base_authentification.html" %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header_page_connection.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_authentification.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_connexion.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css') }}">
+<!-- Link du fichier js-->
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+ 
+
+
+{% endblock %}
+
 
 {% block content %}
 
@@ -17,10 +30,10 @@
     <a href="{{ url_for('inscription') }}"><Button class="b_inscrire">INSCRIPTION</Button></a>
     
 
-    <div class="ou">
-        <hr>
-        <span>ou</span>
-        <hr>
+    <div class="ligne-ou">
+        <div class="ligne"></div>
+        <div class="ou" >OU</div> 
+        <div class="ligne"></div>
     </div>
 
     <a href="{{ url_for('choisir_statut_connexion') }}"><Button class="b_connecter">CONNEXION</Button></a>
