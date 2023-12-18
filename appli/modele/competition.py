@@ -12,8 +12,8 @@ from exceptions import PasAssezDArbitres
 from poule import Poule
 from phase_final import PhaseFinal
 from club import Club
+from piste import Piste
 from datetime import date, datetime
-
 
 
 class Competition:
@@ -136,7 +136,8 @@ class Competition:
         Returns:
             bool: True si la competition est finis, False sinon
         """
-        return self.__phase_final is not None and self.__phase_final.est_finis()
+        return self.__phase_final is not None and self.__phase_final.est_finis(
+        )
 
     def get_etat(self) -> str:
         """
@@ -145,16 +146,19 @@ class Competition:
         Returns:
             str: L'etat de la competition
         """
+        if self.__date_fin_inscription is None:
+            return "Pas disponible"
         if isinstance(self.__date, date):
             self.__date = self.__date.strftime("%d-%m-%Y")
         if isinstance(self.__date_fin_inscription, date):
             self.__date_fin_inscription = self.__date_fin_inscription.strftime(
                 "%d-%m-%Y")
         if self.est_finis():
-            return "Finis"
+            return "Terminée"
         elif datetime.strptime(self.__date, "%d-%m-%Y").date() <= date.today():
             return "En cours"
-        elif datetime.strptime(self.__date_fin_inscription, "%d-%m-%Y").date() < date.today():
+        elif datetime.strptime(self.__date_fin_inscription,
+                               "%d-%m-%Y").date() < date.today():
             return "Inscription ouverte"
         else:
             return "A venir"
@@ -240,7 +244,6 @@ class Competition:
         """
         self.__coefficient = coefficient
 
-
     def set_phase_final(self, phase_final: PhaseFinal) -> None:
         """
         Fonction qui modifie la phase finale de la competition
@@ -249,28 +252,6 @@ class Competition:
             phase_final (PhaseFinal): phase finale de la competition
         """
         self.__phase_final = phase_final
-
-    def statut(self) -> str:
-
-        """
-        Fonction qui retourne le statut de la competition
-
-        Returns :
-
-            str : Le statut de la competition
-        """
-
-        if self.__date_fin_inscription is None:
-            return "Pas disponible"
-        if str(self.__date_fin_inscription) > str(date.today()):
-            return "Inscription ouverte"
-        if str(self.__date) > str(date.today()) > str(self.__date_fin_inscription):
-            return "La compétition va bientôt commencer"
-        elif self.__date == date.today():
-            return "En cours"
-
-        else:
-            return "Terminée"
 
     @staticmethod
     def generation_poule(
@@ -310,6 +291,7 @@ class Competition:
                 poule[Poule(-1)] = poule_int[i]
             return poule
         except PasAssezDArbitres:
+            print("Pas assez d'arbitres pour couvrir chaque poule.")
             return None
 
     @staticmethod
@@ -324,7 +306,9 @@ class Competition:
             list[Escrimeur] : liste des escrimeurs de la competition triee par classement initial
         """
         return sorted(liste_escrimeur,
-                      key=lambda escrimeur: escrimeur.get_classement())
+                      key=lambda escrimeur:
+                      (escrimeur.get_classement() is not None,
+                       escrimeur.get_classement()))
 
     @staticmethod
     def nombre_poule(nombre_escrimeur: int,
@@ -423,6 +407,12 @@ class Competition:
         while len(liste_escrimeur) < 2**puissance:
             liste_escrimeur.append(escrimeur_none)
         phase_finale = PhaseFinal(-1)
+        piste1 = Piste(-1, 1, "Piste 1")
+        piste2 = Piste(-1, 2, "Piste 2")
+        piste3 = Piste(-1, 3, "Piste 3")
+        piste4 = Piste(-1, 4, "Piste 4")
+        liste_piste = [piste1, piste2, piste3, piste4]
+        phase_finale.set_les_pistes(liste_piste)
         les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)
         return phase_finale, les_matchs

@@ -5,8 +5,6 @@
 import sys
 import os
 from sqlalchemy.sql.expression import text
-from escrimeur_bd import EscrimeurBD
-from competition_bd import CompetitionBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -31,12 +29,8 @@ class InscrireArbitreBD:
             query = text('SELECT idEscrimeur, idCompetition FROM ARBITRER')
             result = self.__connexion.execute(query)
             arbitres = []
-            for id_escrimeur, id_categorie in result:
-                escrimeur = EscrimeurBD(
-                    self.__connexion).get_escrimeur_by_id(id_escrimeur)
-                competition = CompetitionBD(
-                    self.__connexion).get_competition_by_id(id_categorie)
-                arbitres.append(InscrireArbitre(escrimeur, competition))
+            for (id_escrimeur, id_competition) in result:
+                arbitres.append(InscrireArbitre(id_escrimeur, id_competition))
             return arbitres
         except Exception as e:
             print(e)
@@ -53,12 +47,28 @@ class InscrireArbitreBD:
                          'FROM ARBITRER WHERE idEscrimeur =' + str(id_a))
             result = self.__connexion.execute(query)
             for id_escrimeur, id_competition in result:
-                escrimeur = EscrimeurBD(
-                    self.__connexion).get_escrimeur_by_id(id_escrimeur)
-                competition = CompetitionBD(
-                    self.__connexion).get_competition_by_id(id_competition)
-                return InscrireArbitre(escrimeur, competition)
+                return InscrireArbitre(id_escrimeur, id_competition)
             return None
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_arbitre_by_competition(self, competition):
+        """
+        Fonction qui retourne tous les arbitres d'une compétition
+        :param competition: compétition
+        :return: liste d'arbitre
+        """
+        try:
+            query = text(
+                f'SELECT idEscrimeur FROM ARBITRER WHERE idCompetition = {competition.get_id()}'
+            )
+            result = self.__connexion.execute(query)
+            arbitres = []
+            for (id_escrimeur, ) in result:
+                arbitres.append(
+                    InscrireArbitre(id_escrimeur, competition.get_id()))
+            return arbitres
         except Exception as e:
             print(e)
             return None
