@@ -81,7 +81,7 @@ class ConnexionFormE(FlaskForm):
     identifiant = IntegerField(
         "Votre N° de licence",
         validators=[DataRequired(),
-                    NumberRange(min=0, max=999999999)])
+                    NumberRange(min=0)])
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
     next = HiddenField()
 
@@ -98,7 +98,7 @@ class InscriptionForm(FlaskForm):
     numLicence = IntegerField(
         "Votre numéro de licence",
         validators=[DataRequired(),
-                    NumberRange(min=0, max=999999999)])
+                    NumberRange(min=0)])
     nom = StringField("Votre nom", validators=[DataRequired()])
     prenom = StringField("Votre prénom", validators=[DataRequired()])
     date_naissance = DateField("Votre date de naissance",
@@ -270,3 +270,10 @@ def competition_match(id_competition):
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     matchs = modele.get_competition_bd().get_all_matchs(id_competition)
     return render_template("competition_match.html" , compet = la_competition, matchs = matchs,user=USER)
+
+# verifier que le USer est conecter + arbitre
+@app.route("/competition_arbitre/<id_arbitre>")
+def competition_arbitre(id_arbitre):
+    modele = ModeleAppli()
+    les_competition = modele.get_competition_bd().get_competition_by_arbitre(id_arbitre)
+    return render_template("page_competition_arbitre.html" , competitions = les_competition,user=USER)

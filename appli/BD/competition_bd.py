@@ -57,7 +57,7 @@ class CompetitionBD:
         result = self.__connexion.execute(query)
 
         matchs = []
-        for (id_match, id_tireur1, id_tireur2, id_phase, id_arbitre,_, heure_match, fini ) in result:
+        for (id_match, id_tireur1, id_tireur2, id_phase, id_arbitre, heure_match, fini) in result:
             escrimeur_n1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
             escrimeur_n2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
             arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_arbitre)
@@ -88,6 +88,34 @@ class CompetitionBD:
                 return Competition(id_competition, nom, date, date_fin, saison,
                                    lieu, arme, categorie, coefficient)
             return None
+        except Exception as e:
+            print(e)
+            return None
+        
+    def get_competition_by_arbitre(self, id_e: int):
+        """
+        Fonction qui retourne une competition en fonction de son id
+        :param id_e: id de l'escrimeur
+        :return: competition
+        """
+        try:
+            query = text(
+                  'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition '
+                'FROM COMPETITION NATURAL JOIN ARBITRER '
+                'WHERE idEscrimeur =' + str(id_e))
+            result = self.__connexion.execute(query)
+            competitions = []
+            for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
+                 id_categorie, coefficient) in result:
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+                lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
+                arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
+                competitions.append(Competition(id_competition, nom, date, date_fin, saison,
+                                   lieu, arme, categorie, coefficient))
+            return competitions
         except Exception as e:
             print(e)
             return None
