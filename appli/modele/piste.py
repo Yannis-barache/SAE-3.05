@@ -1,8 +1,6 @@
 """
 Module contenant la classe Piste
 """
-from lieu import Lieu
-
 
 
 class Piste:
@@ -21,9 +19,7 @@ class Piste:
         self.__lieu = lieu
         self.__description = description_piste
 
-
     def get_id_piste(self) -> int:
-
         """
         Fonction qui retourne l'id de la piste
 
@@ -32,17 +28,6 @@ class Piste:
         """
 
         return self.__id
-
-    def get_lieu(self):
-        """
-        Fonction qui retourne l'id du lieu
-
-        Returns :
-            int : id du lieu
-        """
-        return self.__lieu
-
-
 
     def get_description(self):
         """
@@ -62,8 +47,6 @@ class Piste:
         """
         return ("Piste : id = " + str(self.__id) + ", idLieu = " + str(self.__lieu) +
                 ", description = " + str(self.__description))
-        return self.__id_piste
-
 
 
     def set_id_piste(self, id_piste: int) -> None:
@@ -73,7 +56,7 @@ class Piste:
         Args:
             id_piste (int): id de la piste
         """
-        self.__id_piste = id_piste
+        self.__id = id_piste
 
     def set_id_lieu(self, id_lieu: int) -> None:
         """
@@ -82,7 +65,7 @@ class Piste:
         Args:
             id_lieu (int): id du lieu
         """
-        self.__id_lieu = id_lieu
+        self.__lieu = id_lieu
 
     def set_description(self, description: str) -> None:
         """
@@ -92,3 +75,12 @@ class Piste:
             description (str): description de la piste
         """
         self.__description = description
+
+    def get_id_lieu(self):
+        """
+        Fonction qui retourne l'id du lieu
+
+        Returns :
+            int : id du lieu
+        """
+        return self.__lieu

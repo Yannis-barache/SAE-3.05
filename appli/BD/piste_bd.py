@@ -2,13 +2,8 @@
   Fichier qui contient les requêtes SQL pour la table PISTE
 """
 
-from sqlalchemy import text
-import sys
-import os
+
 from lieu_bd import LieuBD
-
-
-
 import sys
 import os
 from sqlalchemy import text
