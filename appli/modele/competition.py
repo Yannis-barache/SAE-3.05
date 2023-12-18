@@ -78,7 +78,7 @@ class Competition:
     def get_date_fin_inscription(self) -> str:
         """
         Fonction qui retourne la date de fin d'inscription de la competition
-        
+
         Returns :
             str : date de fin d'inscription de la competition
         """
@@ -263,11 +263,11 @@ class Competition:
         Args :
             liste_escrimeur (list) : liste des escrimeurs de la competition
             liste_arbitre (list) : liste des arbitres de la competition
-        
+
         Returns :
             dict[int, tuple[Escrimeur, list[Escrimeur]]] :
                 dictionnaire contenant les poules de la competition
-            La clé est le numéro de la poule et la valeur est un tuple 
+            La clé est le numéro de la poule et la valeur est un tuple
             contenant l'arbitre de la poule et la liste des escrimeurs de la poule
         """
         try:

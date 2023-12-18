@@ -13,7 +13,7 @@ if 'database' in config:
     locale = config['database']['locale']
 else:
     print("Key 'database' does not exist in the configuration file.")
-    
+
 
 class ConnexionBD:
     """
