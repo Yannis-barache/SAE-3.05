@@ -13,35 +13,105 @@
     <div class="big-div">
 
         <div class="grey-bg center">
+
+            {% if nb > 0 %}
+                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb - 1) }}" >
+                    <button>
+                        <img class="arrow arrow-l" src="{{ url_for('static', filename='../static/img/arrow-l.png') }}" alt="">
+                    </button>
+                </form>
+            {% endif %}
             <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+            {% if nb > 0 %}
+                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb + 1) }}" >
+                    <button>
+                        <img class="arrow arrow-r" src="{{ url_for('static', filename='../static/img/arrow-r.png') }}" alt="">
+                    </button>
+                </form>
+            {% endif %}
         </div>
 
         <div>
-            <p class="description">POULE {{nb}}</p>
+            <p class="description">POULE {{ la_poule.get_lettre_poule(nb + 1) }}</p>
         </div>
 
-        <div>
+        <div class="middle">
 
             <div class="matchs">
 
-                <p>Arbitre : {{ les_poules[nb].get_les_matchs()}}</p>
+                <p>Arbitre : {{ la_poule.get_les_matchs()[0].get_arbitre().get_nom() }} {{ la_poule.get_les_matchs()[0].get_arbitre().get_prenom() }}</p>
 
-            </div>
+                <p>Les prochains matchs :</p>
 
-            <div class="pdf">
+                <div class="scroll-match">
 
-                <img class="pdf" src="{{ url_for('static', filename='../static/img/pdf.png') }}" alt="menu">
-                <div class="div-dow">
-                    <img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">
-                    <a href="#">Télécharger le PDF</a> 
+                    {% for match in la_poule.get_les_matchs() %}
+                        {% if not match.est_finis() %}
+                            <p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-
+            <div class="pdf">
+                <table>
+                    <tr>
+                        <th>NOMS</th>
+                        <th>CLUBS</th>
+                        <th class="carre-bl"></th>
+                        {% for i in range(1, la_poule.get_les_escrimeurs()|count + 1) %}
+                            <th class="bg-black carre-6">{{ i }}</th>
+                        {% endfor %}
+                        <th class="petit"></th>
+                        <th class="th-wrap">Victoire</th>
+                        <th>Indice</th>
+                        <th>Place</th>
+                    </tr>
+                    {% set les_escrimeurs = la_poule.get_les_escrimeurs() %}
+                    {% for i in range(les_escrimeurs|count) %}
+                        <tr>
+                            <th>{{ les_escrimeurs[i].get_nom() }}</th>
+                            <th>{{ les_escrimeurs[i].get_club().get_nom() }}</th>
+                            {% for j in range(les_escrimeurs|count + 1) %}
+                                {% if j == 0 %}
+                                    <th class="bg-black">{{ i + 1 }}</th>
+                                {% elif j == i + 1 %}
+                                    <th class="bg-grey"></th>
+                                {% elif j != les_escrimeurs|count and i != les_escrimeurs|count %}
+                                    {% set le_match = la_poule.get_match_by_escrimeurs(les_escrimeurs[i], les_escrimeurs[j - 1]) %}
+                                    {% if le_match %}
+                                        {% if le_match.est_commencer() %}
+                                            {% if le_match.est_finis() %}
+                                                {% if le_match.get_gagnant().get_id() == les_escrimeurs[i].get_id() %}
+                                                    <th>V</th>
+                                                {% else %}
+                                                    <th>{{ le_match.get_nb_touche(les_escrimeurs[i]) }}</th>
+                                                {% endif %}
+                                            {% else %}
+                                                <th>{{ le_match.get_nb_touche(les_escrimeurs[i]) }}</th>
+                                            {% endif %}
+                                        {% else %}
+                                            <th></th>
+                                        {% endif %}
+                                    {% else %}
+                                        <th></th>
+                                    {% endif %}
+                                {% else %}
+                                    <th></th>
+                                {% endif %}
+                            {% endfor %}
+                            <th class="petit"></th>
+                            <th>{{ la_poule.get_nb_victoires(les_escrimeurs[i]) }}</th>
+                            <th>{{ la_poule.get_indice(les_escrimeurs[i]) }}</th>
+                            <th>{{ la_poule.get_place(les_escrimeurs[i]) }}</th>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-
-
+        <div class="div-dow">
+            <a class="dow-a" href="{{ url_for('telecharger_pdf_poule', id_poule=la_poule.get_id()) }}"><img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">Télécharger le PDF</a> 
+        </div>
     </div>
-
 
 {% endblock %}
 

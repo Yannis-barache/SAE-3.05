@@ -74,12 +74,44 @@ class MatchBD:
                     self.__connexion).get_escrimeur_by_id(id_escrimeur1)
                 escrimeur2 = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_escrimeur2)
-                arbitre = InscrireArbitreBD(
-                    self.__connexion).get_arbitre_by_id(id_arbitre)
+                arbitre = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
                 return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
                              heure, fini, piste)
             return None
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_match_by_phase(self, id_p: int):
+        '''
+        Fonction qui retourne les matchs en fonction de la phase
+        :param id_p: id de la phase
+        :return: liste de match
+        '''
+        try:
+            query = text(
+                'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
+                'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
+                'WHERE idPhase = ' + str(id_p))
+            result = self.__connexion.execute(query)
+            matchs = []
+            for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
+                 id_piste, heure, fini) in result:
+                fini = fini == 1
+                phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
+                escrimeur1 = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur1)
+                escrimeur2 = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur2)
+                arbitre = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_arbitre)
+                piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
+                matchs.append(
+                    Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
+                          heure, fini, piste))
+            return matchs
         except Exception as e:
             print(e)
             return None

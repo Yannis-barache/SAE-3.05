@@ -531,6 +531,8 @@ class TestCompetition(unittest.TestCase):
         competition.set_date_fin_inscription(date.today())
         competition.set_date(date.today())
         self.assertEqual(competition.get_etat(), 'En cours')
+        competition.set_date_fin_inscription(None)
+        self.assertEqual(competition.get_etat(), 'Pas disponible')
 
     def test_str(self):
         """
