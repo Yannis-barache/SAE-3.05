@@ -1,2 +1,2 @@
-FLASK_APP=appli
+FLASK_APP=appli/sae_flask
 FLASK_DEBUG=True

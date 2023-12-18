@@ -6,8 +6,14 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-locale = config['database']['locale']
+#locale = config['database']['locale']
 
+
+if 'database' in config:
+    locale = config['database']['locale']
+else:
+    print("Key 'database' does not exist in the configuration file.")
+    
 
 class ConnexionBD:
     """
