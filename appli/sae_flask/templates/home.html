@@ -58,7 +58,7 @@
                 {% if competition.get_etat() != 'En cours' and competition.get_etat() != 'Terminée' %}
                 <td>  Pas encore de résultats </td>
                 {% else %}
-                <td> <a href="#"> VOIR RESULTATS </a></td>
+                <td> <a href="{{ url_for('poule',id_competition= competition.get_id(),nb = 0) }}"> Voir les résultats </a></td>
                 {% endif %}
             </tr>
 
