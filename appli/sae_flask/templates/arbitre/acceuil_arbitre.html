@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
 {% endblock %}
+{% block nav %}
+    {{ super() }}
+{% endblock %}
 {% block content %}
 <h2>Tableau de bord arbitrage</h2>
 

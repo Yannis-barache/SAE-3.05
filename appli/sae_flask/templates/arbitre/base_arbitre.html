@@ -1,0 +1,23 @@
+{% extends "base_home.html" %}
+{% block header %}
+    {{ super() }}
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+
+{% endblock %}
+{% block nav %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+{% macro competition_nav(compet_id) %}
+
+    <a class="btn" href="{{ url_for('competition', id_competition=compet_id) }}">INFORMATIONS</a>
+    <a class="btn" href="{{ url_for('home') }}" >POULES</a>
+    <a href="{{ url_for('home') }}" class="btn">PHASE FINAL</a>
+    <a href="{{ url_for('home') }}" class="btn">CLASSEMENT</a>
+{% endmacro %}
