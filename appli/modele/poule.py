@@ -616,7 +616,7 @@ class Poule:
         """
         cpt = 0
         for match in self.__les_matchs:
-            if match.est_commencer():
+            if match.est_finis():
                 if match.get_gagnant().get_id() == escrimeur.get_id():
                     cpt += 1
         return cpt
