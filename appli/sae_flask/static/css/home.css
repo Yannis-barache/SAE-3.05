@@ -122,3 +122,24 @@ th {
 .tableau {
     width: 100%;
 }
+.tableau tr:nth-child(even) {
+    background-color: rgb(230, 230, 230);
+}
+
+.tableau tr a {
+    color: rgb(212, 8, 11);
+}
+
+
+
+.tableau tr:hover td {
+    background-color: rgb(212, 8, 11);
+    color: white;
+}
+
+.tableau tr:hover a {
+    color: black;
+}
+
+
+
