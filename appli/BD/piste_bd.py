@@ -41,6 +41,10 @@ class PisteBD:
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 pistes.append(Piste(id_piste, lieu, description_piste))
             return pistes
+        except Exception as e:
+            print(e)
+            return None
+
 
 
     def get_piste_by_id(self, id_piste: int):
