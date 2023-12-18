@@ -346,6 +346,21 @@ class TestEscrimeurBD(unittest.TestCase):
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
+    def test_insert_escrimeur(self):
+        """
+        Test de la méthode insert_escrimeur
+        """
+        categorie = Categorie(1, "test")
+        club = Club(1, "test", "test", "test")
+        escrimeur = Escrimeur(-1, "test", "test", "test", "test", "test",
+                              "test", "test", None, club, categorie, False)
+        escrimeur2 = Escrimeur(-1, "test", "test", "test", "test", "test",
+                               "test", "test2", 12, club, categorie, False)
+        self.escrimeur_bd.insert_escrimeur(escrimeur)
+        self.escrimeur_bd.insert_escrimeur(escrimeur2)
+        with self.assertRaises(Exception):
+            self.escrimeur_bd.insert_escrimeur("a")
+
     def test_delete_escrimeur_by_nom(self):
         """
         Test de la méthode delete_escrimeur_by_nom
@@ -594,6 +609,39 @@ class TestMatchBD(unittest.TestCase):
         """
         self.assertIsInstance(self.match_bd, MatchBD)
 
+    def test_get_all_match(self):
+        """
+        Test de la méthode get_all_match
+        """
+        matchs = self.match_bd.get_all_match()
+        self.assertIsInstance(matchs, list)
+
+    def test_get_match_by_id(self):
+        """
+        Test de la méthode get_match_by_id
+        """
+        match = self.match_bd.get_match_by_id(1)
+        self.assertIsInstance(match, Match)
+        match = self.match_bd.get_match_by_id(-1)
+        self.assertIsNone(match)
+        try:
+            self.match_bd.get_match_by_id("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_get_match_by_phase(self):
+        """
+        Test de la méthode get_match_by_phase
+        """
+        matchs = self.match_bd.get_match_by_phase(60)
+        self.assertIsInstance(matchs, list)
+        matchs = self.match_bd.get_match_by_phase(-1)
+        self.assertIsInstance(matchs, list)
+        try:
+            self.match_bd.get_match_by_phase("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
     def test_insert_match(self):
         """
         Test de la méthode insert_match
@@ -642,6 +690,31 @@ class TestPisteBD(unittest.TestCase):
         Test du constructeur de la classe PisteBD
         """
         self.assertIsInstance(self.piste_bd, PisteBD)
+
+    def test_get_piste_by_id(self):
+        """
+        Test de la méthode get_piste_by_id
+        """
+        piste = self.piste_bd.get_piste_by_id(1)
+        self.assertIsInstance(piste, Piste)
+        piste = self.piste_bd.get_piste_by_id(-1)
+        self.assertIsNone(piste)
+        try:
+            self.piste_bd.get_piste_by_id("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_get_piste_by_lieu(self):
+        """
+        Test de la méthode get_piste_by_lieu
+        """
+        lieu = Lieu(1, "test", "test")
+        pistes = self.piste_bd.get_piste_by_lieu(lieu)
+        self.assertIsInstance(pistes, list)
+        try:
+            self.piste_bd.get_piste_by_lieu("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
 
 
 class TestOrganisateurBD(unittest.TestCase):
@@ -837,6 +910,32 @@ class TestPouleBD(unittest.TestCase):
         Test du constructeur de la classe PouleBD
         """
         self.assertIsInstance(self.poule_bd, PouleBD)
+
+    def test_get_poule_by_id(self):
+        """
+        Test de la méthode get_poule_by_id
+        """
+        poule = self.poule_bd.get_poule_by_id(60)
+        self.assertIsInstance(poule, Poule)
+        poule = self.poule_bd.get_poule_by_id(-1)
+        self.assertIsNone(poule)
+        try:
+            self.poule_bd.get_poule_by_id("a")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
+
+    def test_get_poules_by_compet_nb(self):
+        """
+        Test de la méthode get_poules_by_compet_nb
+        """
+        poules = self.poule_bd.get_poules_by_compet_nb(8, 0)
+        self.assertIsInstance(poules, Poule)
+        poules = self.poule_bd.get_poules_by_compet_nb(8, 100)
+        self.assertIsNone(poules)
+        try:
+            self.poule_bd.get_poules_by_compet_nb(";", ";")
+        except Exception as e:
+            self.assertIsInstance(e, TypeError)
 
     def test_get_all_poule(self):
         """
@@ -1200,6 +1299,13 @@ class TestException(TestClubBD):
         """
         phases = self.phase_bd2.get_all_phase()
         self.assertIsNone(phases)
+
+    def test_get_all_match(self):
+        """
+        Test de l'exception de la méthode get_all_match
+        """
+        matchs = self.match_bd2.get_all_match()
+        self.assertIsNone(matchs)
 
     def test_get_all_lieu(self):
         """

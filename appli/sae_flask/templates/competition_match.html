@@ -40,7 +40,7 @@
                         <img src="{{ url_for('static', filename='img/imprimante.png') }}" alt="Image Escrimeur 1">
                     </a>
                     
-                    {% if user != none and user.get_arbitrage() and match.get_arbitre().get_id_escrimeur() == user.get_id()%}
+                    {% if user != none and user.get_arbitrage() and match.get_arbitre().get_id() == user.get_id()%}
                     <a>
                     <img src="{{ url_for('static', filename='img/stylo.png') }}" alt="Image Escrimeur 1">
                     </a>
