@@ -1,0 +1,36 @@
+.ligne1{
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+}
+
+
+.ligne2{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-groupe a{
+    color: #000;
+    text-decoration: none;
+}
+
+.img{
+    width: 6em;
+    height: 6em;
+}
+
+.btn-groupe{
+    width: 33%;
+    height: 300px;
+    font-size: 32px;
+    font-family: "IcebergRegular", sans-serif; /* You may need to import the font */
+    color: rgb(212, 8, 11);
+    cursor: pointer;
+    background-color: #b1afaf ;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;    
+}

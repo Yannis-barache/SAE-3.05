@@ -1,0 +1,46 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="ligne1">
+    <button id="auteurs" class="btn-groupe">
+        <a href="#">
+            <p>Compétitions</p>
+            <img class="img" src="{{ url_for('static', filename='img/compet.png')}}" alt="auteur">
+        </a>
+    </button>
+    
+
+    <button class="btn-groupe">
+        <a href="#">
+            <p>Escrimeurs</p>
+            <img class="img" src="{{ url_for('static', filename='img/escrimeur.png')}}" alt="livre">
+        </a>
+    </button>
+
+    <button class="btn-groupe">
+        <a href="{{ url_for('admin_club') }}">
+            <p>Clubs</p>
+            <img class="img" src="{{ url_for('static', filename='img/club.png')}}" alt="user">
+        </a>
+    </button>
+    </div>
+
+    <div class="ligne2">
+        <button class="btn-groupe">
+            <a href="#">
+                <p>Lieux</p>
+                <img class="img" src="{{ url_for('static', filename='img/lieu.png')}}" alt="eval">
+            </a>
+        </button>
+
+    </div>
+
+
+{% endblock %}

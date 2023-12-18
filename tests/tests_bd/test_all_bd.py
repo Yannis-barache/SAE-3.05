@@ -951,7 +951,6 @@ class TestPouleBD(unittest.TestCase):
         poules = self.poule_bd.get_poules_by_compet(1)
         self.assertIsInstance(poules, list)
         poules = self.poule_bd.get_poules_by_compet(2)
-        print(poules)
         self.assertIsInstance(poules, list)
         try:
             self.poule_bd.get_poules_by_compet(";")
@@ -1320,6 +1319,3 @@ class TestException(TestClubBD):
         """
         inscrires = self.inscrire_bd2.get_all_inscrire()
         self.assertIsNone(inscrires)
-
-if __name__ == '__main__':
-    unittest.main()

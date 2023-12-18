@@ -12,6 +12,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
+from club import Club
 from constantes import USER
 
 USER = USER
@@ -210,6 +211,8 @@ def connexion(nom):
     global USER
     modele_appli = ModeleAppli()
     print("connexion ",USER)
+    
+
 
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
@@ -224,22 +227,21 @@ def connexion(nom):
             USER = modele_appli.get_escrimeur_bd().login_escrimeur(
                 identifiant, mdp)
             modele_appli.close_connexion()
-            if USER is not None and USER.get_mdp() == mdp:
-                print("redirectzefdiz")
+            if USER is not None :
                 return redirect(url_for('home'))
         elif nom == "ORGANISATEUR":
             USER = modele_appli.get_organisateur_bd(
             ).login_organisateur(identifiant, mdp)
             modele_appli.close_connexion()
-            if USER is not None and USER.get_mdp() == mdp:
-                return redirect(url_for('home'))
+            if USER is not None :
+                print("redirect")
+                return redirect(url_for('home_admin'))
 
         elif nom == "CLUB":
             USER = modele_appli.get_club_bd(
-
             ).login_club(identifiant, mdp)
             modele_appli.close_connexion()
-            if USER is not None and USER.get_mdp() == mdp:
+            if USER is not None :
                 return redirect(url_for('home'))
         if USER is None:
             return render_template(
@@ -270,7 +272,6 @@ def competition(id_competition):
 def poule(id_competition, nb):
     modele = ModeleAppli()
     nombre_poule = modele.get_poule_bd().nb_poule_compet(int(id_competition))
-    print("nombre_poule", nombre_poule)
     nb = int(nb) % nombre_poule
     la_competition = modele.get_competition_bd().get_competition_by_id_s(id_competition)
     la_poule = modele.get_poule_bd().get_poules_by_compet_nb(int(id_competition), int(nb))
@@ -293,3 +294,70 @@ def deconnexion():
     global USER
     USER = None
     return redirect(url_for('choose_sign'))
+
+@app.route("/admin")
+def home_admin():
+    return render_template("Admin/home_admin.html", user=USER)
+
+@app.route("/admin/clubs")
+def admin_club():
+    modele = ModeleAppli()
+    les_clubs = modele.get_club_bd().get_all_club_2()
+    modele.close_connexion()
+    return render_template("Admin/Club/clubs.html", user=USER, clubs=les_clubs)
+
+@app.route("/admin/supprimer_clubs/<int:id_club>", methods=["GET", "POST"])
+def supprimer_club(id_club):
+    modele = ModeleAppli()
+    modele.get_club_bd().delete_club(id_club)
+    modele.close_connexion()
+    return redirect(url_for('admin_club'))
+
+@app.route("/admin/modifier_clubs/<int:id_club>", methods=["GET", "POST"])
+def modifier_club(id_club):
+    modele = ModeleAppli()
+    club = modele.get_club_bd().get_club_by_id(id_club)
+    form = ClubForm()
+    form.name.data = club.get_nom()
+    form.adresse.data = club.get_adresse()
+    modele.close_connexion()
+    return render_template("Admin/Club/modifier_club.html", user=USER, title="Modification club", club=club, form=form)
+
+@app.route("/admin/modifier_clubs/<int:id_club>/<int:type>", methods=["GET", "POST"])
+def update_club(id_club, type):
+    modele = ModeleAppli()
+    if type == 1:
+        form = ClubForm()
+        club = modele.get_club_bd().get_club_by_id(id_club)
+        nom = form.name.data
+        adresse = form.adresse.data
+        club.set_nom(nom)
+        club.set_adresse(adresse)
+        modele.get_club_bd().update_club(club)
+    else :
+        form = ClubForm2()
+        nom = form.name.data
+        adresse = form.adresse.data
+        mdp = form.mdp.data
+        club = Club(1, nom, adresse, mdp)
+        modele.get_club_bd().insert_club(club)
+    modele.close_connexion()
+    return redirect(url_for('admin_club'))
+
+@app.route("/admin/ajouter_club", methods=["GET", "POST"])
+def ajouter_club():
+    form = ClubForm2()
+    return render_template("Admin/Club/add_club.html", user=USER, title="Ajouter club", form=form)
+
+
+class ClubForm(FlaskForm):
+    id = HiddenField('id')
+    name = StringField('Nom', validators=[DataRequired()])
+    adresse = StringField('Adresse', validators=[DataRequired()])
+    title = HiddenField('title')
+
+class ClubForm2(FlaskForm):
+    name = StringField('Nom', validators=[DataRequired()])
+    adresse = StringField('Adresse', validators=[DataRequired()])
+    mdp = PasswordField('Mot de passe', validators=[DataRequired()])
+    title = HiddenField('title')
