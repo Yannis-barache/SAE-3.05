@@ -42,7 +42,7 @@
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ competition.get_etat() }} </td>
                 {% if competition.get_etat() == 'Inscription ouverte' %}
-                <td> <a href="#"> S'INSCRIRE </a></td>
+                <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
                 {% else %}
                 <td> Inscription terminée </td>
                 {% endif %}

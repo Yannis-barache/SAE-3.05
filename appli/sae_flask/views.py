@@ -118,9 +118,12 @@ def home():
     modele_appli = ModeleAppli()
     competitions = modele_appli.get_competition_bd().get_all_competition()
     print("USER ", USER)
+    lien = "/"
+    if USER is None:
+        lien = "/choisir_statut_connexion"
     modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=competitions, user=USER
+        "home.html",competitions=competitions, user=USER , lien = lien
     )
 
 
@@ -255,7 +258,7 @@ def connexion(nom):
 
 @app.route("/regles")
 def regles():
-    return render_template("regles.html", user=USER)
+    return render_template("regles.html",user=USER)
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
