@@ -101,7 +101,7 @@ class EscrimeurBD:
                 f"'{escrimeur.get_date_naissance()}', "
                 f"'{escrimeur.get_nom_utilisateur()}', "
                 f"'{escrimeur.get_mdp()}', {classement}, "
-                f"'{escrimeur.get_sexe()}', {str(escrimeur.get_club().get_id())}, "
+                f"'{escrimeur.get_sexe()}', {escrimeur.get_club().get_id()}, "
                 f"{str(escrimeur.get_categorie().get_id())}, {str(escrimeur.get_arbitrage())})"
             )
             self.__connexion.execute(query)
@@ -158,7 +158,6 @@ class EscrimeurBD:
                 return Escrimeur(id_escrimeur, nom, prenom, sexe,
                                  date_naissance, nom_utilisateur, mdp, licence,
                                  classement, club, categorie, arbitrage)
-            return None
         except Exception as e:
             print(e)
             return None

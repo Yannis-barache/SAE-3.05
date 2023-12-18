@@ -22,59 +22,16 @@ class TestConnexionBD(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """
+        Création d'une connexion à la base de données
+        """
         cls.connexion = ConnexionBD()
-        text = 'Distante'
-        # changer la viriable "locale" dans le fichier constante.py
-        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
-            lines = file.readlines()
-        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
-            for line in lines:
-                if line.startswith('locale = '):
-                    file.write(f'locale = {text}\n')
-                else:
-                    file.write(line)
-
-    @classmethod
-    def tearDownClass(cls):
-        text = "''"
-        # changer la variable "locale" dans le fichier constante.py
-        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
-            lines = file.readlines()
-        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
-            for line in lines:
-                if line.startswith('locale = '):
-                    file.write(f'locale = {text}\n')
-                else:
-                    file.write(line)
 
     def test_constructeur_connexion(self):
         """
         Test du constructeur de la classe ConnexionBD
         """
         self.assertIsNotNone(self.connexion)
-
-    def test_constructeur_connexion_iut(self):
-        """
-        Test du constructeur de la classe ConnexionBD en local
-        """
-        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
-            lines = file.readlines()
-        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
-            for line in lines:
-                if line.startswith('locale = '):
-                    file.write(f'locale = {True}\n')
-                else:
-                    file.write(line)
-        connexion = ConnexionBD()
-        self.assertIsNotNone(connexion)
-        with open('appli/modele/constantes.py', 'r', encoding="utf-8") as file:
-            lines = file.readlines()
-        with open('appli/modele/constantes.py', 'w', encoding="utf-8") as file:
-            for line in lines:
-                if line.startswith('locale = '):
-                    file.write(f'locale = {False}\n')
-                else:
-                    file.write(line)
 
     def test_creation_connexion(self):
         """

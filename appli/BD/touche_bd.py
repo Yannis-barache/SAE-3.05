@@ -12,6 +12,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from touche import Touche
+from match import Match
 
 
 class ToucheBD:
@@ -31,10 +32,38 @@ class ToucheBD:
             query = text('SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE')
             result = self.__connexion.execute(query)
             touches = []
-            for id_match, id_escrimeur, num in result:
+            for (
+                    id_match,
+                    id_escrimeur,
+                    num,
+            ) in result:
                 match = MatchBD(self.__connexion).get_match_by_id(id_match)
                 escrimeur = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_escrimeur)
+                touches.append(Touche(match, escrimeur, num))
+            return touches
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_by_match(self, match: Match):
+        """
+        Fonction qui retourne toutes les touches d'un match
+
+        Args:
+            match_id (int): l'id du match
+        """
+        try:
+            query = text(
+                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {match.get_id()}"
+            )
+            result = self.__connexion.execute(query)
+            touches = []
+            for (id_match, id_escrimeur, num) in result:
+                match.set_id(id_match)
+                escrimeur = match.get_escrimeur1(
+                ) if id_escrimeur == match.get_escrimeur1().get_id(
+                ) else match.get_escrimeur2()
                 touches.append(Touche(match, escrimeur, num))
             return touches
         except Exception as e:

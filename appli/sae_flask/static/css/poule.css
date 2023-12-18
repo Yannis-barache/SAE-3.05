@@ -1,0 +1,191 @@
+.big-div{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grey-bg{
+  flex-basis: 100%;
+  background-color: #EDEDED;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grey-bg > p{
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+main{
+  margin-top: 3%;
+  margin-right: 0%;
+  margin-bottom: 3%;
+  margin-left: 0%;
+}
+img.pdf{
+    display: block;
+    width: 413px;
+    height: auto;
+}
+
+.description{
+    margin-top: 1.5em;
+    margin-left: 1.5em;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.big-div > div{
+  flex-basis: 100%;
+}
+
+.dow{
+  height: 30px;
+  width: 30px;
+}
+
+.pdf{
+  width: 450px;
+  height: auto;
+}
+
+a{
+  color: black;
+}
+
+.center{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.div-dow{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top : 10px;
+}
+
+.middle{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.matchs{
+  margin-left: 60px;
+}
+
+.scroll-match {
+  width: 300px; /* Ajustez la largeur selon vos besoins */
+  height: 200px; /* Ajustez la hauteur selon vos besoins */
+  overflow: auto; /* Permet le défilement si le contenu dépasse les dimensions définies */
+}
+
+.scroll-match p {
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.bg-black{
+  background-color: black;
+  color: white;
+}
+
+.bg-black > th{
+  color: white;
+  font-size: 30px;
+}
+
+.petit{
+  padding: 2px;
+}
+
+.bg-grey{
+  background-color: #b3b1b1;
+}
+
+th{
+  padding: 10px;
+  white-space: nowrap;
+}
+
+tr{
+  height: 60px;
+}
+
+.carre-bl{
+  padding-inline: 28.5px;
+}
+
+.carre-1{
+  padding-inline: 24.40165px;
+}
+
+.carre-2{
+  padding-inline: 23.35835px;
+}
+
+.carre-3{
+  padding-inline: 23.19px;
+}
+
+.carre-4{
+  padding-inline: 23px;
+}
+
+.carre-5{
+  padding-inline: 23.19955px;
+}
+
+.carre-6{
+  padding-inline: 23.5px;
+}
+
+.carre-7{
+  padding-inline: 23.5px;
+}
+
+.dow-a{
+  color: black;
+  padding-top: 10px;
+}
+
+.arrow{
+  width: 40px;
+  height: auto;
+}
+
+button{
+  background-color: #EDEDED;
+  border: none;
+}
+
+@keyframes bounceAlpha-r {
+  0% {opacity: 1; transform: translateX(0px) scale(1);}
+  25%{opacity: 0; transform:translateX(10px) scale(0.9);}
+  26%{opacity: 0; transform:translateX(-10px) scale(0.9);}
+  55% {opacity: 1; transform: translateX(0px) scale(1);}
+}
+
+@keyframes bounceAlpha-l {
+  0% {opacity: 1; transform: translateX(0px) scale(1);}
+  25%{opacity: 0; transform:translateX(-10px) scale(0.9);}
+  26%{opacity: 0; transform:translateX(10px) scale(0.9);}
+  55% {opacity: 1; transform: translateX(0px) scale(1);}
+}
+
+.arrow-r:hover{
+  animation-name: bounceAlpha-r;
+  animation-iteration-count:infinite;
+  animation-duration:1.4s;
+  animation-timing-function:linear;
+}
+
+.arrow-l:hover{
+  animation-name: bounceAlpha-l;
+  animation-iteration-count:infinite;
+  animation-duration:1.4s;
+  animation-timing-function:linear;
+}

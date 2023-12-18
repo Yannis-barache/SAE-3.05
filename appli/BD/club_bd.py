@@ -107,7 +107,6 @@ class ClubBD:
                          f"FROM CLUB WHERE nomClub = '{login_club}'")
             result = self.__connexion.execute(query)
             for id_club, nom, adresse, mdp in result:
-
                 fonction = text("SELECT verif_mdp_club(:id, :mdp)")
                 result = self.__connexion.execute(fonction, {
                     "id": id_club,
@@ -115,7 +114,6 @@ class ClubBD:
                 })
                 if result.fetchone()[0] == 0:
                     return None
-
                 return Club(id_club, nom, adresse, mdp)
         except Exception as e:
             print(e)
