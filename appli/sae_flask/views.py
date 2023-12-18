@@ -13,6 +13,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from club import Club
+from lieu import Lieu
 from constantes import USER
 
 USER = USER
@@ -467,4 +468,68 @@ class EscrimeurForm2(FlaskForm):
     licence = StringField('License', validators=[DataRequired()])
     nom_utilisateur = StringField('Nom d\'utilisateur', validators=[DataRequired()])
     arbitrage = SelectField('Arbitrage', choices=["Oui", "Non"], validators=[DataRequired()])
+    title = HiddenField('title')
+
+# Lieu
+
+@app.route("/admin/lieux")
+def admin_lieu():
+    modele = ModeleAppli()
+    les_lieux = modele.get_lieu_bd().get_all_lieu2()
+    modele.close_connexion()
+    return render_template("Admin/Lieux/lieux.html", user=USER, lieux=les_lieux)
+
+@app.route("/admin/supprimer_lieux/<int:id_lieu>", methods=["GET", "POST"])
+def supprimer_lieu(id_lieu):
+    modele = ModeleAppli()
+    modele.get_lieu_bd().delete_lieu(id_lieu)
+    modele.close_connexion()
+    return redirect(url_for('admin_lieu'))
+
+@app.route("/admin/modifier_lieux/<int:id_lieu>", methods=["GET", "POST"])
+def modifier_lieu(id_lieu):
+    modele = ModeleAppli()
+    lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
+    form = LieuForm()
+    form.description.data = lieu.get_description()
+    form.adresse.data = lieu.get_adresse()
+    modele.close_connexion()
+    return render_template("Admin/Lieux/modifier_lieu.html", user=USER, title="Modification lieu", lieu=lieu, form=form)
+
+@app.route("/admin/modifier_lieux/<int:id_lieu>/<int:type>", methods=["GET", "POST"])
+def update_lieu(id_lieu, type):
+    modele = ModeleAppli()
+    if type == 1:
+        form = LieuForm()
+        lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
+        adresse = form.adresse.data
+        description = form.description.data
+        print("adresse", adresse)
+        print("description", description)
+        lieu.set_description(description)
+        lieu.set_adresse(adresse)
+        modele.get_lieu_bd().update_lieu(lieu)
+    else :
+        form = LieuForm2()
+        adresse = form.adresse.data
+        description = form.description.data
+        lieu = Lieu(1, description, adresse)
+        modele.get_lieu_bd().insert_lieu(lieu)
+    modele.close_connexion()
+    return redirect(url_for('admin_lieu'))
+
+@app.route("/admin/ajouter_lieu", methods=["GET", "POST"])
+def ajouter_lieu():
+    form = LieuForm2()
+    return render_template("Admin/Lieux/add_lieu.html", user=USER, title="Ajouter lieu", form=form)
+
+class LieuForm(FlaskForm):
+    id = HiddenField('id')
+    adresse = StringField('Adresse', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    title = HiddenField('title')
+
+class LieuForm2(FlaskForm):
+    description = StringField('Description', validators=[DataRequired()])
+    adresse = StringField('Adresse', validators=[DataRequired()])
     title = HiddenField('title')
