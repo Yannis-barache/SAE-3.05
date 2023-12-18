@@ -122,3 +122,18 @@ th {
 .tableau {
     width: 100%;
 }
+
+.tableau tr:hover td {
+    background-color: rgb(212, 8, 11);
+    color: white;
+
+}
+
+.tableau tr:hover a {
+    color: black;
+
+
+}
+
+
+

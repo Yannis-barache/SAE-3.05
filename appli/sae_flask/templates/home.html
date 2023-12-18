@@ -38,7 +38,9 @@
         {% for competition in competitions %}
             <tr>
                 <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
-                <td> {{ competition.get_lieu().get_adresse() }} </td>
+                {% set lieu = competition.get_lieu() %}
+                {% set lien = "https://www.google.fr/maps/place/" + lieu.get_adresse() + "/" %}
+                <td> <a href="{{ lien }}">{{ lieu.get_adresse() }}</a> </td>
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ competition.get_etat() }} </td>
                 {% set lien = url_for('inscription_competition',id_competition= competition.get_id()) %}
