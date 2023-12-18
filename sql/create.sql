@@ -99,19 +99,29 @@ CREATE TABLE ARBITRER(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
+CREATE TABLE PISTE(
+    idPiste INT(10) AUTO_INCREMENT,
+    idLieu INT(10) NOT NULL,
+    descriptionPiste VARCHAR(1000),
+    PRIMARY KEY (idPiste),
+    FOREIGN KEY (idLieu) REFERENCES LIEU(idLieu)
+);
+
 CREATE TABLE MATCHS(
     idMatch INT(10) AUTO_INCREMENT NOT NULL,
     idEscrimeur1 INT(10) NOT NULL,
     idEscrimeur2 INT(10) NOT NULL,
     idPhase INT(10) NOT NULL,
     idArbitre INT(10) NOT NULL,
+    idPiste INT(10) NOT NULL ,
     heureMatch TIME,
     fini boolean,
     PRIMARY KEY (idMatch),
     FOREIGN KEY (idEscrimeur1) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idEscrimeur2) REFERENCES ESCRIMEUR(idEscrimeur),
     FOREIGN KEY (idPhase) REFERENCES PHASE(idPhase),
-    FOREIGN KEY (idArbitre) REFERENCES ESCRIMEUR(idEscrimeur)
+    FOREIGN KEY (idArbitre) REFERENCES ESCRIMEUR(idEscrimeur),
+    FOREIGN KEY (idPiste) REFERENCES PISTE(idPiste)
 );
 
 CREATE TABLE TOUCHE(
@@ -124,9 +134,6 @@ CREATE TABLE TOUCHE(
 );
 
 
-
-
-
 CREATE TABLE INSCRIRE(
     idEscrimeur INT(10) NOT NULL,
     idCompetition INT(10) NOT NULL,
@@ -134,6 +141,7 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idCompetition) references COMPETITION(idCompetition),
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
+
 
 -- TRIGGER
 

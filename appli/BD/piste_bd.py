@@ -1,6 +1,13 @@
 """
-Fichier qui contient les requêtes SQL pour la table PISTE
+  Fichier qui contient les requêtes SQL pour la table PISTE
 """
+
+from sqlalchemy import text
+import sys
+import os
+from lieu_bd import LieuBD
+
+
 
 import sys
 import os
@@ -15,11 +22,26 @@ from lieu import Lieu
 
 class PisteBD:
     """
-    Classe PistesBD
+    Classe PisteBD
     """
-
     def __init__(self, connexion):
         self.__connexion = connexion
+
+    def get_all_piste(self):
+        """
+        Fonction qui retourne toutes les pistes
+        :return: liste de pistes
+        """
+        try:
+            query = text('SELECT idPiste, idLieu, descriptionPiste FROM PISTE')
+            result = self.__connexion.execute(query)
+            pistes = []
+
+            for (id_piste, id_lieu, description_piste) in result:
+                lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
+                pistes.append(Piste(id_piste, lieu, description_piste))
+            return pistes
+
 
     def get_piste_by_id(self, id_piste: int):
         """
@@ -34,6 +56,7 @@ class PisteBD:
             result = self.__connexion.execute(query)
             for (id_pistee, id_lieu, description_piste) in result:
                 return Piste(int(id_pistee), int(id_lieu), description_piste)
+
         except Exception as e:
             print(e)
             return None
@@ -57,3 +80,4 @@ class PisteBD:
         except Exception as e:
             print(e)
             return None
+

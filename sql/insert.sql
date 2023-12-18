@@ -58,8 +58,8 @@ INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateN
         (12, 'Fofana','Abdoulahi', '224224', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5, true),
         (13, 'Merit','Juliann', '963963', '1999-01-01', 'juliann', 'merit', NULL, 14, 'H', 5, false),
         (14, 'Chedeville','Baptiste', '33333333', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5, true),
-        (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5, false),
-        (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5, false),
+        (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'H', 5, false),
+        (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'H', 5, false),
         (17, 'Abada','Khalil','213213213','1999-01-01','khalil','abada',NULL,1,'H',5,false);
 
 INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
@@ -133,6 +133,62 @@ INSERT INTO POULE(idPoule) VALUES
         (14);
 
 
+INSERT INTO PISTE(idPiste, idLieu,descriptionPiste) VALUES
+        (1, 1,'Piste 1'),
+        (2, 1,'Piste 2'),
+        (3, 1,'Piste 3'),
+        (4, 1,'Piste 4'),
+        (5,2,'Piste a'),
+        (6,2,'Piste b'),
+        (7,2,'Piste c'),
+        (8,2,'Piste d'),
+        (9,3,'Piste e'),
+        (10,3,'Piste f'),
+        (11,3,'Piste g'),
+        (12,3,'Piste h'),
+        (13,4,'Piste i'),
+        (14,4,'Piste j'),
+        (15,4,'Piste k'),
+        (16,4,'Piste l'),
+        (17,5,'Piste m'),
+        (18,5,'Piste n'),
+        (19,5,'Piste o'),
+        (20,5,'Piste p'),
+        (21,6,'Piste q'),
+        (22,6,'Piste r'),
+        (23,6,'Piste s'),
+        (24,6,'Piste t'),
+        (25,7,'Piste u'),
+        (26,7,'Piste v'),
+        (27,7,'Piste w'),
+        (28,7,'Piste x'),
+        (29,8,'Piste y'),
+        (30,8,'Piste z'),
+        (31,8,'Piste do'),
+        (32,8,'Piste re'),
+        (33,9,'Piste mi'),
+        (34,9,'Piste fa'),
+        (35,9,'Piste sol'),
+        (36,9,'Piste la'),
+        (37,10,'Piste si'),
+        (38,10,'Piste do#'),
+        (39,10,'Piste Marie Curie'),
+        (40,10,'Piste Albert Einstein'),
+        (41,11,'Piste Isaac Newton'),
+        (42,11,'Piste Galilée'),
+        (43,11,'Piste Charles Darwin'),
+        (44,11,'Piste Stephen Hawking'),
+        (45,12,'Piste IUT1'),
+        (46,12,'Piste IUT2'),
+        (47,12,'Piste  IUT3'),
+        (48,12,'Piste IUT4'),
+        (49,13,'Piste hehe'),
+        (50,13,'Piste hoho'),
+        (51,13,'Piste hihi'),
+        (52,13,'Piste haha');
+
+
+
 INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch, fini) VALUES
         (1, 1, 2, 1, 10, '10:20:00',false),
         (2, 3, 4, 1, 2, '23:00:00',false),
@@ -149,7 +205,12 @@ INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heure
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
         (1,1),
         (1,2),
-        (1,3);
+        (1,3),
+        (10,8),
+        (11,8),
+        (12,8),
+        (13,8),
+        (17,8);
 
 
 INSERT INTO ARBITRER(idEscrimeur, idCompetition) VALUES
