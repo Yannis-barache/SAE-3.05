@@ -158,9 +158,10 @@ def choisir_statut_inscription():
 
 @app.route("/espace_personnel/")
 def espace_personnel():
-    user = USER
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     return render_template(
-        "espace.html", user=user
+        "espace.html", user=USER
     )
 
 @app.route("/inscription", methods=["GET", "POST"])
@@ -296,6 +297,8 @@ def telecharger_pdf_poule(id_poule):
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     modele.get_inscrire_bd().insert_inscrire(Inscrire(id_competition, USER.get_id()))
     modele.close_connexion()
@@ -303,6 +306,8 @@ def inscription_competition(id_competition):
 
 @app.route("/desinscription_competition/<id_competition>")
 def desinscription_competition(id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     modele.get_inscrire_bd().delete_inscrire_competition(Inscrire(id_competition, USER.get_id()))
     modele.close_connexion()
