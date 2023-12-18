@@ -41,7 +41,7 @@
                     </a>
                     
                     {% if user != none and user.get_arbitrage() and match.get_arbitre().get_id() == user.get_id()%}
-                    <a>
+                    <a href="{{ url_for('page_de_match',id_match=match.get_id(),id_competition=compet.get_id() ) }}">
                     <img src="{{ url_for('static', filename='img/stylo.png') }}" alt="Image Escrimeur 1">
                     </a>
 

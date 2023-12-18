@@ -260,16 +260,13 @@ def regles():
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
-    if USER is not None and USER.is_arbitre():
-        modele = ModeleAppli()
-        print("id_competition", id_competition)
-        la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-        nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
-        modele.close_connexion()
-        return render_template("competition.html", compet=la_competition,
-                            poule=nb_poule, user=USER)
-    else:
-        flask.abort(404)
+    print("id_competition", id_competition)
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    modele.close_connexion()
+    return render_template("competition.html", compet=la_competition,
+                        poule=nb_poule, user=USER)
+
 
 @app.route("/competition_match/<id_competition>")
 def competition_match(id_competition):
@@ -291,6 +288,14 @@ def competition_arbitre(id_arbitre):
         return render_template("page_competition_arbitre.html" , competitions = les_competition,user=USER)
     else:
         flask.abort(404)
+        
+@app.route("/page_de_match/<id_match>")
+def page_de_match(id_competition,id_match):
+    modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    modele.close_connexion()
+    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):

@@ -1,0 +1,49 @@
+{% extends "base_home.html" %}
+
+
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rec_match.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>
+        <h1> Matches du {{ match.get_nom() }} le {{ match.get_date() }}  </h1>
+    </h1>
+</section>
+
+<div>
+
+    <div>
+        <p>
+            Match : {{ match.get_heure() }}
+        </p>
+        <p>
+            Arbitre : {{ match.get_arbitre() }}
+        </p>
+    </div>
+
+    <div>
+    
+    </div>
+
+    
+    <div>
+    
+    </div>
+
+    <div>
+    
+    </div>
+
+</div>
+
+
+{% endblock %}

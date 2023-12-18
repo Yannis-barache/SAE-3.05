@@ -65,11 +65,12 @@ class CompetitionBD:
         result = self.__connexion.execute(query)
 
         matchs = []
-        for (id_match, id_tireur1, id_tireur2, id_phase, id_arbitre, heure_match, fini) in result:
+        for (id_match, id_tireur1, id_tireur2, id_phase, id_arbitre,id_piste, heure_match, fini) in result:
             escrimeur_n1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
             escrimeur_n2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
             arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_arbitre)
-            matchs.append(Match(id_match,id_phase, escrimeur_n1, escrimeur_n2, arbitre, heure_match, fini,Piste(1,1,"test")))
+            piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
+            matchs.append(Match(id_match,id_phase, escrimeur_n1, escrimeur_n2, arbitre, heure_match, fini,piste))
 
         return matchs
 
