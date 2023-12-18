@@ -98,7 +98,7 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
-        
+
     def get_competition_by_arbitre(self, id_e: int):
         """
         Fonction qui retourne une competition en fonction de son id

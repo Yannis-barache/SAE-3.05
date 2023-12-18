@@ -5,7 +5,7 @@ import os
 from .app import app
 from flask import render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
+from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
@@ -79,7 +79,7 @@ class ConnexionForm(FlaskForm):
 class InscriptionForm(FlaskForm):
     modele_appli = ModeleAppli()
     dixhuit = date.today() - timedelta(days=18 * 365)
-    numLicence = IntegerField(
+    num_licence = IntegerField(
         "Votre numéro de licence",
         validators=[DataRequired(),
                     NumberRange(min=0)])
@@ -165,7 +165,7 @@ def inscription():
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
-        num_licence = int(form.numLicence.data)
+        num_licence = int(form.num_licence.data)
         nom = form.nom.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
@@ -260,7 +260,7 @@ def regles():
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
-    if USER != None and USER.is_arbitre():
+    if USER is not None and USER.is_arbitre():
         modele = ModeleAppli()
         print("id_competition", id_competition)
         la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
@@ -284,7 +284,7 @@ def competition_match(id_competition):
 @app.route("/competition_arbitre/<id_arbitre>")
 def competition_arbitre(id_arbitre):
     print("icicicicic",USER)
-    if USER != None and USER.get_arbitrage():
+    if USER is not None and USER.get_arbitrage():
         modele = ModeleAppli()
         les_competition = modele.get_competition_bd().get_competition_by_arbitre(id_arbitre)
         modele.close_connexion()
