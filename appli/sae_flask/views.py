@@ -299,6 +299,8 @@ def deconnexion():
 def home_admin():
     return render_template("Admin/home_admin.html", user=USER)
 
+# Club
+
 @app.route("/admin/clubs")
 def admin_club():
     modele = ModeleAppli()
@@ -349,7 +351,6 @@ def ajouter_club():
     form = ClubForm2()
     return render_template("Admin/Club/add_club.html", user=USER, title="Ajouter club", form=form)
 
-
 class ClubForm(FlaskForm):
     id = HiddenField('id')
     name = StringField('Nom', validators=[DataRequired()])
@@ -360,4 +361,110 @@ class ClubForm2(FlaskForm):
     name = StringField('Nom', validators=[DataRequired()])
     adresse = StringField('Adresse', validators=[DataRequired()])
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
+    title = HiddenField('title')
+
+# Escrimeur
+
+@app.route("/admin/escrimeurs")
+def admin_escrimeur():
+    modele = ModeleAppli()
+    les_escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur()
+    modele.close_connexion()
+    return render_template("Admin/Escrimeur/escrimeurs.html", user=USER, escrimeurs=les_escrimeurs)
+
+@app.route("/admin/supprimer_escrimeurs/<int:id_escrimeur>", methods=["GET", "POST"])
+def supprimer_escrimeur(id_escrimeur):
+    modele = ModeleAppli()
+    modele.get_escrimeur_bd().delete_escrimeur(id_escrimeur)
+    modele.close_connexion()
+    return redirect(url_for('admin_escrimeur'))
+
+@app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>", methods=["GET", "POST"])
+def modifier_escrimeur(id_escrimeur):
+    modele = ModeleAppli()
+    escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
+    form = EscrimeurForm()
+    form.name.data = escrimeur.get_nom()
+    form.prenom.data = escrimeur.get_prenom()
+    form.date_naissance.data = escrimeur.get_date_naissance()
+    form.sexe.process_data(escrimeur.get_sexe())
+    form.categorie.process_data(escrimeur.get_categorie().get_id())
+    form.club.process_data(escrimeur.get_club().get_id())
+    form.arbitrage.process_data("Oui" if escrimeur.get_arbitrage() else "Non")
+    form.licence.data = escrimeur.get_licence()
+    form.nom_utilisateur.data = escrimeur.get_nom_utilisateur()
+    modele.close_connexion()
+    return render_template("Admin/Escrimeur/modifier_escrimeur.html", user=USER, title="Modification escrimeur", escrimeur=escrimeur, form=form)
+
+@app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>/<int:type>", methods=["GET", "POST"])
+def update_escrimeur(id_escrimeur, type):
+    modele = ModeleAppli()
+    if type == 1:
+        form = EscrimeurForm()
+        escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
+        nom = form.name.data
+        prenom = form.prenom.data
+        date_naissance = form.date_naissance.data
+        sexe = form.sexe.data
+        categorie = modele.get_categorie_bd().get_categorie_by_id(form.categorie.data)
+        club = modele.get_club_bd().get_club_by_id(form.club.data)
+        licence = form.licence.data
+        arbitre = True if form.arbitrage.data == "Oui" else False
+        nom_utilisateur = form.nom_utilisateur.data
+        escrimeur.set_nom(nom)
+        escrimeur.set_prenom(prenom)
+        escrimeur.set_date_naissance(date_naissance)
+        escrimeur.set_sexe(sexe)
+        escrimeur.set_categorie(categorie)
+        escrimeur.set_club(club)
+        escrimeur.set_licence(licence)
+        escrimeur.set_nom_utilisateur(nom_utilisateur)
+        escrimeur.set_arbitrage(arbitre)
+        modele.get_escrimeur_bd().update_escrimeur(escrimeur)
+    else :
+        form = EscrimeurForm2()
+        nom = form.name.data
+        prenom = form.prenom.data
+        date_naissance = form.date_naissance.data
+        sexe = form.sexe.data
+        categorie = modele.get_categorie_bd().get_categorie_by_id(form.categorie.data)
+        club = modele.get_club_bd().get_club_by_id(form.club.data)
+        licence = form.licence.data
+        arbitre = True if form.arbitrage.data == "Oui" else False
+        nom_utilisateur = form.nom_utilisateur.data
+        escrimeur = Escrimeur(1, nom, prenom, sexe, date_naissance,
+                                        prenom.lower(), "mdp", licence, None,
+                                        club, categorie, arbitre)
+        modele.get_escrimeur_bd().insert_escrimeur(escrimeur)
+    modele.close_connexion()
+    return redirect(url_for('admin_escrimeur'))
+
+@app.route("/admin/ajouter_escrimeur", methods=["GET", "POST"])
+def ajouter_escrimeur():
+    form = EscrimeurForm2()
+    return render_template("Admin/Escrimeur/add_escrimeur.html", user=USER, title="Ajouter escrimeur", form=form)
+
+class EscrimeurForm(FlaskForm):
+    id = HiddenField('id')
+    name = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
+    sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in ModeleAppli().get_club_bd().get_all_club()], validators=[DataRequired()])
+    licence = StringField('License', validators=[DataRequired()])
+    nom_utilisateur = StringField('Nom d\'utilisateur', validators=[DataRequired()])
+    arbitrage = SelectField('Arbitrage', choices=["Oui", "Non"], validators=[DataRequired()])
+    title = HiddenField('title')
+
+class EscrimeurForm2(FlaskForm):
+    name = StringField('Nom', validators=[DataRequired()])
+    prenom = StringField('Prenom', validators=[DataRequired()])
+    date_naissance = DateField('Date de naissance', validators=[DataRequired()])
+    sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in ModeleAppli().get_club_bd().get_all_club()], validators=[DataRequired()])
+    licence = StringField('License', validators=[DataRequired()])
+    nom_utilisateur = StringField('Nom d\'utilisateur', validators=[DataRequired()])
+    arbitrage = SelectField('Arbitrage', choices=["Oui", "Non"], validators=[DataRequired()])
     title = HiddenField('title')

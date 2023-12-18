@@ -14,7 +14,7 @@
 
         <div class="grey-bg center">
 
-            {% if nb > 0 %}
+            {% if nb_poule > 0 %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb - 1) }}" >
                     <button>
                         <img class="arrow arrow-l" src="{{ url_for('static', filename='../static/img/arrow-l.png') }}" alt="">
@@ -22,7 +22,7 @@
                 </form>
             {% endif %}
             <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
-            {% if nb > 0 %}
+            {% if nb_poule > 0 %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb + 1) }}" >
                     <button>
                         <img class="arrow arrow-r" src="{{ url_for('static', filename='../static/img/arrow-r.png') }}" alt="">

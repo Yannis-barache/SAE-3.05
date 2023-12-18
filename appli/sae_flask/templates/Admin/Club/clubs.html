@@ -14,8 +14,7 @@
             <th>Nom</th>
             <th>Adresse</th>
             <th>Nombre d'escrimeurs</th>
-            <th>Modifier le club</th>
-            <th>Supprimer le club</th>
+            <th>Action</th>
         </tr>
     {% for club in clubs %}
 
@@ -23,8 +22,8 @@
             <td>{{ club[0].get_nom() }}</td>
             <td>{{ club[0].get_adresse() }}</td>
             <td>{{ club[1] }}</td>
-            <td><a href="{{ url_for('modifier_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Modifier</a></td>
-            <td><a href="{{ url_for('supprimer_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Supprimer</a></td>
+            <td><a href="{{ url_for('modifier_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Modifier</a>
+                <a href="{{ url_for('supprimer_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Supprimer</a></td>
         </tr>
     {% endfor %}
     </table>
