@@ -13,7 +13,7 @@ class Piste:
         """
         Constructeur de la classe Piste
         :param id_piste: id de la piste
-        :param id_lieu: id du lieu
+        :param lieu: le lieu
         :param description_piste: description de la piste
         """
         self.__id = id_piste
