@@ -10,7 +10,7 @@ class Piste:
     Classe Piste
     """
 
-    def __init__(self, id_piste: int, lieu: Lieu, description_piste: str):
+    def __init__(self, id_piste: int, lieu: int, description_piste: str):
         """
         Constructeur de la classe Piste
         :param id_piste: id de la piste
@@ -65,14 +65,6 @@ class Piste:
         return self.__id_piste
 
 
-    def get_description(self) -> str:
-        """
-        Fonction qui retourne la description de la piste
-
-        Returns:
-            str: description de la piste
-        """
-        return self.__description
 
     def set_id_piste(self, id_piste: int) -> None:
         """
