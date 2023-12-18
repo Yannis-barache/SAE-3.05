@@ -20,6 +20,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from competition import Competition
+from match import Match
 from phase import Phase
 
 
@@ -67,7 +68,7 @@ class CompetitionBD:
             escrimeur_n1 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur1)
             escrimeur_n2 = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_tireur2)
             arbitre = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_arbitre)
-            matchs.append(Match(id_match,id_phase, escrimeur_n1, escrimeur_n2, arbitre, heure_match, fini))
+            matchs.append(Match(id_match,id_phase, escrimeur_n1, escrimeur_n2, arbitre, heure_match, fini,None))
 
         return matchs
 

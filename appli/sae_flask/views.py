@@ -260,13 +260,16 @@ def regles():
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
-    modele = ModeleAppli()
-    print("id_competition", id_competition)
-    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
-    modele.close_connexion()
-    return render_template("competition.html", compet=la_competition,
-                           poule=nb_poule, user=USER)
+    if USER != None and USER.is_arbitre():
+        modele = ModeleAppli()
+        print("id_competition", id_competition)
+        la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+        nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+        modele.close_connexion()
+        return render_template("competition.html", compet=la_competition,
+                            poule=nb_poule, user=USER)
+    else:
+        flask.abort(404)
 
 @app.route("/competition_match/<id_competition>")
 def competition_match(id_competition):
@@ -277,13 +280,17 @@ def competition_match(id_competition):
     return render_template("competition_match.html" , compet = la_competition, matchs = matchs,user=USER)
 
 # verifier que le USer est conecter + arbitre
+
 @app.route("/competition_arbitre/<id_arbitre>")
 def competition_arbitre(id_arbitre):
-    modele = ModeleAppli()
-    les_competition = modele.get_competition_bd().get_competition_by_arbitre(id_arbitre)
-    modele.close_connexion()
-    return render_template("page_competition_arbitre.html" , competitions = les_competition,user=USER)
-
+    print("icicicicic",USER)
+    if USER != None and USER.get_arbitrage():
+        modele = ModeleAppli()
+        les_competition = modele.get_competition_bd().get_competition_by_arbitre(id_arbitre)
+        modele.close_connexion()
+        return render_template("page_competition_arbitre.html" , competitions = les_competition,user=USER)
+    else:
+        flask.abort(404)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
