@@ -5,6 +5,7 @@
 {{ super() }}
     <!-- Link du fichier js-->
     <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
 
 {% endblock %}
 
@@ -32,7 +33,7 @@
           <th>LIEUX</th> 
           <th>DATE</th> 
           <th>STATUT</th> 
-          <th colspan="2">ACTION</th>
+          <th colspan="3">ACTION</th>
         </tr>
 
         {% for competition in competitions %}
@@ -64,6 +65,10 @@
                 {% else %}
                 <td> <a href="{{ url_for('poule',id_competition= competition.get_id(),nb = 0) }}"> Voir les résultats </a></td>
                 {% endif %}
+                {% if user|is_arbitre %}
+                <td> <a href="{{ url_for('participants',id_competition= competition.get_id()) }}"> Participants </a></td>
+                {% endif %}
+
             </tr>
 
         {% endfor %}

@@ -1,0 +1,52 @@
+{% extends "base_home.html" %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/participants.css') }}">
+
+{% endblock %}
+{% block content %}
+
+    <div class="grey-bg center">
+        <p>{{ competition.get_nom() }} du {{ competition.get_date() }}</p>
+    </div>
+
+
+    <div class="container">
+        <div class="box">
+            <h3>Les escrimeurs</h3>
+            {% if inscrits|length <=0 %}
+                <p>Aucun escrimeur n'est inscrit à cette compétition</p>
+            {% endif %}
+            {% for escrimeur in inscrits %}
+                <p>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
+            {% endfor %}
+
+        </div>
+
+
+
+        <div class="box">
+            <h3>Les arbitres</h3>
+            {% if arbitres|length <=0 %}
+                <p>Aucun arbitre n'est inscrit à cette compétition</p>
+            {% endif %}
+            {% for arbitre in arbitres %}
+                <p>{{ arbitre.get_nom() }} {{ arbitre.get_prenom() }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="bouton">
+            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('generation_poule',id_competition = competition.get_id())}}'">Générer les poules</button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}
+

@@ -232,7 +232,6 @@ def connexion(nom):
                 identifiant, mdp)
             modele_appli.close_connexion()
             if USER is not None and USER.get_mdp() == mdp:
-                print("redirectzefdiz")
                 return redirect(url_for('home'))
         elif nom == "ORGANISATEUR":
             USER = modele_appli.get_organisateur_bd(
@@ -318,3 +317,51 @@ def deconnexion():
     global USER
     USER = None
     return redirect(url_for('choose_sign'))
+
+@app.route("/participants/<id_competition>")
+def participants(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
+    inscrits = []
+
+    for i in inscription:
+        inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+
+    arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
+    arbitres = []
+    for arbitrage in arbitrages:
+        arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(arbitrage.get_id_escrimeur()))
+
+    modele.close_connexion()
+    return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits, arbitres=arbitres)
+
+@app.route("/generation_poule/<id_competition>")
+def generation_poule(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    print("competition", competition)
+    modele.get_competition_bd().generate_poule_compet(competition.get_id())
+    modele.close_connexion()
+    return redirect(url_for('competition', id_competition=id_competition))
+
+
+@app.route("/arbitrage")
+def arbitrage():
+    modele = ModeleAppli()
+    id_compet_arbitre = modele.get_inscrire_arbitre_bd().get_all_compet_arbitre(USER.get_id())
+    competitions = []
+    for id_compet in id_compet_arbitre:
+        competitions.append(modele.get_competition_bd().get_competition_by_id(id_compet))
+
+    modele.close_connexion()
+    return render_template("arbitre/acceuil_arbitre.html", competitions=competitions)
+
+@app.route("/arbitrage/<id_competition>")
+def arbitrage_competition(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    poules = modele.get_poule_bd().get_poules_by_compet(competition)
+    modele.close_connexion()
+    return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
