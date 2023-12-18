@@ -41,10 +41,15 @@
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ competition.get_etat() }} </td>
+
                 {% if competition.get_etat() == 'Inscription ouverte' %}
-                <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
+                    {% if competition.get_id() in competitions_inscrit %}
+                        <td> <a href="#"> SE DESINSCRIRE </a></td>
+                    {% else %}
+                        <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
+                    {% endif %}
                 {% else %}
-                <td> Inscription terminée </td>
+                    <td> Inscription terminée </td>
                 {% endif %}
 
                 {% if competition.get_etat() != 'En cours' and competition.get_etat() != 'Terminée' %}

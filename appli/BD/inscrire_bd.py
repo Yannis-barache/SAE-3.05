@@ -6,10 +6,13 @@ import sys
 import os
 from sqlalchemy.sql.expression import text
 
+
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from inscrire import Inscrire
+from escrimeur import Escrimeur
 
 
 class InscrireBD:
@@ -85,3 +88,25 @@ class InscrireBD:
         except Exception as e:
             print(e)
             return None
+
+    def  get_all_inscrit_escrimeur(self, escrimeur : Escrimeur):
+        """
+        Fonction qui retourne tous les inscrits à une compétition
+
+        Args:
+            competition (Competition) : compétition
+            :param escrimeur:
+        """
+        try:
+            query = text(
+                f'SELECT idCompetition FROM INSCRIRE WHERE idEscrimeur = {escrimeur.get_id()}'
+            )
+            result = self.__connexion.execute(query)
+            inscrires = []
+            for (id_competition, ) in result:
+                inscrires.append(Inscrire(id_competition, escrimeur.get_id()))
+            return inscrires
+        except Exception as e:
+            print(e)
+            return None
+

@@ -117,13 +117,23 @@ class InscriptionForm(FlaskForm):
 def home():
     modele_appli = ModeleAppli()
     competitions = modele_appli.get_competition_bd().get_all_competition()
+    inscrit = []
+    if USER is not None and isinstance(USER, Escrimeur):
+        inscription = modele_appli.get_inscrire_bd().get_all_inscrit_escrimeur(USER)
+
+        for i in inscription:
+            inscrit.append(i.get_id_competition())
+
+
+
+
     print("USER ", USER)
     lien = "/"
     if USER is None:
         lien = "/choisir_statut_connexion"
     modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=competitions, user=USER , lien = lien
+        "home.html",competitions=competitions, user=USER , lien = lien , competitions_inscrit = inscrit
     )
 
 
