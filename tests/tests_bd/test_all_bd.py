@@ -1029,7 +1029,11 @@ class TestToucheBD(unittest.TestCase):
         """
         Test de la méthode get_by_match
         """
-        match = Match(9, None, None, None, None, None, None, None)
+        escrimeur = Escrimeur(6, None, None, None, None, None, None, None,
+                              None, None, None, None)
+        escrimeur2 = Escrimeur(8, None, None, None, None, None, None, None,
+                              None, None, None, None)
+        match = Match(9, None, escrimeur, escrimeur2, None, None, None, None)
         touches = self.touche_bd.get_by_match(match)
         self.assertIsInstance(touches, list)
         try:
@@ -1316,3 +1320,6 @@ class TestException(TestClubBD):
         """
         inscrires = self.inscrire_bd2.get_all_inscrire()
         self.assertIsNone(inscrires)
+
+if __name__ == '__main__':
+    unittest.main()
