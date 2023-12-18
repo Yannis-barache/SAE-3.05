@@ -52,7 +52,7 @@ class EscrimeurBD:
             print(e)
             return None
 
-    def get_all_escrimeur(self):
+    def get_all_escrimeur2(self):
         """
         Fonction qui retourne tous les escrimeurs
         :return: liste d'escrimeur

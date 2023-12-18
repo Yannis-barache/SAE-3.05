@@ -368,7 +368,7 @@ class ClubForm2(FlaskForm):
 @app.route("/admin/escrimeurs")
 def admin_escrimeur():
     modele = ModeleAppli()
-    les_escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur()
+    les_escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur2()
     modele.close_connexion()
     return render_template("Admin/Escrimeur/escrimeurs.html", user=USER, escrimeurs=les_escrimeurs)
 
