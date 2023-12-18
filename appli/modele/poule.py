@@ -38,8 +38,8 @@ class Poule:
         """
         Fonction qui retourne les matchs de la poule
 
-        Returns:
-            list[Match]: les matchs de la poule
+        Returns :
+            list[Match] : les matchs de la poule
         """
         return self.__les_matchs
 
