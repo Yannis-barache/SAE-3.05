@@ -41,10 +41,13 @@
                 <td> {{ competition.get_lieu().get_adresse() }} </td>
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ competition.get_etat() }} </td>
-
+                {% set lien = url_for('inscription_competition',id_competition= competition.get_id()) %}
+                {% if user == None %}
+                {% set lien = url_for('choisir_statut_connexion') %}
+                {% endif %}
                 {% if competition.get_etat() == 'Inscription ouverte' %}
                     {% if competition.get_id() in competitions_inscrit %}
-                        <td> <a href="#"> SE DESINSCRIRE </a></td>
+                        <td> <a href="{{ url_for('desinscription_competition',id_competition= competition.get_id()) }}"> SE DESINSCRIRE </a></td>
                     {% else %}
                         <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
                     {% endif %}

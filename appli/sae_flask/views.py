@@ -13,6 +13,7 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from constantes import USER
+from inscrire import Inscrire
 
 USER = USER
 
@@ -120,20 +121,12 @@ def home():
     inscrit = []
     if USER is not None and isinstance(USER, Escrimeur):
         inscription = modele_appli.get_inscrire_bd().get_all_inscrit_escrimeur(USER)
-
         for i in inscription:
             inscrit.append(i.get_id_competition())
-
-
-
-
     print("USER ", USER)
-    lien = "/"
-    if USER is None:
-        lien = "/choisir_statut_connexion"
     modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=competitions, user=USER , lien = lien , competitions_inscrit = inscrit
+        "home.html",competitions=competitions, user=USER , competitions_inscrit = inscrit
     )
 
 
@@ -298,6 +291,20 @@ def telecharger_pdf_poule(id_poule):
     modele = ModeleAppli()
     la_poule = modele.get_poule_bd().get_poule_by_id(id_poule)
     la_poule.generer_pdf()
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+@app.route("/inscription_competition/<id_competition>")
+def inscription_competition(id_competition):
+    modele = ModeleAppli()
+    modele.get_inscrire_bd().insert_inscrire(Inscrire(id_competition, USER.get_id()))
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+@app.route("/desinscription_competition/<id_competition>")
+def desinscription_competition(id_competition):
+    modele = ModeleAppli()
+    modele.get_inscrire_bd().delete_inscrire_competition(Inscrire(id_competition, USER.get_id()))
     modele.close_connexion()
     return redirect(request.referrer)
 
