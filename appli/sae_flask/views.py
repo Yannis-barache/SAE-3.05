@@ -82,6 +82,7 @@ class ConnexionFormE(FlaskForm):
         "Votre N° de licence",
         validators=[DataRequired(),
                     NumberRange(min=0)])
+    
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
     next = HiddenField()
 
