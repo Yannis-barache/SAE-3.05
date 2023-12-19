@@ -1,9 +1,11 @@
-{% extends "base_home.html" %}
+{% extends "arbitre/base_arbitre.html" %}
 {% block styles %}
 {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/participants.css') }}">
-
+{% endblock %}
+{% block nav %}
+    {{  competition_nav(competition.get_id()) }}
 {% endblock %}
 {% block content %}
 
@@ -38,9 +40,25 @@
     </div>
 
     <div class="container">
+    {% if competition.get_etat() == "À venir" %}
         <div class="bouton">
             <button class="btn btn-primary" onclick="window.location.href='{{ url_for('generation_poule',id_competition = competition.get_id())}}'">Générer les poules</button>
         </div>
+    {% endif %}
+
+    {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
+        <div class="bouton">
+            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
+        </div>
+    {% endif %}
+
+    {% if competition.get_etat() == "Inscription ouverte" %}
+        <div class="bouton">
+           <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
+        </div>
+    {% endif %}
+
+
     </div>
 
 {% endblock %}

@@ -277,7 +277,10 @@ def poule(id_competition, nb):
     modele = ModeleAppli()
     nombre_poule = modele.get_poule_bd().nb_poule_compet(int(id_competition))
     print("nombre_poule", nombre_poule)
-    nb = int(nb) % nombre_poule
+    if nombre_poule == 0:
+        nombre_poule = -1
+    else :
+        nb = int(nb) % nombre_poule
     la_competition = modele.get_competition_bd().get_competition_by_id_s(id_competition)
     la_poule = modele.get_poule_bd().get_poules_by_compet_nb(int(id_competition), int(nb))
     modele.close_connexion()
