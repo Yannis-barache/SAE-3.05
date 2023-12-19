@@ -2,13 +2,13 @@
     /* width: max-content; */
     display: flex;
     flex-direction: column;
-    width: 5vw;
-    gap: 1vw;
+    width: 3rem;
+    gap: 10px;
     cursor: pointer;
     /* width: auto; */
     /* height: 148%; */
     /* height: 34px;*/
-    height: 4vw;
+    height: 34px;
 }
 
 .line {
@@ -31,10 +31,6 @@
     -ms-transform: rotate(405deg) translateY(0.1em) translateX(0.25em);
     transform: rotate(405deg) translateY(0.1em) translateX(0.25em);
     left: -2px;
-    top: 1vw;
-    @media only screen and (max-device-width: 400px) {
-        top: -0.5vw;
-    }
 }
 
 #toggleChecker:checked + #togglerLable .checkboxtoggler .line-2 {
@@ -124,4 +120,3 @@
     width: 130%;
 
 }
-
