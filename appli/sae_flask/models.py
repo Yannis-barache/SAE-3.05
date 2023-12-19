@@ -34,7 +34,3 @@ def load_user(user_id, user_type):
     except Exception as err:
         print(err)
         raise err
-
-
-
-
