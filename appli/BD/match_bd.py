@@ -9,7 +9,6 @@ from phase_bd import PhaseBD
 from escrimeur_bd import EscrimeurBD
 from inscrire_arbitre_bd import InscrireArbitreBD
 from piste_bd import PisteBD
-from touche_bd import ToucheBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -80,7 +79,6 @@ class MatchBD:
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
                 match = Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
                               heure, fini, piste)
-                match.set_touche(ToucheBD(self.__connexion).get_by_match(match))
                 return match
             return None
         except Exception as e:
