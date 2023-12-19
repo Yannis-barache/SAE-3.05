@@ -803,8 +803,8 @@ def arbitrage_competition(id_competition):
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
 
-@app.route("/arbitrage/<id_competition>/classement")
-def classement(id_competition):
+@app.route("/arbitrage/<id_competition>/classement/<full>")
+def podium(id_competition, full):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     # phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
@@ -818,7 +818,7 @@ def classement(id_competition):
     escrimeurs_matchs.append(Escrimeur(1, "BYE", "BYE", "H", date.today(), "bye", "mdp", 0, None, None, None, False))
     escrimeurs_matchs.append(Escrimeur(1, "COUCOU", "COUCOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
     escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
-
-
-
-    return render_template("arbitre/classement.html", competition=competition, escrimeurs = escrimeurs_matchs)
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)

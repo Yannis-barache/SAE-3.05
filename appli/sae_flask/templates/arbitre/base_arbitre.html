@@ -19,5 +19,5 @@
     <a class="btn" href="{{ url_for('poule',id_competition=compet_id,nb = 0) }}"> POULES </a>
     <a class="btn" href="{{ url_for('home') }}" >PHASE FINAL</a>
     <a class="btn" href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a>
-    <a class="btn" href="{{ url_for('classement',id_competition = compet_id) }}" >CLASSEMENT</a>
+    <a class="btn" href="{{ url_for('podium',id_competition = compet_id,full = False) }}" >CLASSEMENT</a>
 {% endmacro %}
