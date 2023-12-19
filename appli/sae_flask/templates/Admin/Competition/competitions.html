@@ -4,13 +4,24 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css')}}">
-{% endblock %}
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tab_adm.css')}}">
+
+{% endblock %}
 
 {% block content %}
 
+<div class="animation"> 
+
+    <img class= "match" src="{{ url_for('static', filename='../static/video/epee.gif') }}" alt="video match escrime">
+
+    <h1> LISTE DES COMPÉTITIONS</h1>
+
+</div>
+
+
 <div class="scroll-tableau" style="overflow-x: auto;">
-    <table class="tableau">
+    <table class="tab">
         <tr class="nom">
             <th>Nom</th>
             <th>Date</th>
@@ -26,6 +37,7 @@
             <th>Phase finale</th>
             <th>Action</th>
         </tr>
+
     {% for compet in compets %}
 
         <tr class="tableau">
