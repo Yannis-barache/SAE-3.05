@@ -1,0 +1,41 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="scroll-tableau" style="overflow-x: auto;">
+    <table class="tableau">
+        <tr>
+            <th>Adresse</th>
+            <th>Description</th>
+            <th>Nombre de pistes</th>
+            <th>Nombre de compétitions</th>
+            <th>Action</th>
+        </tr>
+    {% for lieu in lieux %}
+
+        <tr>
+            <td>{{ lieu[0].get_adresse() }}</td>
+            <td>{{ lieu[0].get_description() }}</td>
+            <td>{{ lieu[1] }}</td>
+            <td>{{ lieu[2] }}</td>
+            <td><a href="{{ url_for('modifier_lieu', id_lieu=lieu[0].get_id()) }}">Modifier</a>
+                <a href="{{ url_for('supprimer_lieu', id_lieu=lieu[0].get_id()) }}">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div>
+        <button class="btn">
+            <a href="{{ url_for('ajouter_lieu') }}" style="text-decoration: none;">Ajouter un lieu</a>
+        </button>
+
+    </div>
+</div>
+
+{% endblock %}

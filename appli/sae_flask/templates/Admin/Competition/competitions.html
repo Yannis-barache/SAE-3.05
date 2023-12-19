@@ -1,0 +1,61 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="scroll-tableau" style="overflow-x: auto;">
+    <table class="tableau">
+        <tr>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Date fin d'inscription</th>
+            <th>Categorie</th>
+            <th>Arme</th>
+            <th>Saison</th>
+            <th>Coefficient</th>
+            <th>Adresse</th>
+            <th>Nombre d'escrimeurs</th>
+            <th>Nombre d'arbitres</th>
+            <th>Nombre de poules</th>
+            <th>Phase finale</th>
+            <th>Action</th>
+        </tr>
+    {% for compet in compets %}
+
+        <tr>
+            <td>{{ compet[0].get_nom() }}</td>
+            <td>{{ compet[0].get_date() }}</td>
+            <td>{{ compet[0].get_date_fin_inscription() }}</td>
+            <td>{{ compet[0].get_categorie().get_nom() }}</td>
+            <td>{{ compet[0].get_arme().get_nom() }}</td>
+            <td>{{ compet[0].get_saison() }}</td>
+            <td>{{ compet[0].get_coefficient() }}</td>
+            <td>{{ compet[0].get_lieu().get_adresse() }}</td>
+            <td>{{ compet[1] }}</td>
+            <td>{{ compet[2] }}</td>
+            <td>{{ compet[3] }}</td>
+            {% if compet[4] %}
+                <td>Oui</td>
+            {% else %}
+                <td>Non</td>
+            {% endif %}
+            <td><a href="{{ url_for('modifier_competition', id_competition=compet[0].get_id()) }}" style="text-decoration: none;">Modifier</a>
+                <a href="{{ url_for('supprimer_competition', id_competition=compet[0].get_id()) }}" style="text-decoration: none;">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div>
+        <button class="btn">
+            <a href="{{ url_for('ajouter_competition') }}" style="text-decoration: none;">Ajouter une compétition</a>
+        </button>
+
+    </div>
+</div>
+
+{% endblock %}
