@@ -59,12 +59,9 @@ class ToucheBD:
             )
             result = self.__connexion.execute(query)
             touches = []
-            for (id_match, id_escrimeur, num) in result:
-                match.set_id(id_match)
-                escrimeur = match.get_escrimeur1(
-                ) if id_escrimeur == match.get_escrimeur1().get_id(
-                ) else match.get_escrimeur2()
-                touches.append(Touche(match, escrimeur, num))
+            for (_, id_escrimeur, num) in result:
+                escrimeur = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_escrimeur)
+                touches.append(Touche(match, escrimeur, int(num)))
             return touches
         except Exception as e:
             print(e)

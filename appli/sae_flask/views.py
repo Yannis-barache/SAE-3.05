@@ -21,6 +21,8 @@ from touche import Touche
 from organisateur import Organisateur
 
 USER = USER
+modele_appli = ModeleAppli()
+
 
 
 
@@ -121,13 +123,13 @@ class InscriptionForm(FlaskForm):
 
 @app.route("/", methods=["GET"])
 def home():
-    modele_appli = ModeleAppli()
-    competitions = modele_appli.get_competition_bd().get_all_competition()
+    competitions = modele_appli.get_competition_bd().get_all_competition() or []
     inscrit = []
     if USER is not None and isinstance(USER, Escrimeur):
         inscription = modele_appli.get_inscrire_bd().get_all_inscrit_escrimeur(USER)
-        for i in inscription:
-            inscrit.append(i.get_id_competition())
+        if inscription is not None:
+            for i in inscription:
+                inscrit.append(i.get_id_competition())
     print("USER ", USER)
     modele_appli.close_connexion()
     return render_template(
@@ -281,10 +283,12 @@ def competition(id_competition):
 
         
 @app.route("/page_de_match")
-def page_de_match(id_competition=2,id_match=10):
+def page_de_match(id_competition=1,id_match=1 ):
     modele = ModeleAppli()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
     modele.close_connexion()
     return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
 
@@ -334,20 +338,22 @@ def desinscription_competition(id_competition):
     return redirect(request.referrer)
 
 @app.route("/envoie_point/<id_match>/<id_escrimeur>",  methods=["GET", "POST"])
-def envoie_point(id_match, id_escrimeur):
+def envoie_point(id_match, id_escrimeur,id_competition=2):
     if USER is None:
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
+    escrimeur= modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
-    escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     numero = modele.get_touche_bd().get_max_num_touche(id_match)
-    print(le_match.get_les_touches())
-    print(le_match.get_nb_touche(escrimeur))
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    
     if numero >= 27:
         return redirect(request.referrer)
-    #modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
+    modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
     modele.close_connexion()
-    return redirect(request.referrer)
+    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
 
     
 

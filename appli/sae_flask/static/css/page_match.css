@@ -3,7 +3,7 @@
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    
+    margin-left: 10px;
 
 }
 
@@ -56,10 +56,36 @@ span{
 
 .circle{
     margin:10px;
-    width:100px;
-    background:#FF0000;
-    height:100px;
+    width:64px;
+    background:#2E2E2E;
+    height:64px;
     text-align:center;
     border-radius:100px;
-    <strong>line-height: 90px; /* 100 - 10 */</strong>
+    line-height: 54px; /* 100 - 10 */
+    font-weight: bold;
+    color: white;
+}
+
+.les-escimeur{
+
+
+
+}
+
+.ligne{
+    width: 100%;
+    color: #000;
+    margin: 10px 6px;
+    text-align: center;
+    height: 8px;
+    background-color: black;
+
+}
+
+#le-rouge{
+    background-color: red;
+}
+
+.le-marg{
+    margin: 2px;
 }

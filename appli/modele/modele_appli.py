@@ -185,6 +185,12 @@ class ModeleAppli:
             _type_: _description_
         """
         return self.__piste_bd
+    
+    def ouvrir_connexion(self):
+        """
+        ddd
+        """
+        self.__connexion.ouvrir_connexion()
 
     def close_connexion(self):
         """
