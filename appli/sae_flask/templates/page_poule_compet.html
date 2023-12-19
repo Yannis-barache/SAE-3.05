@@ -79,7 +79,7 @@
                                     <th class="bg-black">{{ i + 1 }}</th>
                                 {% elif j == i + 1 %}
                                     <th class="bg-grey"></th>
-                                {% elif j != les_escrimeurs|count and i != les_escrimeurs|count %}
+                                {% elif j != les_escrimeurs|count + 1 and i != les_escrimeurs|count %}
                                     {% set le_match = la_poule.get_match_by_escrimeurs(les_escrimeurs[i], les_escrimeurs[j - 1]) %}
                                     {% if le_match %}
                                         {% if le_match.est_commencer() %}
@@ -137,7 +137,7 @@
                                 <th class="bg-black">{{ i + 1 }}</th>
                             {% elif j == i + 1 %}
                                 <th class="bg-grey"></th>
-                            {% elif j != les_escrimeurs|count and i != les_escrimeurs|count %}
+                            {% elif j != les_escrimeurs|count + 1 and i != les_escrimeurs|count %}
                                 {% set le_match = la_poule.get_match_by_escrimeurs(les_escrimeurs[i], les_escrimeurs[j - 1]) %}
                                 {% if le_match %}
                                     {% if le_match.est_commencer() %}

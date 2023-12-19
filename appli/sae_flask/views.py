@@ -298,6 +298,8 @@ def poule(id_competition, nb):
 def telecharger_pdf_poule(id_poule):
     modele = ModeleAppli()
     la_poule = modele.get_poule_bd().get_poule_by_id(id_poule)
+    for match in la_poule.get_les_matchs():
+        print(match.est_finis())
     la_poule.generer_pdf()
     modele.close_connexion()
     return redirect(request.referrer)
