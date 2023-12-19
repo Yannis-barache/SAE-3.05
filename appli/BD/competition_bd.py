@@ -21,7 +21,6 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from competition import Competition
 from match import Match
-from piste import Piste
 from phase import Phase
 
 
