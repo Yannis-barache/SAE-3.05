@@ -5,7 +5,7 @@ import os
 from .app import app
 from flask import render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, TelField, DateField
+from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, DateField, FloatField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
@@ -14,6 +14,7 @@ from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from club import Club
 from lieu import Lieu
+from competition import Competition
 from constantes import USER
 
 USER = USER
@@ -532,4 +533,103 @@ class LieuForm(FlaskForm):
 class LieuForm2(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     adresse = StringField('Adresse', validators=[DataRequired()])
+    title = HiddenField('title')
+
+
+# Competition
+
+@app.route("/admin/competitions")
+def admin_competition():
+    modele = ModeleAppli()
+    les_competitions = modele.get_competition_bd().get_all_competition2()
+    modele.close_connexion()
+    return render_template("Admin/Competition/competitions.html", user=USER, compets=les_competitions)
+
+@app.route("/admin/supprimer_competitions/<int:id_competition>", methods=["GET", "POST"])
+def supprimer_competition(id_competition):
+    modele = ModeleAppli()
+    modele.get_competition_bd().delete_competition(id_competition)
+    modele.close_connexion()
+    return redirect(url_for('admin_competition'))
+
+@app.route("/admin/modifier_competitions/<int:id_competition>", methods=["GET", "POST"])
+def modifier_competition(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    form = CompetitionForm()
+    form.name.data = competition.get_nom()
+    form.date.data = competition.get_date()
+    form.date_fin_inscripiton.data = competition.get_date_fin_inscription()
+    form.categorie.process_data(competition.get_categorie().get_id())
+    form.saison.process_data(competition.get_saison())
+    form.arme.process_data(competition.get_arme().get_id())
+    form.lieu.process_data(competition.get_lieu().get_id())
+    form.coefficient.data = competition.get_coefficient()
+    modele.close_connexion()
+    return render_template("Admin/Competition/modifier_competition.html", user=USER, title="Modification competition", competition=competition, form=form)
+
+@app.route("/admin/modifier_competitions/<int:id_competition>/<int:type>", methods=["GET", "POST"])
+def update_competition(id_competition, type):
+    modele = ModeleAppli()
+    if type == 1:
+        form = CompetitionForm()
+        competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+        nom = form.name.data
+        date = form.date.data
+        date_fin_inscription = form.date_fin_inscripiton.data
+        categorie = modele.get_categorie_bd().get_categorie_by_id(form.categorie.data)
+        saison = form.saison.data
+        arme = modele.get_arme_bd().get_arme_by_id(form.arme.data)
+        lieu = modele.get_lieu_bd().get_lieu_by_id(form.lieu.data)
+        coefficient = form.coefficient.data
+        competition.set_nom(nom)
+        competition.set_date(date)
+        competition.set_date_fin_inscription(date_fin_inscription)
+        competition.set_categorie(categorie)
+        competition.set_saison(saison)
+        competition.set_arme(arme)
+        competition.set_lieu(lieu)
+        competition.set_coefficient(coefficient)
+        modele.get_competition_bd().update_competition(competition)
+    else :
+        form = CompetitionForm2()
+        nom = form.name.data
+        date = form.date.data
+        date_fin_inscription = form.date_fin_inscripiton.data
+        categorie = modele.get_categorie_bd().get_categorie_by_id(form.categorie.data)
+        saison = form.saison.data
+        arme = modele.get_arme_bd().get_arme_by_id(form.arme.data)
+        lieu = modele.get_lieu_bd().get_lieu_by_id(form.lieu.data)
+        coefficient = form.coefficient.data
+        competition = Competition(1, nom, date, date_fin_inscription, saison, lieu, arme, categorie, coefficient)
+        modele.get_competition_bd().insert_competition(competition)
+    modele.close_connexion()
+    return redirect(url_for('admin_competition'))
+
+@app.route("/admin/ajouter_competition", methods=["GET", "POST"])
+def ajouter_competition():
+    form = CompetitionForm2()
+    return render_template("Admin/Competition/add_competition.html", user=USER, title="Ajouter competition", form=form)
+
+class CompetitionForm(FlaskForm):
+    id = HiddenField('id')
+    name = StringField('Nom', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()])
+    date_fin_inscripiton = DateField('Date fin inscription', validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    saison = SelectField('Saison', choices=['été', 'hiver', 'printemps', 'automne'], validators=[DataRequired()])
+    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in ModeleAppli().get_arme_bd().get_all_arme()], validators=[DataRequired()])
+    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in ModeleAppli().get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
+    coefficient = FloatField('Coefficient', validators=[DataRequired()])
+    title = HiddenField('title')
+
+class CompetitionForm2(FlaskForm):
+    name = StringField('Nom', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()])
+    date_fin_inscripiton = DateField('Date fin inscription', validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    saison = SelectField('Saison', choices=['été', 'hiver', 'printemps', 'automne'], validators=[DataRequired()])
+    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in ModeleAppli().get_arme_bd().get_all_arme()], validators=[DataRequired()])
+    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in ModeleAppli().get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
+    coefficient = FloatField('Coefficient', validators=[DataRequired()])
     title = HiddenField('title')

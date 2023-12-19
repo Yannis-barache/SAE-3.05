@@ -806,7 +806,8 @@ class TestPhaseBD(unittest.TestCase):
         Test de la méthode insert_phase
         """
         phase = Phase(-1, 1)
-        self.phase_bd.insert_phase(phase)
+        id_p = self.phase_bd.insert_phase(phase)
+        self.phase_bd.delete_phase_by_id(id_p)
         try:
             self.phase_bd.insert_phase("a")
         except Exception as e:

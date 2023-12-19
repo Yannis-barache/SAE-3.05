@@ -67,3 +67,20 @@ class PhaseFinaleBD:
         except Exception as e:
             print(e)
             return None
+
+    def exist_phase_finale(self, id_compet: int):
+        """
+        Fonction qui vérifie si il existe une phase finale pour une compétition
+        
+        Args:
+            id_compet (int): id de la compétition
+        """
+        try:
+            query = text(
+                f'SELECT idPhaseFinale FROM PHASE_FINALE JOiN PHASE on PHASE.idPhase = PHASE_FINALE.idPhaseFinale WHERE idCompetition = {id_compet}'
+            )
+            result = self.__connexion.execute(query)
+            return result.rowcount > 0
+        except Exception as e:
+            print(e)
+            return None
