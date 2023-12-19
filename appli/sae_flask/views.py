@@ -662,7 +662,7 @@ class CompetitionForm2(FlaskForm):
     lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in ModeleAppli().get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
     coefficient = FloatField('Coefficient', validators=[DataRequired()])
     title = HiddenField('title')
-=======
+
 @app.route("/participants/<id_competition>")
 def participants(id_competition):
     modele = ModeleAppli()
