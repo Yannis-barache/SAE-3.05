@@ -410,6 +410,7 @@ class Competition:
         phase_finale.set_les_pistes(liste_pistes)
         les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)
+        return phase_finale, les_matchs
 
     def __str__(self) -> str:
         """
