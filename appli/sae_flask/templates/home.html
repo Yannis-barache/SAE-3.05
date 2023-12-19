@@ -4,7 +4,8 @@
 {% block styles %}
 {{ super() }}
     <!-- Link du fichier js-->
-
+    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
 
 {% endblock %}
 
@@ -22,7 +23,7 @@
         Notre site va vous permettre de vous inscrire dans une competition 
         si vous êtes escrimeur, mais également de visionner les dates de matchs à venir. <br>
         Vous pourrez également visionner les résultats si vous êtes un adepte de l'escrime ! </p>
-    </section>
+</section>
 
 <div class = "tableau">
     <table>
@@ -32,26 +33,42 @@
           <th>LIEUX</th> 
           <th>DATE</th> 
           <th>STATUT</th> 
-          <th colspan="2">ACTION</th>
+          <th colspan="3">ACTION</th>
         </tr>
 
         {% for competition in competitions %}
             <tr>
                 <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
-                <td> {{ competition.get_lieu().get_adresse() }} </td>
+                {% set lieu = competition.get_lieu() %}
+                {% set lien = "https://www.google.fr/maps/place/" + lieu.get_adresse() + "/" %}
+
+                <td> <a href="{{ lien }}">{{ lieu.get_adresse() }}</a> </td>
+
                 <td> {{ competition.get_date() }}</td>
                 <td> {{ competition.get_etat() }} </td>
+                {% set lien = url_for('inscription_competition',id_competition= competition.get_id()) %}
+                {% if user == None %}
+                {% set lien = url_for('choisir_statut_connexion') %}
+                {% endif %}
                 {% if competition.get_etat() == 'Inscription ouverte' %}
-                <td> <a href="#"> S'INSCRIRE </a></td>
+                    {% if competition.get_id() in competitions_inscrit %}
+                        <td> <a href="{{ url_for('desinscription_competition',id_competition= competition.get_id()) }}"> SE DESINSCRIRE </a></td>
+                    {% else %}
+                        <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
+                    {% endif %}
                 {% else %}
-                <td> Inscription terminée </td>
+                    <td> Inscription terminée </td>
                 {% endif %}
 
                 {% if competition.get_etat() != 'En cours' and competition.get_etat() != 'Terminée' %}
                 <td>  Pas encore de résultats </td>
                 {% else %}
-                <td> <a href="#"> VOIR RESULTATS </a></td>
+                <td> <a href="{{ url_for('poule',id_competition= competition.get_id(),nb = 0) }}"> Voir les résultats </a></td>
                 {% endif %}
+                {% if user|is_arbitre %}
+                <td> <a href="{{ url_for('participants',id_competition= competition.get_id()) }}"> Participants </a></td>
+                {% endif %}
+
             </tr>
 
         {% endfor %}

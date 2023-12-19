@@ -161,7 +161,7 @@ class Competition:
                                "%d-%m-%Y").date() < date.today():
             return "Inscription ouverte"
         else:
-            return "A venir"
+            return "À venir"
 
     def set_id(self, id_comp: int) -> None:
         """

@@ -527,7 +527,7 @@ class TestCompetition(unittest.TestCase):
         phase.clear_matchs()
         self.assertEqual(competition.get_etat(), 'Inscription ouverte')
         competition.set_date_fin_inscription(date_ojd_plus_1)
-        self.assertEqual(competition.get_etat(), 'A venir')
+        self.assertEqual(competition.get_etat(), 'À venir')
         competition.set_date_fin_inscription(date.today())
         competition.set_date(date.today())
         self.assertEqual(competition.get_etat(), 'En cours')

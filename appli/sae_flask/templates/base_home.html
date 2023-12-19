@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EscriUT'O</title>
     {% block styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
@@ -52,7 +52,7 @@
                 <a class="compet" href="{{ url_for('home') }}"> COMPÉTITIONS </a>
 
                 {% if user|is_arbitre %}
-                <a class="compet" href="{{ url_for('competition_arbitre',id_arbitre=user.get_id()) }}">ARBITRAGE</a>
+                <a class="compet" href="{{ url_for('arbitrage') }}">ARBITRAGE</a>
                 {% endif %}
                 <a class="regles" href="{{ url_for('regles') }}"> RÈGLES </a>
             {% endblock %}
