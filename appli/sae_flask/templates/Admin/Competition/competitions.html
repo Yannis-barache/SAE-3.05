@@ -3,6 +3,7 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css')}}">
 {% endblock %}
 
 
@@ -10,7 +11,7 @@
 
 <div class="scroll-tableau" style="overflow-x: auto;">
     <table class="tableau">
-        <tr>
+        <tr class="nom">
             <th>Nom</th>
             <th>Date</th>
             <th>Date fin d'inscription</th>
@@ -27,7 +28,7 @@
         </tr>
     {% for compet in compets %}
 
-        <tr>
+        <tr class="tableau">
             <td>{{ compet[0].get_nom() }}</td>
             <td>{{ compet[0].get_date() }}</td>
             <td>{{ compet[0].get_date_fin_inscription() }}</td>
@@ -51,8 +52,10 @@
     </table>
 
     <div>
-        <button class="btn">
-            <a href="{{ url_for('ajouter_competition') }}" style="text-decoration: none;">Ajouter une compétition</a>
+            <button class="btn" >
+            <span class="box">
+                <a href="{{ url_for('ajouter_competition') }}" style="text-decoration: none;" > Ajouter une compétition</a>
+            </span>
         </button>
 
     </div>

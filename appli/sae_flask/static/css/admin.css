@@ -38,3 +38,15 @@
 th, td {
     padding: 1em;
 }
+
+.tableau{
+    text-align: center
+}
+
+th{
+    font-size: 1.3em;
+}
+
+.box a {
+    color : black;
+}
