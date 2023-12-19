@@ -11,6 +11,12 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from phase_final import PhaseFinal
 
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/BD'))
+
+from match_bd import MatchBD
+from touche_bd import ToucheBD
+
 
 class PhaseFinaleBD:
     """
@@ -64,6 +70,35 @@ class PhaseFinaleBD:
                          str(phase_finale.get_id_phase_f()))
             self.__connexion.execute(query)
             self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_phase_finale_by_compet(self, id_compet: int):
+        """
+        Fonction qui retourne la phase finale d'une compétition
+        :param id_compet: id de la compétition
+        :return: phase finale
+        """
+        try:
+            query = text(
+                "SELECT idPhaseFinale FROM PHASE_FINALE join PHASE ON idPhase = idPhaseFinale WHERE idCompetition = "
+                + str(id_compet))
+            result = self.__connexion.execute(query)
+            for (id_phase_finale, ) in result:
+                phase_final = PhaseFinal(id_phase_finale)
+            query = text(
+                "SELECT idMatch FROM MATCHS where idPhase = " + str(phase_final.get_id_phase_f()))
+            result = self.__connexion.execute(query)
+            matches = []
+            for (id_match, ) in result:
+                match = MatchBD(self.__connexion).get_match_by_id(id_match)
+                match.set_touche(ToucheBD(self.__connexion).get_by_match(match))
+                matches.append(match)
+            phase_final.set_match(matches)
+            #TODO : ajouter les pistes
+
+            return phase_final
         except Exception as e:
             print(e)
             return None

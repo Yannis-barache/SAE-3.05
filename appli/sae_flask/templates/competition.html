@@ -53,7 +53,9 @@
                 <button class="btn-disable">voir les poules ?</button>
             {% endif %}
 
-            <button>voir la phase finale</button>
+            <form role="form" method="post" action="{{ url_for('phase_final', id_competition=compet.get_id()) }}" >
+                <button type="submit" class="btn-active">voir la phase final</button>
+            </form>
         </div>
 
     </div>

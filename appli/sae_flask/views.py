@@ -18,8 +18,6 @@ from inscrire import Inscrire
 USER = USER
 
 
-
-
 class ValideMdp:
     """
     Classe qui permet de vérifier que le mot de passe est valide
@@ -114,6 +112,7 @@ class InscriptionForm(FlaskForm):
     next = HiddenField()
     modele_appli.close_connexion()
 
+
 @app.route("/", methods=["GET"])
 def home():
     modele_appli = ModeleAppli()
@@ -126,7 +125,7 @@ def home():
     print("USER ", USER)
     modele_appli.close_connexion()
     return render_template(
-        "home.html",competitions=competitions, user=USER , competitions_inscrit = inscrit
+        "home.html", competitions=competitions, user=USER, competitions_inscrit=inscrit
     )
 
 
@@ -156,6 +155,7 @@ def choisir_statut_inscription():
         "choisir_statut_inscription.html",
     )
 
+
 @app.route("/espace_personnel/")
 def espace_personnel():
     if USER is None:
@@ -163,6 +163,7 @@ def espace_personnel():
     return render_template(
         "espace.html", user=USER
     )
+
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
@@ -216,7 +217,7 @@ def inscription():
 def connexion(nom):
     global USER
     modele_appli = ModeleAppli()
-    print("connexion ",USER)
+    print("connexion ", USER)
 
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
@@ -259,9 +260,11 @@ def connexion(nom):
     modele_appli.close_connexion()
     return render_template("page_connexion.html", nom=nom, form=form)
 
+
 @app.route("/regles")
 def regles():
-    return render_template("regles.html",user=USER)
+    return render_template("regles.html", user=USER)
+
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
@@ -272,6 +275,7 @@ def competition(id_competition):
     return render_template("competition.html", compet=la_competition,
                            poule=nb_poule, user=USER)
 
+
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
     modele = ModeleAppli()
@@ -279,15 +283,24 @@ def poule(id_competition, nb):
     print("nombre_poule", nombre_poule)
     if nombre_poule == 0:
         nombre_poule = -1
-    else :
+    else:
         nb = int(nb) % nombre_poule
     la_competition = modele.get_competition_bd().get_competition_by_id_s(id_competition)
     la_poule = modele.get_poule_bd().get_poules_by_compet_nb(int(id_competition), int(nb))
     modele.close_connexion()
     return render_template(
         "page_poule_compet.html", la_poule=la_poule,
-        compet=la_competition, nb=nb, user=USER, nb_poule = nombre_poule
+        compet=la_competition, nb=nb, user=USER, nb_poule=nombre_poule
     )
+
+@app.route("/phase_final/<id_competition>", methods=["GET", "POST"])
+def phase_final(id_competition):
+    modele = ModeleAppli()
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase_final = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    print(la_phase_final)
+    modele.close_connexion()
+    return render_template("phase_final.html", competition=la_competition, phase_final=la_phase_final, user=USER)
 
 @app.route('/telecharger_pdf_poule/<int:id_poule>')
 def telecharger_pdf_poule(id_poule):
@@ -296,6 +309,7 @@ def telecharger_pdf_poule(id_poule):
     la_poule.generer_pdf()
     modele.close_connexion()
     return redirect(request.referrer)
+
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
@@ -306,6 +320,7 @@ def inscription_competition(id_competition):
     modele.close_connexion()
     return redirect(request.referrer)
 
+
 @app.route("/desinscription_competition/<id_competition>")
 def desinscription_competition(id_competition):
     if USER is None:
@@ -315,11 +330,13 @@ def desinscription_competition(id_competition):
     modele.close_connexion()
     return redirect(request.referrer)
 
+
 @app.route("/deconnexion")
 def deconnexion():
     global USER
     USER = None
     return redirect(url_for('choose_sign'))
+
 
 @app.route("/participants/<id_competition>")
 def participants(id_competition):
@@ -338,6 +355,7 @@ def participants(id_competition):
 
     modele.close_connexion()
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits, arbitres=arbitres)
+
 
 @app.route("/generation_poule/<id_competition>")
 def generation_poule(id_competition):
@@ -360,6 +378,7 @@ def arbitrage():
     modele.close_connexion()
     return render_template("arbitre/acceuil_arbitre.html", competitions=competitions)
 
+
 @app.route("/arbitrage/<id_competition>")
 def arbitrage_competition(id_competition):
     modele = ModeleAppli()
@@ -367,4 +386,3 @@ def arbitrage_competition(id_competition):
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
-

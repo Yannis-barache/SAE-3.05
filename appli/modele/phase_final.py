@@ -130,4 +130,4 @@ class PhaseFinal:
         self.__les_matchs = []
 
     def __str__(self):
-        return f'Phase finale : {self.__id_phase_f} |'
+        return f'Phase finale : {self.__id_phase_f} | Matchs : {self.__les_matchs} | Pistes : {self.__les_pistes}'
