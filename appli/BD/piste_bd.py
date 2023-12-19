@@ -60,6 +60,26 @@ class PisteBD:
             print(e)
             return None
 
+    def get_pistes_by_id_competition(self, id_competition: int):
+        """
+        Fonction qui retourne une piste en fonction de son id de compétition
+        :param id_competition: id de la compétition
+        :return: piste
+        """
+        try:
+            query = text(
+                'SELECT idPiste, idLieu, descriptionPiste FROM PISTE WHERE idLieu = '
+                + str(id_competition))
+            result = self.__connexion.execute(query)
+            liste_pistes = []
+            for (id_piste, id_lieu, description_piste) in result:
+                liste_pistes.append(
+                    Piste(int(id_piste), int(id_lieu), description_piste))
+            return liste_pistes
+        except Exception as e:
+            print(e)
+            return None
+
     def get_piste_by_lieu(self, lieu: Lieu):
         """
         Fonction qui retourne toutes les pistes d'un lieu

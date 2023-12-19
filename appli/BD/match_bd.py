@@ -135,6 +135,20 @@ class MatchBD:
             print(e)
             return None
 
+    def delete_match(self, match: Match):
+        """
+        Fonction qui supprime un match
+        :param match : match
+        """
+        try:
+            query = text(
+                f"DELETE FROM MATCHS WHERE idMatch = {str(match.get_id())}")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
     def delete_match_by_arbitre(self, id_arbitre: int):
         """
         Fonction qui supprime un match en fonction de l'arbitre
