@@ -15,6 +15,7 @@ from poule_bd import PouleBD
 from escrimeur_bd import EscrimeurBD
 from phase_bd import PhaseBD
 from piste_bd import PisteBD
+from phase_finale_bd import PhaseFinaleBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -52,6 +53,36 @@ class CompetitionBD:
                 competitions.append(
                     Competition(id_competition, nom, date, date_fin, saison,
                                 lieu, arme, categorie, coefficient))
+            return competitions
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_all_competition2(self):
+        """
+        Fonction qui retourne toutes les competitions
+        :return: liste de competition
+        """
+        try:
+            query = text(
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition FROM COMPETITION')
+            result = self.__connexion.execute(query)
+            competitions = []
+            for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
+                 id_categorie, coefficient) in result:
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+                lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
+                arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
+                nombre_escrimeurs = InscrireBD(self.__connexion).get_nb_escrimeurs_competition(id_competition)
+                nombre_arbitres = InscrireArbitreBD(self.__connexion).get_nb_arbitres_competition(id_competition)
+                nombre_poule = PouleBD(self.__connexion).nb_poule_compet(id_competition)
+                exist_phase_final = PhaseFinaleBD(self.__connexion).exist_phase_finale(id_competition)
+                competitions.append(
+                    (Competition(id_competition, nom, date, date_fin, saison,
+                                lieu, arme, categorie, coefficient), nombre_escrimeurs, nombre_arbitres, nombre_poule, exist_phase_final))
             return competitions
         except Exception as e:
             print(e)
@@ -111,15 +142,53 @@ class CompetitionBD:
         :param competition : competition
         """
         try:
+            competition_nom = competition.get_nom().replace("'", "''")
             query = text(
                 f"INSERT INTO COMPETITION (nomCompetition, dateCompetition, "
                 f"dateFinInscription, saisonCompetition,idLieu, idArme, "
                 f"idCategorie, coefficientCompetition) VALUES "
-                f"('{competition.get_nom()}', '{competition.get_date()}', "
+                f"('{competition_nom}', '{competition.get_date()}', "
                 f"'{competition.get_date_fin_inscription()}', "
                 f"'{competition.get_saison()}', {competition.get_lieu().get_id()}, "
                 f"{competition.get_arme().get_id()}, "
                 f"{competition.get_categorie().get_id()}, {competition.get_coefficient()})"
+            )
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_competition(self, id_comp: int):
+        """
+        Fonction qui supprime une competition
+        :param id_comp: id de la competition
+        """
+        try:
+            query = text(
+                f"DELETE FROM COMPETITION WHERE idCompetition = {id_comp}")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def update_competition(self, competition: Competition):
+        """
+        Fonction qui met à jour une competition
+        :param competition: competition
+        """
+        try:
+            query = text(
+                f"UPDATE COMPETITION SET nomCompetition = '{competition.get_nom()}', "
+                f"dateCompetition = '{competition.get_date()}', "
+                f"dateFinInscription = '{competition.get_date_fin_inscription()}', "
+                f"saisonCompetition = '{competition.get_saison()}', "
+                f"idLieu = {competition.get_lieu().get_id()}, "
+                f"idArme = {competition.get_arme().get_id()}, "
+                f"idCategorie = {competition.get_categorie().get_id()}, "
+                f"coefficientCompetition = {competition.get_coefficient()} "
+                f"WHERE idCompetition = {competition.get_id()}"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()

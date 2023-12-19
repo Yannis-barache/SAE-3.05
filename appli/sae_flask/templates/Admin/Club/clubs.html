@@ -1,0 +1,39 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="scroll-tableau">
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Nombre d'escrimeurs</th>
+            <th>Action</th>
+        </tr>
+    {% for club in clubs %}
+
+        <tr>
+            <td>{{ club[0].get_nom() }}</td>
+            <td>{{ club[0].get_adresse() }}</td>
+            <td>{{ club[1] }}</td>
+            <td><a href="{{ url_for('modifier_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Modifier</a>
+                <a href="{{ url_for('supprimer_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div>
+        <button class="btn">
+            <a href="{{ url_for('ajouter_club') }}" style="text-decoration: none;">Ajouter un club</a>
+        </button>
+
+    </div>
+</div>
+
+{% endblock %}

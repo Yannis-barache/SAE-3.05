@@ -73,6 +73,23 @@ class InscrireArbitreBD:
             print(e)
             return None
 
+    def get_nb_arbitres_competition(self, id_compet):
+        """
+        Fonction qui retourne le nombre d'arbitres inscrits à une compétition
+        :param id_compet: id de la compétition
+        :return: nombre d'arbitres
+        """
+        try:
+            query = text(
+                f'SELECT COUNT(idEscrimeur) FROM ARBITRER WHERE idCompetition = {id_compet}'
+            )
+            result = self.__connexion.execute(query)
+            for (nombre, ) in result:
+                return nombre
+        except Exception as e:
+            print(e)
+            return None
+
     def insert_arbitre(self, arbitre: InscrireArbitre):
         """
         Fonction qui insère un arbitre

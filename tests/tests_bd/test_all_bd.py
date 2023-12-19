@@ -806,7 +806,8 @@ class TestPhaseBD(unittest.TestCase):
         Test de la méthode insert_phase
         """
         phase = Phase(-1, 1)
-        self.phase_bd.insert_phase(phase)
+        id_p = self.phase_bd.insert_phase(phase)
+        self.phase_bd.delete_phase_by_id(id_p)
         try:
             self.phase_bd.insert_phase("a")
         except Exception as e:
@@ -951,7 +952,6 @@ class TestPouleBD(unittest.TestCase):
         poules = self.poule_bd.get_poules_by_compet(1)
         self.assertIsInstance(poules, list)
         poules = self.poule_bd.get_poules_by_compet(2)
-        print(poules)
         self.assertIsInstance(poules, list)
         try:
             self.poule_bd.get_poules_by_compet(";")
@@ -975,7 +975,7 @@ class TestPouleBD(unittest.TestCase):
         """
         Test de la méthode insert_poule
         """
-        self.phase_bd.insert_phase_by_id(Phase(-11, 1))
+        self.phase_bd.insert_phase_by_id(Phase(-11, 13))
         self.poule_bd.insert_poule(Poule(-11))
         poule = Poule(-1)
         self.assertIsNone(self.poule_bd.insert_poule(poule))
@@ -1320,6 +1320,3 @@ class TestException(TestClubBD):
         """
         inscrires = self.inscrire_bd2.get_all_inscrire()
         self.assertIsNone(inscrires)
-
-if __name__ == '__main__':
-    unittest.main()

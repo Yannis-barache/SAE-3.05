@@ -1,0 +1,27 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form role="form" method ="POST" action="{{ url_for('update_club', id_club=0, type=2)}}">
+    
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.name.label }} {{ form.name(size =50) }}
+        {{ form.adresse.label }} {{ form.adresse(size =50) }}
+        {{ form.mdp.label }} {{ form.mdp(size =50) }}
+    </div >
+    {% if form.name.errors %}
+    <ul class="list-group">
+        {% for e in form.name.errors %}
+        <li>{{ e }}</li >
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <a href="{{url_for('admin_club')}}" style="text-decoration: none;">
+        <input type="button" value="Annuler">
+    </a>
+
+    <input type="submit" value="Ajouter le club">
+</form >
+{% endblock %}

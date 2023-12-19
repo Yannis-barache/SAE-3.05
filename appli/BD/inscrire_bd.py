@@ -59,6 +59,24 @@ class InscrireBD:
             print(e)
             return None
 
+    def get_nb_escrimeurs_competition(self, id_compet):
+        """
+        Fonction qui retourne le nombre d'escrimeurs inscrits à une compétition
+
+        Args:
+            id_compet (int): id de la compétition
+        """
+        try:
+            query = text(
+                f'SELECT COUNT(idEscrimeur) FROM INSCRIRE WHERE idCompetition = {id_compet}'
+            )
+            result = self.__connexion.execute(query)
+            for (nombre, ) in result:
+                return nombre
+        except Exception as e:
+            print(e)
+            return None
+
     def insert_inscrire(self, inscrire: Inscrire):
         """
         Fonction qui insère un inscrire

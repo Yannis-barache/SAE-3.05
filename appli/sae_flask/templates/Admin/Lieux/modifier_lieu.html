@@ -1,0 +1,30 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form role="form" method ="POST" action="{{ url_for('update_lieu', id_lieu=lieu.get_id(), type=1)}}">
+    
+    {{ form.hidden_tag() }}
+    <div style="display:flex; flex-wrap: wrap;">
+        <div style="flex-basis: 100%;">
+            {{ form.adresse.label }} {{ form.adresse(size =50) }}
+        </div>
+        <div style="flex-basis: 100%;">
+            {{ form.description.label }} {{ form.description(size =50) }}
+        </div>
+
+    </div >
+    {% if form.adresse.errors %}
+    <ul class="list-group">
+        {% for e in form.adresse.errors %}
+        <li>{{ e }}</li >
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="{{url_for('admin_lieu')}}" style="text-decoration: none;">
+        <input type="button" value="Annuler">
+    </a>
+
+    <input type="submit" value="Enregistrer">
+</form >
+{% endblock %}
