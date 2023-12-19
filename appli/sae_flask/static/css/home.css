@@ -95,30 +95,17 @@ footer > p {
     font-weight: bold;
 }
 
-table {
-    width: 100%;
-    text-align: center;
-}
-
-th, td {
-    border: solid black;
-    padding: 1.5em;
-}
-
 .paragfin {
     font-size: 0.8em;
     padding-top: 1em;
     margin-bottom: 0;
 }
 
-th {
-    text-align: center;
-}
+
 
 .intro p {
     padding-bottom: 1em;
 }
 
-.tableau {
-    width: 100%;
-}
+
+

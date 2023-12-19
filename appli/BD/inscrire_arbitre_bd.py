@@ -121,3 +121,21 @@ class InscrireArbitreBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_all_compet_arbitre(self,id_arbitre):
+        """
+        Fonction qui retourne toutes les compétitions d'un arbitre
+        :param id_arbitre : id de l'arbitre
+        :return: liste d'id de compétition
+        """
+        try:
+            query = text(
+                f"SELECT idCompetition FROM ARBITRER WHERE idEscrimeur = {str(id_arbitre)}")
+            result = self.__connexion.execute(query)
+            competitions = []
+            for (id_competition, ) in result:
+                competitions.append(id_competition)
+            return competitions
+        except Exception as e:
+            print(e)
+            return None
