@@ -211,7 +211,7 @@ class CompetitionBD:
             print(e)
             return None
 
-    def generate_poule_compet(self, id_compet: int):
+    def generate_poule_compet(self, id_compet: int, heure_debut: float):
         """
         Fonction qui génère les poules d'une compétition
         :param id_compet: id de la compétition
@@ -247,10 +247,43 @@ class CompetitionBD:
                     poule.set_id(id_phase)
                     poule.set_les_pistes(les_pistes)
                     poule_bd.insert_poule(poule)
-                    matchs = poule.generer_matchs(poules.get(poule), 10.5)
+                    matchs = poule.generer_matchs(poules.get(poule), heure_debut)
                     for match in matchs:
                         match_bd.insert_match(match)
             return poules
+        except Exception as e:
+            print(e)
+            return None
+
+    def generate_phase_finale(self, id_compet: int, heure_debut: float):
+        """
+        Fonction qui permet de générer la phase finale d'une compétition
+
+        Args:
+            id_compet (int): id de la compétition
+        
+        Returns:
+            int: id de la phase finale
+        """
+        try:
+            escrimeur_bd = EscrimeurBD(self.__connexion)
+            les_poules = PouleBD(self.__connexion).get_poules_by_compet(id_compet)
+            les_inscriptions_arbitres = InscrireArbitreBD(self.__connexion).get_arbitre_by_id_competition(id_compet)
+            les_arbitres = []
+            for inscrire in les_inscriptions_arbitres:
+                les_arbitres.append(
+                    escrimeur_bd.get_escrimeur_by_id(
+                        inscrire.get_id_escrimeur()))
+            les_pistes = PisteBD(self.__connexion).get_pistes_by_id_competition(id_compet)
+            phase_finale, les_matchs = Competition.generer_phase_finale(les_poules, les_arbitres, heure_debut, les_pistes)
+            phase = Phase(-1, id_compet)
+            id_phase = PhaseBD(self.__connexion).insert_phase(phase)
+            phase_finale.set_id_phase_f(id_phase)
+            PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
+            for match in les_matchs:
+                match.set_id_phase(id_phase)
+                MatchBD(self.__connexion).insert_match(match)
+            return id_phase
         except Exception as e:
             print(e)
             return None

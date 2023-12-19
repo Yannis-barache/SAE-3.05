@@ -300,9 +300,9 @@ class TestCompetitionBD(unittest.TestCase):
         """
         Test de la méthode generate_poule_compet
         """
-        self.competition_bd.generate_poule_compet(-1)
+        self.competition_bd.generate_poule_compet(-1, 10.5)
         try:
-            self.competition_bd.generate_poule_compet("a")
+            self.competition_bd.generate_poule_compet("a", 10.5)
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 
