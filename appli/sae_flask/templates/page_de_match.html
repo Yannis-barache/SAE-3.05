@@ -7,43 +7,137 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/rec_match.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_match.css')}}">
 <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
 
 {% endblock %}
 
 {% block content %}
 
+<div class="rec-central-content">
+
 <section>
-    <h1>
-        <h1> Matches du {{ match.get_nom() }} le {{ match.get_date() }}  </h1>
-    </h1>
+    <h1> {{ compet.get_nom() }} le {{ compet.get_date() }}  </h1>
 </section>
 
-<div>
 
-    <div>
-        <p>
-            Match : {{ match.get_heure() }}
-        </p>
-        <p>
-            Arbitre : {{ match.get_arbitre() }}
-        </p>
+
+
+<div class="enflex">
+
+    <div>   
+        
+        <div>
+            <p>
+                Match : {{ match.get_heure() }}
+            </p>
+            <p>
+                Arbitre : {{ match.get_arbitre().get_nom() }}
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div class="info-match">
+
+
+    
+
+    <div class="enflex colonne escrimeur" >
+    
+        <div class="enflex">
+            <span>
+                Escrimeur
+            </span>
+            <div class="cercle"></div>
+        </div>
+
+        <div>
+            <span>
+            {{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - NC
+            </span>
+            <span>
+                {{ match.get_escrimeur1().get_club().get_nom() }} 
+            </span>
+            <span>
+                {{ match.get_escrimeur1().get_categorie().get_nom( ) }} 
+            </span>
+
+        </div>
+
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur1().get_id() ) }}">
+            <button type="submit">
+                ADD
+            </button>
+        </form>
+        
+
+
+
     </div>
 
-    <div>
+        
+
+
+    <div class="enflex resultat">
     
+        <div class="circle">
+            {{ match.get_nb_touche(match.get_escrimeur1().get_id() ) }}
+        </div>
+        <div>
+            trait
+        </div>
+        <div class="circle">
+            {{ match.get_nb_touche(match.get_escrimeur2()) }}
+            
+        </div>
+
     </div>
 
+    <div class="enflex colonne escrimeur">
     
-    <div>
+        <div class="enflex">
+            <span>
+                Escrimeur
+            </span>
+            <div class="cercle"></div>
+        </div>
+
+        <div>
+            <span>
+                {{ match.get_escrimeur2().get_nom() }} - NC
+                </span>
+                <span>
+                    {{ match.get_escrimeur2().get_club().get_nom() }} 
+                </span>
+                <span>
+                    {{ match.get_escrimeur2().get_categorie().get_nom( ) }}
+                </span>
+
+        </div>
+
+        <div>
     
+            <button>
+                le boutton
+            </button>
+
+        </div>
+
     </div>
 
-    <div>
-    
-    </div>
+
+
 
 </div>
+
+<div class="enflex">
+    fin du match
+</div>
+
+</div>
+
 
 
 {% endblock %}

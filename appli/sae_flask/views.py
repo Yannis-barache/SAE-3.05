@@ -14,6 +14,7 @@ from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from constantes import USER
 from inscrire import Inscrire
+from touche import Touche
 
 USER = USER
 
@@ -75,7 +76,6 @@ class ConnexionForm(FlaskForm):
     identifiant = StringField("Votre nom", validators=[DataRequired()])
     mdp = PasswordField("Mot de passe", validators=[DataRequired()])
     next = HiddenField()
-
 
 class InscriptionForm(FlaskForm):
     modele_appli = ModeleAppli()
@@ -325,6 +325,25 @@ def desinscription_competition(id_competition):
     modele.close_connexion()
     return redirect(request.referrer)
 
+@app.route("/envoie_point/<id_match>/<id_escrimeur>",  methods=["GET", "POST"])
+def envoie_point(id_match, id_escrimeur):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
+    numero = modele.get_touche_bd().get_max_num_touche(id_match)
+    print(le_match.get_les_touches())
+    print(le_match.get_nb_touche(escrimeur))
+    if numero >= 27:
+        return redirect(request.referrer)
+    #modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+    
+
+
 @app.route("/deconnexion")
 def deconnexion():
     global USER
@@ -357,6 +376,8 @@ def generation_poule(id_competition):
     modele.get_competition_bd().generate_poule_compet(competition.get_id())
     modele.close_connexion()
     return redirect(url_for('competition', id_competition=id_competition))
+
+
 
 
 @app.route("/arbitrage")

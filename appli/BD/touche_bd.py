@@ -100,3 +100,24 @@ class ToucheBD:
             self.__connexion.commit()
         except Exception as e:
             print(e)
+
+    def get_max_num_touche(self, id_match: int):
+        """Function that returns the number of the next touch to insert into the database for a given match.
+
+        Args:
+            id_match (int): Match ID
+        """
+        try:
+            query = text(
+                f"SELECT COALESCE(MAX(numTouche), 0) AS maxTouche\
+                FROM TOUCHE WHERE idMatch = {id_match};"
+            )
+            result = self.__connexion.execute(query).fetchone()
+            if result is not None:
+                for element in result:
+                    return int(element)
+            else:
+                return 0
+        except Exception as e:
+            print(e)
+            # Handle the exception appropriately, e.g., log the error or raise it.

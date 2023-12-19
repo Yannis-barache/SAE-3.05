@@ -35,7 +35,7 @@ class Match:
 
         Returns:
             int: id du match
-        """
+        """ 
         return self.__id
 
     def get_id_phase(self) -> int:
