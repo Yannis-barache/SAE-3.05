@@ -379,7 +379,7 @@ class Competition:
     @staticmethod
     def generer_phase_finale(les_poules: list[Poule],
                              les_arbitres: list[Escrimeur],
-                             heure_debut: float) -> tuple[PhaseFinal, list]:
+                             heure_debut: float, liste_pistes: list[Piste]) -> tuple[PhaseFinal, list]:
         """
         Fonction qui genere la phase finale de la competition
 
@@ -392,9 +392,9 @@ class Competition:
             PhaseFinal : La phase finale de la competition
             list[Match] : La liste des matchs de la phase finale de la competition
         """
-        club_none = Club(-2, "None", "None", "None")
-        categorie_none = Categorie(-2, "None")
-        escrimeur_none = Escrimeur(-2, "None", "None", "None", "None", "None",
+        club_none = Club(1, "None", "None", "None")
+        categorie_none = Categorie(1, "None")
+        escrimeur_none = Escrimeur(308, "None", "None", "None", "None", "None",
                                    "None", "None", 0, club_none,
                                    categorie_none, False)
 
@@ -407,15 +407,9 @@ class Competition:
         while len(liste_escrimeur) < 2**puissance:
             liste_escrimeur.append(escrimeur_none)
         phase_finale = PhaseFinal(-1)
-        piste1 = Piste(-1, 1, "Piste 1")
-        piste2 = Piste(-1, 2, "Piste 2")
-        piste3 = Piste(-1, 3, "Piste 3")
-        piste4 = Piste(-1, 4, "Piste 4")
-        liste_piste = [piste1, piste2, piste3, piste4]
-        phase_finale.set_les_pistes(liste_piste)
+        phase_finale.set_les_pistes(liste_pistes)
         les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)
-        return phase_finale, les_matchs
 
     def __str__(self) -> str:
         """
