@@ -260,7 +260,7 @@ def regles():
 
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
-    print("id_competition", id_competition)
+    modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
     modele.close_connexion()
