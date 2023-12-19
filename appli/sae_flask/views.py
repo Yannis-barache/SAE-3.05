@@ -306,7 +306,10 @@ def inscription_competition(id_competition):
     if USER is None:
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
-    modele.get_inscrire_bd().insert_inscrire(Inscrire(id_competition, USER.get_id()))
+    try:
+        modele.get_inscrire_bd().insert_inscrire(Inscrire(id_competition, USER.get_id()))
+    except Exception as e:
+        error = str(e.__cause__)
     modele.close_connexion()
     return redirect(request.referrer)
 
@@ -520,29 +523,33 @@ def ajouter_escrimeur():
     return render_template("Admin/Escrimeur/add_escrimeur.html", user=USER, title="Ajouter escrimeur", form=form)
 
 class EscrimeurForm(FlaskForm):
+    modele = ModeleAppli()
     id = HiddenField('id')
     name = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
     date_naissance = DateField('Date de naissance', validators=[DataRequired()])
     sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
-    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
-    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in ModeleAppli().get_club_bd().get_all_club()], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in modele.get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in modele.get_club_bd().get_all_club()], validators=[DataRequired()])
     licence = StringField('License', validators=[DataRequired()])
     nom_utilisateur = StringField('Nom d\'utilisateur', validators=[DataRequired()])
     arbitrage = SelectField('Arbitrage', choices=["Oui", "Non"], validators=[DataRequired()])
     title = HiddenField('title')
+    modele.close_connexion()
 
 class EscrimeurForm2(FlaskForm):
+    modele = ModeleAppli()
     name = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
     date_naissance = DateField('Date de naissance', validators=[DataRequired()])
     sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
-    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
-    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in ModeleAppli().get_club_bd().get_all_club()], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in modele.get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    club = SelectField('Club', choices=[(club.get_id(), club.get_nom()) for club in modele.get_club_bd().get_all_club()], validators=[DataRequired()])
     licence = StringField('License', validators=[DataRequired()])
     nom_utilisateur = StringField('Nom d\'utilisateur', validators=[DataRequired()])
     arbitrage = SelectField('Arbitrage', choices=["Oui", "Non"], validators=[DataRequired()])
     title = HiddenField('title')
+    modele.close_connexion()
 
 # Lieu
 
@@ -725,27 +732,31 @@ def ajouter_competition():
     return render_template("Admin/Competition/add_competition.html", user=USER, title="Ajouter competition", form=form)
 
 class CompetitionForm(FlaskForm):
+    modele = ModeleAppli()
     id = HiddenField('id')
     name = StringField('Nom', validators=[DataRequired()])
     date = DateField('Date', validators=[DataRequired()])
     date_fin_inscripiton = DateField('Date fin inscription', validators=[DataRequired()])
-    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in modele.get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
     saison = SelectField('Saison', choices=['été', 'hiver', 'printemps', 'automne'], validators=[DataRequired()])
-    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in ModeleAppli().get_arme_bd().get_all_arme()], validators=[DataRequired()])
-    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in ModeleAppli().get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
+    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in modele.get_arme_bd().get_all_arme()], validators=[DataRequired()])
+    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in modele.get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
     coefficient = FloatField('Coefficient', validators=[DataRequired()])
     title = HiddenField('title')
+    modele.close_connexion()
 
 class CompetitionForm2(FlaskForm):
+    modele = ModeleAppli()
     name = StringField('Nom', validators=[DataRequired()])
     date = DateField('Date', validators=[DataRequired()])
     date_fin_inscripiton = DateField('Date fin inscription', validators=[DataRequired()])
-    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in ModeleAppli().get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
+    categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in modele.get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
     saison = SelectField('Saison', choices=['été', 'hiver', 'printemps', 'automne'], validators=[DataRequired()])
-    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in ModeleAppli().get_arme_bd().get_all_arme()], validators=[DataRequired()])
-    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in ModeleAppli().get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
+    arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in modele.get_arme_bd().get_all_arme()], validators=[DataRequired()])
+    lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in modele.get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
     coefficient = FloatField('Coefficient', validators=[DataRequired()])
     title = HiddenField('title')
+    modele.close_connexion()
 
 @app.route("/participants/<id_competition>")
 def participants(id_competition):
