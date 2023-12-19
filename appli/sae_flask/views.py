@@ -805,3 +805,8 @@ def arbitrage_competition(id_competition):
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
+@app.route("/arbitrage/<id_competition>/classement")
+def classement(id_competition):
+    modele = ModeleAppli()
+    return render_template("arbitre/classement.html")

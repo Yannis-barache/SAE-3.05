@@ -1,0 +1,34 @@
+{% extends "arbitre/base_arbitre.html" %}
+{% block content %}
+<div class="podium">
+    <div class="podium__header">
+        <h1>Podium</h1>
+    </div>
+    <div class="podium__content">
+        <div class="podium__content__first">
+            <div class="podium__content__first__img">
+                <img src="{{ url_for('static', filename='../static/img/medaille-or.png') }}" alt="medaille or">
+            </div>
+            <div class="podium__content__first__name">
+            </div>
+        </div>
+        <div class="podium__content__second">
+            <div class="podium__content__second__img">
+                <img src="{{ url_for('static', filename='../static/img/medaille-argent.png') }}" alt="medaille argent">
+            </div>
+            <div class="podium__content__second__name">
+            </div>
+        </div>
+        <div class="podium__content__third">
+            <div class="podium__content__third__img">
+                <img src="{{ url_for('static', filename='../static/img/medaille-bronze.png') }}" alt="medaille bronze">
+            </div>
+            <div class="podium__content__third__name">
+            </div>
+        </div>
+    </div>
+    <div class="podium__footer">
+        <a href="{{ url_for('home') }}">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}
