@@ -60,7 +60,9 @@ class ClubBD:
         :return: nombre de licenciés
         """
         try:
-            query = text('SELECT count(*) FROM CLUB NATURAL JOIN ESCRIMEUR where idClub =' + str(id_cl))
+            query = text(
+                'SELECT count(*) FROM CLUB NATURAL JOIN ESCRIMEUR where idClub ='
+                + str(id_cl))
             result = self.__connexion.execute(query)
             for nb in result:
                 return nb[0]

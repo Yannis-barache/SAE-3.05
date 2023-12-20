@@ -1032,7 +1032,7 @@ class TestToucheBD(unittest.TestCase):
         escrimeur = Escrimeur(6, None, None, None, None, None, None, None,
                               None, None, None, None)
         escrimeur2 = Escrimeur(8, None, None, None, None, None, None, None,
-                              None, None, None, None)
+                               None, None, None, None)
         match = Match(9, None, escrimeur, escrimeur2, None, None, None, None)
         touches = self.touche_bd.get_by_match(match)
         self.assertIsInstance(touches, list)

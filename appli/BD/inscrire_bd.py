@@ -6,8 +6,6 @@ import sys
 import os
 from sqlalchemy.sql.expression import text
 
-
-
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
@@ -114,14 +112,16 @@ class InscrireBD:
         """
         try:
             query = text("DELETE FROM INSCRIRE WHERE idCompetition =" +
-                         str(inscrire.get_id_competition())+" AND idEscrimeur = " + str(inscrire.get_id_escrimeur()))
+                         str(inscrire.get_id_competition()) +
+                         " AND idEscrimeur = " +
+                         str(inscrire.get_id_escrimeur()))
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
             print(e)
             return None
 
-    def  get_all_inscrit_escrimeur(self, escrimeur: Escrimeur):
+    def get_all_inscrit_escrimeur(self, escrimeur: Escrimeur):
         """
         Fonction qui retourne tous les inscrits à une compétition
 
@@ -141,7 +141,3 @@ class InscrireBD:
         except Exception as e:
             print(e)
             return None
-
-
-
-

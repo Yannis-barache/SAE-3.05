@@ -16,6 +16,7 @@ from competition import Competition
 from constantes import USER
 from inscrire import Inscrire
 from organisateur import Organisateur
+from phase_final import PhaseFinal
 
 USER = USER
 
@@ -175,9 +176,10 @@ def competition(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    phase_finale = modele.get_phase_finale_bd().exist_phase_finale(id_competition)
     modele.close_connexion()
     return render_template("competition.html", compet=la_competition,
-                           poule=nb_poule, user=USER)
+                           poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -199,11 +201,17 @@ def poule(id_competition, nb):
 def telecharger_pdf_poule(id_poule):
     modele = ModeleAppli()
     la_poule = modele.get_poule_bd().get_poule_by_id(id_poule)
-    for match in la_poule.get_les_matchs():
-        print(match.est_finis())
     la_poule.generer_pdf()
     modele.close_connexion()
     return redirect(request.referrer)
+
+@app.route('/telecharger_pdf_phase_finale/<int:id_compet>/<int:id_phase>', methods=["GET", "POST"])
+def telecharger_pdf_phase(id_compet, id_phase):
+    modele = ModeleAppli()
+    la_phase_finale = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
+    la_phase_finale.generer_pdf()
+    modele.close_connexion()
+    return url_for('phase_finale', id_competition=id_compet)
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
@@ -687,6 +695,30 @@ def podium(id_competition, full):
     escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
     escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
     return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)
+
+@app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
+def phase_finale(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    liste_match = la_phase.get_les_matchs()
+    modele.close_connexion()
+    nb_escrimeur = 8
+    nombre = competition.get_puissance_sup(nb_escrimeur)
+    liste_match_by_tour: list[list] = []
+    cpt = 0
+    for i in range (nombre):
+        un_tour = []
+        for match in range (cpt, cpt + nb_escrimeur //2):
+            if match < len(liste_match):
+                un_tour.append(liste_match[match])
+            else:
+                un_tour.append(None)
+            cpt += 1
+        nb_escrimeur = nb_escrimeur // 2
+        liste_match_by_tour.append(un_tour)
+    print(liste_match_by_tour)
+    return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase, les_matchs=liste_match_by_tour)
 
 @app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
 def generation_phase_finale(id_competition,heure_debut):
