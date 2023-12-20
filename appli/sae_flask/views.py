@@ -603,30 +603,41 @@ def ajouter_competition():
 @app.route("/participants/<id_competition>", methods=["GET", "POST"])
 def participants(id_competition):
     from .form import HeureDebutForm
-    if USER is None:
-        return redirect(url_for('choose_sign'))
 
     form = HeureDebutForm()
-    modele = ModeleAppli()
-    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-    inscrits = []
-    for i in inscription:
-        inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+    try:
+        modele = ModeleAppli()
+        competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+        inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
+        inscrits = []
+        for i in inscription:
+            inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
 
-    arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
-    arbitres = []
-    for arbitrage in arbitrages:
-        arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(arbitrage.get_id_escrimeur()))
+        arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
+        arbitres = []
+        for element in arbitrages:
+            arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(element.get_id_escrimeur()))
+        poules = modele.get_poule_bd().get_poules_by_compet(competition.get_id())
+        fini = any(element.est_finis() for element in poules)
+        fini = True
+
+        modele.close_connexion()
+    except Exception as e:
+        print(e)
+        flask.abort(404)
+    finally:
+        modele.close_connexion()
 
     if request.method == 'POST':
         heure = form.heure.data
-        print("heure", heure)
-        modele.close_connexion()
-        return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
+        type = form.type.data
+        if type == 1:
+            return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
+        if type == 2:
+            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
 
-
-    return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits, arbitres=arbitres, form=form)
+    return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
+                           arbitres=arbitres, form=form,fini = fini)
 
 
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
@@ -641,6 +652,8 @@ def generation_poule(id_competition,heure_debut):
 
 @app.route("/arbitrage")
 def arbitrage():
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     id_compet_arbitre = modele.get_inscrire_arbitre_bd().get_all_compet_arbitre(USER.get_id())
     competitions = []
@@ -657,3 +670,13 @@ def arbitrage_competition(id_competition):
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
+
+@app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
+def generation_phase_finale(id_competition,heure_debut):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    modele.get_competition_bd().generate_phase_finale_compet(competition.get_id(),heure_debut)
+    modele.close_connexion()
+    print('Phase finale générée')
+    return redirect(url_for('phase_finale', id_competition=id_competition))

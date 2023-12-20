@@ -194,3 +194,4 @@ class LieuForm2(FlaskForm):
 
 class HeureDebutForm(FlaskForm):
     heure = IntegerField('Heure de début', validators=[DataRequired()])
+    type = HiddenField('type')
