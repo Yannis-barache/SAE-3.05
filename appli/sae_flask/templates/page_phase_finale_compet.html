@@ -1,0 +1,98 @@
+
+{% extends "base_home.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/phase_finale.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/btn_agrandir.css')}}">
+<script src="{{ url_for('static', filename='js/script_agrandir2.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="big-div">
+
+    <div class="grey-bg center">
+        <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+    </div>
+
+    <div>
+        <p class="description">PHASE FINALE</p>
+    </div>
+
+    <div class="middle">
+        <section id="bracket">
+            <div class="container">
+                {% for tour in range(1, les_matchs|length + 1) %}
+                    <div class="split split-{{ tour }}">
+                        <div class="round round-{{ tour }} current">
+                            {% for i in range(0, les_matchs[tour-1]|length) %}
+                                <a href="">
+                                    <ul class="matchup">
+                                        {% if les_matchs[tour-1][i] %}
+                                            {% if les_matchs[tour-1][i].get_escrimeur2().get_nom() == "None" %}
+                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                <li class="team team-bottom">Exempt<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                            {% else %}
+                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                <li class="team team-bottom">{{ les_matchs[tour-1][i].get_escrimeur2().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                            {% endif %}
+                                        {% else %}
+                                            <li class="team team-top"><span class="score"></span></li>
+                                            <li class="team team-bottom"><span class="score"></span></li>
+                                        {% endif %}
+                                    </ul>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <div id="div-image-agrandir2" class="div-image-agrandir div-p" style="display:none; background-color: #EDEDED;justify-content: center;">
+        <section id="bracket">
+            <div class="container">
+                {% for tour in range(1, les_matchs|length + 1) %}
+                    <div class="split split-{{ tour }}">
+                        <div class="round round-{{ tour }} current">
+                            {% for i in range(0, les_matchs[tour-1]|length) %}
+                                <a href="">
+                                    <ul class="matchup">
+                                        {% if les_matchs[tour-1][i] %}
+                                            {% if les_matchs[tour-1][i].get_escrimeur2().get_nom() == "None" %}
+                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                <li class="team team-bottom">Exempt<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                            {% else %}
+                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                <li class="team team-bottom">{{ les_matchs[tour-1][i].get_escrimeur2().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                            {% endif %}
+                                        {% else %}
+                                            <li class="team team-top"><span class="score"></span></li>
+                                            <li class="team team-bottom"><span class="score"></span></li>
+                                        {% endif %}
+                                    </ul>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <button id="bouton-fermeture2" class="bouton-fermeture" data-action="pswp-close" title="Fermer">
+            <svg focusable="false" width="14" height="14" class="svg-bouton-fermeture" viewBox="0 0 14 14">
+                <path d="M13 13L1 1M13 1L1 13" stroke="currentColor" stroke-width="2" fill="none"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="div-dow">
+        <a id="btn-agrandir2" class="dow-a"><img class="img_agrandir dow" src="{{ url_for('static', filename='img/agrandir.png') }}" alt="">Plein écran</a>
+        <a class="dow-a" href="{{ url_for('telecharger_pdf_phase', id_compet=compet.get_id(), id_phase=phase.get_id_phase_f()) }}"><img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">Télécharger le PDF</a> 
+    </div>
+</div>
+
+{% endblock %}
+

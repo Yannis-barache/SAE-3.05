@@ -74,4 +74,5 @@ class TestPiste(unittest.TestCase):
         Test de la fonction __str__ de la classe Piste
         """
         piste = Piste(1, 1, 'Piste 1')
-        self.assertEqual(str(piste), 'Piste : id = 1, idLieu = 1, description = Piste 1')
+        self.assertEqual(str(piste),
+                         'Piste : id = 1, idLieu = 1, description = Piste 1')

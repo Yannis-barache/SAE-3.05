@@ -377,9 +377,10 @@ class Competition:
         return puissance
 
     @staticmethod
-    def generer_phase_finale(les_poules: list[Poule],
-                             les_arbitres: list[Escrimeur],
-                             heure_debut: float, liste_pistes: list[Piste]) -> tuple[PhaseFinal, list]:
+    def generer_phase_finale(
+            les_poules: list[Poule], les_arbitres: list[Escrimeur],
+            heure_debut: float,
+            liste_pistes: list[Piste]) -> tuple[PhaseFinal, list]:
         """
         Fonction qui genere la phase finale de la competition
 

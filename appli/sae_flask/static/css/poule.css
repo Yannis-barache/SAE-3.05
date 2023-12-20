@@ -24,6 +24,7 @@ main{
   margin-bottom: 3%;
   margin-left: 0%;
 }
+
 img.pdf{
     display: block;
     width: 413px;
@@ -159,7 +160,7 @@ tr{
   height: auto;
 }
 
-button{
+.arrow-btn{
   background-color: #EDEDED;
   border: none;
 }

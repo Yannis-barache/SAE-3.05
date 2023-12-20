@@ -18,7 +18,7 @@ class Escrimeur:
 
     def __init__(self, id_escrim: int, nom: str, prenom: str, sexe: str,
                  date_naissance: str, nom_utilisateur: str, mdp: str,
-                 licence: str, classement: int , club: Club,
+                 licence: str, classement: int, club: Club,
                  categorie: Categorie, arbitrage: bool):
         self.__id = id_escrim
         self.__nom = nom
@@ -105,7 +105,7 @@ class Escrimeur:
         """
         return self.__licence
 
-    def get_classement(self) -> int :
+    def get_classement(self) -> int:
         """
         Fonction qui retourne le classement de l'escrimeur
 

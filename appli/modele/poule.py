@@ -433,7 +433,8 @@ class Poule:
         if le_match is not None and le_match.est_commencer():
 
             # Si le match est fini et que le gagnant est le premier escrimeur
-            if le_match.get_gagnant().get_id() == self.__les_escrimeurs[j - 1].get_id():
+            if le_match.get_gagnant().get_id() == self.__les_escrimeurs[
+                    j - 1].get_id():
                 # Dessine un V dans la case
                 canva.drawString(const.DECALAGE_GAUCHE + largeur + 11.664,
                                  hauteur + 10, 'V')
