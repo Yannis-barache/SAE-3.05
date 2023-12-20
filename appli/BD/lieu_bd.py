@@ -50,7 +50,8 @@ class LieuBD:
             for id_lieu, adresse, description in result:
                 nombre_pistes = self.get_nombre_pistes_by_lieu(id_lieu)
                 nombre_compets = self.get_nombre_competitions_by_lieu(id_lieu)
-                lieux.append((Lieu(id_lieu, description, adresse), nombre_pistes, nombre_compets))
+                lieux.append((Lieu(id_lieu, description,
+                                   adresse), nombre_pistes, nombre_compets))
             return lieux
         except Exception as e:
             print(e)
@@ -63,9 +64,8 @@ class LieuBD:
         :return: nombre de pistes
         """
         try:
-            query = text(
-                'SELECT COUNT(*) FROM PISTE WHERE idLieu =' +
-                str(id_lieu))
+            query = text('SELECT COUNT(*) FROM PISTE WHERE idLieu =' +
+                         str(id_lieu))
             result = self.__connexion.execute(query)
             for nombre_pistes in result:
                 return nombre_pistes[0]
@@ -81,9 +81,8 @@ class LieuBD:
         :return: nombre de compétitions
         """
         try:
-            query = text(
-                'SELECT COUNT(*) FROM COMPETITION WHERE idLieu =' +
-                str(id_lieu))
+            query = text('SELECT COUNT(*) FROM COMPETITION WHERE idLieu =' +
+                         str(id_lieu))
             result = self.__connexion.execute(query)
             for nombre_competitions in result:
                 return nombre_competitions[0]
@@ -131,8 +130,7 @@ class LieuBD:
         :param lieu: lieu
         """
         try:
-            query = text(
-                f"DELETE FROM LIEU WHERE idLieu = {id_lieu}")
+            query = text(f"DELETE FROM LIEU WHERE idLieu = {id_lieu}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
@@ -146,12 +144,14 @@ class LieuBD:
         """
         try:
             if '\'' in lieu.get_description():
-                lieu.set_description(lieu.get_description().replace('\'', '\'\''))
+                lieu.set_description(lieu.get_description().replace(
+                    '\'', '\'\''))
             if '\'' in lieu.get_adresse():
                 lieu.set_adresse(lieu.get_adresse().replace('\'', '\'\''))
             query = text(
                 f"UPDATE LIEU SET adresseLieu = '{lieu.get_adresse()}', "
-                f"descriptionLieu = '{lieu.get_description()}' WHERE idLieu = {lieu.get_id()}")
+                f"descriptionLieu = '{lieu.get_description()}' WHERE idLieu = {lieu.get_id()}"
+            )
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

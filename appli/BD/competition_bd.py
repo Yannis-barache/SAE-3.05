@@ -76,13 +76,21 @@ class CompetitionBD:
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
-                nombre_escrimeurs = InscrireBD(self.__connexion).get_nb_escrimeurs_competition(id_competition)
-                nombre_arbitres = InscrireArbitreBD(self.__connexion).get_nb_arbitres_competition(id_competition)
-                nombre_poule = PouleBD(self.__connexion).nb_poule_compet(id_competition)
-                exist_phase_final = PhaseFinaleBD(self.__connexion).exist_phase_finale(id_competition)
+                nombre_escrimeurs = InscrireBD(
+                    self.__connexion).get_nb_escrimeurs_competition(
+                        id_competition)
+                nombre_arbitres = InscrireArbitreBD(
+                    self.__connexion).get_nb_arbitres_competition(
+                        id_competition)
+                nombre_poule = PouleBD(
+                    self.__connexion).nb_poule_compet(id_competition)
+                exist_phase_final = PhaseFinaleBD(
+                    self.__connexion).exist_phase_finale(id_competition)
                 competitions.append(
                     (Competition(id_competition, nom, date, date_fin, saison,
-                                lieu, arme, categorie, coefficient), nombre_escrimeurs, nombre_arbitres, nombre_poule, exist_phase_final))
+                                 lieu, arme, categorie,
+                                 coefficient), nombre_escrimeurs,
+                     nombre_arbitres, nombre_poule, exist_phase_final))
             return competitions
         except Exception as e:
             print(e)
@@ -188,8 +196,7 @@ class CompetitionBD:
                 f"idArme = {competition.get_arme().get_id()}, "
                 f"idCategorie = {competition.get_categorie().get_id()}, "
                 f"coefficientCompetition = {competition.get_coefficient()} "
-                f"WHERE idCompetition = {competition.get_id()}"
-            )
+                f"WHERE idCompetition = {competition.get_id()}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
@@ -247,7 +254,8 @@ class CompetitionBD:
                     poule.set_id(id_phase)
                     poule.set_les_pistes(les_pistes)
                     poule_bd.insert_poule(poule)
-                    matchs = poule.generer_matchs(poules.get(poule), heure_debut)
+                    matchs = poule.generer_matchs(poules.get(poule),
+                                                  heure_debut)
                     for match in matchs:
                         match_bd.insert_match(match)
             return poules
@@ -267,15 +275,19 @@ class CompetitionBD:
         """
         try:
             escrimeur_bd = EscrimeurBD(self.__connexion)
-            les_poules = PouleBD(self.__connexion).get_poules_by_compet(id_compet)
-            les_inscriptions_arbitres = InscrireArbitreBD(self.__connexion).get_arbitre_by_id_competition(id_compet)
+            les_poules = PouleBD(
+                self.__connexion).get_poules_by_compet(id_compet)
+            les_inscriptions_arbitres = InscrireArbitreBD(
+                self.__connexion).get_arbitre_by_id_competition(id_compet)
             les_arbitres = []
             for inscrire in les_inscriptions_arbitres:
                 les_arbitres.append(
                     escrimeur_bd.get_escrimeur_by_id(
                         inscrire.get_id_escrimeur()))
-            les_pistes = PisteBD(self.__connexion).get_pistes_by_id_competition(id_compet)
-            phase_finale, les_matchs = Competition.generer_phase_finale(les_poules, les_arbitres, heure_debut, les_pistes)
+            les_pistes = PisteBD(
+                self.__connexion).get_pistes_by_id_competition(id_compet)
+            phase_finale, les_matchs = Competition.generer_phase_finale(
+                les_poules, les_arbitres, heure_debut, les_pistes)
             phase = Phase(-1, id_compet)
             id_phase = PhaseBD(self.__connexion).insert_phase(phase)
             phase_finale.set_id_phase_f(id_phase)

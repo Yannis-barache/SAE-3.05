@@ -5,6 +5,8 @@ Module contenant la classe PhaseFinal
 from match import Match
 from escrimeur import Escrimeur
 from piste import Piste
+from club import Club
+from categorie import Categorie
 import random
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, landscape
@@ -106,16 +108,17 @@ class PhaseFinal:
             escrimeur1 = liste_escrimeurs[cpt]
             escrimeur2 = liste_escrimeurs[-(cpt + 1)]
             arbitre = random.choice(liste_arbitres)
-            if escrimeur1.get_nom() == 'None' or escrimeur2.get_nom() == 'None':
+            if escrimeur1.get_nom() == 'None' or escrimeur2.get_nom(
+            ) == 'None':
                 liste_matchs.append(
-                    Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
-                        heure_debut, True,
-                        self.__les_pistes[self.__index_piste]))
+                    Match(-1, self.__id_phase_f, escrimeur1, escrimeur2,
+                          arbitre, heure_debut, True,
+                          self.__les_pistes[self.__index_piste]))
             else:
                 liste_matchs.append(
-                Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
-                      heure_debut, False,
-                      self.__les_pistes[self.__index_piste]))
+                    Match(-1, self.__id_phase_f, escrimeur1, escrimeur2,
+                          arbitre, heure_debut, False,
+                          self.__les_pistes[self.__index_piste]))
             self.__index_piste += 1
             if self.__index_piste == len(self.__les_pistes):
                 self.__index_piste = 0
@@ -146,7 +149,8 @@ class PhaseFinal:
         """
         self.__les_matchs = []
 
-    def generer_tour_suivant(self, liste_arbitres: list[Escrimeur], heure_debut: float):
+    def generer_tour_suivant(self, liste_arbitres: list[Escrimeur],
+                             heure_debut: float):
         """
         Méthode qui permet de généré les matchs suivants
         """
@@ -156,7 +160,7 @@ class PhaseFinal:
         liste_gagnants = []
         for match in self.__les_matchs:
             liste_gagnants.append(match.get_gagnant())
-        dico = {}
+        dico: dict[Escrimeur, int] = {}
         for gagnant in liste_gagnants:
             if gagnant in dico:
                 dico[gagnant] += 1
@@ -179,9 +183,9 @@ class PhaseFinal:
             escrimeur2 = liste_gagnants_final[i + 1]
             arbitre = random.choice(liste_arbitres)
             les_matchs.append(
-            Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
-                    heure_debut, False,
-                    self.__les_pistes[self.__index_piste]))
+                Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
+                      heure_debut, False,
+                      self.__les_pistes[self.__index_piste]))
             self.__index_piste += 1
             if self.__index_piste == len(self.__les_pistes):
                 self.__index_piste = 0
@@ -190,15 +194,16 @@ class PhaseFinal:
                     heure_debut += 0.4
         return les_matchs
 
-
     def generer_pdf(self) -> None:
         """
         Fonction qui génère le pdf de la phase finale
         """
-        canva = canvas.Canvas("Phase_finale_" + str(self.__id_phase_f) + ".pdf",
-                            pagesize=landscape(letter))
+        canva = canvas.Canvas("Phase_finale_" + str(self.__id_phase_f) +
+                              ".pdf",
+                              pagesize=landscape(letter))
         canva.setFont('Helvetica', 18)
-        canva.drawCentredString(letter[1] / 2, 570, "Phase finale : " + str(self.__id_phase_f))
+        canva.drawCentredString(letter[1] / 2, 570,
+                                "Phase finale : " + str(self.__id_phase_f))
         canva.setFont('Helvetica', 12)
 
         # self.dessine_match(canva, self.__les_matchs[0], 10, 510)
@@ -207,12 +212,13 @@ class PhaseFinal:
 
         canva.save()
 
-    def dessine_tour(self, canvas, liste_matchs: list[Match], x: int, y: int, tour: int) -> None:
+    def dessine_tour(self, canvas, liste_matchs: list[Match], x: int | float,
+                     y: int | float, tour: int) -> None:
         """
         Fonction qui dessine un tour
 
         Args:
-            canvas ([type]): [description]
+            canvas
             liste_matchs (list): liste des matchs
             x (int): coordonnée x
             y (int): coordonnée y
@@ -222,27 +228,46 @@ class PhaseFinal:
         liste_matchs_2 = []
         cpt = 0
         for match in liste_matchs:
-            if  match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "None" or match.get_escrimeur2().get_nom() == "None" or match.get_escrimeur1().get_id() not in ensemble and match.get_escrimeur2().get_id() not in ensemble:
+            if match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1(
+            ).get_nom() == "" or match.get_escrimeur1().get_nom(
+            ) == "None" or match.get_escrimeur2().get_nom(
+            ) == "None" or match.get_escrimeur1().get_id(
+            ) not in ensemble and match.get_escrimeur2().get_id(
+            ) not in ensemble:
                 ensemble.append(match.get_escrimeur1().get_id())
                 ensemble.append(match.get_escrimeur2().get_id())
                 if len(liste_matchs) == 1:
-                    type = 0
+                    typee = 0
                 else:
-                    type = cpt % 2 + 1
+                    typee = cpt % 2 + 1
                 if len(liste_matchs) == 2:
                     type2 = 0
                 else:
                     type2 = cpt % 4 + 1
-                self.dessine_match(canvas, match, x, y - cpt * 45, type, type2)
+                self.dessine_match(canvas, match, x, y - cpt * 45, typee,
+                                   type2)
                 cpt += 1
-            else :
+            else:
                 liste_matchs_2.append(match)
-        while len(liste_matchs_2) < len(ensemble)/4: # 
-            liste_matchs_2.append(Match(-1, -1, Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), -1, False, Piste(-1, -1, "None")))
+        while len(liste_matchs_2) < len(ensemble) / 4:
+            club = Club(-1, "", "", "")
+            cate = Categorie(-1, "")
+            liste_matchs_2.append(
+                Match(
+                    -1, -1,
+                    Escrimeur(-1, "", "None", "None", "None", "None", "None",
+                              "None", 0, club, cate, False),
+                    Escrimeur(-1, "", "None", "None", "None", "None", "None",
+                              "None", 0, club, cate, False),
+                    Escrimeur(-1, "", "None", "None", "None", "None", "None",
+                              "None", 0, club, cate, True), -1, False,
+                    Piste(-1, -1, "None")))
         if len(liste_matchs) > 1:
-            self.dessine_tour(canvas, liste_matchs_2, x + 280, y - 45 / (tour + 1), tour + 1)
+            self.dessine_tour(canvas, liste_matchs_2, x + 280,
+                              y - 45 / (tour + 1), tour + 1)
 
-    def dessine_match(self, canvas, match: Match, x: int, y: int, type: int, type2: int) -> None:
+    def dessine_match(self, canvas, match: Match, x: float | int,
+                      y: float | int, typee: int, type2: int) -> None:
         """
         Fonction qui dessine un match
 
@@ -282,101 +307,40 @@ class PhaseFinal:
         else:
             if match.est_commencer():
                 if match.est_finis():
-                    if match.get_gagnant().get_id() == match.get_escrimeur1().get_id():
+                    if match.get_gagnant().get_id() == match.get_escrimeur1(
+                    ).get_id():
                         canvas.drawString(x + 106.5, y + 5, "V")
-                        canvas.drawString(x + 106.5, y - 15, str(match.get_nb_touche(match.get_escrimeur2())))
+                        canvas.drawString(
+                            x + 106.5, y - 15,
+                            str(match.get_nb_touche(match.get_escrimeur2())))
                     else:
-                        canvas.drawString(x + 106.5, y + 5, str(match.get_nb_touche(match.get_escrimeur1())))
+                        canvas.drawString(
+                            x + 106.5, y + 5,
+                            str(match.get_nb_touche(match.get_escrimeur1())))
                         canvas.drawString(x + 106.5, y - 15, "V")
                 else:
-                    canvas.drawString(x + 106.5, y + 5, str(match.get_nb_touche(match.get_escrimeur1())))
-                    canvas.drawString(x + 106.5, y - 15, str(match.get_nb_touche(match.get_escrimeur2())))
-            elif match.get_escrimeur1().get_nom() != '' and match.get_escrimeur2().get_nom() != '':
+                    canvas.drawString(
+                        x + 106.5, y + 5,
+                        str(match.get_nb_touche(match.get_escrimeur1())))
+                    canvas.drawString(
+                        x + 106.5, y - 15,
+                        str(match.get_nb_touche(match.get_escrimeur2())))
+            elif match.get_escrimeur1().get_nom(
+            ) != '' and match.get_escrimeur2().get_nom() != '':
                 canvas.drawString(x + 106.5, y + 5, "0")
                 canvas.drawString(x + 106.5, y - 15, "0")
-        if type == 1:
+        if typee == 1:
             canvas.line(x + 120, y, x + 200, y)
             canvas.line(x + 200, y, x + 200, y - 45)
-        elif type == 2:
+        elif typee == 2:
             canvas.line(x + 120, y, x + 200, y)
             canvas.line(x + 200, y, x + 200, y + 45)
-        if type2 == 0 and type == 1:
+        if type2 == 0 and typee == 1:
             canvas.line(x + 200, y - 22.5, x + 280, y - 22.5)
-        elif type2 == 1 and type == 1:
+        elif type2 == 1 and typee == 1:
             canvas.line(x + 200, y - 37, x + 280, y - 37)
-        elif type2 == 4 and type == 2:
+        elif type2 == 4 and typee == 2:
             canvas.line(x + 200, y + 37, x + 280, y + 37)
-
-    def get_dimansion_html(self) -> (list[tuple[Match, int, int, int, int]], list[tuple[int, int, int, int]]):
-        """
-        Fonction qui retourne les dimensions pour le html
-
-        Returns:
-            list: liste des dimensions
-        """
-        liste_matchs_dim = []
-        liste_lignes_dim = []
-        self.dessine_tour_html(self.__les_matchs, liste_matchs_dim, liste_lignes_dim, self.__les_matchs, 0, 0, 0)
-        return liste_matchs_dim, liste_lignes_dim
-
-    def dessine_tour_html(self, liste_matchs, liste_matchs_dim: list[tuple[Match, int, int, int, int]], liste_lignes_dim: list[tuple[int, int, int, int]], liste_matchs_2: list[Match], x: int, y: int, tour: int) -> None:
-        ensemble = []
-        liste_matchs_2 = []
-        cpt = 0
-        for match in liste_matchs:
-            if  match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "None" or match.get_escrimeur2().get_nom() == "None" or match.get_escrimeur1().get_id() not in ensemble and match.get_escrimeur2().get_id() not in ensemble:
-                ensemble.append(match.get_escrimeur1().get_id())
-                ensemble.append(match.get_escrimeur2().get_id())
-                if len(liste_matchs) == 1:
-                    type = 0
-                else:
-                    type = cpt % 2 + 1
-                if len(liste_matchs) == 2:
-                    type2 = 0
-                else:
-                    type2 = cpt % 4 + 1
-                self.dessine_match_html(liste_matchs_dim, liste_lignes_dim, match, x, y - cpt * 45, type, type2)
-                cpt += 1
-            else :
-                liste_matchs_2.append(match)
-        while len(liste_matchs_2) < len(ensemble)/4: # 
-            liste_matchs_2.append(Match(-1, -1, Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), -1, False, Piste(-1, -1, "None")))
-        if len(liste_matchs) > 1:
-            self.dessine_tour_html(liste_matchs_2, liste_matchs_dim, liste_lignes_dim, liste_matchs_2, x + 280, y - 45 / (tour + 1), tour + 1)
-
-    def dessine_match_html(self, liste_matchs_dim: list[tuple[Match, int, int, int, int]], liste_lignes_dim: list[tuple[int, int, int, int]], match: Match, x: int, y: int, type: int, type2: int) -> None:
-        """
-        Fonction qui dessine un match
-
-        Args:
-            canvas ([type]): [description]
-            match (Match): match
-            x (int): coordonnée x
-            y (int): coordonnée y
-            type (int): type de match
-            0 : pas de suite
-            1 : suite en haut
-            2 : suite en bas
-        """
-        liste_matchs_dim.append((match, x, y, x+120, y+20))
-        if type == 1:
-            liste_lignes_dim.append((x + 120, y, x + 200, y))
-            liste_lignes_dim.append((x + 200, y, x + 200, y - 45))
-        elif type == 2:
-            liste_lignes_dim.append((x + 120, y, x + 200, y))
-            liste_lignes_dim.append((x + 200, y, x + 200, y + 45))
-        if type2 == 0 and type == 1:
-            liste_lignes_dim.append((x + 200, y - 22.5, x + 280, y - 22.5))
-        elif type2 == 1 and type == 1:
-            liste_lignes_dim.append((x + 200, y - 37, x + 280, y - 37))
-        elif type2 == 4 and type == 2:
-            liste_lignes_dim.append((x + 200, y + 37, x + 280, y + 37))
 
     def __str__(self):
         return f'Phase finale : {self.__id_phase_f} |'
-
-
-if __name__ == '__main__':
-    from modele_appli import ModeleAppli
-    phase_phinale = ModeleAppli().get_phase_finale_bd().get_phase_finale_by_compet(8)
-    print(phase_phinale.get_dimansion_html())

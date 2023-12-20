@@ -150,7 +150,8 @@ class Match:
             escrimeur1 = 0
             escrimeur2 = 0
             for touche in self.__les_touches:
-                if touche.get_escrimeur().get_id() == self.__escrimeur1.get_id():
+                if touche.get_escrimeur().get_id() == self.__escrimeur1.get_id(
+                ):
                     escrimeur1 += 1
                 else:
                     escrimeur2 += 1
@@ -179,10 +180,11 @@ class Match:
             str: affiche pour l'escrimeur 1
         """
         if self.est_finis() or self.est_commencer():
-            if self.get_gagnant() == self.__escrimeur1 or self.__escrimeur2.get_nom() == 'None':
+            if self.get_gagnant(
+            ) == self.__escrimeur1 or self.__escrimeur2.get_nom() == 'None':
                 return 'V'
             else:
-                return self.get_nb_touche(self.__escrimeur1)
+                return str(self.get_nb_touche(self.__escrimeur1))
         else:
             return '0'
 
@@ -194,10 +196,11 @@ class Match:
             str: affiche pour l'escrimeur 2
         """
         if self.est_finis() or self.est_commencer():
-            if self.get_gagnant() == self.__escrimeur2 or self.__escrimeur1.get_nom() == 'None':
+            if self.get_gagnant(
+            ) == self.__escrimeur2 or self.__escrimeur1.get_nom() == 'None':
                 return 'V'
             else:
-                return self.get_nb_touche(self.__escrimeur2)
+                return str(self.get_nb_touche(self.__escrimeur2))
         else:
             return '0'
 
