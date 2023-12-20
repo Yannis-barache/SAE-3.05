@@ -49,6 +49,7 @@
             <div class="bouton">
                 <button class="btn btn-primary" type="submit">Générer les poules</button>
             </div>
+        </form>
     {% endif %}
 
     {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
@@ -84,7 +85,9 @@
         {% endif %}
 
 
+
     {% endif %}
+    </div>
 
 {% endblock %}
 
