@@ -1,11 +1,9 @@
-
 {% extends "base_home.html" %}
 
 {% block styles %}
 {{ super() }}
-    <!-- Link du fichier js-->
-    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
+{% endblock %}
 
 {% endblock %}
 
