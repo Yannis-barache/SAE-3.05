@@ -283,12 +283,14 @@ def competition(id_competition):
 
         
 @app.route("/page_de_match")
-def page_de_match(id_competition=1,id_match=1 ):
+def page_de_match(id_competition=1,id_match=6 ):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
+    for element in les_touches:
+        print(element.get_escrimeur().get_nom())
     modele.close_connexion()
     return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
 
@@ -338,23 +340,36 @@ def desinscription_competition(id_competition):
     return redirect(request.referrer)
 
 @app.route("/envoie_point/<id_match>/<id_escrimeur>",  methods=["GET", "POST"])
-def envoie_point(id_match, id_escrimeur,id_competition=2):
+def envoie_point(id_match, id_escrimeur,id_competition=1):
     if USER is None:
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     escrimeur= modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    
     numero = modele.get_touche_bd().get_max_num_touche(id_match)
+    modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
+
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     
     if numero >= 27:
         return redirect(request.referrer)
-    modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
     modele.close_connexion()
     return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
 
+@app.route("/fin_du_match/<id_match>",  methods=["GET", "POST"])
+def fin_du_match(id_match):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(le_match)
+    la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    modele.get_match_bd().set_fini_match(le_match)
+    modele.close_connexion()
+    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
     
 
 

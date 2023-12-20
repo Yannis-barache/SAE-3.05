@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/page_match.css')}}">
 <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/button_anim.js') }}"></script>
 
 {% endblock %}
 
@@ -67,10 +68,17 @@
         </div>
 
         <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(),
-         id_escrimeur=match.get_escrimeur1().get_id(), id_competition=compet.get_id() ) }}">
-            <button type="submit">
-                ADD
-            </button>
+         id_escrimeur=match.get_escrimeur1().get_id() ) }}">
+         {% if match.est_finis() %}
+         <button class="button-" type="submit" disabled>
+            <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+             +
+         </button>
+         {% else %}
+         <button class="circle-button" type="submit" onclick="rotatePlus()">
+             +
+         </button>
+         {% endif %}
         </form>
         
 
@@ -117,10 +125,17 @@
         </div>
 
         <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(),
-         id_escrimeur=match.get_escrimeur2().get_id(), id_competition=compet.get_id() ) }}">
-            <button type="submit">
-                ADD
+         id_escrimeur=match.get_escrimeur2().get_id() ) }}">
+            {% if match.est_finis() %}
+            <button class="circle-button" type="submit" disabled>
+                <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+                + 
             </button>
+            {% else %}
+            <button class="circle-button" type="submit">
+                +
+            </button>
+            {% endif %}
         </form>
 
     </div>
@@ -130,7 +145,7 @@
 
 </div>
 
-<div class="enflex">
+<form class="enflex">
     fin du match
 </div>
 

@@ -73,7 +73,7 @@ span{
 }
 
 .ligne{
-    width: 100%;
+    width: 50%;
     color: #000;
     margin: 10px 6px;
     text-align: center;
@@ -89,3 +89,52 @@ span{
 .le-marg{
     margin: 2px;
 }
+
+.circle-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.circle-button[disabled]:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.rotate {
+    transform: rotate(45deg);
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.button-{
+    background-image: url(../img/atest.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+    width: 28%;
+    height: 100%;
+}
+

@@ -162,3 +162,32 @@ class MatchBD:
         except Exception as e:
             print(e)
             return None
+    
+    def set_fini_match(self, match: Match):
+        """
+        Fonction qui met le match en fini
+        :param match : match
+        """
+        try:
+            query = text(
+                f"UPDATE MATCHS SET fini = 1 WHERE idMatch = {str(match.get_id())}")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+    
+    def get_id_competition_du_match(self, match: Match):
+        """
+        Fonction qui retourne la compétition du match
+        :param match : match
+        """
+        try:
+            query = text(
+                f"SELECT idCompetition FROM MATCHS NATURAL JOIN PHASE WHERE idMatch = {str(match.get_id())}")
+            result = self.__connexion.execute(query)
+            for (id_competition) in result:
+                return id_competition[0]
+        except Exception as e:
+            print(e)
+            return None
