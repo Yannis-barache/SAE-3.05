@@ -8,7 +8,7 @@ header {
 .logo {
     width: 12vw;
     margin: 2em;
-    margin-right:0;
+    margin-right: 0;
 }
 
 .user {
@@ -21,13 +21,17 @@ header {
 .navigateur {
     background-color: black;
     padding: 0.5em;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap : wrap;
 }
 
 .navigateur a {
     text-decoration: none;
     color: rgb(212, 8, 11);
-    font-size: 120%;
+    font-size: large;
     font-weight: bold;
+    margin : 1%;
 }
 
 .navigateur a:hover {
@@ -36,23 +40,7 @@ header {
 }
 
 
-.authentif {
-    float: left;
-    margin-left: 1em;
-}
-
-
-.regles {
-    float: right;
-    margin-right: 1em;
-}
-
-.compet{
-    margin-right:4.5em
-}
-
 body {
-    height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -102,10 +90,19 @@ footer > p {
 }
 
 
-
 .intro p {
     padding-bottom: 1em;
 }
 
 
+.tableau {
+    overflow-x: auto;
+}
 
+.accueil {
+    font-size: large;
+}
+
+p {
+    font-size: small;
+}

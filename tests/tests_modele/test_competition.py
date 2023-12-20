@@ -504,7 +504,7 @@ class TestCompetition(unittest.TestCase):
                 match.set_finis(True)
                 liste.append(match)
         phase, matchs_finaux = Competition.generer_phase_finale(
-            poules, les_arbitres, 10.3)
+            poules, les_arbitres, 10.3, [Piste(1, 1, "piste1")])
         self.assertEqual(len(matchs_finaux), 8)
         self.assertIsInstance(phase, PhaseFinal)
 

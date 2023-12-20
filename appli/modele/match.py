@@ -135,7 +135,7 @@ class Match:
                 cpt += 1
         return cpt
 
-    def get_gagnant(self) -> Escrimeur | None:
+    def get_gagnant(self):
         """
         Fonction qui retourne le gagnant du match
 

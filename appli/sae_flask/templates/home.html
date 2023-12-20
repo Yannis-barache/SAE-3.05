@@ -1,11 +1,9 @@
-
 {% extends "base_home.html" %}
 
 {% block styles %}
 {{ super() }}
-    <!-- Link du fichier js-->
-    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
+{% endblock %}
 
 {% endblock %}
 
@@ -13,11 +11,11 @@
 {% block content %}
 <section class="intro">
 {% if user==None %}
-    <h1> BIENVENUE À VOUS </h1>
+    <h1 class="accueil"> BIENVENUE À VOUS </h1>
 {% elif user|is_escrimeur or user|is_organisateur %}
-    <h1> Bonjour {{ user.get_nom() }} {{ user.get_prenom() }} </h1>
+    <h1 class="accueil"> Bonjour {{ user.get_nom() }} {{ user.get_prenom() }} </h1>
 {% else %}
-    <h1> Vous êtes le club {{ user.get_nom() }} </h1>
+    <h1 class="accueil"> Vous êtes le club {{ user.get_nom() }} </h1>
 {% endif %}
     <p> Le Cercle de Blois vous offre un moyen facile et pratique de gérer vos compétitions. <br>
         Notre site va vous permettre de vous inscrire dans une competition 

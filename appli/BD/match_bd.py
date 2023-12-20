@@ -77,8 +77,9 @@ class MatchBD:
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
-                return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
-                             heure, fini, piste)
+                match = Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
+                              heure, fini, piste)
+                return match
             return None
         except Exception as e:
             print(e)
