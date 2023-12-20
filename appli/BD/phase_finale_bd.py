@@ -164,6 +164,9 @@ class PhaseFinaleBD:
             result = self.__connexion.execute(query)
             for (id_phase_finale, ) in result:
                 return id_phase_finale
+        except Exception as e:
+            print(e)
+            return None
 
     def generer_tour_suivant(self, phase_finale: PhaseFinal, id_compet: int,
                              heure_debut: float):
