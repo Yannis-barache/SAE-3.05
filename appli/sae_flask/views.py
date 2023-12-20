@@ -5,7 +5,7 @@ import os
 from .app import app
 from flask import render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, DateField, FloatField
+from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, DateField, FloatField,SubmitField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
@@ -281,9 +281,14 @@ def competition(id_competition):
     return render_template("competition.html", compet=la_competition,
                         poule=nb_poule, user=USER)
 
-        
+class EnvoiePointForm(FlaskForm):
+    submit = SubmitField('+')
+    
+    
+
 @app.route("/page_de_match")
 def page_de_match(id_competition=1,id_match=6 ):
+    form = EnvoiePointForm()
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
@@ -292,7 +297,7 @@ def page_de_match(id_competition=1,id_match=6 ):
     for element in les_touches:
         print(element.get_escrimeur().get_nom())
     modele.close_connexion()
-    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
+    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition,form=form)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -339,25 +344,30 @@ def desinscription_competition(id_competition):
     modele.close_connexion()
     return redirect(request.referrer)
 
-@app.route("/envoie_point/<id_match>/<id_escrimeur>",  methods=["GET", "POST"])
-def envoie_point(id_match, id_escrimeur,id_competition=1):
+
+@app.route("/envoie_point/<id_match>/<id_escrimeur>", methods=["GET", "POST"])
+def envoie_point(id_match, id_escrimeur, id_competition=1):
     if USER is None:
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
-    escrimeur= modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
+    escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    
-    numero = modele.get_touche_bd().get_max_num_touche(id_match)
-    modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur,numero))
 
-    les_touches = modele.get_touche_bd().get_by_match(le_match)
-    le_match.set_touche(les_touches)
-    
-    if numero >= 27:
-        return redirect(request.referrer)
+    form = EnvoiePointForm(request.form)
+
+    if form.validate_on_submit():
+        numero = modele.get_touche_bd().get_max_num_touche(id_match)
+        modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur, numero))
+
+        les_touches = modele.get_touche_bd().get_by_match(le_match)
+        le_match.set_touche(les_touches)
+
+        if numero >= 27:
+            return redirect(request.referrer)
+
     modele.close_connexion()
-    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition)
+    return render_template("page_de_match.html", match=le_match, user=USER, compet=la_competition, form=form)
 
 @app.route("/fin_du_match/<id_match>",  methods=["GET", "POST"])
 def fin_du_match(id_match):

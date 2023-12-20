@@ -67,19 +67,18 @@
 
         </div>
 
-        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(),
-         id_escrimeur=match.get_escrimeur1().get_id() ) }}">
-         {% if match.est_finis() %}
-         <button class="button-" type="submit" disabled>
-            <span class="tooltiptext" id="tooltip">Le match est terminé</span>
-             +
-         </button>
-         {% else %}
-         <button class="circle-button" type="submit" onclick="rotatePlus()">
-             +
-         </button>
-         {% endif %}
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur1().get_id()) }}">
+            {% if match.est_finis() %}
+                <button class="button-" type="submit" disabled>
+                    <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+                    +
+                </button>
+            {% else %}
+                {{ form.csrf_token }}
+                {{ form.submit(class="circle-button") }}
+            {% endif %}
         </form>
+        
         
 
 
@@ -124,17 +123,15 @@
 
         </div>
 
-        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(),
-         id_escrimeur=match.get_escrimeur2().get_id() ) }}">
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
             {% if match.est_finis() %}
-            <button class="circle-button" type="submit" disabled>
-                <span class="tooltiptext" id="tooltip">Le match est terminé</span>
-                + 
-            </button>
+                <button class="circle-button" type="submit" disabled>
+                    <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+                    + 
+                </button>
             {% else %}
-            <button class="circle-button" type="submit">
-                +
-            </button>
+                {{ form.csrf_token }}
+                {{ form.submit(class="circle-button") }}
             {% endif %}
         </form>
 
@@ -145,7 +142,7 @@
 
 </div>
 
-<form class="enflex">
+<div class="enflex">
     fin du match
 </div>
 
