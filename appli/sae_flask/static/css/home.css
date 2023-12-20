@@ -28,17 +28,12 @@ header {
 .navigateur a {
     text-decoration: none;
     color: rgb(212, 8, 11);
-    font-size: 2vw;
     font-weight: bold;
 }
 
 .navigateur a:hover {
     color: rgb(255, 255, 255);
     text-decoration: underline;
-}
-
-.compet {
-    flex-grow: 1;
 }
 
 body {
@@ -104,8 +99,4 @@ footer > p {
 
 .accueil {
     font-size: 4vw;
-}
-
-p {
-    font-size: 2vw;
 }

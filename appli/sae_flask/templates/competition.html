@@ -54,8 +54,6 @@
                 <form role="form" method="post" action="{{ url_for('phase_finale', id_competition=compet.get_id()) }}">
                     <button type="submit" class="btn-active">voir la phase finale</button>
                 </form>
-            {% else %}
-                <button class="btn-disable">voir la phase finale ?</button>
             {% endif %}
         </div>
     </div>

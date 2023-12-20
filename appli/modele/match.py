@@ -143,6 +143,10 @@ class Match:
             Escrimeur | None: gagnant du match
         """
         if self.est_finis():
+            if self.__escrimeur1.get_nom() == 'None':
+                return self.__escrimeur2
+            elif self.__escrimeur2.get_nom() == 'None':
+                return self.__escrimeur1
             escrimeur1 = 0
             escrimeur2 = 0
             for touche in self.__les_touches:
@@ -166,6 +170,36 @@ class Match:
             Piste: piste du match
         """
         return self.__piste
+
+    def get_affiche1(self) -> str:
+        """
+        Fonction qui retourne l'affiche pour l'escrimeur 1
+
+        Returns:
+            str: affiche pour l'escrimeur 1
+        """
+        if self.est_finis() or self.est_commencer():
+            if self.get_gagnant() == self.__escrimeur1 or self.__escrimeur2.get_nom() == 'None':
+                return 'V'
+            else:
+                return self.get_nb_touche(self.__escrimeur1)
+        else:
+            return '0'
+
+    def get_affiche2(self) -> str:
+        """
+        Fonction qui retourne l'affiche pour l'escrimeur 2
+
+        Returns:
+            str: affiche pour l'escrimeur 2
+        """
+        if self.est_finis() or self.est_commencer():
+            if self.get_gagnant() == self.__escrimeur2 or self.__escrimeur1.get_nom() == 'None':
+                return 'V'
+            else:
+                return self.get_nb_touche(self.__escrimeur2)
+        else:
+            return '0'
 
     def ajouter_touche(self, touche) -> None:
         """

@@ -160,7 +160,7 @@ tr{
   height: auto;
 }
 
-button{
+.arrow-btn{
   background-color: #EDEDED;
   border: none;
 }

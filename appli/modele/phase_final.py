@@ -146,6 +146,50 @@ class PhaseFinal:
         """
         self.__les_matchs = []
 
+    def generer_tour_suivant(self, liste_arbitres: list[Escrimeur], heure_debut: float):
+        """
+        Méthode qui permet de généré les matchs suivants
+        """
+        for match in self.__les_matchs:
+            if not match.est_finis():
+                return None
+        liste_gagnants = []
+        for match in self.__les_matchs:
+            liste_gagnants.append(match.get_gagnant())
+        dico = {}
+        for gagnant in liste_gagnants:
+            if gagnant in dico:
+                dico[gagnant] += 1
+            else:
+                dico[gagnant] = 1
+        max_valeurs = max(dico.values())
+        liste_gagnants_2 = []
+        for key, value in dico.items():
+            if value == max_valeurs:
+                liste_gagnants_2.append(key)
+        # On garde le bon ordre
+        liste_gagnants_final = []
+        for gagnant in liste_gagnants:
+            if gagnant in liste_gagnants_2:
+                liste_gagnants_final.append(gagnant)
+        les_matchs = []
+        self.__index_piste = 0
+        for i in range(0, len(liste_gagnants_final), 2):
+            escrimeur1 = liste_gagnants_final[i]
+            escrimeur2 = liste_gagnants_final[i + 1]
+            arbitre = random.choice(liste_arbitres)
+            les_matchs.append(
+            Match(-1, self.__id_phase_f, escrimeur1, escrimeur2, arbitre,
+                    heure_debut, False,
+                    self.__les_pistes[self.__index_piste]))
+            self.__index_piste += 1
+            if self.__index_piste == len(self.__les_pistes):
+                self.__index_piste = 0
+                heure_debut += 0.25
+                if heure_debut % 1 >= 0.6:
+                    heure_debut += 0.4
+        return les_matchs
+
 
     def generer_pdf(self) -> None:
         """
@@ -193,7 +237,7 @@ class PhaseFinal:
                 cpt += 1
             else :
                 liste_matchs_2.append(match)
-        while len(liste_matchs_2) < len(liste_matchs)/2:
+        while len(liste_matchs_2) < len(ensemble)/4: # 
             liste_matchs_2.append(Match(-1, -1, Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), -1, False, Piste(-1, -1, "None")))
         if len(liste_matchs) > 1:
             self.dessine_tour(canvas, liste_matchs_2, x + 280, y - 45 / (tour + 1), tour + 1)
@@ -263,6 +307,70 @@ class PhaseFinal:
         elif type2 == 4 and type == 2:
             canvas.line(x + 200, y + 37, x + 280, y + 37)
 
+    def get_dimansion_html(self) -> (list[tuple[Match, int, int, int, int]], list[tuple[int, int, int, int]]):
+        """
+        Fonction qui retourne les dimensions pour le html
+
+        Returns:
+            list: liste des dimensions
+        """
+        liste_matchs_dim = []
+        liste_lignes_dim = []
+        self.dessine_tour_html(self.__les_matchs, liste_matchs_dim, liste_lignes_dim, self.__les_matchs, 0, 0, 0)
+        return liste_matchs_dim, liste_lignes_dim
+
+    def dessine_tour_html(self, liste_matchs, liste_matchs_dim: list[tuple[Match, int, int, int, int]], liste_lignes_dim: list[tuple[int, int, int, int]], liste_matchs_2: list[Match], x: int, y: int, tour: int) -> None:
+        ensemble = []
+        liste_matchs_2 = []
+        cpt = 0
+        for match in liste_matchs:
+            if  match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "" or match.get_escrimeur1().get_nom() == "None" or match.get_escrimeur2().get_nom() == "None" or match.get_escrimeur1().get_id() not in ensemble and match.get_escrimeur2().get_id() not in ensemble:
+                ensemble.append(match.get_escrimeur1().get_id())
+                ensemble.append(match.get_escrimeur2().get_id())
+                if len(liste_matchs) == 1:
+                    type = 0
+                else:
+                    type = cpt % 2 + 1
+                if len(liste_matchs) == 2:
+                    type2 = 0
+                else:
+                    type2 = cpt % 4 + 1
+                self.dessine_match_html(liste_matchs_dim, liste_lignes_dim, match, x, y - cpt * 45, type, type2)
+                cpt += 1
+            else :
+                liste_matchs_2.append(match)
+        while len(liste_matchs_2) < len(ensemble)/4: # 
+            liste_matchs_2.append(Match(-1, -1, Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), Escrimeur(-1, "", "None", None, None, None, None, None, None, None, None, None), -1, False, Piste(-1, -1, "None")))
+        if len(liste_matchs) > 1:
+            self.dessine_tour_html(liste_matchs_2, liste_matchs_dim, liste_lignes_dim, liste_matchs_2, x + 280, y - 45 / (tour + 1), tour + 1)
+
+    def dessine_match_html(self, liste_matchs_dim: list[tuple[Match, int, int, int, int]], liste_lignes_dim: list[tuple[int, int, int, int]], match: Match, x: int, y: int, type: int, type2: int) -> None:
+        """
+        Fonction qui dessine un match
+
+        Args:
+            canvas ([type]): [description]
+            match (Match): match
+            x (int): coordonnée x
+            y (int): coordonnée y
+            type (int): type de match
+            0 : pas de suite
+            1 : suite en haut
+            2 : suite en bas
+        """
+        liste_matchs_dim.append((match, x, y, x+120, y+20))
+        if type == 1:
+            liste_lignes_dim.append((x + 120, y, x + 200, y))
+            liste_lignes_dim.append((x + 200, y, x + 200, y - 45))
+        elif type == 2:
+            liste_lignes_dim.append((x + 120, y, x + 200, y))
+            liste_lignes_dim.append((x + 200, y, x + 200, y + 45))
+        if type2 == 0 and type == 1:
+            liste_lignes_dim.append((x + 200, y - 22.5, x + 280, y - 22.5))
+        elif type2 == 1 and type == 1:
+            liste_lignes_dim.append((x + 200, y - 37, x + 280, y - 37))
+        elif type2 == 4 and type == 2:
+            liste_lignes_dim.append((x + 200, y + 37, x + 280, y + 37))
 
     def __str__(self):
         return f'Phase finale : {self.__id_phase_f} |'
@@ -271,4 +379,4 @@ class PhaseFinal:
 if __name__ == '__main__':
     from modele_appli import ModeleAppli
     phase_phinale = ModeleAppli().get_phase_finale_bd().get_phase_finale_by_compet(8)
-    phase_phinale.generer_pdf()
+    print(phase_phinale.get_dimansion_html())

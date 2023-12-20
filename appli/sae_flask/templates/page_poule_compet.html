@@ -18,17 +18,17 @@
             {% if nb_poule < 0 %}
                 <p>Il n'y a pas de poules pour cette compétition</p>
             {% else %}
-            {% if nb_poule > 0 %}
+            {% if nb_poule > 1 %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb - 1) }}" >
-                    <button>
+                    <button class="arrow-btn">
                         <img class="arrow arrow-l" src="{{ url_for('static', filename='../static/img/arrow-l.png') }}" alt="">
                     </button>
                 </form>
             {% endif %}
             <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
-            {% if nb_poule > 0 %}
+            {% if nb_poule > 1 %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = nb + 1) }}" >
-                    <button>
+                    <button class="arrow-btn">
                         <img class="arrow arrow-r" src="{{ url_for('static', filename='../static/img/arrow-r.png') }}" alt="">
                     </button>
                 </form>
