@@ -283,13 +283,20 @@ def competition(id_competition):
 
 class EnvoiePointForm(FlaskForm):
     submit = SubmitField('+')
-    
-    
+    supprimer_point = SubmitField('-')
+
+class FinirMatchForm(FlaskForm):
+    finir_match = SubmitField('Terminer le match')
+    next = HiddenField()
+
 
 @app.route("/page_de_match")
-def page_de_match(id_competition=1,id_match=6 ):
+def page_de_match(id_match=9 ):
     form = EnvoiePointForm()
+    finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
@@ -297,7 +304,7 @@ def page_de_match(id_competition=1,id_match=6 ):
     for element in les_touches:
         print(element.get_escrimeur().get_nom())
     modele.close_connexion()
-    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition,form=form)
+    return render_template("page_de_match.html", match = le_match, user=USER,compet=la_competition,form=form,finir_match_form=finir_match_form)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -346,28 +353,46 @@ def desinscription_competition(id_competition):
 
 
 @app.route("/envoie_point/<id_match>/<id_escrimeur>", methods=["GET", "POST"])
-def envoie_point(id_match, id_escrimeur, id_competition=1):
+def envoie_point(id_match, id_escrimeur):
     if USER is None:
         return redirect(url_for('choose_sign'))
+    
     modele = ModeleAppli()
     escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
     le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    numero = modele.get_touche_bd().get_max_num_touche(id_match)
 
-    form = EnvoiePointForm(request.form)
+    envoie_point_form = EnvoiePointForm(request.form)
+    finir_match_form = FinirMatchForm(request.form)
 
-    if form.validate_on_submit():
-        numero = modele.get_touche_bd().get_max_num_touche(id_match)
-        modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur, numero))
+    if envoie_point_form.validate_on_submit():
+        if envoie_point_form.submit.data:
+            modele.get_touche_bd().insert_touche(Touche(le_match, escrimeur, numero))
 
-        les_touches = modele.get_touche_bd().get_by_match(le_match)
-        le_match.set_touche(les_touches)
+            les_touches = modele.get_touche_bd().get_by_match(le_match)
+            le_match.set_touche(les_touches)
 
-        if numero >= 27:
+            if numero >= 27:
+                return redirect(request.referrer)
+
+        elif envoie_point_form.supprimer_point.data:
+            # Logique pour supprimer un point, par exemple, supprimer la dernière touche
+            touche = modele.get_touche_bd().get_touche_by_id(id_match,numero)
+            modele.get_touche_bd().delete_touche(touche, numero)
+            # Mettez à jour d'autres propriétés du match selon vos besoins
             return redirect(request.referrer)
+        
+    if finir_match_form.validate_on_submit():
+        # Logique pour terminer le match, par exemple, marquer le match comme terminé
+        modele.get_match_bd().set_fini_match(le_match)
+        # Mettez à jour d'autres propriétés du match selon vos besoins
+        modele.close_connexion()
+        return redirect(request.referrer)
 
     modele.close_connexion()
-    return render_template("page_de_match.html", match=le_match, user=USER, compet=la_competition, form=form)
+    return render_template("page_de_match.html", match=le_match, user=USER, compet=la_competition, envoie_point_form=envoie_point_form)
 
 @app.route("/fin_du_match/<id_match>",  methods=["GET", "POST"])
 def fin_du_match(id_match):

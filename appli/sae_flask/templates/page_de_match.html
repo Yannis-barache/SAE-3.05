@@ -90,14 +90,21 @@
 
     <div class="enflex resultat">
     
-        <div class="circle">
-            {{ match.get_nb_touche(match.get_escrimeur1() ) }}
+        <div class="enflex">
+            <div class="circle">
+                {{ match.get_nb_touche(match.get_escrimeur1() ) }}
+            </div>
+            <div class="ligne"></div>
+            <div class="circle">
+                {{ match.get_nb_touche(match.get_escrimeur2()) }}
+            </div>
         </div>
-        <div class="ligne"></div>
-        <div class="circle">
-            {{ match.get_nb_touche(match.get_escrimeur2()) }}
-            
-        </div>
+        <!-- Button pour supprimer une touche-->
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
+            {{ form.csrf_token }}
+            {{ form.supprimer_point(class="circle-button") }}
+        </form>
+
 
     </div>
 
@@ -142,9 +149,10 @@
 
 </div>
 
-<div class="enflex">
-    fin du match
-</div>
+<form class="enflex lemarg" role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
+    {{ finir_match_form.csrf_token }}
+    {{ finir_match_form.finir_match(class="circle-button") }}
+</form>
 
 </div>
 

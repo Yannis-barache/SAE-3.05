@@ -26,6 +26,7 @@ h1{
 .enflex{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .colonne{
@@ -51,7 +52,7 @@ span{
 }
 
 .resultat{
-    
+    flex-direction: column;
 }
 
 .circle{
@@ -138,3 +139,10 @@ span{
     height: 100%;
 }
 
+.button_finir{
+
+}
+
+.lemarg{
+    margin: 10px;
+}

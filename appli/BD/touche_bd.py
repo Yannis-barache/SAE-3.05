@@ -61,7 +61,8 @@ class ToucheBD:
             touches = []
             #pylint: disable=W0612
             for (id_match, id_escrimeur, num) in result:
-                escrimeur = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_escrimeur)
+                escrimeur = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur)
                 touches.append(Touche(match, escrimeur, int(num)))
             return touches
         except Exception as e:
@@ -106,16 +107,37 @@ class ToucheBD:
             id_match (int): Match ID
         """
         try:
-            query = text(
-                f"SELECT COALESCE(MAX(numTouche), 0) AS maxTouche\
-                FROM TOUCHE WHERE idMatch = {id_match};"
-            )
+            query = text(f"SELECT COALESCE(MAX(numTouche), 0) AS maxTouche\
+                FROM TOUCHE WHERE idMatch = {id_match};")
             result = self.__connexion.execute(query).fetchone()
             if result is not None:
                 for element in result:
                     return int(element)
             else:
                 return 0
+        except Exception as e:
+            print(e)
+            # Handle the exception appropriately, e.g., log the error or raise it.
+
+    def get_touche_by_id(self, id_match: int, num_touche: int):
+        """Function that returns a touch from the database.
+
+        Args:
+            id_match (int): Match ID
+            num_touche (int): Touch number
+        """
+        try:
+            query = text(
+                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {id_match} AND numTouche = {num_touche}"
+            )
+            result = self.__connexion.execute(query).fetchone()
+            if result is not None:
+                match = MatchBD(self.__connexion).get_match_by_id(result[0])
+                escrimeur = EscrimeurBD(self.__connexion).get_escrimeur_by_id(
+                    result[1])
+                return Touche(match, escrimeur, int(result[2]))
+            else:
+                return None
         except Exception as e:
             print(e)
             # Handle the exception appropriately, e.g., log the error or raise it.
