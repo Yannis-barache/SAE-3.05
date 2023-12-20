@@ -274,9 +274,10 @@ def competition(id_competition):
     modele = ModeleAppli()
     la_competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    phase_finale = modele.get_phase_finale_bd().exist_phase_finale(id_competition)
     modele.close_connexion()
     return render_template("competition.html", compet=la_competition,
-                           poule=nb_poule, user=USER)
+                           poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
 def poule(id_competition, nb):
@@ -807,3 +808,11 @@ def arbitrage_competition(id_competition):
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
+@app.route("/phase_finale/<id_competition>")
+def phase_finale(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    modele.close_connexion()
+    return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase)

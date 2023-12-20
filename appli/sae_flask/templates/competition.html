@@ -48,14 +48,16 @@
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
                     <button type="submit" class="btn-active">voir les poules</button>
                 </form>
-                {% endif %}
-            {% if poule == 0 %}
-                <button class="btn-disable">voir les poules ?</button>
             {% endif %}
 
-            <button>voir la phase finale</button>
+            {% if phase_finale %}
+                <form role="form" method="post" action="{{ url_for('phase_finale', id_competition=compet.get_id()) }}">
+                    <button type="submit" class="btn-active">voir la phase finale</button>
+                </form>
+            {% else %}
+                <button class="btn-disable">voir la phase finale ?</button>
+            {% endif %}
         </div>
-
     </div>
 
 

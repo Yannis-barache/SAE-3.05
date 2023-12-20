@@ -70,6 +70,29 @@ class ToucheBD:
             print(e)
             return None
 
+    def get_touches_by_id_match(self, id_match: int):
+        """
+        Fonction qui retourne toutes les touches d'un match
+
+        Args:
+            match_id (int): l'id du match
+        """
+        try:
+            query = text(
+                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {id_match}"
+            )
+            result = self.__connexion.execute(query)
+            touches = []
+            for (id_match, id_escrimeur, num) in result:
+                match = MatchBD(self.__connexion).get_match_by_id(id_match)
+                escrimeur = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur)
+                touches.append(Touche(match, escrimeur, num))
+            return touches
+        except Exception as e:
+            print(e)
+            return None
+
     def insert_touche(self, touche: Touche):
         """
         Fonction qui insert une touche dans la table TOUCHE
@@ -79,6 +102,21 @@ class ToucheBD:
             query = text(
                 f"call ajoute_touche("
                 f"{touche.get_match().get_id()}, {touche.get_escrimeur().get_id()}"
+                ")")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+
+    def insert_touche_2(self, id_match : int, id_escrimeur: int):
+        """
+        Fonction qui insert une touche dans la table TOUCHE
+        :param touche: La touche à insérer
+        """
+        try:
+            query = text(
+                f"call ajoute_touche("
+                f"{id_match}, {id_escrimeur}"
                 ")")
             self.__connexion.execute(query)
             self.__connexion.commit()
@@ -100,3 +138,7 @@ class ToucheBD:
             self.__connexion.commit()
         except Exception as e:
             print(e)
+
+# if __name__ == '__main__':
+#     from modele_appli import ModeleAppli
+#     ModeleAppli().get_touche_bd().insert_touche_2(181, 13)

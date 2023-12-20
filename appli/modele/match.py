@@ -146,7 +146,7 @@ class Match:
             escrimeur1 = 0
             escrimeur2 = 0
             for touche in self.__les_touches:
-                if touche.get_escrimeur() == self.__escrimeur1:
+                if touche.get_escrimeur().get_id() == self.__escrimeur1.get_id():
                     escrimeur1 += 1
                 else:
                     escrimeur2 += 1
