@@ -5,6 +5,8 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/poule.css')}}"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/btn_agrandir.css')}}">
+<script src="{{ url_for('static', filename='js/script_agrandir.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -77,7 +79,7 @@
                                     <th class="bg-black">{{ i + 1 }}</th>
                                 {% elif j == i + 1 %}
                                     <th class="bg-grey"></th>
-                                {% elif j != les_escrimeurs|count and i != les_escrimeurs|count %}
+                                {% elif j != les_escrimeurs|count + 1 and i != les_escrimeurs|count %}
                                     {% set le_match = la_poule.get_match_by_escrimeurs(les_escrimeurs[i], les_escrimeurs[j - 1]) %}
                                     {% if le_match %}
                                         {% if le_match.est_commencer() %}
@@ -109,10 +111,74 @@
                 </table>
             </div>
         </div>
+
+        <!-- Div qui apparait lors du clic sur le bouton -->
+        <div id="div-image-agrandir" class="div-image-agrandir" style="display:none;">
+            <table class="table_agrandi">
+                <tr>
+                    <th>NOMS</th>
+                    <th>CLUBS</th>
+                    <th class="carre-bl"></th>
+                    {% for i in range(1, la_poule.get_les_escrimeurs()|count + 1) %}
+                        <th class="bg-black carre-6">{{ i }}</th>
+                    {% endfor %}
+                    <th class="petit"></th>
+                    <th class="th-wrap">Victoire</th>
+                    <th>Indice</th>
+                    <th>Place</th>
+                </tr>
+                {% set les_escrimeurs = la_poule.get_les_escrimeurs() %}
+                {% for i in range(les_escrimeurs|count) %}
+                    <tr>
+                        <th>{{ les_escrimeurs[i].get_nom() }}</th>
+                        <th>{{ les_escrimeurs[i].get_club().get_nom() }}</th>
+                        {% for j in range(les_escrimeurs|count + 1) %}
+                            {% if j == 0 %}
+                                <th class="bg-black">{{ i + 1 }}</th>
+                            {% elif j == i + 1 %}
+                                <th class="bg-grey"></th>
+                            {% elif j != les_escrimeurs|count + 1 and i != les_escrimeurs|count %}
+                                {% set le_match = la_poule.get_match_by_escrimeurs(les_escrimeurs[i], les_escrimeurs[j - 1]) %}
+                                {% if le_match %}
+                                    {% if le_match.est_commencer() %}
+                                        {% if le_match.est_finis() %}
+                                            {% if le_match.get_gagnant().get_id() == les_escrimeurs[i].get_id() %}
+                                                <th>V</th>
+                                            {% else %}
+                                                <th>{{ le_match.get_nb_touche(les_escrimeurs[i]) }}</th>
+                                            {% endif %}
+                                        {% else %}
+                                            <th>{{ le_match.get_nb_touche(les_escrimeurs[i]) }}</th>
+                                        {% endif %}
+                                    {% else %}
+                                        <th></th>
+                                    {% endif %}
+                                {% else %}
+                                    <th></th>
+                                {% endif %}
+                            {% else %}
+                                <th></th>
+                            {% endif %}
+                        {% endfor %}
+                        <th class="petit"></th>
+                        <th>{{ la_poule.get_nb_victoires(les_escrimeurs[i]) }}</th>
+                        <th>{{ la_poule.get_indice(les_escrimeurs[i]) }}</th>
+                        <th>{{ la_poule.get_place(les_escrimeurs[i]) }}</th>
+                    </tr>
+                {% endfor %}
+            </table>
+            <button id="bouton-fermeture" class="bouton-fermeture" data-action="pswp-close" title="Fermer">
+                <svg focusable="false" width="14" height="14" class="svg-bouton-fermeture" viewBox="0 0 14 14">
+                    <path d="M13 13L1 1M13 1L1 13" stroke="currentColor" stroke-width="2" fill="none"></path>
+                </svg>
+            </button>
+        </div>
+        
         {% else %}
             <p class="no-match">Aucun match n'a été joué pour cette poule</p>
         {% endif %}
         <div class="div-dow">
+            <a id="btn-agrandir" class="dow-a"><img class="img_agrandir dow" src="{{ url_for('static', filename='img/agrandir.png') }}" alt="">Plein écran</a>
             <a class="dow-a" href="{{ url_for('telecharger_pdf_poule', id_poule=la_poule.get_id()) }}"><img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">Télécharger le PDF</a> 
         </div>
     </div>
