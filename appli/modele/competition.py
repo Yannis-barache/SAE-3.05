@@ -46,7 +46,7 @@ class Competition:
         self.__arme = arme
         self.__categorie = categorie
         self.__coefficient = coefficient
-        self.__phase_final: PhaseFinal | None = None
+        self.__phase_final: PhaseFinal  = None
 
     def get_id(self) -> int:
         """
@@ -158,7 +158,7 @@ class Competition:
         elif datetime.strptime(self.__date, "%d-%m-%Y").date() <= date.today():
             return "En cours"
         elif datetime.strptime(self.__date_fin_inscription,
-                               "%d-%m-%Y").date() < date.today():
+                               "%d-%m-%Y").date() > date.today():
             return "Inscription ouverte"
         else:
             return "À venir"
@@ -256,7 +256,7 @@ class Competition:
     @staticmethod
     def generation_poule(
         liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
-    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None:
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] :
         """
         Fonction qui genere les poules de la competition
 
