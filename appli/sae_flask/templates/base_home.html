@@ -9,7 +9,12 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
+
     {% endblock %}
+    {% block scripts %}
+            <script src="{{ url_for('static', filename='js/button_menu.js')}}"></script>
+    {% endblock %}
+
 </head>
 <body>
 

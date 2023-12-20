@@ -6,7 +6,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}"> 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/poule.css')}}"> 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/btn_agrandir.css')}}">
-<script src="{{ url_for('static', filename='js/script_agrandir.js') }}"></script>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/script_agrandir.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -45,13 +48,9 @@
                 <p>Arbitre : {{ la_poule.get_les_matchs()[0].get_arbitre().get_nom() }} {{ la_poule.get_les_matchs()[0].get_arbitre().get_prenom() }}</p>
 
                 <p>Les prochains matchs :</p>
-
                 <div class="scroll-match">
-
                     {% for match in la_poule.get_les_matchs() %}
-                        {% if not match.est_finis() %}
-                            <p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p>
-                        {% endif %}
+                        <p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p>
                     {% endfor %}
                 </div>
             </div>
@@ -185,4 +184,5 @@
     {% endif %}
 
 {% endblock %}
+
 
