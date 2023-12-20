@@ -46,7 +46,7 @@ class Competition:
         self.__arme = arme
         self.__categorie = categorie
         self.__coefficient = coefficient
-        self.__phase_final: PhaseFinal  = None
+        self.__phase_final: PhaseFinal | None  = None
 
     def get_id(self) -> int:
         """
@@ -256,7 +256,7 @@ class Competition:
     @staticmethod
     def generation_poule(
         liste_escrimeur: list[Escrimeur], liste_arbitre: list[Escrimeur]
-    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] :
+    ) -> dict[Poule, tuple[Escrimeur, list[Escrimeur]]] | None :
         """
         Fonction qui genere les poules de la competition
 
