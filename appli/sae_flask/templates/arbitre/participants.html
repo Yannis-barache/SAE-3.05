@@ -41,9 +41,13 @@
 
     <div class="container">
     {% if competition.get_etat() == "À venir" %}
-        <div class="bouton">
-            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('generation_poule',id_competition = competition.get_id())}}'">Générer les poules</button>
-        </div>
+        <form action="{{ url_for('participants',id_competition = competition.get_id()) }}" method="POST" role="form">
+            <div class="form-group">
+                {{ form.heure(class="form-control",placeholder="Heure de début") }}
+            </div>
+            <div class="bouton">
+                <button class="btn btn-primary" type="submit">Générer les poules</button>
+            </div>
     {% endif %}
 
     {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
@@ -57,9 +61,6 @@
            <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
         </div>
     {% endif %}
-
-
-    </div>
 
 {% endblock %}
 
