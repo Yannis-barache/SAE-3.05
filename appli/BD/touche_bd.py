@@ -59,7 +59,8 @@ class ToucheBD:
             )
             result = self.__connexion.execute(query)
             touches = []
-            for (_, id_escrimeur, num) in result:
+            #pylint: disable=W0612
+            for (id_match, id_escrimeur, num) in result:
                 escrimeur = EscrimeurBD(self.__connexion).get_escrimeur_by_id(id_escrimeur)
                 touches.append(Touche(match, escrimeur, int(num)))
             return touches
