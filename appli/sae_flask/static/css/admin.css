@@ -56,14 +56,27 @@ body{
     background-color: black;
 }
 
+.animation{
+    display: flex;
+    position: relative;
+}
+
 .animation img{
 
     width: 100%;
-    height: 10%;
+    height: 25em;
+}
+
+.listecomp {
+    position: absolute;
+    z-index: 5;
+    left: 35%;
+    top:50%;
 }
 
 h1{
     color:white;
     font-weight: bolder;
     font-family: Arial, Helvetica, sans-serif;
+    opacity: 0.8;
 }
