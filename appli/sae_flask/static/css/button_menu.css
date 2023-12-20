@@ -119,7 +119,7 @@
 
 
 
-   .compet:after {
+   a.compet:after {
     position: absolute;
     content: '';
     top: 0;
@@ -132,18 +132,18 @@
     transform: translateX(-100%);
   }
   
-  .compet:hover {
+  a.compet:hover {
     box-shadow: 0 5px 15px rgb(212, 8, 11);
   }
   
-  .compet:hover:before {
+  a.compet:hover:before {
     border-color: rgb(212, 8, 11);;
     height: 100%;
     transform: translateX(0);
     transition: .3s transform linear, .3s height linear .3s;
   }
   
-  .compet:hover:after {
+  a.compet:hover:after {
     border-color: rgb(212, 8, 11);;
     height: 100%;
     transform: translateX(0);

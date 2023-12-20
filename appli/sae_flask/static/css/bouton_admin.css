@@ -1,5 +1,5 @@
 .box {
-    width: 140px;
+    width: 50%;
     height: auto;
     float: left;
     transition: .5s linear;

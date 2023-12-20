@@ -3,13 +3,20 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tab_adm.css')}}">
 {% endblock %}
 
 
 {% block content %}
 
+<div class="animation"> 
+    <h1 class="listecomp"> LISTE DES LIEUX</h1>
+    <img class= "match" src="{{ url_for('static', filename='../static/video/epee.gif') }}" alt="video épee gif">
+</div>
+
 <div class="scroll-tableau" style="overflow-x: auto;">
-    <table class="tableau">
+    <table class="tab">
         <tr>
             <th>Adresse</th>
             <th>Description</th>
@@ -31,11 +38,13 @@
     </table>
 
     <div>
-        <button class="btn">
-            <a href="{{ url_for('ajouter_lieu') }}" style="text-decoration: none;">Ajouter un lieu</a>
-        </button>
+        <button class="btn" >
+        <span class="box">
+            <a href="{{ url_for('ajouter_competition') }}" style="text-decoration: none;" > Ajouter une compétition</a>
+        </span>
+    </button>
 
-    </div>
+</div>
 </div>
 
 {% endblock %}
