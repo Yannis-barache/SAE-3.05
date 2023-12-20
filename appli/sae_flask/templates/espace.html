@@ -1,59 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/espace.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
-    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
-
-    <title>Espace</title>
-    {% block styles %}
-    <!-- Bootstrap CSS -->
-    {{ bootstrap.load_css() }}
-    {% endblock %}
-</head>
-<body>
-    <header>
-        {% block header %}
-        <div class="b-menu2">
-            <input id="toggleChecker" type="checkbox">
-            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
-            <div class="checkboxtoggler">
-                <div class="line line-1"></div>
-                <div class="line line-2"></div>
-                <div class="line line-3"></div>
-            </div>
-            </label>
-            <nav id="myDropdown" class="dropdown-content2">
-                <ul class="menu-deroule">
-                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-
-        <img class= "logo" src="{{ url_for('static', filename='../static/img/userAccunt.png') }}" alt="logo">
-        <a href="{{ url_for('home') }}">
-            <img class= "user" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="user">
-        </a>
-
-        <nav class="navigateur">
-            {% block nav %}
-             <a class="information" href="#"> MES INFORMATIONS </a>
-             <a class="my-comp" href="#"> MES COMPÉTITIONS </a>
-             <a class="gest-comp" href="#"> GESTION COMPÉTITION </a>
-            {% endblock %}
-        </nav>
-
-        {% endblock %}
-    </header>
-    <main>
-        <table>
+{% extends "base_home.html" %}
+{% block styles %}
+{{ super() }}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/espace.css') }}">
+{% endblock %}
+{% block content %}
+<table>
             {% if user|is_escrimeur%}
                 <tr>
                     <td class="left">N° de licence</td>
@@ -140,8 +94,6 @@
 
             {% endif %}
         </table>
-
-    </main>
-
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}

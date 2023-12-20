@@ -420,6 +420,49 @@ begin
 end |
 delimiter ;
 
+-- Création de la procédure stockée pour tuer les sessions en sommeil
+DELIMITER //
+
+CREATE PROCEDURE TuerConnexionsEnSommeil()
+BEGIN
+    DECLARE termine INT DEFAULT 0;
+    DECLARE requete_a_tuer VARCHAR(255);
+
+    -- Curseur pour itérer à travers les sessions en sommeil
+    DECLARE cur CURSOR FOR
+        SELECT concat('KILL ', id, ';') FROM information_schema.processlist WHERE Command='Sleep';
+
+    -- Ignorer les erreurs au cas où une session a déjà été fermée
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET termine = 1;
+
+    OPEN cur;
+
+    boucle_de_lecture: LOOP
+        FETCH cur INTO requete_a_tuer;
+        IF termine THEN
+            LEAVE boucle_de_lecture;
+        END IF;
+
+        -- Exécution de la commande KILL
+        SET @requete_a_tuer = requete_a_tuer;
+        PREPARE stmt FROM @requete_a_tuer;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END LOOP;
+
+    CLOSE cur;
+END //
+
+DELIMITER ;
+
+
+-- Création de l'event pour tuer les sessions en sommeil
+CREATE EVENT IF NOT EXISTS TuerConnexionsEnSommeil
+ON SCHEDULE EVERY 30 MINUTE
+DO
+    CALL TuerConnexionsEnSommeil();
+
+
 
 
 
