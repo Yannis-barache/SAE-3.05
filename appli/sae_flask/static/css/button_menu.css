@@ -2,13 +2,13 @@
     /* width: max-content; */
     display: flex;
     flex-direction: column;
-    width: 5vw;
+    width: 4vmax;
     gap: 1vw;
     cursor: pointer;
     /* width: auto; */
     /* height: 148%; */
     /* height: 34px;*/
-    height: 4vw;
+    height: 3vw;
 }
 
 .line {

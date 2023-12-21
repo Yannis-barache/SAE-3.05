@@ -46,18 +46,22 @@ footer {
 
 .insta {
     width: 2%;
+    min-width: 30px;
 }
 
 .youtube {
     width: 2%;
+    min-width: 30px;
 }
 
 .twitter {
-    width: 2%;;
+    width: 2%;
+    min-width: 30px;
 }
 
 .facebook {
     width: 2%;
+    min-width: 30px;
 }
 
 footer > p {
@@ -79,14 +83,6 @@ footer > p {
 
 .tableau {
     overflow-x: auto;
-}
-
-.accueil {
-    font-size: large;
-}
-
-p {
-    font-size: small;
 }
 
 .pas {
