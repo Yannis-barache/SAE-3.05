@@ -73,9 +73,9 @@ def espace_personnel():
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
-    from .form import InscriptionForm
+    from .form import inscription_form
     modele_appli = ModeleAppli()
-    form = InscriptionForm()
+    form = inscription_form()
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
@@ -122,16 +122,16 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
-    from .form import ConnexionForm, ConnexionFormE
+    from .form import connexion_form, connexion_formE
     global USER
     modele_appli = ModeleAppli()
     print("connexion ",USER)
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
-    form = ConnexionForm()
+    form = connexion_form()
     if nom == "ESCRIMEUR":
-        form = ConnexionFormE()
+        form = connexion_formE()
     if form.validate_on_submit():
         identifiant = form.identifiant.data
         mdp = form.mdp.data
@@ -275,14 +275,14 @@ def supprimer_club(id_club):
 
 @app.route("/admin/modifier_clubs/<int:id_club>", methods=["GET", "POST"])
 def modifier_club(id_club):
-    from .form import ClubForm
+    from .form import club_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     club = modele.get_club_bd().get_club_by_id(id_club)
-    form = ClubForm()
+    form = club_form()
     form.name.data = club.get_nom()
     form.adresse.data = club.get_adresse()
     modele.close_connexion()
@@ -290,14 +290,14 @@ def modifier_club(id_club):
 
 @app.route("/admin/modifier_clubs/<int:id_club>/<int:type>", methods=["GET", "POST"])
 def update_club(id_club, type):
-    from .form import ClubForm, ClubForm2
+    from .form import club_form, club_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = ClubForm()
+        form = club_form()
         club = modele.get_club_bd().get_club_by_id(id_club)
         nom = form.name.data
         adresse = form.adresse.data
@@ -305,7 +305,7 @@ def update_club(id_club, type):
         club.set_adresse(adresse)
         modele.get_club_bd().update_club(club)
     else :
-        form = ClubForm2()
+        form = club_form2()
         nom = form.name.data
         adresse = form.adresse.data
         mdp = form.mdp.data
@@ -316,12 +316,12 @@ def update_club(id_club, type):
 
 @app.route("/admin/ajouter_club", methods=["GET", "POST"])
 def ajouter_club():
-    from .form import ClubForm2
+    from .form import club_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
-    form = ClubForm2()
+    form = club_form2()
     return render_template("Admin/Club/add_club.html", user=USER, title="Ajouter club", form=form)
 
 # Escrimeur
@@ -350,14 +350,14 @@ def supprimer_escrimeur(id_escrimeur):
 
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>", methods=["GET", "POST"])
 def modifier_escrimeur(id_escrimeur):
-    from .form import EscrimeurForm
+    from .form import escrimeur_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
-    form = EscrimeurForm()
+    form = escrimeur_form()
     form.name.data = escrimeur.get_nom()
     form.prenom.data = escrimeur.get_prenom()
     form.date_naissance.data = escrimeur.get_date_naissance()
@@ -372,14 +372,14 @@ def modifier_escrimeur(id_escrimeur):
 
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>/<int:type>", methods=["GET", "POST"])
 def update_escrimeur(id_escrimeur, type):
-    from .form import EscrimeurForm, EscrimeurForm2
+    from .form import escrimeur_form, escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = EscrimeurForm()
+        form = escrimeur_form()
         escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
         nom = form.name.data
         prenom = form.prenom.data
@@ -401,7 +401,7 @@ def update_escrimeur(id_escrimeur, type):
         escrimeur.set_arbitrage(arbitre)
         modele.get_escrimeur_bd().update_escrimeur(escrimeur)
     else :
-        form = EscrimeurForm2()
+        form = escrimeur_form2()
         nom = form.name.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
@@ -420,12 +420,12 @@ def update_escrimeur(id_escrimeur, type):
 
 @app.route("/admin/ajouter_escrimeur", methods=["GET", "POST"])
 def ajouter_escrimeur():
-    from .form import EscrimeurForm2
+    from .form import escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
-    form = EscrimeurForm2()
+    form = escrimeur_form2()
     return render_template("Admin/Escrimeur/add_escrimeur.html", user=USER, title="Ajouter escrimeur", form=form)
 
 
@@ -455,14 +455,14 @@ def supprimer_lieu(id_lieu):
 
 @app.route("/admin/modifier_lieux/<int:id_lieu>", methods=["GET", "POST"])
 def modifier_lieu(id_lieu):
-    from .form import LieuForm
+    from .form import lieu_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
-    form = LieuForm()
+    form = lieu_form()
     form.description.data = lieu.get_description()
     form.adresse.data = lieu.get_adresse()
     modele.close_connexion()
@@ -470,14 +470,14 @@ def modifier_lieu(id_lieu):
 
 @app.route("/admin/modifier_lieux/<int:id_lieu>/<int:type>", methods=["GET", "POST"])
 def update_lieu(id_lieu, type):
-    from .form import LieuForm, LieuForm2
+    from .form import lieu_form, lieu_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = LieuForm()
+        form = lieu_form()
         lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
         adresse = form.adresse.data
         description = form.description.data
@@ -487,7 +487,7 @@ def update_lieu(id_lieu, type):
         lieu.set_adresse(adresse)
         modele.get_lieu_bd().update_lieu(lieu)
     else :
-        form = LieuForm2()
+        form = lieu_form2()
         adresse = form.adresse.data
         description = form.description.data
         lieu = Lieu(1, description, adresse)
@@ -497,12 +497,12 @@ def update_lieu(id_lieu, type):
 
 @app.route("/admin/ajouter_lieu", methods=["GET", "POST"])
 def ajouter_lieu():
-    from .form import LieuForm2
+    from .form import lieu_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
-    form = LieuForm2()
+    form = lieu_form2()
     return render_template("Admin/Lieux/add_lieu.html", user=USER, title="Ajouter lieu", form=form)
 
 
@@ -533,14 +533,14 @@ def supprimer_competition(id_competition):
 
 @app.route("/admin/modifier_competitions/<int:id_competition>", methods=["GET", "POST"])
 def modifier_competition(id_competition):
-    from .form import CompetitionForm
+    from .form import competition_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    form = CompetitionForm()
+    form = competition_form()
     form.name.data = competition.get_nom()
     form.date.data = competition.get_date()
     form.date_fin_inscripiton.data = competition.get_date_fin_inscription()
@@ -554,14 +554,14 @@ def modifier_competition(id_competition):
 
 @app.route("/admin/modifier_competitions/<int:id_competition>/<int:type>", methods=["GET", "POST"])
 def update_competition(id_competition, type):
-    from .form import CompetitionForm, CompetitionForm2
+    from .form import competition_form, competition_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = CompetitionForm()
+        form = competition_form()
         competition = modele.get_competition_bd().get_competition_by_id(id_competition)
         nom = form.name.data
         date = form.date.data
@@ -581,7 +581,7 @@ def update_competition(id_competition, type):
         competition.set_coefficient(coefficient)
         modele.get_competition_bd().update_competition(competition)
     else :
-        form = CompetitionForm2()
+        form = competition_form2()
         nom = form.name.data
         date = form.date.data
         date_fin_inscription = form.date_fin_inscripiton.data
@@ -597,19 +597,19 @@ def update_competition(id_competition, type):
 
 @app.route("/admin/ajouter_competition", methods=["GET", "POST"])
 def ajouter_competition():
-    from .form import CompetitionForm2
+    from .form import competition_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur) :
         return redirect(url_for('home'))
-    form = CompetitionForm2()
+    form = competition_form2()
     return render_template("Admin/Competition/add_competition.html", user=USER, title="Ajouter competition", form=form)
 
 @app.route("/participants/<id_competition>", methods=["GET", "POST"])
 def participants(id_competition):
-    from .form import HeureDebutForm
+    from .form import heure_debut_form
 
-    form = HeureDebutForm()
+    form = heure_debut_form()
     try:
         modele = ModeleAppli()
         competition = modele.get_competition_bd().get_competition_by_id(id_competition)
