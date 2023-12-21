@@ -47,9 +47,7 @@
                 <div class="scroll-match">
 
                     {% for match in la_poule.get_les_matchs() %}
-                        {% if not match.est_finis() %}
-                            <p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p>
-                        {% endif %}
+                        <a href="{{ url_for('page_de_match',id_match=match.get_id() ) }}"><p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p></a>
                     {% endfor %}
                 </div>
             </div>
