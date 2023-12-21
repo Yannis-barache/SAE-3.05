@@ -74,10 +74,11 @@ class EscrimeurBD:
                     self.__connexion).get_categorie_by_id(id_categorie)
                 nombre_match = self.get_nb_match(id_escrimeur)
                 nombre_competition = self.get_nb_competition(id_escrimeur)
-                escrimeurs.append((
-                    Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
-                              nom_utilisateur, mdp, licence, classement, club,
-                              categorie, arbitrage), nombre_match, nombre_competition))
+                escrimeurs.append(
+                    (Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
+                               nom_utilisateur, mdp, licence, classement, club,
+                               categorie,
+                               arbitrage), nombre_match, nombre_competition))
             return escrimeurs
         except Exception as e:
             print(e)
@@ -90,7 +91,8 @@ class EscrimeurBD:
         :return: nombre de match
         """
         try:
-            query = text('SELECT count(*) from MATCHS where idEscrimeur2 =' + str(id_e) + ' or idEscrimeur1 =' + str(id_e))
+            query = text('SELECT count(*) from MATCHS where idEscrimeur2 =' +
+                         str(id_e) + ' or idEscrimeur1 =' + str(id_e))
             result = self.__connexion.execute(query)
             for nb in result:
                 return nb[0]
@@ -105,7 +107,8 @@ class EscrimeurBD:
         :return: nombre de compétition
         """
         try:
-            query = text('SELECT count(*) FROM INSCRIRE where idEscrimeur =' + str(id_e))
+            query = text('SELECT count(*) FROM INSCRIRE where idEscrimeur =' +
+                         str(id_e))
             result = self.__connexion.execute(query)
             for nb in result:
                 return nb[0]
@@ -192,8 +195,7 @@ class EscrimeurBD:
                 f"idClub = {escrimeur.get_club().get_id()}, "
                 f"idCategorie = {str(escrimeur.get_categorie().get_id())}, "
                 f"arbitrage = {str(escrimeur.get_arbitrage())} "
-                f"WHERE idEscrimeur = {escrimeur.get_id()}"
-            )
+                f"WHERE idEscrimeur = {escrimeur.get_id()}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
@@ -206,7 +208,8 @@ class EscrimeurBD:
         :param id_e: id de l'escrimeur
         """
         try:
-            query = text('DELETE FROM ESCRIMEUR WHERE idEscrimeur =' + str(id_e))
+            query = text('DELETE FROM ESCRIMEUR WHERE idEscrimeur =' +
+                         str(id_e))
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

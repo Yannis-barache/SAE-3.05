@@ -77,8 +77,9 @@ class MatchBD:
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
-                return Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
-                             heure, fini, piste)
+                match = Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
+                              heure, fini, piste)
+                return match
             return None
         except Exception as e:
             print(e)
@@ -129,20 +130,6 @@ class MatchBD:
                 f"{str(match.get_escrimeur1().get_id())},{str(match.get_escrimeur2().get_id())},"
                 f"{str(match.get_arbitre().get_id())}, {str(match.get_piste().get_id_piste())},"
                 f"'{match.get_heure()}', {str(int(match.est_finis()))})")
-            self.__connexion.execute(query)
-            self.__connexion.commit()
-        except Exception as e:
-            print(e)
-            return None
-
-    def delete_match(self, match: Match):
-        """
-        Fonction qui supprime un match
-        :param match : match
-        """
-        try:
-            query = text(
-                f"DELETE FROM MATCHS WHERE idMatch = {str(match.get_id())}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

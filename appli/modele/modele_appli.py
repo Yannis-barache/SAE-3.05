@@ -55,8 +55,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table arme
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ArmeBD : l'objet qui gère les interactions avec la table arme
         """
         return self.__arme_bd
 
@@ -64,8 +64,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table categorie
 
-        Returns:
-            _type_: _description_
+        Returns :
+            CategorieBD : l'objet qui gère les interactions avec la table categorie
         """
         return self.__categorie_bd
 
@@ -73,8 +73,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table club
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ClubBD : l'objet qui gère les interactions avec la table club
         """
         return self.__club_bd
 
@@ -82,8 +82,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table competition
 
-        Returns:
-            _type_: _description_
+        Returns :
+            CompetitionBD : l'objet qui gère les interactions avec la table competition
         """
         return self.__competition_bd
 
@@ -91,8 +91,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table escrimeur
 
-        Returns:
-            _type_: _description_
+        Returns :
+            EscrimeurBD : l'objet qui gère les interactions avec la table escrimeur
         """
         return self.__escrimeur_bd
 
@@ -100,8 +100,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table inscrire_arbitre
 
-        Returns:
-            _type_: _description_
+        Returns :
+            InscrireArbitreBD : l'objet qui gère les interactions avec la table inscrire_arbitre
         """
         return self.__inscrire_arbitre_bd
 
@@ -109,8 +109,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table inscrire
 
-        Returns:
-            _type_: _description_
+        Returns :
+            InscrireBD : l'objet qui gère les interactions avec la table inscrire
         """
         return self.__inscrire_bd
 
@@ -118,8 +118,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table lieu
 
-        Returns:
-            _type_: _description_
+        Returns :
+            LieuBD : l'objet qui gère les interactions avec la table lieu
         """
         return self.__lieu_bd
 
@@ -127,8 +127,9 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table match
 
-        Returns:
-            _type_: _description_
+        Returns :
+            MatchBD : l'objet qui gère les interactions avec la table match
+
         """
         return self.__match_bd
 
@@ -136,8 +137,9 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table organisateur
 
-        Returns:
-            _type_: _description_
+        Returns :
+            OrganisateurBD : l'objet qui gère les interactions avec la table organisateur
+
         """
         return self.__organisateur_bd
 
@@ -145,8 +147,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table phase
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PhaseBD : l'objet qui gère les interactions avec la table phase
         """
         return self.__phase_bd
 
@@ -154,8 +156,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table phase_finale
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PhaseFinaleBD : l'objet qui gère les interactions avec la table phase_finale
         """
         return self.__phase_final_bd
 
@@ -163,8 +165,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table poule
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PouleBD : l'objet qui gère les interactions avec la table poule
         """
         return self.__poule_bd
 
@@ -172,8 +174,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table touche
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ToucheBD : l'objet qui gère les interactions avec la table touche
         """
         return self.__touche_bd
 
@@ -181,8 +183,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table piste
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PisteBD : l'objet qui gère les interactions avec la table piste
         """
         return self.__piste_bd
 

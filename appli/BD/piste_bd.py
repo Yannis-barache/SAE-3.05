@@ -2,7 +2,6 @@
   Fichier qui contient les requêtes SQL pour la table PISTE
 """
 
-
 from lieu_bd import LieuBD
 import sys
 import os
@@ -19,6 +18,7 @@ class PisteBD:
     """
     Classe PisteBD
     """
+
     def __init__(self, connexion):
         self.__connexion = connexion
 
@@ -39,8 +39,6 @@ class PisteBD:
         except Exception as e:
             print(e)
             return None
-
-
 
     def get_piste_by_id(self, id_piste: int):
         """
@@ -99,4 +97,3 @@ class PisteBD:
         except Exception as e:
             print(e)
             return None
-

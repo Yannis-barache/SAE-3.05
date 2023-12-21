@@ -19,6 +19,7 @@ from constantes import USER
 from inscrire import Inscrire
 from touche import Touche
 from organisateur import Organisateur
+from phase_final import PhaseFinal
 
 USER = USER
 modele_appli = ModeleAppli()
@@ -166,6 +167,7 @@ def espace_personnel():
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
+    from .form import InscriptionForm
     modele_appli = ModeleAppli()
     form = InscriptionForm()
     message = []
@@ -215,10 +217,10 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
+    from .form import ConnexionForm, ConnexionFormE
     global USER
     modele_appli = ModeleAppli()
-    print("connexion ", USER)
-
+    print("connexion ",USER)
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
@@ -271,12 +273,10 @@ def competition(id_competition):
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
     nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    phase_finale = modele.get_phase_finale_bd().exist_phase_finale(id_competition)
     modele.close_connexion()
-    return render_template("competition.html",
-                           compet=la_competition,
-                           poule=nb_poule,
-                           user=USER)
-
+    return render_template("competition.html", compet=la_competition,
+                           poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 class EnvoiePointForm(FlaskForm):
     submit = SubmitField('+')
@@ -344,6 +344,13 @@ def telecharger_pdf_poule(id_poule):
     modele.close_connexion()
     return redirect(request.referrer)
 
+@app.route('/telecharger_pdf_phase_finale/<int:id_compet>/<int:id_phase>', methods=["GET", "POST"])
+def telecharger_pdf_phase(id_compet, id_phase):
+    modele = ModeleAppli()
+    la_phase_finale = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
+    la_phase_finale.generer_pdf()
+    modele.close_connexion()
+    return url_for('phase_finale', id_competition=id_compet)
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
@@ -527,6 +534,7 @@ def supprimer_club(id_club):
 
 @app.route("/admin/modifier_clubs/<int:id_club>", methods=["GET", "POST"])
 def modifier_club(id_club):
+    from .form import ClubForm
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -547,6 +555,7 @@ def modifier_club(id_club):
 @app.route("/admin/modifier_clubs/<int:id_club>/<int:type>",
            methods=["GET", "POST"])
 def update_club(id_club, type):
+    from .form import ClubForm, ClubForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -573,6 +582,7 @@ def update_club(id_club, type):
 
 @app.route("/admin/ajouter_club", methods=["GET", "POST"])
 def ajouter_club():
+    from .form import ClubForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -596,7 +606,6 @@ class ClubForm2(FlaskForm):
     adresse = StringField('Adresse', validators=[DataRequired()])
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
     title = HiddenField('title')
-
 
 # Escrimeur
 
@@ -631,6 +640,7 @@ def supprimer_escrimeur(id_escrimeur):
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>",
            methods=["GET", "POST"])
 def modifier_escrimeur(id_escrimeur):
+    from .form import EscrimeurForm
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -658,6 +668,7 @@ def modifier_escrimeur(id_escrimeur):
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>/<int:type>",
            methods=["GET", "POST"])
 def update_escrimeur(id_escrimeur, type):
+    from .form import EscrimeurForm, EscrimeurForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -708,6 +719,7 @@ def update_escrimeur(id_escrimeur, type):
 
 @app.route("/admin/ajouter_escrimeur", methods=["GET", "POST"])
 def ajouter_escrimeur():
+    from .form import EscrimeurForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -811,6 +823,7 @@ def supprimer_lieu(id_lieu):
 
 @app.route("/admin/modifier_lieux/<int:id_lieu>", methods=["GET", "POST"])
 def modifier_lieu(id_lieu):
+    from .form import LieuForm
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -831,6 +844,7 @@ def modifier_lieu(id_lieu):
 @app.route("/admin/modifier_lieux/<int:id_lieu>/<int:type>",
            methods=["GET", "POST"])
 def update_lieu(id_lieu, type):
+    from .form import LieuForm, LieuForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -858,6 +872,7 @@ def update_lieu(id_lieu, type):
 
 @app.route("/admin/ajouter_lieu", methods=["GET", "POST"])
 def ajouter_lieu():
+    from .form import LieuForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -915,6 +930,7 @@ def supprimer_competition(id_competition):
 @app.route("/admin/modifier_competitions/<int:id_competition>",
            methods=["GET", "POST"])
 def modifier_competition(id_competition):
+    from .form import CompetitionForm
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -942,6 +958,7 @@ def modifier_competition(id_competition):
 @app.route("/admin/modifier_competitions/<int:id_competition>/<int:type>",
            methods=["GET", "POST"])
 def update_competition(id_competition, type):
+    from .form import CompetitionForm, CompetitionForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -989,6 +1006,7 @@ def update_competition(id_competition, type):
 
 @app.route("/admin/ajouter_competition", methods=["GET", "POST"])
 def ajouter_competition():
+    from .form import CompetitionForm2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -999,6 +1017,45 @@ def ajouter_competition():
                            title="Ajouter competition",
                            form=form)
 
+
+@app.route("/participants/<id_competition>", methods=["GET", "POST"])
+def participants(id_competition):
+    from .form import HeureDebutForm
+
+    form = HeureDebutForm()
+    try:
+        modele = ModeleAppli()
+        competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+        inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
+        inscrits = []
+        for i in inscription:
+            inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+
+        arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
+        arbitres = []
+        for element in arbitrages:
+            arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(element.get_id_escrimeur()))
+        poules = modele.get_poule_bd().get_poules_by_compet(competition.get_id())
+        fini = any(element.est_finis() for element in poules)
+        fini = True
+
+        modele.close_connexion()
+    except Exception as e:
+        print(e)
+        flask.abort(404)
+    finally:
+        modele.close_connexion()
+
+    if request.method == 'POST':
+        heure = form.heure.data
+        type = form.type.data
+        if type == 1:
+            return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
+        if type == 2:
+            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
+
+    return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
+                           arbitres=arbitres, form=form,fini = fini)
 
 class CompetitionForm(FlaskForm):
     modele = ModeleAppli()
@@ -1093,19 +1150,21 @@ def participants(id_competition):
                            arbitres=arbitres)
 
 
-@app.route("/generation_poule/<id_competition>")
-def generation_poule(id_competition):
+@app.route("/generation_poule/<id_competition>/<heure_debut>")
+def generation_poule(id_competition,heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
     print("competition", competition)
-    modele.get_competition_bd().generate_poule_compet(competition.get_id())
+    modele.get_competition_bd().generate_poule_compet(competition.get_id(),heure_debut)
     modele.close_connexion()
-    return redirect(url_for('competition', id_competition=id_competition))
+    return redirect(url_for('poule', id_competition=id_competition, nb=0))
 
 
 @app.route("/arbitrage")
 def arbitrage():
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     id_compet_arbitre = modele.get_inscrire_arbitre_bd(
     ).get_all_compet_arbitre(USER.get_id())
@@ -1126,6 +1185,57 @@ def arbitrage_competition(id_competition):
         id_competition)
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
-    return render_template("arbitre/arbitrage.html",
-                           competition=competition,
-                           poules=poules)
+    return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
+@app.route("/arbitrage/<id_competition>/classement/<full>")
+def podium(id_competition, full):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    # phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
+    # if phase_finale is not None:
+    #     matchs = modele.get_match_bd().get_match_by_phase(phase_finale.get_id_phase_f())
+    escrimeurs_matchs = []
+    # for match in matchs:
+    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur1()))
+    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur2()))
+    modele.close_connexion()
+    escrimeurs_matchs.append(Escrimeur(1, "BYE", "BYE", "H", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "COUCOU", "COUCOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)
+
+@app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
+def phase_finale(id_competition):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    liste_match = la_phase.get_les_matchs()
+    modele.close_connexion()
+    nb_escrimeur = 8
+    nombre = competition.get_puissance_sup(nb_escrimeur)
+    liste_match_by_tour: list[list] = []
+    cpt = 0
+    for i in range (nombre):
+        un_tour = []
+        for match in range (cpt, cpt + nb_escrimeur //2):
+            if match < len(liste_match):
+                un_tour.append(liste_match[match])
+            else:
+                un_tour.append(None)
+            cpt += 1
+        nb_escrimeur = nb_escrimeur // 2
+        liste_match_by_tour.append(un_tour)
+    print(liste_match_by_tour)
+    return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase, les_matchs=liste_match_by_tour)
+
+@app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
+def generation_phase_finale(id_competition,heure_debut):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    modele.get_competition_bd().generate_phase_finale_compet(competition.get_id(),heure_debut)
+    modele.close_connexion()
+    print('Phase finale générée')
+    return redirect(url_for('phase_finale', id_competition=id_competition))

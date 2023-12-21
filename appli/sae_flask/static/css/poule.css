@@ -24,6 +24,7 @@ main{
   margin-bottom: 3%;
   margin-left: 0%;
 }
+
 img.pdf{
     display: block;
     width: 413px;
@@ -44,6 +45,7 @@ img.pdf{
 .dow{
   height: 30px;
   width: 30px;
+  padding-right: 5px;
 }
 
 .pdf{
@@ -61,8 +63,8 @@ a{
 }
 
 .div-dow{
+  gap: 20px;
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   margin-top : 10px;
@@ -150,6 +152,7 @@ tr{
 .dow-a{
   color: black;
   padding-top: 10px;
+  display: block;
 }
 
 .arrow{
@@ -157,7 +160,7 @@ tr{
   height: auto;
 }
 
-button{
+.arrow-btn{
   background-color: #EDEDED;
   border: none;
 }
@@ -188,4 +191,16 @@ button{
   animation-iteration-count:infinite;
   animation-duration:1.4s;
   animation-timing-function:linear;
+}
+
+td, th{
+  text-align: center;
+  border: 3px solid black;
+}
+
+.table_agrandi{
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 100px;
+  font-size: 200%;
 }

@@ -45,9 +45,9 @@ class Piste:
         Returns :
             str : informations de la piste
         """
-        return ("Piste : id = " + str(self.__id) + ", idLieu = " + str(self.__lieu) +
-                ", description = " + str(self.__description))
-
+        return ("Piste : id = " + str(self.__id) + ", idLieu = " +
+                str(self.__lieu) + ", description = " +
+                str(self.__description))
 
     def set_id_piste(self, id_piste: int) -> None:
         """

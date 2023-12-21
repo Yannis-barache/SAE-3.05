@@ -433,7 +433,8 @@ class Poule:
         if le_match is not None and le_match.est_commencer():
 
             # Si le match est fini et que le gagnant est le premier escrimeur
-            if le_match.get_gagnant() == self.__les_escrimeurs[j - 1]:
+            if le_match.get_gagnant().get_id() == self.__les_escrimeurs[
+                    j - 1].get_id():
                 # Dessine un V dans la case
                 canva.drawString(const.DECALAGE_GAUCHE + largeur + 11.664,
                                  hauteur + 10, 'V')
@@ -704,6 +705,18 @@ class Poule:
                 return cpt
             cpt += 1
         return -1
+
+    def is_finis(self) -> bool:
+        """
+        Fonction qui retourne si tous les matchs de la poule sont finis
+
+        Returns :
+            bool : si la poule est finis
+        """
+        for match in self.__les_matchs:
+            if not match.est_finis():
+                return False
+        return True
 
     def __str__(self):
         return f'Poule : {self.__id} |'

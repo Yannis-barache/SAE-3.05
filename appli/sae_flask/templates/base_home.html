@@ -10,7 +10,12 @@
         <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
+
     {% endblock %}
+    {% block scripts %}
+            <script src="{{ url_for('static', filename='js/button_menu.js')}}"></script>
+    {% endblock %}
+
 </head>
 <body>
 

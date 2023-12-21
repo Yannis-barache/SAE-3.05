@@ -15,10 +15,9 @@
 {% endblock %}
 
 {% macro competition_nav(compet_id) %}
-
     <a class="btn" href="{{ url_for('competition', id_competition=compet_id) }}">INFORMATIONS</a>
-    <a href="{{ url_for('poule',id_competition=compet_id,nb = 0) }}"> POULES </a>
-    <a href="{{ url_for('home') }}" class="btn">PHASE FINAL</a>
-    <a href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a>
-    <a href="{{ url_for('home') }}" class="btn">CLASSEMENT</a>
+    <a class="btn" href="{{ url_for('poule',id_competition=compet_id,nb = 0) }}"> POULES </a>
+    <a class="btn" href="{{ url_for('home') }}" >PHASE FINAL</a>
+    <a class="btn" href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a>
+    <a class="btn" href="{{ url_for('podium',id_competition = compet_id,full = False) }}" >CLASSEMENT</a>
 {% endmacro %}
