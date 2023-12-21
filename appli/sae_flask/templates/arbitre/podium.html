@@ -1,0 +1,73 @@
+{% extends "arbitre/base_arbitre.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='../static/css/podium.css') }}">
+{% endblock %}
+
+{% block nav %}
+{{  competition_nav(competition.get_id()) }}
+{% endblock %}
+
+{% block content %}
+<div class="podium">
+    <div class="podium__header">
+        <h1>Podium</h1>
+    </div>
+    <div class="podium__content">
+        {% for escrimeur in escrimeurs %}
+            {% if loop.index < 4 %}
+            {% set classe = "podium__content__escrimeur__"+  loop.index|string %}
+            <div class="{{ classe }}">
+            <div class="podium__content_escrimeur_place">
+
+                {% set lien = "../../../static/img/medaille-" + loop.index|string + ".png" %}
+                <img src="{{lien}}" alt="médaille première place">
+
+            </div>
+            <div class="podium__content__escrimeur__info">
+                <div class="podium__content__escrimeur__info__name">
+                    <h3>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom()}}</h3>
+                </div>
+                <div class="podium__content__escrimeur__info__club">
+                    {% if escrimeur.get_club() != None %}
+                    <h4>{{ escrimeur.get_club().get_nom() }}</h4>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    {% if full == "True" %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Place</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Club</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(3 , escrimeurs|length) %}
+            <tr>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{escrimeurs[i].get_nom()}} </td>
+                <td>{{escrimeurs[i].get_prenom()}} </td>
+                {% if escrimeurs[i].get_club() != None %}
+                <td>{{escrimeurs[i].get_club().get_nom()}} </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+<div class="podium__footer">
+    <a href="{{ url_for('home') }}">Retour à l'accueil</a>
+
+    <a href="{{ url_for('podium', id_competition=competition.get_id(),full=True) }}">Voir tout le classement</a>
+</div>
+{% endblock %}

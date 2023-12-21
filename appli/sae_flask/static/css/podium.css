@@ -1,0 +1,41 @@
+.podium img {
+    width: 5vw;
+    height: 15vh;
+}
+
+.podium__content {
+    display: flex;
+    flex-wrap : wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.podium__content__escrimeur__1 {
+    flex-basis : 50%;
+    background-color: #FFD700;
+}
+
+
+
+.podium__content > div{
+    text-align: center;
+    padding : 2%;
+    margin : 2%;
+    border-radius : 10%;
+
+}
+
+.podium__content__escrimeur__2 {
+    background-color: #C0C0C0;
+}
+
+.podium__content__escrimeur__2 {
+    flex-basis : 45%;
+}
+.podium__content__escrimeur__3 {
+    flex-basis : 45%;
+    background-color: #CD7F32;
+}
+
+
+

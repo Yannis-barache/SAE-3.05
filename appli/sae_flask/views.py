@@ -126,9 +126,6 @@ def connexion(nom):
     global USER
     modele_appli = ModeleAppli()
     print("connexion ",USER)
-    
-
-
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
@@ -678,6 +675,26 @@ def arbitrage_competition(id_competition):
     poules = modele.get_poule_bd().get_poules_by_compet(competition)
     modele.close_connexion()
     return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
+
+@app.route("/arbitrage/<id_competition>/classement/<full>")
+def podium(id_competition, full):
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    # phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
+    # if phase_finale is not None:
+    #     matchs = modele.get_match_bd().get_match_by_phase(phase_finale.get_id_phase_f())
+    escrimeurs_matchs = []
+    # for match in matchs:
+    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur1()))
+    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur2()))
+    modele.close_connexion()
+    escrimeurs_matchs.append(Escrimeur(1, "BYE", "BYE", "H", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "COUCOU", "COUCOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)
 
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
