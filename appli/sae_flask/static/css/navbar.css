@@ -2,7 +2,7 @@
 .navigateur {
     background-color: black;
     text-align: center;
-    width: 100%;
+    width: 100vw;
     margin: 0 auto; /* Add this line to center the .navigateur */
 }
 
@@ -10,13 +10,16 @@
     margin : 0;
     padding: 0;
     display: flex;
+    flex-wrap : wrap;
+    justify-content :center;
 }
 
 .navigateur li {
     list-style-type: none;
     margin: 0.5em;
     padding: 0.5em;
-    flex-basis : 50%;
+    text-align : center;
+    flex-basis: 17%;
 }
 
 .navigateur a {
@@ -24,6 +27,7 @@
     color: rgb(212, 8, 11);
     font-size: large;
     font-weight: bold;
+    text-align : center;
 }
 
 .navigateur a:hover {
