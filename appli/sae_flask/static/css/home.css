@@ -18,8 +18,7 @@ header {
 .user {
     width: 5vw;
     float: right;
-    margin: 1rem;
-    margin-left: 0;
+    margin: 1rem 1rem 1rem 0;
 }
 
 body {
@@ -67,19 +66,19 @@ footer {
 footer > p {
     color: white;
     font-weight: bold;
+    margin-bottom: 1vh;
+
 }
 
 .paragfin {
     font-size: 0.8em;
-    padding-top: 1em;
+    padding-top: 2vh;
     margin-bottom: 0;
 }
-
 
 .intro p {
     padding-bottom: 1em;
 }
-
 
 .tableau {
     overflow-x: auto;
@@ -87,4 +86,9 @@ footer > p {
 
 .pas {
     display :none;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
 }
