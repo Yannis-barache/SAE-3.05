@@ -55,7 +55,7 @@ class Touche:
     def set_escrimeur(self, escrimeur: Escrimeur) -> None:
         """
         Fonction qui modifie l'escrimeur
-        
+
         Args:
             escrimeur (Escrimeur): L'escrimeur
         """

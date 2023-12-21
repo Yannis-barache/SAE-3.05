@@ -19,6 +19,7 @@ header {
 }
 
 .navigateur {
+    display: flex;
     background-color: black;
     padding: 0.5em;
     display: flex;

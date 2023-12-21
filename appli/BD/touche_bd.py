@@ -59,12 +59,11 @@ class ToucheBD:
             )
             result = self.__connexion.execute(query)
             touches = []
+            #pylint: disable=W0612
             for (id_match, id_escrimeur, num) in result:
-                match.set_id(id_match)
-                escrimeur = match.get_escrimeur1(
-                ) if id_escrimeur == match.get_escrimeur1().get_id(
-                ) else match.get_escrimeur2()
-                touches.append(Touche(match, escrimeur, num))
+                escrimeur = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_escrimeur)
+                touches.append(Touche(match, escrimeur, int(num)))
             return touches
         except Exception as e:
             print(e)
@@ -137,3 +136,45 @@ class ToucheBD:
             self.__connexion.commit()
         except Exception as e:
             print(e)
+
+    def get_max_num_touche(self, id_match: int):
+        """Function that returns the number of the next touch to insert into the database for a given match.
+
+        Args:
+            id_match (int): Match ID
+        """
+        try:
+            query = text(f"SELECT COALESCE(MAX(numTouche), 0) AS maxTouche\
+                FROM TOUCHE WHERE idMatch = {id_match};")
+            result = self.__connexion.execute(query).fetchone()
+            if result is not None:
+                for element in result:
+                    return int(element)
+            else:
+                return 0
+        except Exception as e:
+            print(e)
+            # Handle the exception appropriately, e.g., log the error or raise it.
+
+    def get_touche_by_id(self, id_match: int, num_touche: int):
+        """Function that returns a touch from the database.
+
+        Args:
+            id_match (int): Match ID
+            num_touche (int): Touch number
+        """
+        try:
+            query = text(
+                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {id_match} AND numTouche = {num_touche}"
+            )
+            result = self.__connexion.execute(query).fetchone()
+            if result is not None:
+                match = MatchBD(self.__connexion).get_match_by_id(result[0])
+                escrimeur = EscrimeurBD(self.__connexion).get_escrimeur_by_id(
+                    result[1])
+                return Touche(match, escrimeur, int(result[2]))
+            else:
+                return None
+        except Exception as e:
+            print(e)
+            # Handle the exception appropriately, e.g., log the error or raise it.
