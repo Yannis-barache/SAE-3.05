@@ -3,11 +3,16 @@
     height: 15vh;
 }
 
-.podium__content {
+.podium__content, .podium__content__erreur {
     display: flex;
     flex-wrap : wrap;
     justify-content: space-around;
     align-items: center;
+}
+
+.podium__content__erreur {
+    flex-basis : 100%;
+    background-color: #FF;
 }
 
 .podium__content__escrimeur__1 {

@@ -10,6 +10,16 @@
 {% endblock %}
 
 {% block content %}
+{% if escrimeurs == None %}
+    <div class="podium">
+    <div class="podium__header">
+        <h1>Podium</h1>
+    </div>
+    <div class="podium__content__erreur">
+        <h2>Aucun podium n'a été défini pour cette compétition</h2>
+    </div>
+</div>
+{% else %}
 <div class="podium">
     <div class="podium__header">
         <h1>Podium</h1>
@@ -65,9 +75,14 @@
         </tbody>
     </table>
     {% endif %}
+
+{% endif %}
 <div class="podium__footer">
     <a href="{{ url_for('home') }}">Retour à l'accueil</a>
 
+    {% if escrimeurs != None %}
     <a href="{{ url_for('podium', id_competition=competition.get_id(),full=True) }}">Voir tout le classement</a>
+    {% endif %}
 </div>
+
 {% endblock %}
