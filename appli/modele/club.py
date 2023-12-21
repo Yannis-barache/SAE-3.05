@@ -18,8 +18,8 @@ class Club:
         """
         Fonction qui retourne l'id du club
 
-        Returns:
-            int: id du club
+        Returns :
+            int : id du club
         """
         return self.__id
 
@@ -27,8 +27,8 @@ class Club:
         """
         Fonction qui retourne le nom du club
 
-        Returns:
-            str: nom du club
+        Returns :
+            str : nom du club
         """
         return self.__nom
 
@@ -36,8 +36,8 @@ class Club:
         """
         Fonction qui retourne l'adresse du club
 
-        Returns:
-            str: adresse du club
+        Returns :
+            str : adresse du club
         """
         return self.__adresse
 
@@ -45,8 +45,8 @@ class Club:
         """
         Fonction qui retourne le mot de passe du club
 
-        Returns:
-            str: mot de passe du club
+        Returns :
+            str : mot de passe du club
         """
         return self.__mdp
 
@@ -54,8 +54,8 @@ class Club:
         """
         Fonction qui modifie l'id du club
 
-        Args:
-            id (int): id du club
+        Args :
+            id_club (int) : id du club
         """
         self.__id = id_club
 
@@ -63,8 +63,8 @@ class Club:
         """
         Fonction qui modifie le nom du club
 
-        Args:
-            nom (str): nom du club
+        Args :
+            nom (str) : nom du club
         """
         self.__nom = nom
 
@@ -72,8 +72,8 @@ class Club:
         """
         Fonction qui modifie l'adresse du club
 
-        Args:
-            adresse (str): adresse du club
+        Args :
+            adresse (str) : adresse du club
         """
         self.__adresse = adresse
 
@@ -81,16 +81,16 @@ class Club:
         """
         Fonction qui modifie le mot de passe du club
 
-        Args:
-            mdp (str): mot de passe du club
+        Args :
+            mdp (str) : mot de passe du club
         """
         self.__mdp = mdp
 
     def __str__(self):
         """
-        Fonction qui retourne une chaine de caractere contenant les informations du club
+        Fonction qui retourne une chaine de caractère contenant les informations du club
 
-        Returns:
-            str: informations du club
+        Returns :
+            str : informations du club
         """
         return f"Club : {self.__id} - {self.__nom} - {self.__adresse} - {self.__mdp} |"

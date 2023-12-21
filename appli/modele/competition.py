@@ -133,8 +133,8 @@ class Competition:
         """
         Fonction qui retourne si la competition est finis ou non
 
-        Returns:
-            bool: True si la competition est finis, False sinon
+        Returns :
+            bool : True si la competition est finis, False sinon
         """
         return self.__phase_final is not None and self.__phase_final.est_finis(
         )
@@ -143,8 +143,8 @@ class Competition:
         """
         Fonction qui retourne l'etat de la competition
 
-        Returns:
-            str: L'etat de la competition
+        Returns :
+            str : L'etat de la competition
         """
         if self.__date_fin_inscription is None:
             return "Pas disponible"
@@ -167,7 +167,7 @@ class Competition:
         """
         Fonction qui modifie l'id de la competition
 
-        Args:
+        Args :
             id_comp (int): id de la competition
         """
         self.__id = id_comp
@@ -250,6 +250,8 @@ class Competition:
 
         Args:
             phase_final (PhaseFinal): phase finale de la competition
+        Args :
+            phase_final (PhaseFinal) : phase finale de la competition
         """
         self.__phase_final = phase_final
 
@@ -271,7 +273,7 @@ class Competition:
             contenant l'arbitre de la poule et la liste des escrimeurs de la poule
         """
         try:
-            liste_escrimeur = Competition.trie_classement_inital(
+            liste_escrimeur = Competition.trie_classement_initial(
                 liste_escrimeur)
             nombre_poule = Competition.nombre_poule(len(liste_escrimeur),
                                                     len(liste_arbitre))[0]
@@ -295,7 +297,7 @@ class Competition:
             return None
 
     @staticmethod
-    def trie_classement_inital(liste_escrimeur: list[Escrimeur]):
+    def trie_classement_initial(liste_escrimeur: list[Escrimeur]):
         """
         Fonction qui trie les escrimeurs par classement initial
 
@@ -303,7 +305,7 @@ class Competition:
             liste_escrimeur (list[Escrimeur]) : liste des escrimeurs de la competition
 
         Returns :
-            list[Escrimeur] : liste des escrimeurs de la competition triee par classement initial
+            list[Escrimeur] : liste des escrimeurs de la competition triée par classement initial
         """
         return sorted(liste_escrimeur,
                       key=lambda escrimeur:
@@ -337,13 +339,13 @@ class Competition:
     def etablir_classement_provisoire(
             les_poules: list[Poule]) -> list[Escrimeur]:
         """
-        Fonction qui etablit le classement provisoir de la competition apres les poules
+        Fonction qui établit le classement provisoire de la competition apres les poules
 
         Args :
             les_poules (list[Poule]) : La liste des poules de la competition
 
         Returns :
-            list[Escrimeur] : Le classement provisoir de la competition
+            list[Escrimeur] : Le classement provisoire de la competition
         """
         infos = {}
         for poule in les_poules:
@@ -363,13 +365,13 @@ class Competition:
     @staticmethod
     def get_puissance_sup(nb_escrimeur: int) -> int:
         """
-        Fonction qui retourne la puissance superieur de 2
+        Fonction qui retourne la puissance de 2 supérieurs au nombre d'escrimeurs passé en paramètre.
 
         Args :
             nb_escrimeur (int) : Le nombre d'escrimeurs de la competition
 
         Returns :
-            int : La puissance superieur de 2
+            int : La puissance de 2 supérieurs au nombre d'escrimeurs passé en paramètre
         """
         puissance = 0
         while 2**puissance < nb_escrimeur:
@@ -421,5 +423,5 @@ class Competition:
             str : informations de la competition
         """
         return f"Competition : {self.__id}, {self.__nom}, {self.__date}, " \
-        f"{self.__date_fin_inscription}, {self.__saison}, {self.__lieu}, " \
-        f"{self.__arme}, {self.__categorie} |"
+            f"{self.__date_fin_inscription}, {self.__saison}, {self.__lieu}, " \
+            f"{self.__arme}, {self.__categorie} |"
