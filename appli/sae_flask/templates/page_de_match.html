@@ -1,0 +1,182 @@
+{% extends "base_home.html" %}
+
+
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rec_match.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_match.css')}}">
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/button_anim.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="rec-central-content">
+
+<section>
+    <h1> {{ compet.get_nom() }} le {{ compet.get_date() }}  </h1>
+</section>
+
+
+
+
+<div class="enflex">
+
+    <div>   
+        
+        <div>
+            <p class="enbold">
+                Match : {{ match.get_heure_str() }}  
+            </p>
+            <p>
+                Arbitre : {{ match.get_arbitre().get_nom() }} {{ match.get_arbitre().get_prenom() }}
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div class="info-match">
+
+
+    
+
+    <div class="enflex colonne escrimeur" >
+    
+        <div class="enflex les-escimeur">
+            <span class="enbold">
+                Escrimeur
+            </span>
+            <div class="cercle vert"></div>
+        </div>
+
+        <div class="enbold gros">
+            <span class="petit">
+            {{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - NC
+            </span>
+            <span class="petit">
+                {{ match.get_escrimeur1().get_club().get_nom() }} 
+            </span>
+            <span class="petit">
+                {{ match.get_escrimeur1().get_categorie().get_nom( ) }} 
+            </span>
+
+        </div>
+        {% if user != None and user.get_arbitrage() %}
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur1().get_id()) }}">
+            {% if match.est_finis() %}
+                <button class="-" type="submit" disabled>
+                    <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+                    +
+                </button>
+            {% else %}
+                {{ form.csrf_token }}
+                {{ form.submit(class="circle-button") }}
+            {% endif %}
+        </form>
+        {% endif %}
+        
+
+
+
+    </div>
+
+        
+
+
+    <div class="enflex resultat">
+    
+        <div class="enflex marg">
+            <div class="circle">
+                {{ match.get_nb_touche(match.get_escrimeur1() ) }}
+            </div>
+            <div class="ligne"></div>
+            <div class="circle">
+                {{ match.get_nb_touche(match.get_escrimeur2()) }}
+            </div>
+        </div>
+        <!-- Button pour supprimer une touche-->
+        {% if user != None and user.get_arbitrage() %}
+
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
+            {{ form.csrf_token }}
+            {{ form.supprimer_point(class="circle-button") }}
+        </form>
+        {% endif %}
+
+
+    </div>
+
+    <div class="enflex colonne escrimeur">
+    
+        <div class="enflex">
+            <span class="enbold">
+                Escrimeur
+            </span>
+            <div class="cercle le-rouge"></div>
+        </div>
+
+        <div class="enbold gros">
+            <span class="petit">
+                {{ match.get_escrimeur2().get_nom() }} - NC
+                </span>
+                <span class="petit">
+                    {{ match.get_escrimeur2().get_club().get_nom() }} 
+                </span>
+                <span class="petit">
+                    {{ match.get_escrimeur2().get_categorie().get_nom( ) }}
+                </span>
+
+        </div>
+        {% if user != None and user.get_arbitrage() %}
+
+        <form role="form" method="POST" action="{{ url_for('envoie_point', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
+            {% if match.est_finis() %}
+                <button class="circle-button" type="submit" disabled>
+                    <span class="tooltiptext" id="tooltip">Le match est terminé</span>
+                    + 
+                </button>
+            {% else %}
+                {{ form.csrf_token }}
+                {{ form.submit(class="circle-button") }}
+            {% endif %}
+        </form>
+        {% endif %}
+
+    </div>
+
+
+
+
+</div>
+
+<!--affiche les touches -->
+<div class="enflex touches-line">
+    {% for i in range(24)%}
+        {% if i < touches|length %}
+            {% if touches[i].get_escrimeur().get_id() == match.get_escrimeur1().get_id() %}
+                <div class="circle vert"></div>
+            {% else %}
+                <div class="circle le-rouge"></div>
+            {% endif %}
+        {% else %}
+            <div class="circle blanc"></div>
+        {% endif %} 
+    {% endfor %}
+</div>
+
+{% if user != None and user.get_arbitrage() %}
+<form class="enflex lemarg" role="form" method="POST" action="{{ url_for('supp_point', id_match=match.get_id()) }}">
+    {{ finir_match_form.csrf_token }}
+    {{ finir_match_form.finir_match(class="buttonterm") }}
+</form>
+{% endif %}
+</div>
+
+
+
+{% endblock %}

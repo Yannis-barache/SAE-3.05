@@ -706,5 +706,17 @@ class Poule:
             cpt += 1
         return -1
 
+    def is_finis(self) -> bool:
+        """
+        Fonction qui retourne si tous les matchs de la poule sont finis
+
+        Returns :
+            bool : si la poule est finis
+        """
+        for match in self.__les_matchs:
+            if not match.est_finis():
+                return False
+        return True
+
     def __str__(self):
         return f'Poule : {self.__id} |'

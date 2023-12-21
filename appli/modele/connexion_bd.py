@@ -8,7 +8,6 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 locale = config['database']['locale']
 
-
 class ConnexionBD:
     """
     Classe ConnexionBD
