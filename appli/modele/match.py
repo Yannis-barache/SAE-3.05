@@ -82,7 +82,6 @@ class Match:
             float: heure du match
         """
         return self.__heure
-    
     def get_heure_str(self) -> str:
         """
         Fonction qui retourne l'heure du match sous forme de chaîne de caractères
