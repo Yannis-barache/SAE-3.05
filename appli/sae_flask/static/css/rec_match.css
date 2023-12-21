@@ -1,0 +1,62 @@
+
+main {
+    background-color: #DBDBDB;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.rec-central{
+    display: flex;
+    justify-content: center;
+}
+
+.les_boutons{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 21%;
+}
+
+.rec_match {
+    display: flex;
+    /* margin: 20px auto; */
+    justify-content: space-between;
+    padding: 0px 11px;
+    align-items: center;
+    width: 65vw;
+    border-color: black;
+    border: solid;
+    margin: 11px;
+}
+
+
+
+.rec_match h2 {
+    color: #333;
+}
+
+.rec_match span {
+    font-weight: bold;
+}
+
+.rec_match p {
+    margin: 10px 0;
+}
+
+.rec_match  img {
+    max-width: 35px;
+    height: auto;
+
+}
+
+section>h1{
+    text-align: center;
+}
+
