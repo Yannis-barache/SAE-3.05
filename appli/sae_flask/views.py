@@ -865,33 +865,6 @@ def participants(id_competition):
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini)
 
-
-@app.route("/participants/<id_competition>")
-def participants(id_competition):
-    modele = ModeleAppli()
-    competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-    inscrits = []
-
-    for i in inscription:
-        inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-            i.get_id_escrimeur()))
-
-    arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(
-        competition)
-    arbitres = []
-    for arbitrage in arbitrages:
-        arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-            arbitrage.get_id_escrimeur()))
-
-    modele.close_connexion()
-    return render_template("arbitre/participants.html",
-                           competition=competition,
-                           inscrits=inscrits,
-                           arbitres=arbitres)
-
-
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
 def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()

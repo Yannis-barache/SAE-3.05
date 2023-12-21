@@ -1,0 +1,32 @@
+
+.navigateur {
+    background-color: black;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto; /* Add this line to center the .navigateur */
+}
+
+.navigateur ul {
+    margin : 0;
+    padding: 0;
+    display: flex;
+}
+
+.navigateur li {
+    list-style-type: none;
+    margin: 0.5em;
+    padding: 0.5em;
+    flex-basis : 50%;
+}
+
+.navigateur a {
+    text-decoration: none;
+    color: rgb(212, 8, 11);
+    font-size: large;
+    font-weight: bold;
+}
+
+.navigateur a:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
