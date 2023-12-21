@@ -340,7 +340,7 @@ class TestCompetition(unittest.TestCase):
         liste_trie = [escrimeur1, escrimeur2, escrimeur3, escrimeur4]
         liste_non_trie = [escrimeur4, escrimeur3, escrimeur2, escrimeur1]
         self.assertEqual(
-            Competition.trie_classement_inital(liste_non_trie.copy()),
+            Competition.trie_classement_initial(liste_non_trie.copy()),
             liste_trie)
 
     def test_nombre_poule(self):

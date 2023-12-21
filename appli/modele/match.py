@@ -82,19 +82,7 @@ class Match:
             float: heure du match
         """
         return self.__heure
-    
-    def get_heure_str(self) -> str:
-        """
-        Fonction qui retourne l'heure du match sous forme de chaîne de caractères
 
-        Returns:
-            str: heure du match au format HH:mm
-        """
-        heures, reste = divmod(self.__heure.seconds, 3600)
-        minutes = reste // 60
-
-        format_horloge = f"{heures:02d}h{minutes:02d}"
-        return format_horloge
 
     def get_type_phase(self) -> str | None:
         """
@@ -152,8 +140,8 @@ class Match:
         """
         Fonction qui retourne le gagnant du match
 
-        Returns:
-            Escrimeur | None: gagnant du match
+        Returns :
+            Escrimeur | None : gagnant du match
         """
         if self.est_finis():
             if self.__escrimeur1.get_nom() == 'None':
@@ -444,11 +432,11 @@ class Match:
         """
         Fonction qui retourne l'escrimeur qui a touché
 
-        Args:
-            num_toucher (int): numéro de la touche
+        Args :
+            num_toucher (int) : numéro de la touche
 
-        Returns:
-            Escrimeur | None: escrimeur qui a touché
+        Returns :
+            Escrimeur | None : escrimeur qui a touché
         """
         for touche in self.__les_touches:
             if touche.get_numero() == num_toucher:

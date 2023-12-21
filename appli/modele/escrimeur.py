@@ -37,8 +37,8 @@ class Escrimeur:
         """
         Fonction qui retourne l'id de l'escrimeur
 
-        Returns:
-            int: id de l'escrimeur
+        Returns :
+            int : id de l'escrimeur
         """
         return self.__id
 
@@ -46,8 +46,8 @@ class Escrimeur:
         """
         Fonction qui retourne le nom de l'escrimeur
 
-        Returns:
-            str: nom de l'escrimeur
+        Returns :
+            str : nom de l'escrimeur
         """
         return self.__nom
 
@@ -55,8 +55,8 @@ class Escrimeur:
         """
         Fonction qui retourne le prenom de l'escrimeur
 
-        Returns:
-            str: prenom de l'escrimeur
+        Returns :
+            str : prenom de l'escrimeur
         """
         return self.__prenom
 
@@ -64,8 +64,8 @@ class Escrimeur:
         """
         Fonction qui retourne le sexe de l'escrimeur
 
-        Returns:
-            str: sexe de l'escrimeur
+        Returns :
+            str : sexe de l'escrimeur
         """
         return self.__sexe
 
@@ -73,8 +73,8 @@ class Escrimeur:
         """
         Fonction qui retourne la date de naissance de l'escrimeur
 
-        Returns:
-            str: date de naissance de l'escrimeur
+        Returns :
+            str : date de naissance de l'escrimeur
         """
         return self.__date_naissance
 
@@ -82,8 +82,8 @@ class Escrimeur:
         """
         Fonction qui retourne le nom d'utilisateur de l'escrimeur
 
-        Returns:
-            str: nom d'utilisateur de l'escrimeur
+        Returns :
+            str : nom d'utilisateur de l'escrimeur
         """
         return self.__nom_utilisateur
 
@@ -91,8 +91,8 @@ class Escrimeur:
         """
         Fonction qui retourne le mot de passe de l'escrimeur
 
-        Returns:
-            str: mot de passe de l'escrimeur
+        Returns :
+            str : mot de passe de l'escrimeur
         """
         return self.__mdp
 
@@ -100,8 +100,8 @@ class Escrimeur:
         """
         Fonction qui retourne la licence de l'escrimeur
 
-        Returns:
-            str: licence de l'escrimeur
+        Returns :
+            str : licence de l'escrimeur
         """
         return self.__licence
 
@@ -109,8 +109,8 @@ class Escrimeur:
         """
         Fonction qui retourne le classement de l'escrimeur
 
-        Returns:
-            int: classement de l'escrimeur
+        Returns :
+            int : classement de l'escrimeur
         """
         return self.__classement
 
@@ -118,8 +118,8 @@ class Escrimeur:
         """
         Fonction qui retourne le club de l'escrimeur
 
-        Returns:
-            Club: club de l'escrimeur
+        Returns :
+            Club : club de l'escrimeur
         """
         return self.__club
 
@@ -127,8 +127,8 @@ class Escrimeur:
         """
         Fonction qui retourne la categorie de l'escrimeur
 
-        Returns:
-            Categorie: categorie de l'escrimeur
+        Returns :
+            Categorie : categorie de l'escrimeur
         """
         return self.__categorie
 
@@ -136,8 +136,8 @@ class Escrimeur:
         """
         Fonction qui retourne l'arbitrage de l'escrimeur
 
-        Returns:
-            bool: arbitrage de l'escrimeur
+        Returns :
+            bool : arbitrage de l'escrimeur
         """
         return self.__arbitrage
 
@@ -145,8 +145,8 @@ class Escrimeur:
         """
         Fonction qui modifie l'id de l'escrimeur
 
-        Args:
-            id_escrim (int): id de l'escrimeur
+        Args :
+            id_escrim (int) : id de l'escrimeur
         """
         self.__id = id_escrim
 
@@ -154,8 +154,8 @@ class Escrimeur:
         """
         Fonction qui modifie le nom de l'escrimeur
 
-        Args:
-            nom (str): nom de l'escrimeur
+        Args :
+            nom (str) : nom de l'escrimeur
         """
         self.__nom = nom
 
@@ -163,8 +163,8 @@ class Escrimeur:
         """
         Fonction qui modifie le prenom de l'escrimeur
 
-        Args:
-            prenom (str): prenom de l'escrimeur
+        Args :
+            prenom (str) : prenom de l'escrimeur
         """
         self.__prenom = prenom
 
@@ -172,8 +172,8 @@ class Escrimeur:
         """
         Fonction qui modifie le sexe de l'escrimeur
 
-        Args:
-            sexe (str): sexe de l'escrimeur
+        Args :
+            sexe (str) : sexe de l'escrimeur
         """
         self.__sexe = sexe
 
@@ -181,8 +181,8 @@ class Escrimeur:
         """
         Fonction qui modifie la date de naissance de l'escrimeur
 
-        Args:
-            date_naissance (str): date de naissance de l'escrimeur
+        Args :
+            date_naissance (str) : date de naissance de l'escrimeur
         """
         self.__date_naissance = date_naissance
 
@@ -190,8 +190,8 @@ class Escrimeur:
         """
         Fonction qui modifie le nom d'utilisateur de l'escrimeur
 
-        Args:
-            nom_utilisateur (str): nom d'utilisateur de l'escrimeur
+        Args :
+            nom_utilisateur (str) : nom d'utilisateur de l'escrimeur
         """
         self.__nom_utilisateur = nom_utilisateur
 
@@ -199,8 +199,8 @@ class Escrimeur:
         """
         Fonction qui modifie le mot de passe de l'escrimeur
 
-        Args:
-            mdp (str): mot de passe de l'escrimeur
+        Args :
+            mdp (str) : mot de passe de l'escrimeur
         """
         self.__mdp = mdp
 
@@ -208,8 +208,8 @@ class Escrimeur:
         """
         Fonction qui modifie la licence de l'escrimeur
 
-        Args:
-            licence (str): licence de l'escrimeur
+        Args :
+            licence (str) : licence de l'escrimeur
         """
         self.__licence = licence
 
@@ -217,8 +217,8 @@ class Escrimeur:
         """
         Fonction qui modifie le classement de l'escrimeur
 
-        Args:
-            classement (int): classement de l'escrimeur
+        Args :
+            classement (int) : classement de l'escrimeur
         """
         self.__classement = classement
 
@@ -226,8 +226,8 @@ class Escrimeur:
         """
         Fonction qui modifie le club de l'escrimeur
 
-        Args:
-            club (Club): club de l'escrimeur
+        Args :
+            club (Club) : club de l'escrimeur
         """
         self.__club = club
 
@@ -235,8 +235,8 @@ class Escrimeur:
         """
         Fonction qui modifie la categorie de l'escrimeur
 
-        Args:
-            categorie (Categorie): categorie de l'escrimeur
+        Args :
+            categorie (Categorie) : categorie de l'escrimeur
         """
         self.__categorie = categorie
 
@@ -244,11 +244,11 @@ class Escrimeur:
         """
         Fonction qui compare le classement de l'escrimeur avec un autre
 
-        Args:
-            autre (Escrimeur): autre escrimeur
+        Args :
+            autre (Escrimeur) : autre escrimeur
 
-        Returns:
-            bool: True si le classement de l'escrimeur est inferieur a celui de l'autre, False sinon
+        Returns :
+            bool : True si le classement de l'escrimeur est inférieur à celui de l'autre, False sinon
         """
         if self.__classement is None:
             return False
@@ -260,8 +260,8 @@ class Escrimeur:
         """
         Fonction qui modifie l'arbitrage de l'escrimeur
 
-        Args:
-            arbitrage (bool): arbitrage de l'escrimeur
+        Args :
+            arbitrage (bool) : arbitrage de l'escrimeur
         """
         self.__arbitrage = arbitrage
 
@@ -269,8 +269,8 @@ class Escrimeur:
         """
         Fonction qui retourne une chaine de caractere contenant les informations de l'escrimeur
 
-        Returns:
-            str: informations de l'escrimeur
+        Returns :
+            str : informations de l'escrimeur
         """
         return f'Escrimeur : {self.__id} - {self.__nom} - {self.__prenom} - ' \
             f'{self.__date_naissance} - ' \

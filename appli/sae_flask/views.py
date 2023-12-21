@@ -4,9 +4,7 @@ import sys
 import os
 from .app import app
 from flask import render_template, redirect, url_for, request
-from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, IntegerField, SelectField, DateField, FloatField, SubmitField
-from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, StopValidation
+
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
@@ -23,100 +21,6 @@ from phase_final import PhaseFinal
 
 USER = USER
 modele_appli = ModeleAppli()
-
-
-class ValideMdp:
-    """
-    Classe qui permet de vérifier que le mot de passe est valide
-
-    """
-
-    def __init__(self, message=None):
-
-        self.__message = message
-
-    def __call__(self, form, field):
-        """
-        Fonction qui vérifie que le mot de passe est valide
-
-        Args :
-            form (FlaskForm) : formulaire
-            field (PasswordField) : champ du mot de passe
-
-        Raises :
-            ValidationError : si le mot de passe n'est pas valide
-        """
-        mdp = field.data
-        chiffre = False
-        majuscule = False
-        symbole = False
-        if len(mdp) < 8:
-            raise StopValidation(
-                "Le mot de passe doit contenir au moins 8 caractères")
-        for element in mdp:
-            if element.isdigit():
-                chiffre = True
-            if element.isupper():
-                majuscule = True
-            if element.isalnum():
-                symbole = True
-        if not chiffre or not majuscule or not symbole:
-            raise StopValidation(
-                "Le mot de passe doit contenir au moins un chiffre, une majuscule et un symbole"
-            )
-
-
-class ConnexionFormE(FlaskForm):
-    identifiant = IntegerField("Votre N° de licence",
-                               validators=[DataRequired(),
-                                           NumberRange(min=0)])
-
-    mdp = PasswordField("Mot de passe", validators=[DataRequired()])
-    next = HiddenField()
-
-
-class ConnexionForm(FlaskForm):
-    identifiant = StringField("Votre nom", validators=[DataRequired()])
-    mdp = PasswordField("Mot de passe", validators=[DataRequired()])
-    next = HiddenField()
-
-
-class InscriptionForm(FlaskForm):
-    modele_appli = ModeleAppli()
-    dixhuit = date.today() - timedelta(days=18 * 365)
-    num_licence = IntegerField("Votre numéro de licence",
-                               validators=[DataRequired(),
-                                           NumberRange(min=0)])
-    nom = StringField("Votre nom", validators=[DataRequired()])
-    prenom = StringField("Votre prénom", validators=[DataRequired()])
-    date_naissance = DateField("Votre date de naissance",
-                               default=dixhuit,
-                               validators=[DataRequired()])
-    sexe = SelectField("Votre sexe",
-                       choices=["H", "F"],
-                       validators=[DataRequired()])
-    categorie = SelectField(
-        "Votre catégorie",
-        choices=[(categorie.get_id(), categorie.get_nom()) for categorie in
-                 modele_appli.get_categorie_bd().get_all_categorie()])
-    modele_appli.close_connexion()
-    mdp = PasswordField(
-        "Mot de passe",
-        validators=[
-            DataRequired(),
-            Length(min=8, max=50),
-            EqualTo('conf_mdp',
-                    message="Les mots de passe ne correspondent pas")
-        ])
-    conf_mdp = PasswordField("Confirmation du mot de passe",
-                             validators=[DataRequired()])
-    modele_appli = ModeleAppli()
-    club = SelectField(
-        "Votre club",
-        choices=[(club.get_id(), club.get_nom())
-                 for club in modele_appli.get_club_bd().get_all_club()])
-    next = HiddenField()
-    modele_appli.close_connexion()
 
 
 @app.route("/", methods=["GET"])
@@ -136,6 +40,7 @@ def home():
                            competitions=competitions,
                            user=USER,
                            competitions_inscrit=inscrit)
+
 
 
 @app.route("/choix")
@@ -167,9 +72,9 @@ def espace_personnel():
 
 @app.route("/inscription", methods=["GET", "POST"])
 def inscription():
-    from .form import InscriptionForm
+    from .form import inscription_form
     modele_appli = ModeleAppli()
-    form = InscriptionForm()
+    form = inscription_form()
     message = []
     print("On lance la page inscription")
     if form.validate_on_submit():
@@ -217,16 +122,16 @@ def inscription():
 
 @app.route("/connexion/<nom>", methods=["GET", "POST"])
 def connexion(nom):
-    from .form import ConnexionForm, ConnexionFormE
+    from .form import connexion_form, connexion_formE
     global USER
     modele_appli = ModeleAppli()
-    print("connexion ",USER)
+    print("connexion ", USER)
     if nom != "ORGANISATEUR" and nom != "ESCRIMEUR" and nom != "CLUB":
         modele_appli.close_connexion()
         flask.abort(404)
-    form = ConnexionForm()
+    form = connexion_form()
     if nom == "ESCRIMEUR":
-        form = ConnexionFormE()
+        form = connexion_formE()
     if form.validate_on_submit():
         identifiant = form.identifiant.data
         mdp = form.mdp.data
@@ -266,7 +171,6 @@ def connexion(nom):
 def regles():
     return render_template("regles.html", user=USER)
 
-
 @app.route("/competition/<id_competition>")
 def competition(id_competition):
     modele = ModeleAppli()
@@ -277,15 +181,6 @@ def competition(id_competition):
     modele.close_connexion()
     return render_template("competition.html", compet=la_competition,
                            poule=nb_poule, user=USER, phase_finale=phase_finale)
-
-class EnvoiePointForm(FlaskForm):
-    submit = SubmitField('+')
-    supprimer_point = SubmitField('-')
-
-
-class FinirMatchForm(FlaskForm):
-    finir_match = SubmitField('Terminer le match')
-    next = HiddenField()
 
 
 @app.route("/page_de_match")
@@ -334,6 +229,7 @@ def poule(id_competition, nb):
                            nb=nb,
                            user=USER,
                            nb_poule=nombre_poule)
+
 
 
 @app.route('/telecharger_pdf_poule/<int:id_poule>')
@@ -534,14 +430,14 @@ def supprimer_club(id_club):
 
 @app.route("/admin/modifier_clubs/<int:id_club>", methods=["GET", "POST"])
 def modifier_club(id_club):
-    from .form import ClubForm
+    from .form import club_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     club = modele.get_club_bd().get_club_by_id(id_club)
-    form = ClubForm()
+    form = club_form()
     form.name.data = club.get_nom()
     form.adresse.data = club.get_adresse()
     modele.close_connexion()
@@ -555,22 +451,23 @@ def modifier_club(id_club):
 @app.route("/admin/modifier_clubs/<int:id_club>/<int:type>",
            methods=["GET", "POST"])
 def update_club(id_club, type):
-    from .form import ClubForm, ClubForm2
+    from .form import club_form, club_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = ClubForm()
+        form = club_form()
         club = modele.get_club_bd().get_club_by_id(id_club)
         nom = form.name.data
         adresse = form.adresse.data
         club.set_nom(nom)
         club.set_adresse(adresse)
         modele.get_club_bd().update_club(club)
-    else:
-        form = ClubForm2()
+    else :
+        form = club_form2()
+
         nom = form.name.data
         adresse = form.adresse.data
         mdp = form.mdp.data
@@ -582,30 +479,17 @@ def update_club(id_club, type):
 
 @app.route("/admin/ajouter_club", methods=["GET", "POST"])
 def ajouter_club():
-    from .form import ClubForm2
+    from .form import club_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
-    form = ClubForm2()
+    form = club_form2()
     return render_template("Admin/Club/add_club.html",
                            user=USER,
                            title="Ajouter club",
                            form=form)
 
-
-class ClubForm(FlaskForm):
-    id = HiddenField('id')
-    name = StringField('Nom', validators=[DataRequired()])
-    adresse = StringField('Adresse', validators=[DataRequired()])
-    title = HiddenField('title')
-
-
-class ClubForm2(FlaskForm):
-    name = StringField('Nom', validators=[DataRequired()])
-    adresse = StringField('Adresse', validators=[DataRequired()])
-    mdp = PasswordField('Mot de passe', validators=[DataRequired()])
-    title = HiddenField('title')
 
 # Escrimeur
 
@@ -640,14 +524,14 @@ def supprimer_escrimeur(id_escrimeur):
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>",
            methods=["GET", "POST"])
 def modifier_escrimeur(id_escrimeur):
-    from .form import EscrimeurForm
+    from .form import escrimeur_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
-    form = EscrimeurForm()
+    form = escrimeur_form()
     form.name.data = escrimeur.get_nom()
     form.prenom.data = escrimeur.get_prenom()
     form.date_naissance.data = escrimeur.get_date_naissance()
@@ -665,17 +549,18 @@ def modifier_escrimeur(id_escrimeur):
                            form=form)
 
 
+
 @app.route("/admin/modifier_escrimeurs/<int:id_escrimeur>/<int:type>",
            methods=["GET", "POST"])
 def update_escrimeur(id_escrimeur, type):
-    from .form import EscrimeurForm, EscrimeurForm2
+    from .form import escrimeur_form, escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = EscrimeurForm()
+        form = escrimeur_form()
         escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
         nom = form.name.data
         prenom = form.prenom.data
@@ -697,8 +582,9 @@ def update_escrimeur(id_escrimeur, type):
         escrimeur.set_nom_utilisateur(nom_utilisateur)
         escrimeur.set_arbitrage(arbitre)
         modele.get_escrimeur_bd().update_escrimeur(escrimeur)
-    else:
-        form = EscrimeurForm2()
+
+    else :
+        form = escrimeur_form2()
         nom = form.name.data
         prenom = form.prenom.data
         date_naissance = form.date_naissance.data
@@ -710,8 +596,8 @@ def update_escrimeur(id_escrimeur, type):
         arbitre = True if form.arbitrage.data == "Oui" else False
         nom_utilisateur = form.nom_utilisateur.data
         escrimeur = Escrimeur(1, nom, prenom, sexe, date_naissance,
-                              prenom.lower(), "mdp", licence, None, club,
-                              categorie, arbitre)
+                              prenom.lower(), "mdp", licence, None,
+                              club, categorie, arbitre)
         modele.get_escrimeur_bd().insert_escrimeur(escrimeur)
     modele.close_connexion()
     return redirect(url_for('admin_escrimeur'))
@@ -719,78 +605,16 @@ def update_escrimeur(id_escrimeur, type):
 
 @app.route("/admin/ajouter_escrimeur", methods=["GET", "POST"])
 def ajouter_escrimeur():
-    from .form import EscrimeurForm2
+    from .form import escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
-    form = EscrimeurForm2()
+    form = escrimeur_form2()
     return render_template("Admin/Escrimeur/add_escrimeur.html",
                            user=USER,
                            title="Ajouter escrimeur",
                            form=form)
-
-
-class EscrimeurForm(FlaskForm):
-    modele = ModeleAppli()
-    id = HiddenField('id')
-    name = StringField('Nom', validators=[DataRequired()])
-    prenom = StringField('Prenom', validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance',
-                               validators=[DataRequired()])
-    sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
-    categorie = SelectField(
-        'Catégorie',
-        choices=[
-            (categorie.get_id(), categorie.get_nom())
-            for categorie in modele.get_categorie_bd().get_all_categorie()
-        ],
-        validators=[DataRequired()])
-    club = SelectField('Club',
-                       choices=[
-                           (club.get_id(), club.get_nom())
-                           for club in modele.get_club_bd().get_all_club()
-                       ],
-                       validators=[DataRequired()])
-    licence = StringField('License', validators=[DataRequired()])
-    nom_utilisateur = StringField('Nom d\'utilisateur',
-                                  validators=[DataRequired()])
-    arbitrage = SelectField('Arbitrage',
-                            choices=["Oui", "Non"],
-                            validators=[DataRequired()])
-    title = HiddenField('title')
-    modele.close_connexion()
-
-
-class EscrimeurForm2(FlaskForm):
-    modele = ModeleAppli()
-    name = StringField('Nom', validators=[DataRequired()])
-    prenom = StringField('Prenom', validators=[DataRequired()])
-    date_naissance = DateField('Date de naissance',
-                               validators=[DataRequired()])
-    sexe = SelectField('Sexe', choices=["H", "F"], validators=[DataRequired()])
-    categorie = SelectField(
-        'Catégorie',
-        choices=[
-            (categorie.get_id(), categorie.get_nom())
-            for categorie in modele.get_categorie_bd().get_all_categorie()
-        ],
-        validators=[DataRequired()])
-    club = SelectField('Club',
-                       choices=[
-                           (club.get_id(), club.get_nom())
-                           for club in modele.get_club_bd().get_all_club()
-                       ],
-                       validators=[DataRequired()])
-    licence = StringField('License', validators=[DataRequired()])
-    nom_utilisateur = StringField('Nom d\'utilisateur',
-                                  validators=[DataRequired()])
-    arbitrage = SelectField('Arbitrage',
-                            choices=["Oui", "Non"],
-                            validators=[DataRequired()])
-    title = HiddenField('title')
-    modele.close_connexion()
-
 
 # Lieu
 
@@ -823,14 +647,14 @@ def supprimer_lieu(id_lieu):
 
 @app.route("/admin/modifier_lieux/<int:id_lieu>", methods=["GET", "POST"])
 def modifier_lieu(id_lieu):
-    from .form import LieuForm
+    from .form import lieu_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
-    form = LieuForm()
+    form = lieu_form()
     form.description.data = lieu.get_description()
     form.adresse.data = lieu.get_adresse()
     modele.close_connexion()
@@ -844,14 +668,14 @@ def modifier_lieu(id_lieu):
 @app.route("/admin/modifier_lieux/<int:id_lieu>/<int:type>",
            methods=["GET", "POST"])
 def update_lieu(id_lieu, type):
-    from .form import LieuForm, LieuForm2
+    from .form import lieu_form, lieu_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = LieuForm()
+        form = lieu_form()
         lieu = modele.get_lieu_bd().get_lieu_by_id(id_lieu)
         adresse = form.adresse.data
         description = form.description.data
@@ -861,7 +685,7 @@ def update_lieu(id_lieu, type):
         lieu.set_adresse(adresse)
         modele.get_lieu_bd().update_lieu(lieu)
     else:
-        form = LieuForm2()
+        form = lieu_form2()
         adresse = form.adresse.data
         description = form.description.data
         lieu = Lieu(1, description, adresse)
@@ -872,31 +696,14 @@ def update_lieu(id_lieu, type):
 
 @app.route("/admin/ajouter_lieu", methods=["GET", "POST"])
 def ajouter_lieu():
-    from .form import LieuForm2
+    from .form import lieu_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
-    form = LieuForm2()
-    return render_template("Admin/Lieux/add_lieu.html",
-                           user=USER,
-                           title="Ajouter lieu",
-                           form=form)
-
-
-class LieuForm(FlaskForm):
-    id = HiddenField('id')
-    adresse = StringField('Adresse', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
-    title = HiddenField('title')
-
-
-class LieuForm2(FlaskForm):
-    description = StringField('Description', validators=[DataRequired()])
-    adresse = StringField('Adresse', validators=[DataRequired()])
-    title = HiddenField('title')
-
-
+    form = lieu_form2()
+    return render_template("Admin/Lieux/add_lieu.html", user=USER, title="Ajouter lieu", form=form)
+  
 # Competition
 
 
@@ -930,7 +737,7 @@ def supprimer_competition(id_competition):
 @app.route("/admin/modifier_competitions/<int:id_competition>",
            methods=["GET", "POST"])
 def modifier_competition(id_competition):
-    from .form import CompetitionForm
+    from .form import competition_form
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
@@ -955,17 +762,18 @@ def modifier_competition(id_competition):
                            form=form)
 
 
+
 @app.route("/admin/modifier_competitions/<int:id_competition>/<int:type>",
            methods=["GET", "POST"])
 def update_competition(id_competition, type):
-    from .form import CompetitionForm, CompetitionForm2
+    from .form import competition_form, competition_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
-        form = CompetitionForm()
+        form = competition_form()
         competition = modele.get_competition_bd().get_competition_by_id(
             id_competition)
         nom = form.name.data
@@ -986,8 +794,8 @@ def update_competition(id_competition, type):
         competition.set_lieu(lieu)
         competition.set_coefficient(coefficient)
         modele.get_competition_bd().update_competition(competition)
-    else:
-        form = CompetitionForm2()
+    else :
+        form = competition_form2()
         nom = form.name.data
         date = form.date.data
         date_fin_inscription = form.date_fin_inscripiton.data
@@ -1006,12 +814,12 @@ def update_competition(id_competition, type):
 
 @app.route("/admin/ajouter_competition", methods=["GET", "POST"])
 def ajouter_competition():
-    from .form import CompetitionForm2
+    from .form import competition_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
     if not isinstance(USER, Organisateur):
         return redirect(url_for('home'))
-    form = CompetitionForm2()
+    form = competition_form2()
     return render_template("Admin/Competition/add_competition.html",
                            user=USER,
                            title="Ajouter competition",
@@ -1020,9 +828,9 @@ def ajouter_competition():
 
 @app.route("/participants/<id_competition>", methods=["GET", "POST"])
 def participants(id_competition):
-    from .form import HeureDebutForm
+    from .form import heure_debut_form
 
-    form = HeureDebutForm()
+    form = heure_debut_form()
     try:
         modele = ModeleAppli()
         competition = modele.get_competition_bd().get_competition_by_id(id_competition)
@@ -1055,73 +863,7 @@ def participants(id_competition):
             return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
-                           arbitres=arbitres, form=form,fini = fini)
-
-class CompetitionForm(FlaskForm):
-    modele = ModeleAppli()
-    id = HiddenField('id')
-    name = StringField('Nom', validators=[DataRequired()])
-    date = DateField('Date', validators=[DataRequired()])
-    date_fin_inscripiton = DateField('Date fin inscription',
-                                     validators=[DataRequired()])
-    categorie = SelectField(
-        'Catégorie',
-        choices=[
-            (categorie.get_id(), categorie.get_nom())
-            for categorie in modele.get_categorie_bd().get_all_categorie()
-        ],
-        validators=[DataRequired()])
-    saison = SelectField('Saison',
-                         choices=['été', 'hiver', 'printemps', 'automne'],
-                         validators=[DataRequired()])
-    arme = SelectField('Arme',
-                       choices=[
-                           (arme.get_id(), arme.get_nom())
-                           for arme in modele.get_arme_bd().get_all_arme()
-                       ],
-                       validators=[DataRequired()])
-    lieu = SelectField('Lieu',
-                       choices=[
-                           (lieu.get_id(), lieu.get_adresse())
-                           for lieu in modele.get_lieu_bd().get_all_lieu()
-                       ],
-                       validators=[DataRequired()])
-    coefficient = FloatField('Coefficient', validators=[DataRequired()])
-    title = HiddenField('title')
-    modele.close_connexion()
-
-
-class CompetitionForm2(FlaskForm):
-    modele = ModeleAppli()
-    name = StringField('Nom', validators=[DataRequired()])
-    date = DateField('Date', validators=[DataRequired()])
-    date_fin_inscripiton = DateField('Date fin inscription',
-                                     validators=[DataRequired()])
-    categorie = SelectField(
-        'Catégorie',
-        choices=[
-            (categorie.get_id(), categorie.get_nom())
-            for categorie in modele.get_categorie_bd().get_all_categorie()
-        ],
-        validators=[DataRequired()])
-    saison = SelectField('Saison',
-                         choices=['été', 'hiver', 'printemps', 'automne'],
-                         validators=[DataRequired()])
-    arme = SelectField('Arme',
-                       choices=[
-                           (arme.get_id(), arme.get_nom())
-                           for arme in modele.get_arme_bd().get_all_arme()
-                       ],
-                       validators=[DataRequired()])
-    lieu = SelectField('Lieu',
-                       choices=[
-                           (lieu.get_id(), lieu.get_adresse())
-                           for lieu in modele.get_lieu_bd().get_all_lieu()
-                       ],
-                       validators=[DataRequired()])
-    coefficient = FloatField('Coefficient', validators=[DataRequired()])
-    title = HiddenField('title')
-    modele.close_connexion()
+                           arbitres=arbitres, form=form, fini=fini)
 
 
 @app.route("/participants/<id_competition>")
@@ -1151,12 +893,12 @@ def participants(id_competition):
 
 
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
-def generation_poule(id_competition,heure_debut):
+def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
     print("competition", competition)
-    modele.get_competition_bd().generate_poule_compet(competition.get_id(),heure_debut)
+    modele.get_competition_bd().generate_poule_compet(competition.get_id(), heure_debut)
     modele.close_connexion()
     return redirect(url_for('poule', id_competition=id_competition, nb=0))
 
@@ -1191,20 +933,22 @@ def arbitrage_competition(id_competition):
 def podium(id_competition, full):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    # phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
-    # if phase_finale is not None:
-    #     matchs = modele.get_match_bd().get_match_by_phase(phase_finale.get_id_phase_f())
-    escrimeurs_matchs = []
-    # for match in matchs:
-    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur1()))
-    #     escrimeurs_matchs.add(modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur2()))
-    modele.close_connexion()
-    escrimeurs_matchs.append(Escrimeur(1, "BYE", "BYE", "H", date.today(), "bye", "mdp", 0, None, None, None, False))
-    escrimeurs_matchs.append(Escrimeur(1, "COUCOU", "COUCOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
-    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
-    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
-    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
-    escrimeurs_matchs.append(Escrimeur(1, "BLOU", "BLOU", "F", date.today(), "bye", "mdp", 0, None, None, None, False))
+    phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
+    if phase_finale is not None:
+        matchs = modele.get_match_bd().get_match_by_phase(phase_finale.get_id_phase_f())
+        escrimeurs_matchs = []
+        if matchs is not None:
+            for match in matchs:
+                escrimeur_1 = modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur1())
+                escrimeur_2 = modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur2())
+                if escrimeur_1 is not None and escrimeur_1 not in escrimeurs_matchs:
+                    escrimeurs_matchs.append(escrimeur_1)
+                if escrimeur_2 is not None and escrimeur_2 not in escrimeurs_matchs:
+                    escrimeurs_matchs.append(escrimeur_2)
+
+    else:
+        escrimeurs_matchs = None
+
     return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)
 
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
@@ -1218,9 +962,9 @@ def phase_finale(id_competition):
     nombre = competition.get_puissance_sup(nb_escrimeur)
     liste_match_by_tour: list[list] = []
     cpt = 0
-    for i in range (nombre):
+    for i in range(nombre):
         un_tour = []
-        for match in range (cpt, cpt + nb_escrimeur //2):
+        for match in range(cpt, cpt + nb_escrimeur // 2):
             if match < len(liste_match):
                 un_tour.append(liste_match[match])
             else:
@@ -1229,13 +973,15 @@ def phase_finale(id_competition):
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
     print(liste_match_by_tour)
-    return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase, les_matchs=liste_match_by_tour)
+    return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase,
+                           les_matchs=liste_match_by_tour)
+
 
 @app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
-def generation_phase_finale(id_competition,heure_debut):
+def generation_phase_finale(id_competition, heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    modele.get_competition_bd().generate_phase_finale_compet(competition.get_id(),heure_debut)
+    modele.get_competition_bd().generate_phase_finale_compet(competition.get_id(), heure_debut)
     modele.close_connexion()
     print('Phase finale générée')
     return redirect(url_for('phase_finale', id_competition=id_competition))
