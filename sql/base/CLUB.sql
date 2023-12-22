@@ -1,0 +1,15 @@
+insert into sae-escrime_sae.CLUB (idClub, nomClub, adresse, mdpClub)
+values  (1, 'Escrimeur indépendant', 'Aucune', '43cbf7a904c98e8bcf57117a4102f287498b6bfd'),
+        (2, 'Club d''escrime de Paris quai de seine', '3 Quai Saint-Bernard 75005 Paris', '646f8f4b7042d6a79e8b450998a45346c72c6789'),
+        (3, 'Club d''escrime de Lyon', '215 Rue Paul Bert, 69003 Lyon', '0ab4286d94098803a21ea28cf025f906f270fa6b'),
+        (4, 'Club d''escrime de Marseille', '33 Rue Crillon, 13005 Marseille', '0880863af587adadf38815c6a1a295529d7d5c0c'),
+        (5, 'Club d''escrime de Bordeaux', '53 Rue Pauline Kergomard, 33800 Bordeaux', 'aa0ed8e0ce12d6cad1e860a174ae16c13ff7d64a'),
+        (6, 'TUC Escrime', '6 Rue Claudius Rougenet, 31500 Toulouse', 'c4f1cd55cc75c09921218a24800a06aa4d649a5e'),
+        (7, 'Académie vauban', 'Pl. Nouvelle Aventure, 59000 Lille', '7d40e9f54354eef4758f1978e95965c59d63f326'),
+        (8, 'NEC', 'Rue Louis Joxe, 44200 Nantes', 'db57098e76fdceb2d604480aaecf88ab792f742e'),
+        (9, 'SUC', '43 Av. du Rhin, 67100 Strasbourg', '2b23124374b4dc9bd661f420dbba7c3d0d3dbadc'),
+        (10, 'MUC', '60 Pl. Jacques Mirouze, 34000 Montpellier', 'c02d1bfa451b3c4f3bf3b496ff3bdf827dc34c07'),
+        (11, 'Club d''escrime de Rennes', '8 Av. des Gayeulles, 35700 Rennes', '2311e14d98d9e58e661c38c5d2d13937f187b9fa'),
+        (12, 'Club d''escrime de Reims', 'Imp. Léo Lagrange, 51100 Reims', 'a5bc1d9b2ae74e7a8a249659c13b14f5c2eac13f'),
+        (14, 'Cercle d''escrime de Blois ', '25 Rue Lucien Joubert, 41000 Blois', 'fea82b8bb99cab2fcf8c19ecf852db76dd0b8a23'),
+        (531, 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
