@@ -1,0 +1,50 @@
+.tab {
+    width: 100%;
+    color: white;
+}
+
+th {
+    text-align: center;
+}
+
+th, td {
+    border: solid white;
+    padding: 1.5em;
+}
+
+td {
+    text-align: center;
+}
+.tableau tr:nth-child(even) {
+    background-color: rgb(230, 230, 230);
+}
+
+.tableau tr a {
+    color: rgb(212, 8, 11);
+}
+
+td button {
+    background-color: rgb(212, 8, 11);
+    color: white;
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+td button:hover {
+    background-color: rgb(255, 0, 0);
+}
+
+
+
+
+
+.tab tr:hover td {
+    background-color: rgb(212, 8, 11);
+    color: white;
+}
+
+.tab tr:hover a {
+    color: black;
+}
+

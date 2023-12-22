@@ -36,11 +36,9 @@ td button:hover {
 
 
 
-
-
 .tableau tr:hover td {
     background-color: rgb(212, 8, 11);
-    color: white;
+    color: black;
 }
 
 .tableau tr:hover a {
