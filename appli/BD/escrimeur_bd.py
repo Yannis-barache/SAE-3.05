@@ -284,10 +284,10 @@ class EscrimeurBD:
             escrimeurs = []
 
             for (id_escrimeur, nom, licence, prenom, date_naissance,
-                 nom_utilisateur, mdp, classement, sexe, id_club, id_categorie,
+                 nom_utilisateur, mdp, classement, sexe, id_club_bd, id_categorie,
                  arbitrage) in result:
                 arbitrage = arbitrage == 1
-                club = ClubBD(self.__connexion).get_club_by_id(id_club)
+                club = ClubBD(self.__connexion).get_club_by_id(id_club_bd)
                 categorie = CategorieBD(
                     self.__connexion).get_categorie_by_id(id_categorie)
 
