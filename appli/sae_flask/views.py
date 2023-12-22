@@ -183,31 +183,35 @@ def competition(id_competition):
                            poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 
-@app.route("/page_de_match")
-def page_de_match(id_match=10):
+@app.route("/page_de_match/<id_match>", methods=["GET", "POST"])
+def page_de_match(id_match):
     form = EnvoiePointForm()
     finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     id_competition = modele.get_match_bd().get_id_competition_du_match(
         le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
+    phase_match = match_bd.get_type_phase(le_match)
+    if phase_match == 1:
+        nombre_touche_max = 9
+    else:
+        nombre_touche_max = 29
+    
     modele.close_connexion()
-    
-    
-    
     return render_template("page_de_match.html",
                            match=le_match,
                            user=USER,
                            compet=la_competition,
                            form=form,
                            touches = les_touches,
-                           finir_match_form=finir_match_form)
+                           finir_match_form=finir_match_form,
+                           nb= nombre_touche_max)
 
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
@@ -247,6 +251,22 @@ def telecharger_pdf_phase(id_compet, id_phase):
     la_phase_finale.generer_pdf()
     modele.close_connexion()
     return url_for('phase_finale', id_competition=id_compet)
+
+@app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
+def telecharger_pdf_match(id_match):
+    modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    phase_match = match_bd.get_type_phase(le_match)
+    if phase_match == 1:
+        le_match.set_type_phase("Poule")
+    else:
+        le_match.set_type_phase("Phase finale")
+    le_match.generer_pdf()
+    modele.close_connexion()
+    return redirect(request.referrer)
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
@@ -866,30 +886,30 @@ def participants(id_competition):
                            arbitres=arbitres, form=form, fini=fini)
 
 
-@app.route("/participants/<id_competition>")
-def participants(id_competition):
-    modele = ModeleAppli()
-    competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-    inscrits = []
+# @app.route("/participants/<id_competition>")
+# def participants(id_competition):
+#     modele = ModeleAppli()
+#     competition = modele.get_competition_bd().get_competition_by_id(
+#         id_competition)
+#     inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
+#     inscrits = []
 
-    for i in inscription:
-        inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-            i.get_id_escrimeur()))
+#     for i in inscription:
+#         inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
+#             i.get_id_escrimeur()))
 
-    arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(
-        competition)
-    arbitres = []
-    for arbitrage in arbitrages:
-        arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-            arbitrage.get_id_escrimeur()))
+#     arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(
+#         competition)
+#     arbitres = []
+#     for arbitrage in arbitrages:
+#         arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
+#             arbitrage.get_id_escrimeur()))
 
-    modele.close_connexion()
-    return render_template("arbitre/participants.html",
-                           competition=competition,
-                           inscrits=inscrits,
-                           arbitres=arbitres)
+#     modele.close_connexion()
+#     return render_template("arbitre/participants.html",
+#                            competition=competition,
+#                            inscrits=inscrits,
+#                            arbitres=arbitres)
 
 
 @app.route("/generation_poule/<id_competition>/<heure_debut>")

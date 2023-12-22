@@ -396,7 +396,7 @@ class TestMatch(unittest.TestCase):
         arbitre = Escrimeur(3, 'Dubois', 'Yann', 'M', '2004-14-05', 'yannou',
                             'mdp', 'AB01', 3, club, categorie, True)
 
-        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False, None)
+        match = Match(1, 1, escrimeur1, escrimeur2, arbitre, '10:00', False, None)
         touche1 = Touche(match, escrimeur1, 1)
         touche2 = Touche(match, escrimeur1, 2)
         touche3 = Touche(match, escrimeur1, 3)
@@ -407,7 +407,7 @@ class TestMatch(unittest.TestCase):
         match.set_type_phase('Poule')
         match.generer_pdf()
         match.set_type_phase("Poule")
-        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, 10.0, False,
+        match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, '10:00', False,
                        None)
         escrimeur1.set_classement(None)
         escrimeur2.set_classement(None)
