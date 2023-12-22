@@ -86,6 +86,11 @@
                         <a class="authentif" href="{{ url_for('arbitrage') }}">ARBITRAGE</a>
                     </li>
                 {% endif %}
+                {% if user|is_club %}
+                    <li>
+                        <a class="authentif" href="{{ url_for('gestion_club',id_club=user.get_id() )}}">CLUB</a>
+                    </li>
+                {% endif %}
                     <li>
                         <a class="authentif" href="{{ url_for('regles') }}"> RÈGLES </a>
                     </li>

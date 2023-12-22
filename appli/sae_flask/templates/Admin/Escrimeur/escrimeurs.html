@@ -58,13 +58,13 @@
     </table>
 
     <div>
-        <button class="btn" >
-        <span class="box">
-            <a href="{{ url_for('ajouter_escrimeur') }}" style="text-decoration: none;" > Ajouter un escrimeur</a>
-        </span>
-    </button>
+        <button class="btn" onclick="window.location.href='{{ url_for('ajouter_escrimeur') }}'">
+            <span class="box">
+                <a href="{{ url_for('ajouter_escrimeur') }}" style="text-decoration: none;" > Ajouter un escrimeur</a>
+            </span>
+        </button>
 
-</div>
+    </div>
 </div>
 
 {% endblock %}

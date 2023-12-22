@@ -1,6 +1,10 @@
 .tableau {
     width: 100%;
 }
+.tableau table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
 th {
     text-align: center;
