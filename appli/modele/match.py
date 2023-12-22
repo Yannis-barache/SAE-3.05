@@ -83,7 +83,6 @@ class Match:
         """
         return self.__heure
 
-
     def get_type_phase(self) -> str | None:
         """
         Fonction qui retourne le type de la phase

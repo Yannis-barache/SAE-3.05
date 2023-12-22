@@ -54,7 +54,7 @@
 
     {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
         <div class="bouton">
-            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
+            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
         </div>
     {% endif %}
 
