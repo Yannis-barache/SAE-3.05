@@ -7,7 +7,7 @@ from piste import Piste
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from reportlab.lib.colors import red, blue, black
+from reportlab.lib.colors import red, black, green
 
 
 class Match:
@@ -309,8 +309,8 @@ class Match:
         """
         canva = canvas.Canvas(f'match_{self.__id}.pdf', pagesize=letter)
         canva.setFont('Helvetica', 18)
-        heures = int(self.__heure)
-        minutes = int((self.__heure - heures) * 60)
+        heures = int(str(self.__heure).split(':', maxsplit=1)[0])
+        minutes = int(str(self.__heure).split(':')[1])
         format_horloge = f"{heures}h{minutes:02d}"
         canva.drawCentredString(
             letter[0] / 2, 740,
@@ -340,16 +340,12 @@ class Match:
             classement2 = 'NC'
         else:
             classement2 = "n°" + str(classement)
-        width = canva.stringWidth(
-            str(self.__escrimeur1.get_nom()) + ' ' +
-            str(self.__escrimeur1.get_prenom() + ' - ' + str(classement2)),
-            'Helvetica', 15)
-        canva.drawString(60, 680, "Escrimeur bleu")
+        canva.drawString(75, 680, "Escrimeur rouge")
 
         rayon_rond = 5
-        x_centre_rond = width + 5
+        x_centre_rond = 65
         y_centre_rond = 680 + 4
-        canva.setFillColor(blue)
+        canva.setFillColor(red)
         canva.circle(x_centre_rond,
                      y_centre_rond,
                      rayon_rond,
@@ -377,12 +373,12 @@ class Match:
             classement2 = 'NC'
         else:
             classement2 = "n°" + str(classement)
-        width = canva.stringWidth("Escrimeur rouge", 'Helvetica', 15)
-        canva.drawString(610 - width - 70 - 15, 680, "Escrimeur rouge")
+        width = canva.stringWidth("Escrimeur vert", 'Helvetica', 15)
+        canva.drawString(610 - width - 70 - 15, 680, "Escrimeur vert")
         rayon_rond = 5
         x_centre_rond = 610 - 70 - 5
         y_centre_rond = 680 + 4
-        canva.setFillColor(red)
+        canva.setFillColor(green)
         canva.circle(x_centre_rond,
                      y_centre_rond,
                      rayon_rond,
@@ -427,7 +423,7 @@ class Match:
         canva.drawString(353 - width / 2, 580 - 20 / 2,
                          str(self.get_nb_touche(self.__escrimeur2)))
 
-    def get_escrimeur_touche(self, num_toucher: int) -> Escrimeur | None:
+    def get_escrimeur_touche(self, num_toucher: int) :
         """
         Fonction qui retourne l'escrimeur qui a touché
 
@@ -457,12 +453,12 @@ class Match:
             debut = 40
             cpt = 29
         for i in range(cpt):
-            if self.get_escrimeur_touche(i + 1) == self.__escrimeur1:
-                canva.setFillColor(blue)
+            if self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(i + 1).get_id() == self.__escrimeur1.get_id():
+                canva.setFillColor(red)
                 canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)
-            elif self.get_escrimeur_touche(i + 1) == self.__escrimeur2:
-                canva.setFillColor(red)
+            elif self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(i + 1).get_id() == self.__escrimeur2.get_id():
+                canva.setFillColor(green)
                 canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)
             else:

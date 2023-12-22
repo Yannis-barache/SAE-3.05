@@ -1,58 +1,9 @@
-.cercle{
-    background: #bfd70e;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
-
-}
-
-section{
-
-    background-color: black;
-
-}
-
-h1{
-    color: white;
-}
-
-.rec-central-content{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
 .enflex{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.colonne{
-    flex-direction: column;
-}
-
-.info-match{
-    display: flex;
-    justify-content: space-between;
-
-}
-
-span{
-
-    display: block;
-    text-align: center;
-
-}
-
-.escrimeur{
-    margin: 0 5%;
-}
-
-.resultat{
-    flex-direction: column;
-}
 
 .circle{
     margin:10px;
@@ -66,11 +17,6 @@ span{
     color: white;
 }
 
-.les-escimeur{
-
-
-
-}
 
 .ligne{
     width: 50%;
@@ -80,14 +26,6 @@ span{
     height: 8px;
     background-color: black;
 
-}
-
-#le-rouge{
-    background-color: red;
-}
-
-.le-marg{
-    margin: 2px;
 }
 
 .circle-button {
@@ -141,77 +79,22 @@ span{
     height: 100%;
 }
 
-.button_finir{
 
-}
-
-.lemarg{
-    margin: 10px;
-}
-
-h1{
-    font-size: xx-large;
-}
-
-.enbold{
-    font-weight: bold;
-}
 
 /* ... Autres styles ... */
 
-.rec-central-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.info-match {
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1; /* Utilisez flex-grow pour que cette section utilise tout l'espace disponible */
-    align-items: stretch; /* Ajustez la taille des éléments enfants pour les étirer verticalement */
-}
-
-/* ... Autres styles ... */
-
-.le-rouge{
+.red{
     background-color: red;
 }
 
-.vert{
+.green{
     background-color: green;
 }
 
-.blanc{
+.white{
     background-color: white;
 }
 
-.touches-line {
-    margin: 20px;
-
-}
-
-.touches-line .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin: 0 5px;
-    border: 3px solid #000;
-}
-
-
-
-.gros{
-    margin: 8px;
-}
-
-.petit{
-    margin: 4px;
-}
-
-.marg{
-    margin: 16px;
-}
 
 .buttonterm {
     --color: #0077ff;
@@ -225,18 +108,194 @@ h1{
     position: relative;
     cursor: pointer;
     overflow: hidden;
-  }
- 
+}
+
 .buttonterm::before {
-  position: absolute;
-  content: "";
-  background: var(--color);
-  width: 150px;
-  height: 200px;
-  z-index: -1;
-  border-radius: 50%;
+    position: absolute;
+    content: "";
+    background: var(--color);
+    width: 150px;
+    height: 200px;
+    z-index: -1;
+    border-radius: 50%;
 }
 
 .buttonterm:hover {
-  color: red;
+    color: red;
+}
+
+
+.match{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+
+
+.big-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grey-bg{
+    flex-basis: 100%;
+    background-color: #EDEDED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grey-bg > p{
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+
+main{
+    margin-top: 3%;
+    margin-right: 0%;
+    margin-bottom: 3%;
+    margin-left: 0%;
+}
+
+.big-div > div{
+    flex-basis: 100%;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+}
+
+.infos{
+    font-style: bold;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.infos p{
+    flex-basis: 100%;
+    text-align: center;
+    margin: 0px;
+}
+
+.infos .num{
+    margin-bottom: 20px;
+}
+
+.infos .arbitre{
+    margin-top: 20px;
+}
+
+.name{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.escrimeur p{
+    font-size: 20px;
+    margin: 0px;
+}
+
+.name p{
+    font-size: 30px;
+}
+
+.right{
+    text-align: right;
+}
+
+.left{
+    text-align: left;
+}
+
+.score{
+    font-size: 30px;
+    font-style: bold;
+}
+
+.carre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border : 2px solid black;
+    margin: 10px;
+}
+
+.cercle{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.name-right{
+    justify-content: flex-end;
+}
+
+.name-left{
+    justify-content: flex-start;
+}
+
+.infos p{
+    font-size: 25px;
+}
+
+.infos{
+    margin-bottom: 10px;
+}
+
+.touche{
+    margin-top: 40px;
+}
+
+.touches-line .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 5px;
+    border: 3px solid #000;
+}
+
+.div-dow{
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top : 10px;
+    flex-basis: 100%;
+}
+
+.dow-a{
+    color: black;
+    padding-top: 10px;
+    display: block;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    text-decoration: none;
+}
+
+.dow{
+    height: 30px;
+    width: 30px;
+    padding-right: 5px;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.dow-a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }

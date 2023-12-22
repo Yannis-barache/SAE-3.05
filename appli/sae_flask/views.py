@@ -190,11 +190,12 @@ def competition_arbitre(id_competition):
                            poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 
-@app.route("/page_de_match")
+@app.route("/page_de_match/<id_match>", methods=["GET", "POST"])
 def page_de_match(id_match):
     form = EnvoiePointForm()
     finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     id_competition = modele.get_match_bd().get_id_competition_du_match(
         le_match)
@@ -203,6 +204,11 @@ def page_de_match(id_match):
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
+    phase_match = match_bd.get_type_phase(le_match)
+    if phase_match == 1:
+        nombre_touche_max = 9
+    else:
+        nombre_touche_max = 29
     modele.close_connexion()
     return render_template("page_de_match.html",
                            match=le_match,
@@ -210,7 +216,8 @@ def page_de_match(id_match):
                            compet=la_competition,
                            form=form,
                            touches = les_touches,
-                           finir_match_form=finir_match_form)
+                           finir_match_form=finir_match_form,
+                           nb= nombre_touche_max)
 
 @app.route("/arbitre/arbitre_page_de_match")
 def arbitre_page_de_match(id_match):
@@ -292,6 +299,22 @@ def telecharger_pdf_phase(id_compet, id_phase):
     la_phase_finale.generer_pdf()
     modele.close_connexion()
     return url_for('phase_finale', id_competition=id_compet)
+
+@app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
+def telecharger_pdf_match(id_match):
+    modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    phase_match = match_bd.get_type_phase(le_match)
+    if phase_match == 1:
+        le_match.set_type_phase("Poule")
+    else:
+        le_match.set_type_phase("Phase finale")
+    le_match.generer_pdf()
+    modele.close_connexion()
+    return redirect(request.referrer)
 
 @app.route("/inscription_competition/<id_competition>")
 def inscription_competition(id_competition):
