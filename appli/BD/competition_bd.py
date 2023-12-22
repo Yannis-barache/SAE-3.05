@@ -131,7 +131,7 @@ class CompetitionBD:
         """
         try:
             query = text(
-                  'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
                 'idCategorie, coefficientCompetition '
                 'FROM COMPETITION NATURAL JOIN ARBITRER '
@@ -144,8 +144,9 @@ class CompetitionBD:
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
-                competitions.append(Competition(id_competition, nom, date, date_fin, saison,
-                                   lieu, arme, categorie, coefficient))
+                competitions.append(
+                    Competition(id_competition, nom, date, date_fin, saison,
+                                lieu, arme, categorie, coefficient))
             return competitions
         except Exception as e:
             print(e)

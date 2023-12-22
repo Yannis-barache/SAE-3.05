@@ -53,11 +53,6 @@ def choisir_statut_connexion():
     return render_template("choisir_statut_connexion.html", user=USER)
 
 
-@app.route("/page_poule")
-def page_poule():
-    return render_template("page_poule_compet.html")
-
-
 @app.route("/choisir_statut_inscription")
 def choisir_statut_inscription():
     return render_template("choisir_statut_inscription.html", )
@@ -183,6 +178,18 @@ def competition(id_competition):
                            poule=nb_poule, user=USER, phase_finale=phase_finale)
 
 
+@app.route("/arbitre/competition/<id_competition>")
+def competition_arbitre(id_competition):
+    modele = ModeleAppli()
+    la_competition = modele.get_competition_bd().get_competition_by_id(
+        id_competition)
+    nb_poule = modele.get_poule_bd().nb_poule_compet(id_competition)
+    phase_finale = modele.get_phase_finale_bd().exist_phase_finale(id_competition)
+    modele.close_connexion()
+    return render_template("arbitre/arbitre-competition.html", compet=la_competition,
+                           poule=nb_poule, user=USER, phase_finale=phase_finale)
+
+
 @app.route("/page_de_match/<id_match>", methods=["GET", "POST"])
 def page_de_match(id_match):
     form = EnvoiePointForm()
@@ -202,7 +209,6 @@ def page_de_match(id_match):
         nombre_touche_max = 9
     else:
         nombre_touche_max = 29
-    
     modele.close_connexion()
     return render_template("page_de_match.html",
                            match=le_match,
@@ -212,6 +218,28 @@ def page_de_match(id_match):
                            touches = les_touches,
                            finir_match_form=finir_match_form,
                            nb= nombre_touche_max)
+
+@app.route("/arbitre/arbitre_page_de_match")
+def arbitre_page_de_match(id_match):
+    form = EnvoiePointForm()
+    finir_match_form = FinirMatchForm()
+    modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(
+        le_match)
+    la_competition = modele.get_competition_bd().get_competition_by_id(
+        id_competition)
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    modele.close_connexion()
+    return render_template("arbitre/arbitre-page_de_match.html",
+                           match=le_match,
+                           user=USER,
+                           compet=la_competition,
+                           form=form,
+                           touches = les_touches,
+                           finir_match_form=finir_match_form)
 
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
@@ -234,6 +262,26 @@ def poule(id_competition, nb):
                            user=USER,
                            nb_poule=nombre_poule)
 
+
+@app.route("/abitre/poule/<id_competition>/<nb>", methods=["GET", "POST"])
+def poule_arbitre(id_competition, nb):
+    modele = ModeleAppli()
+    nombre_poule = modele.get_poule_bd().nb_poule_compet(int(id_competition))
+    if nombre_poule == 0:
+        nombre_poule = -1
+    else:
+        nb = int(nb) % nombre_poule
+    la_competition = modele.get_competition_bd().get_competition_by_id_s(
+        id_competition)
+    la_poule = modele.get_poule_bd().get_poules_by_compet_nb(
+        int(id_competition), int(nb))
+    modele.close_connexion()
+    return render_template("arbitre/poule-arbitre.html",
+                           la_poule=la_poule,
+                           compet=la_competition,
+                           nb=nb,
+                           user=USER,
+                           nb_poule=nombre_poule)
 
 
 @app.route('/telecharger_pdf_poule/<int:id_poule>')
@@ -864,7 +912,7 @@ def participants(id_competition):
         for element in arbitrages:
             arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(element.get_id_escrimeur()))
         poules = modele.get_poule_bd().get_poules_by_compet(competition.get_id())
-        fini = any(element.est_finis() for element in poules)
+        fini = any(element.is_finis() for element in poules)
         fini = True
 
         modele.close_connexion()
@@ -884,32 +932,6 @@ def participants(id_competition):
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini)
-
-
-# @app.route("/participants/<id_competition>")
-# def participants(id_competition):
-#     modele = ModeleAppli()
-#     competition = modele.get_competition_bd().get_competition_by_id(
-#         id_competition)
-#     inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-#     inscrits = []
-
-#     for i in inscription:
-#         inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-#             i.get_id_escrimeur()))
-
-#     arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(
-#         competition)
-#     arbitres = []
-#     for arbitrage in arbitrages:
-#         arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(
-#             arbitrage.get_id_escrimeur()))
-
-#     modele.close_connexion()
-#     return render_template("arbitre/participants.html",
-#                            competition=competition,
-#                            inscrits=inscrits,
-#                            arbitres=arbitres)
 
 
 @app.route("/generation_poule/<id_competition>/<heure_debut>")

@@ -8,6 +8,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 locale = config['database']['locale']
 
+
 class ConnexionBD:
     """
     Classe ConnexionBD
@@ -58,8 +59,9 @@ class ConnexionBD:
             if engine is not None:
                 cnx = engine.connect()
                 print("connexion réussie")
-            else :
-                raise AttributeError("Erreur de configuration de la base de données")
+            else:
+                raise AttributeError(
+                    "Erreur de configuration de la base de données")
             self.__connexion = cnx
         except Exception as err:
             print(err)
