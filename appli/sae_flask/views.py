@@ -929,7 +929,6 @@ def participants(id_competition):
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini)
 
-
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
 def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()

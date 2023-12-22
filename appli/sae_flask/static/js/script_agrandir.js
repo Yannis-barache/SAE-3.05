@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     bouton_agrandir.addEventListener('click', () => {
         div_img_agrandir.style.display = "block";
+        div_img_agrandir.style.overflowX = "auto";
+        div_img_agrandir.style.overflowY = "auto";
         html.classList.add("active");
         header.style.zIndex = "0";
     });
