@@ -1,6 +1,8 @@
 .big-div{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .grey-bg{
@@ -109,3 +111,23 @@ a{
 .champion li, .round li {background-color: #fff;box-shadow: none; opacity: 0.45;}
 .current li {opacity: 1;}
 .current li.team {background-color: #fff;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);opacity: 1;}
+
+.bouton{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 1%;
+}
+
+.btn-primary {
+    background-color: #d2080a;
+    border-color: #000000;
+    border-radius: 1em;
+}
+
+.btn-primary:hover {
+    background-color: #000000;
+}
+

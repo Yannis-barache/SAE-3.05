@@ -415,6 +415,29 @@ class Competition:
                                                      les_arbitres, heure_debut)
         return phase_finale, les_matchs
 
+    def get_nombre_escrimeur_phase_finale(self, les_poules) -> int:
+        """
+        Fonction qui retourne le nombre d'escrimeurs de la phase finale de la competition
+
+        Returns :
+            int : Le nombre d'escrimeurs de la phase finale de la competition
+        """
+        club_none = Club(1, "None", "None", "None")
+        categorie_none = Categorie(1, "None")
+        escrimeur_none = Escrimeur(308, "None", "None", "None", "None", "None",
+                                   "None", "None", 0, club_none,
+                                   categorie_none, False)
+
+        classement_provisoire = Competition.etablir_classement_provisoire(
+            les_poules)
+        puissance = Competition.get_puissance_sup(len(classement_provisoire))
+        liste_escrimeur: list[Escrimeur] = []
+        for escrimeur in classement_provisoire:
+            liste_escrimeur.append(escrimeur)
+        while len(liste_escrimeur) < 2**puissance:
+            liste_escrimeur.append(escrimeur_none)
+        return len(liste_escrimeur)
+
     def __str__(self) -> str:
         """
         Fonction qui retourne une chaine de caractere contenant les informations de la competition

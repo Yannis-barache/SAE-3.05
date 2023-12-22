@@ -18,7 +18,7 @@
     <ul>
         <li><a class="btn" href="{{ url_for('competition_arbitre', id_competition=compet_id) }}">INFORMATIONS</a></li>
         <li><a class="btn" href="{{ url_for('poule_arbitre',id_competition=compet_id,nb = 0) }}"> POULES </a></li>
-        <li><a class="btn" href="{{ url_for('home') }}" >PHASE FINAL</a></li>
+        <li><a class="btn" href="{{ url_for('arbitre_phase_finale') }}" >PHASE FINALE</a></li>
         <li><a class="btn" href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a></li>
         <li><a class="btn" href="{{ url_for('podium',id_competition = compet_id,full = False) }}" >CLASSEMENT</a></li>
     </ul>
