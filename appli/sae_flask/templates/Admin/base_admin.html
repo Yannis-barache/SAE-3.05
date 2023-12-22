@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% block styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css')}}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu_choix.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css')}}">
+        <script src="{{ url_for('static', filename='js/button_menu.js')}}"></script>
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
     {% endblock %}
@@ -17,16 +18,48 @@
 
     <header>
         {% block header %}
+        <div class="top_header">
+        <div class="b-menu2">
+            <input id="toggleChecker" type="checkbox">
+            <label id="togglerLable" for="toggleChecker" onclick="myFunction()">
+            <div class="checkboxtoggler">
+                <div class="line line-1"></div>
+                <div class="line line-2"></div>
+                <div class="line line-3"></div>
+            </div>
+            </label>
+            <nav id="myDropdown" class="dropdown-content2">
+                <ul class="menu-deroule">
+                    <li><a href="{{ url_for('home') }}">Accueil</a></li>
+                    {% if user==None %}
+                    <li><a href="{{ url_for('choose_sign')}}">Authentification</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('espace_personnel') }}">Espace personnel</a></li>
+                    {% endif %}
+                    {% if user|is_arbitre %}
+                    <li><a href="{{ url_for('arbitrage') }}">Arbitrage</a></li>
+                    {% endif %}
+                    {% if user|is_organisateur %}
+                    <li><a href="{{ url_for('home_admin') }}">Administrateur</a></li>
+                    {% endif %}
+
+                    <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
+                </ul>
+            </nav>
+        </div>
         <img class= "logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo">
             {% if user!=None %}
             <a href="{{ url_for('deconnexion')}}">
                 <img class= "user" src="{{ url_for('static', filename='../static/img/logout.png') }}" alt="Déconnexion">
             </a>
             {% endif %}
-
+        </div>
         <nav class="navigateur">
             {% block nav %}
-                <a class="compet" href="{{ url_for('home_admin') }}"> MODULE ADMINISTRATION </a>
+                <ul>
+                    <li><a class="compet" href="{{ url_for('home_admin') }}"> MODULE ADMINISTRATION </a></li>
+                </ul>
+
             {% endblock %}
         </nav>
     
@@ -37,25 +70,26 @@
             {% block content %}
             {% endblock %}
         </div>
-    </div>
     </main>
     <footer>
         {% block footer %}
         <p>CONTACTS : </p>
-        <a href="#">
-            <img class="insta" src="{{ url_for('static', filename='../static/img/Insta.png') }}" alt=" image insta ">
+        <a href="https://blois-escrime.fr/">
+            <img class="insta" src="{{ url_for('static', filename='../static/img/planete.png') }}" alt=" image insta ">
         </a>
-            
-        <a href="#">
+
+        <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=blois.escrime@wanadoo.fr">
+            <img class="insta" src="{{ url_for('static', filename='../static/img/mail.png') }}" alt="image enveloppe mail">
+        </a>
+
+        <a href="https://twitter.com/villedeblois">
             <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
         </a>
-        
-        <a href="#"> 
-            <img class="youtube" src="{{ url_for('static', filename='../static/img/Youtube.png') }}" alt="image logo youtube">
-        </a>
-        <a href="#"> 
+
+        <a href="https://www.facebook.com/profile.php?id=100070077406734&locale=fr_FR">
             <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
         </a>
+            <p>02 54 42 15 28</p>
         <p class="paragfin"> @ Cette page a été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, Merit Juliann, Chédeville Baptiste </p>
 
         {% endblock %}
