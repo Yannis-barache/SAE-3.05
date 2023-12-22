@@ -192,8 +192,6 @@ def competition_arbitre(id_competition):
 
 @app.route("/page_de_match/<id_match>", methods=["GET", "POST"])
 def page_de_match(id_match):
-    form = EnvoiePointForm()
-    finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
     match_bd = modele.get_match_bd()
     le_match = modele.get_match_bd().get_match_by_id(id_match)
@@ -214,9 +212,7 @@ def page_de_match(id_match):
                            match=le_match,
                            user=USER,
                            compet=la_competition,
-                           form=form,
                            touches = les_touches,
-                           finir_match_form=finir_match_form,
                            nb= nombre_touche_max)
 
 @app.route("/arbitre/arbitre_page_de_match")
@@ -298,7 +294,7 @@ def telecharger_pdf_phase(id_compet, id_phase):
     la_phase_finale = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
     la_phase_finale.generer_pdf()
     modele.close_connexion()
-    return url_for('phase_finale', id_competition=id_compet)
+    return redirect(request.referrer)
 
 @app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
 def telecharger_pdf_match(id_match):
@@ -996,12 +992,14 @@ def podium(id_competition, full):
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
+    poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
-    modele.close_connexion()
-    nb_escrimeur = 8
+    les_poules = poule_bd.get_poules_by_compet(id_competition)
+    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
     nombre = competition.get_puissance_sup(nb_escrimeur)
+    modele.close_connexion()
     liste_match_by_tour: list[list] = []
     cpt = 0
     for i in range(nombre):
@@ -1014,9 +1012,44 @@ def phase_finale(id_competition):
             cpt += 1
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
-    print(liste_match_by_tour)
     return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase,
                            les_matchs=liste_match_by_tour)
+
+
+@app.route("/arbitre/phase_finale/<id_competition>", methods=["GET", "POST"])
+def arbitre_phase_finale(id_competition):
+    modele = ModeleAppli()
+    poule_bd = modele.get_poule_bd()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    liste_match = la_phase.get_les_matchs()
+    les_poules = poule_bd.get_poules_by_compet(id_competition)
+    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    nombre = competition.get_puissance_sup(nb_escrimeur)
+    modele.close_connexion()
+    liste_match_by_tour: list[list] = []
+    cpt = 0
+    for i in range(nombre):
+        un_tour = []
+        for match in range(cpt, cpt + nb_escrimeur // 2):
+            if match < len(liste_match):
+                un_tour.append(liste_match[match])
+            else:
+                un_tour.append(None)
+            cpt += 1
+        nb_escrimeur = nb_escrimeur // 2
+        liste_match_by_tour.append(un_tour)
+    return render_template("arbitre/arbitre-page_phase_finale_compet.html", compet=competition, phase=la_phase,
+                           les_matchs=liste_match_by_tour)
+
+@app.route("/arbitre/generer_prochain_tour/<id_competition>/<id_phase>", methods=["GET", "POST"])
+def generer_prochain_tour(id_competition, id_phase):
+    modele = ModeleAppli()
+    phase_bd = modele.get_phase_finale_bd()
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
+    phase_bd.generer_tour_suivant(la_phase, id_competition, 10.3)
+    modele.close_connexion()
+    return redirect(request.referrer)
 
 
 @app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
