@@ -191,7 +191,7 @@ def competition_arbitre(id_competition):
 
 
 @app.route("/page_de_match")
-def page_de_match(id_match=10):
+def page_de_match(id_match):
     form = EnvoiePointForm()
     finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
@@ -200,15 +200,33 @@ def page_de_match(id_match=10):
         le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    
     le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     modele.close_connexion()
-    
-    
-    
     return render_template("page_de_match.html",
+                           match=le_match,
+                           user=USER,
+                           compet=la_competition,
+                           form=form,
+                           touches = les_touches,
+                           finir_match_form=finir_match_form)
+
+@app.route("/arbitre/arbitre_page_de_match")
+def arbitre_page_de_match(id_match):
+    form = EnvoiePointForm()
+    finir_match_form = FinirMatchForm()
+    modele = ModeleAppli()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(
+        le_match)
+    la_competition = modele.get_competition_bd().get_competition_by_id(
+        id_competition)
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    modele.close_connexion()
+    return render_template("arbitre/arbitre-page_de_match.html",
                            match=le_match,
                            user=USER,
                            compet=la_competition,
