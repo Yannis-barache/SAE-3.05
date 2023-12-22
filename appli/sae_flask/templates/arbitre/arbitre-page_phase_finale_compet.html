@@ -33,7 +33,7 @@
                         <div class="round round-{{ tour }} current">
                             {% for i in range(0, les_matchs[tour-1]|length) %}
                                 {% if les_matchs[tour-1][i] %}
-                                    <a href=" {{ url_for('page_de_match', id_match=les_matchs[tour-1][i].get_id()) }} ">
+                                    <a href=" {{ url_for('arbitre_page_de_match', id_match=les_matchs[tour-1][i].get_id(), id_competition=compet.get_id() ) }} ">
                                 {% else %}
                                     <a href="">
                                 {% endif %}
@@ -61,7 +61,7 @@
     </div>
 
     {% if phase.tour_finnis() %}
-        <form action="{{ url_for('generer_prochain_tour', id_competition=compet.get_id(), id_phase=phase.get_id_phase()) }}" method="POST" role="form">
+        <form action="{{ url_for('generer_prochain_tour', id_competition=compet.get_id(), id_phase=phase.get_id_phase_f()) }}" method="POST" role="form">
             <div class="bouton">
                 <button class="btn btn-primary" type="submit">Générer tour suivant</button>
             </div>
@@ -76,7 +76,7 @@
                         <div class="round round-{{ tour }} current">
                             {% for i in range(0, les_matchs[tour-1]|length) %}
                                 {% if les_matchs[tour-1][i] %}
-                                    <a href=" {{ url_for('page_de_match', id_match=les_matchs[tour-1][i].get_id()) }} ">
+                                    <a href=" {{ url_for('arbitre_page_de_match', id_match=les_matchs[tour-1][i].get_id(), id_competition=compet.get_id() ) }} ">
                                 {% else %}
                                     <a href="">
                                 {% endif %}

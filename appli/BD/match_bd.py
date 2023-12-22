@@ -77,8 +77,8 @@ class MatchBD:
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
-                match = Match(id_match, phase.get_id_phase(), escrimeur1, escrimeur2, arbitre,
-                              heure, fini, piste)
+                match = Match(id_match, phase.get_id_phase(), escrimeur1,
+                              escrimeur2, arbitre, heure, fini, piste)
                 return match
             return None
         except Exception as e:
@@ -161,6 +161,20 @@ class MatchBD:
             query = text(
                 f"UPDATE MATCHS SET fini = 1 WHERE idMatch = {str(match.get_id())}"
             )
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def set_finis_match_2(self, id_match: int):
+        """
+        Fonction qui met le match en fini
+        :param match : match
+        """
+        try:
+            query = text(
+                f"UPDATE MATCHS SET fini = 1 WHERE idMatch = {str(id_match)}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:

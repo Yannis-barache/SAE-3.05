@@ -1,0 +1,128 @@
+{% extends "arbitre/base_arbitre.html" %}
+
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page_match.css')}}">
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/button_anim.js') }}"></script>
+{% endblock %}
+
+
+{% block nav %}
+    {{  competition_nav(compet.get_id()) }}
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="big-div">
+
+        <div class="grey-bg center">
+            <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+        </div>
+
+        <div class="infos enflex">
+            <p class="arbitre">Arbitre : {{ match.get_arbitre().get_nom() }} {{ match.get_arbitre().get_prenom() }}</p>
+            <p class="num">Match numéro {{ match.get_id() }} - {{ match.get_heure() }} </p>
+            {% if match.est_finis() %}
+                <p class="finis">Match terminé</p>
+            {% else %}
+                <p class="finis">Match en cours</p>
+            {% endif %}
+        </div>
+
+        <div class="match enflex">
+
+            <div class="escrimeur1 escrimeur">
+                <div class="name name-left">
+                    <p>Escrimeur rouge</p>
+                    <div class="cercle red"></div>
+                </div>
+                <div>
+                    {% if match.get_escrimeur1().get_classement() %}
+                        <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - {{ match.get_escrimeur1().get_classement() }}</p>
+                    {% else %}
+                        <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - NC</p>
+                    {% endif %}
+                    <p class="left">{{ match.get_escrimeur1().get_club().get_nom() }} </p>
+                    <p class="left">{{ match.get_escrimeur1().get_categorie().get_nom( ) }} </p>
+                </div>
+            </div>
+
+
+            <div class="score enflex">
+                <div class="carre">{{ match.get_nb_touche(match.get_escrimeur1() ) }}</div>
+                <p>-</p>
+                <div class="carre">{{ match.get_nb_touche(match.get_escrimeur2()) }}</div>
+            </div>
+
+
+            <div class="escrimeur2 escrimeur">
+                <div class="name name-right">
+                    <div class="cercle green"></div>
+                    <p>Escrimeur vert</p>
+                </div>
+                <div>
+                    {% if match.get_escrimeur2().get_classement() %}
+                        <p class="left">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - {{ match.get_escrimeur2().get_classement() }}</p>
+                    {% else %}
+                        <p class="left">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - NC</p>
+                    {% endif %}
+                    <p class="right">{{ match.get_escrimeur2().get_club().get_nom() }} </p>
+                    <p class="right">{{ match.get_escrimeur2().get_categorie().get_nom( ) }} </p>
+                </div>
+            </div>
+        </div>
+
+        {% if not match.est_finis() %}
+        <div class="btns enflex">
+            <a href="{{ url_for('add_touche', id_match=match.get_id(), id_escrimeur=match.get_escrimeur1().get_id()) }}">
+                <img class="btn-icon" src="{{ url_for('static', filename='img/btn-add.png') }}" alt="">
+            </a>
+
+            <a href="{{ url_for('supp_touche', id_match=match.get_id()) }}">
+                <img class="btn-icon" src="{{ url_for('static', filename='img/btn-minus.png') }}" alt="">
+            </a>
+
+            <a href="{{ url_for('add_touche', id_match=match.get_id(), id_escrimeur=match.get_escrimeur2().get_id()) }}">
+                <img class="btn-icon" src="{{ url_for('static', filename='img/btn-add.png') }}" alt="">
+            </a>
+
+        </div>
+        {% endif %}
+
+        <div class="enflex touches-line touche">
+            {% for i in range(nb)%}
+                {% if i < touches|length %}
+                    {% if touches[i].get_escrimeur().get_id() == match.get_escrimeur1().get_id() %}
+                        <div class="circle red"></div>
+                    {% else %}
+                        <div class="circle green"></div>
+                    {% endif %}
+                {% else %}
+                    <div class="circle white"></div>
+                {% endif %} 
+            {% endfor %}
+        </div>
+
+        {% if not match.est_finis() %}
+        <div class="bouton">
+            <a href="{{ url_for('finir_match', id_match=match.get_id()) }}">
+                <button class="btn btn-primary" type="submit">Finir le match</button>
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="div-dow">
+            <a class="dow-a" href="{{ url_for('telecharger_pdf_match', id_match=match.get_id()) }}"><img class="dow" src="{{ url_for('static', filename='../static/img/dow.png') }}" alt="menu">Télécharger le PDF</a> 
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -423,7 +423,7 @@ class Match:
         canva.drawString(353 - width / 2, 580 - 20 / 2,
                          str(self.get_nb_touche(self.__escrimeur2)))
 
-    def get_escrimeur_touche(self, num_toucher: int) :
+    def get_escrimeur_touche(self, num_toucher: int):
         """
         Fonction qui retourne l'escrimeur qui a touché
 
@@ -453,11 +453,14 @@ class Match:
             debut = 40
             cpt = 29
         for i in range(cpt):
-            if self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(i + 1).get_id() == self.__escrimeur1.get_id():
+            if self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(
+                    i + 1).get_id() == self.__escrimeur1.get_id():
                 canva.setFillColor(red)
                 canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)
-            elif self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(i + 1).get_id() == self.__escrimeur2.get_id():
+            elif self.get_escrimeur_touche(
+                    i + 1) and self.get_escrimeur_touche(
+                        i + 1).get_id() == self.__escrimeur2.get_id():
                 canva.setFillColor(green)
                 canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)

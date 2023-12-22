@@ -44,20 +44,6 @@
                 <p>:    {{ compet.get_etat() }}</p>
             </div>
         </div>
-
-        <div class="div-btn center">
-            {% if poule > 0 %}
-                <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
-                    <button type="submit" class="btn-active">voir les poules</button>
-                </form>
-            {% endif %}
-
-            {% if phase_finale %}
-                <form role="form" method="post" action="{{ url_for('phase_finale', id_competition=compet.get_id()) }}">
-                    <button type="submit" class="btn-active">voir la phase finale</button>
-                </form>
-            {% endif %}
-        </div>
     </div>
 
 

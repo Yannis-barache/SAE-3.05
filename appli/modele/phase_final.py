@@ -176,20 +176,23 @@ class PhaseFinal:
             liste_gagnants.append(match.get_gagnant())
         dico: dict[Escrimeur, int] = {}
         for gagnant in liste_gagnants:
-            if gagnant in dico:
-                dico[gagnant] += 1
+            if gagnant.get_id() in dico:
+                dico[gagnant.get_id()] += 1
             else:
-                dico[gagnant] = 1
+                dico[gagnant.get_id()] = 1
         max_valeurs = max(dico.values())
         liste_gagnants_2 = []
         for key, value in dico.items():
             if value == max_valeurs:
                 liste_gagnants_2.append(key)
         # On garde le bon ordre
+        deja = []
         liste_gagnants_final = []
         for gagnant in liste_gagnants:
-            if gagnant in liste_gagnants_2:
+            if gagnant.get_id() in liste_gagnants_2 and gagnant.get_id(
+            ) not in deja:
                 liste_gagnants_final.append(gagnant)
+                deja.append(gagnant.get_id())
         les_matchs = []
         self.__index_piste = 0
         for i in range(0, len(liste_gagnants_final), 2):
