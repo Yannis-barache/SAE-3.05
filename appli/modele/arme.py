@@ -17,8 +17,8 @@ class Arme:
         """
         Fonction qui retourne l'id de l'arme
 
-        Returns:
-            int: id de l'arme
+        Returns :
+            int : id de l'arme
         """
         return self.__id
 
@@ -26,8 +26,8 @@ class Arme:
         """
         Fonction qui retourne le nom de l'arme
 
-        Returns:
-            str: nom de l'arme
+        Returns :
+            str : nom de l'arme
         """
         return self.__nom
 
@@ -35,8 +35,8 @@ class Arme:
         """
         Fonction qui retourne le sexe de l'arme
 
-        Returns:
-            str: sexe de l'arme
+        Returns :
+            str : sexe de l'arme
         """
         return self.__sexe
 
@@ -45,7 +45,7 @@ class Arme:
         Fonction qui modifie l'id de l'arme
 
         Args:
-            id (int): id de l'arme
+            id_arme (int): id de l'arme
         """
         self.__id = id_arme
 
@@ -53,8 +53,8 @@ class Arme:
         """
         Fonction qui modifie le nom de l'arme
 
-        Args:
-            nom (str): nom de l'arme
+        Args :
+            nom (str) : nom de l'arme
         """
         self.__nom = nom
 
@@ -62,16 +62,16 @@ class Arme:
         """
         Fonction qui modifie le sexe de l'arme
 
-        Args:
-            sexe (str): sexe de l'arme
+        Args :
+            sexe (str) : sexe de l'arme
         """
         self.__sexe = sexe
 
     def __str__(self):
         """
-        Fonction qui retourne une chaine de caractere contenant les informations de l'arme
+        Fonction qui retourne une chaine de caractère contenant les informations de l'arme
 
-        Returns:
-            str: informations de l'arme
+        Returns :
+            str : informations de l'arme
         """
         return f"Arme : {self.__id} - {self.__nom} - {self.__sexe} |"

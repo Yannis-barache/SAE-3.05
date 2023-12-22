@@ -13,8 +13,8 @@ class ConnexionBD:
     Classe ConnexionBD
 
     Attributes :
-        __connexion (sqlalchemy.engine.base.Connection) :  connexion à la base de données
-        __user (str) : le login MySQL de l'utilsateur
+        __connexion (sqlalchemy.engine.base.Connection) : connexion à la base de données
+        __user (str) : le login MySQL de l'utilisateur
         __passwd (str) : le mot de passe MySQL de l'utilisateur
         __host (str) : le nom ou l'adresse IP de la machine hébergeant le serveur MySQL
         __database (str) : le nom de la base de données à utiliser
@@ -46,6 +46,7 @@ class ConnexionBD:
         résultat : l'objet qui gère le connection MySQL si tout s'est bien passé
         """
         try:
+            engine = None
             if con:
                 # creation de l'objet gérant les interactions avec le serveur de BD
                 engine = sqlalchemy.create_engine("mysql+mysqlconnector://" +
@@ -54,8 +55,11 @@ class ConnexionBD:
                                                   self.__host + "/" +
                                                   self.__database)
             # creation de la connexion
-            cnx = engine.connect()
-            print("connexion réussie")
+            if engine is not None:
+                cnx = engine.connect()
+                print("connexion réussie")
+            else :
+                raise AttributeError("Erreur de configuration de la base de données")
             self.__connexion = cnx
         except Exception as err:
             print(err)

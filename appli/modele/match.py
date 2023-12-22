@@ -139,8 +139,8 @@ class Match:
         """
         Fonction qui retourne le gagnant du match
 
-        Returns:
-            Escrimeur | None: gagnant du match
+        Returns :
+            Escrimeur | None : gagnant du match
         """
         if self.est_finis():
             if self.__escrimeur1.get_nom() == 'None':
@@ -427,11 +427,11 @@ class Match:
         """
         Fonction qui retourne l'escrimeur qui a touché
 
-        Args:
-            num_toucher (int): numéro de la touche
+        Args :
+            num_toucher (int) : numéro de la touche
 
-        Returns:
-            Escrimeur | None: escrimeur qui a touché
+        Returns :
+            Escrimeur | None : escrimeur qui a touché
         """
         for touche in self.__les_touches:
             if touche.get_numero() == num_toucher:

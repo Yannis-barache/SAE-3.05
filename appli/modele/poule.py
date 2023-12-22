@@ -195,12 +195,12 @@ class Poule:
         """
         Fonction qui retourne le match entre deux escrimeurs
 
-        Args:
+        Args :
             escrimeur1 (Escrimeur): le premier escrimeur
             escrimeur2 (Escrimeur): le deuxième escrimeur
 
-        Returns:
-            Match: le match entre les deux escrimeurs
+        Returns :
+            Match : le match entre les deux escrimeurs
         """
         for match in self.__les_matchs:
             if match.get_escrimeur1().get_id() == escrimeur1.get_id(
