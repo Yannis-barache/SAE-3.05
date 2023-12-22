@@ -299,3 +299,33 @@ main{
     color: #0056b3;
     text-decoration: underline;
 }
+
+.btn-icon{
+    height: 60px;
+    width: auto;
+}
+
+.btns{
+    justify-content: space-around;
+}
+
+
+.bouton{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 1%;
+}
+
+.btn-primary {
+    background-color: #d2080a;
+    border-color: #000000;
+    border-radius: 1em;
+}
+
+.btn-primary:hover {
+    background-color: #000000;
+}
+

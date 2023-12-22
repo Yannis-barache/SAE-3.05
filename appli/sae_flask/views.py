@@ -192,8 +192,6 @@ def competition_arbitre(id_competition):
 
 @app.route("/page_de_match/<id_match>", methods=["GET", "POST"])
 def page_de_match(id_match):
-    form = EnvoiePointForm()
-    finir_match_form = FinirMatchForm()
     modele = ModeleAppli()
     match_bd = modele.get_match_bd()
     le_match = modele.get_match_bd().get_match_by_id(id_match)
@@ -214,32 +212,8 @@ def page_de_match(id_match):
                            match=le_match,
                            user=USER,
                            compet=la_competition,
-                           form=form,
                            touches = les_touches,
-                           finir_match_form=finir_match_form,
                            nb= nombre_touche_max)
-
-@app.route("/arbitre/arbitre_page_de_match")
-def arbitre_page_de_match(id_match):
-    form = EnvoiePointForm()
-    finir_match_form = FinirMatchForm()
-    modele = ModeleAppli()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
-    id_competition = modele.get_match_bd().get_id_competition_du_match(
-        le_match)
-    la_competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
-    les_touches = modele.get_touche_bd().get_by_match(le_match)
-    le_match.set_touche(les_touches)
-    modele.close_connexion()
-    return render_template("arbitre/arbitre-page_de_match.html",
-                           match=le_match,
-                           user=USER,
-                           compet=la_competition,
-                           form=form,
-                           touches = les_touches,
-                           finir_match_form=finir_match_form)
 
 
 @app.route("/poule/<id_competition>/<nb>", methods=["GET", "POST"])
@@ -298,7 +272,7 @@ def telecharger_pdf_phase(id_compet, id_phase):
     la_phase_finale = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
     la_phase_finale.generer_pdf()
     modele.close_connexion()
-    return url_for('phase_finale', id_competition=id_compet)
+    return redirect(request.referrer)
 
 @app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
 def telecharger_pdf_match(id_match):
@@ -339,118 +313,6 @@ def desinscription_competition(id_competition):
         Inscrire(id_competition, USER.get_id()))
     modele.close_connexion()
     return redirect(request.referrer)
-
-
-@app.route("/supp_point/<id_match>", methods=["GET", "POST"])
-def supp_point(id_match):
-    if USER is None:
-        return redirect(url_for('choose_sign'))
-
-    modele = ModeleAppli()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
-
-    finir_match_form = FinirMatchForm()
-
-    if finir_match_form.validate_on_submit():
-        # Logique pour terminer le match, par exemple, marquer le match comme terminé
-        modele.get_match_bd().set_fini_match(le_match)
-        # Mettez à jour d'autres propriétés du match selon vos besoins
-        modele.close_connexion()
-        return redirect(request.referrer)
-
-
-@app.route("/envoie_point/<id_match>/<id_escrimeur>", methods=["GET", "POST"])
-def envoie_point(id_match, id_escrimeur):
-    if USER is None:
-        return redirect(url_for('choose_sign'))
-
-    modele = ModeleAppli()
-    escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
-    id_competition = modele.get_match_bd().get_id_competition_du_match(
-        le_match)
-    la_competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    numero = modele.get_touche_bd().get_max_num_touche(id_match)
-
-    envoie_point_form = EnvoiePointForm(request.form)
-    finir_match_form = FinirMatchForm()
-
-    if envoie_point_form.validate_on_submit():
-        if envoie_point_form.submit.data:
-            modele.get_touche_bd().insert_touche(
-                Touche(le_match, escrimeur, numero))
-
-            les_touches = modele.get_touche_bd().get_by_match(le_match)
-            le_match.set_touche(les_touches)
-
-            if numero >= 27:
-                return render_template("page_de_match.html",
-                                       match=le_match,
-                                       user=USER,
-                                       compet=la_competition,
-                                       form=envoie_point_form,
-                                       touches = les_touches,
-                                       finir_match_form=finir_match_form)
-
-        elif envoie_point_form.supprimer_point.data:
-            # Logique pour supprimer un point, par exemple, supprimer la dernière touche
-            touche = modele.get_touche_bd().get_touche_by_id(id_match, numero)
-            modele.get_touche_bd().delete_touche(touche, numero)
-            # Mettez à jour d'autres propriétés du match selon vos besoins
-
-            les_touches = modele.get_touche_bd().get_by_match(le_match)
-            le_match.set_touche(les_touches)
-
-            return render_template("page_de_match.html",
-                                   match=le_match,
-                                   user=USER,
-                                   compet=la_competition,
-                                   form=envoie_point_form,
-                                    touches = les_touches,
-                                   finir_match_form=finir_match_form)
-
-    
-    les_touches = modele.get_touche_bd().get_by_match(le_match)
-    modele.close_connexion()
-    return render_template("page_de_match.html",
-                           match=le_match,
-                           user=USER,
-                           compet=la_competition,
-                           form=envoie_point_form,
-                           touches = les_touches,
-                           finir_match_form=finir_match_form)
-
-
-@app.route("/fin_du_match/<id_match>", methods=["GET", "POST"])
-def fin_du_match(id_match):
-    if USER is None:
-        return redirect(url_for('choose_sign'))
-    modele = ModeleAppli()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
-    id_competition = modele.get_match_bd().get_id_competition_du_match(
-        le_match)
-    la_competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    les_touches = modele.get_touche_bd().get_by_match(le_match)
-    
-
-    envoie_point_form = EnvoiePointForm()
-    finir_match_form = FinirMatchForm()
-
-    if finir_match_form.validate_on_submit():
-        # Logique pour terminer le match, par exemple, marquer le match comme terminé
-        modele.get_match_bd().set_fini_match(le_match)
-        # Mettez à jour d'autres propriétés du match selon vos besoins
-        modele.close_connexion()
-
-        return render_template("page_de_match.html",
-                               match=le_match,
-                               user=USER,
-                               compet=la_competition,
-                               form=envoie_point_form,
-                               touches = les_touches,
-                               finir_match_form=finir_match_form)
 
 
 @app.route("/deconnexion")
@@ -771,7 +633,7 @@ def ajouter_lieu():
         return redirect(url_for('home'))
     form = lieu_form2()
     return render_template("Admin/Lieux/add_lieu.html", user=USER, title="Ajouter lieu", form=form)
-  
+
 # Competition
 
 
@@ -813,7 +675,7 @@ def modifier_competition(id_competition):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    form = CompetitionForm()
+    form = competition_form()
     form.name.data = competition.get_nom()
     form.date.data = competition.get_date()
     form.date_fin_inscripiton.data = competition.get_date_fin_inscription()
@@ -933,7 +795,6 @@ def participants(id_competition):
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini)
 
-
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
 def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()
@@ -996,12 +857,14 @@ def podium(id_competition, full):
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
+    poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
-    modele.close_connexion()
-    nb_escrimeur = 8
+    les_poules = poule_bd.get_poules_by_compet(id_competition)
+    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
     nombre = competition.get_puissance_sup(nb_escrimeur)
+    modele.close_connexion()
     liste_match_by_tour: list[list] = []
     cpt = 0
     for i in range(nombre):
@@ -1014,16 +877,118 @@ def phase_finale(id_competition):
             cpt += 1
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
-    print(liste_match_by_tour)
     return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase,
                            les_matchs=liste_match_by_tour)
 
 
+@app.route("/arbitre/phase_finale/<id_competition>", methods=["GET", "POST"])
+def arbitre_phase_finale(id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    poule_bd = modele.get_poule_bd()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    liste_match = la_phase.get_les_matchs()
+    les_poules = poule_bd.get_poules_by_compet(id_competition)
+    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    nombre = competition.get_puissance_sup(nb_escrimeur)
+    modele.close_connexion()
+    liste_match_by_tour: list[list] = []
+    cpt = 0
+    for i in range(nombre):
+        un_tour = []
+        for match in range(cpt, cpt + nb_escrimeur // 2):
+            if match < len(liste_match):
+                un_tour.append(liste_match[match])
+            else:
+                un_tour.append(None)
+            cpt += 1
+        nb_escrimeur = nb_escrimeur // 2
+        liste_match_by_tour.append(un_tour)
+    return render_template("arbitre/arbitre-page_phase_finale_compet.html", compet=competition, phase=la_phase,
+                           les_matchs=liste_match_by_tour)
+
+@app.route("/arbitre/generer_prochain_tour/<id_competition>/<id_phase>", methods=["GET", "POST"])
+def generer_prochain_tour(id_competition, id_phase):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    piste_bd = modele.get_piste_bd()
+    phase_bd = modele.get_phase_finale_bd()
+    la_phase = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase)
+    les_pistes = piste_bd.get_pistes_by_id_competition(1)
+    la_phase.set_les_pistes(les_pistes)
+    phase_bd.generer_tour_suivant(la_phase, id_competition, 10.3)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+
 @app.route("/generation_phase_finale/<id_competition>/<heure_debut>")
 def generation_phase_finale(id_competition, heure_debut):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    modele.get_competition_bd().generate_phase_finale_compet(competition.get_id(), heure_debut)
+    modele.get_competition_bd().generate_phase_finale(competition.get_id(), heure_debut)
     modele.close_connexion()
     print('Phase finale générée')
     return redirect(url_for('phase_finale', id_competition=id_competition))
+
+@app.route("/arbitre/arbitre_page_de_match/<id_competition>/<id_match>", methods=["GET", "POST"])
+def arbitre_page_de_match(id_match, id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    id_competition = modele.get_match_bd().get_id_competition_du_match(
+        le_match)
+    la_competition = modele.get_competition_bd().get_competition_by_id(
+        id_competition)
+    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    les_touches = modele.get_touche_bd().get_by_match(le_match)
+    le_match.set_touche(les_touches)
+    phase_match = match_bd.get_type_phase(le_match)
+    if phase_match == 1:
+        nombre_touche_max = 9
+    else:
+        nombre_touche_max = 29
+    modele.close_connexion()
+    return render_template("arbitre/arbitre-page_de_match.html",
+                           match=le_match,
+                           user=USER,
+                           compet=la_competition,
+                           touches = les_touches, 
+                           nb = nombre_touche_max,
+                           id_compet= id_competition)
+
+@app.route("/arbitre/add-touche/<id_match>/<id_escrimeur>", methods=["GET", "POST"])
+def add_touche(id_match, id_escrimeur):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    touche_bd = modele.get_touche_bd()
+    touche_bd.insert_touche_2(id_match, id_escrimeur)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+@app.route("/arbitre/supp-touche/<id_match>", methods=["GET", "POST"])
+def supp_touche(id_match):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    touche_bd = modele.get_touche_bd()
+    touche_bd.delete_last_touche(id_match)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+@app.route("/arbitre/fin_du_match/<id_match>", methods=["GET", "POST"])
+def finir_match(id_match):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    match_bd = modele.get_match_bd()
+    match_bd.set_finis_match_2(id_match)
+    modele.close_connexion()
+    return redirect(request.referrer)

@@ -214,6 +214,5 @@ def heure_debut_form():
         type = HiddenField('type')
     return HeureDebutForm()
 
-
 if __name__ == '__main__':
     pass

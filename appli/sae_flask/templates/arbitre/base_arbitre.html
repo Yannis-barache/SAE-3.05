@@ -15,9 +15,15 @@
 {% endblock %}
 
 {% macro competition_nav(compet_id) %}
-    <a class="btn" href="{{ url_for('competition_arbitre', id_competition=compet_id) }}">INFORMATIONS</a>
-    <a class="btn" href="{{ url_for('poule_arbitre',id_competition=compet_id,nb = 0) }}"> POULES </a>
-    <a class="btn" href="{{ url_for('home') }}" >PHASE FINAL</a>
-    <a class="btn" href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a>
-    <a class="btn" href="{{ url_for('podium',id_competition = compet_id,full = False) }}" >CLASSEMENT</a>
+    <ul>
+        <li><a class="btn" href="{{ url_for('competition_arbitre', id_competition=compet_id) }}">INFORMATIONS</a></li>
+        <li><a class="btn" href="{{ url_for('poule_arbitre',id_competition=compet_id,nb = 0) }}"> POULES </a></li>
+        <li><a class="btn" href="{{ url_for('arbitre_phase_finale', id_competition=compet_id) }}" >PHASE FINALE</a></li>
+        <li><a class="btn" href="{{ url_for('participants',id_competition= compet_id) }}"> PARTICIPANTS </a></li>
+        <li><a class="btn" href="{{ url_for('podium',id_competition = compet_id,full = False) }}" >CLASSEMENT</a></li>
+    </ul>
 {% endmacro %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

@@ -51,10 +51,10 @@
             <div class="matchs">
                 <p>Arbitre : {{ la_poule.get_les_matchs()[0].get_arbitre().get_nom() }} {{ la_poule.get_les_matchs()[0].get_arbitre().get_prenom() }}</p>
 
-                <p>Les prochains matchs :</p>
+                <p>Les matchs :</p>
                 <div class="scroll-match">
                     {% for match in la_poule.get_les_matchs() %}
-                        <a href="{{ url_for('page_de_match',id_match=match.get_id() ) }}"><p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p></a>
+                        <a href="{{ url_for('arbitre_page_de_match',id_match=match.get_id(), id_competition=compet.get_id() ) }}"><p>{{ match.get_escrimeur1().get_nom() }} - {{ match.get_escrimeur2().get_nom() }}</p></a>
                     {% endfor %}
                 </div>
             </div>

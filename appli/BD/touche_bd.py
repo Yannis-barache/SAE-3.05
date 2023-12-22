@@ -137,6 +137,20 @@ class ToucheBD:
         except Exception as e:
             print(e)
 
+    def delete_last_touche(self, id_match: int):
+        """
+        Fonction qui supprime la dernière touche d'un match
+        :param id_match: L'id du match
+        """
+        try:
+            query = text(
+                f"DELETE FROM TOUCHE WHERE idMatch = {id_match} AND numTouche = (SELECT MAX(numTouche) FROM TOUCHE WHERE idMatch = {id_match})"
+            )
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+
     def get_max_num_touche(self, id_match: int):
         """Function that returns the number of the next touch to insert into the database for a given match.
 

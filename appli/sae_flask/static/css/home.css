@@ -2,42 +2,23 @@ header {
     background-image: url(../img/baniere.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
-    text-align: center;
+}
+
+.top_header {
+    display : inline-flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .logo {
     width: 12vw;
-    margin: 2em;
-    margin-right: 0;
+    margin: 1rem;
 }
 
 .user {
     width: 5vw;
     float: right;
-    margin: 1rem;
-    margin-left: 0;
-}
-
-.navigateur {
-    display: flex;
-    background-color: black;
-    padding: 0.5em;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap : wrap;
-}
-
-.navigateur a {
-    text-decoration: none;
-    color: rgb(212, 8, 11);
-    font-size: large;
-    font-weight: bold;
-    margin : 1%;
-}
-
-.navigateur a:hover {
-    color: rgb(255, 255, 255);
-    text-decoration: underline;
+    margin: 1rem 1rem 1rem 0;
 }
 
 body {
@@ -64,41 +45,50 @@ footer {
 
 .insta {
     width: 2%;
+    min-width: 30px;
 }
 
 .youtube {
     width: 2%;
+    min-width: 30px;
 }
 
 .twitter {
-    width: 2%;;
+    width: 2%;
+    min-width: 30px;
 }
 
 .facebook {
     width: 2%;
+    min-width: 30px;
 }
 
 footer > p {
     color: white;
     font-weight: bold;
+    margin-bottom: 1vh;
+
 }
 
 .paragfin {
     font-size: 0.8em;
-    padding-top: 1em;
+    padding-top: 2vh;
     margin-bottom: 0;
 }
-
 
 .intro p {
     padding-bottom: 1em;
 }
 
-
 .tableau {
     overflow-x: auto;
 }
 
-.accueil {
-    font-size: large;
+.pas {
+    display :none;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
 }

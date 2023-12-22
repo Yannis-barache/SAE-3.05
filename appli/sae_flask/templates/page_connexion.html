@@ -12,11 +12,12 @@
 
 {% block content %}
 
-
+<div class="top">
 <span class="block-logo"> <img id="logo" src="{{ url_for('static', filename='img/userAccunt.png') }}" alt="logo"></span>
             
 <div class="infoconnecte">
     <span class="titre"> {{ nom }} </span>
+</div>
 </div>
 <form class="form-horizontal" role="form" method="POST"
         action="{{ url_for('connexion', nom=nom) }}">
