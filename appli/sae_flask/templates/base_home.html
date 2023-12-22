@@ -45,7 +45,7 @@
                     <li><a href="{{ url_for('arbitrage') }}">Arbitrage</a></li>
                     {% endif %}
                     {% if user|is_organisateur %}
-                    <li><a href="{{ url_for('admin') }}">Administrateur</a></li>
+                    <li><a href="{{ url_for('home_admin') }}">Administrateur</a></li>
                     {% endif %}
 
                     <li><a href="https://blois-escrime.fr/renseignements">À propos</a></li>
@@ -84,6 +84,11 @@
                 {% if user|is_arbitre %}
                     <li>
                         <a class="authentif" href="{{ url_for('arbitrage') }}">ARBITRAGE</a>
+                    </li>
+                {% endif %}
+                {% if user|is_club %}
+                    <li>
+                        <a class="authentif" href="{{ url_for('gestion_club',id_club=user.get_id() )}}">CLUB</a>
                     </li>
                 {% endif %}
                     <li>

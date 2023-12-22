@@ -18,6 +18,7 @@ from inscrire import Inscrire
 from touche import Touche
 from organisateur import Organisateur
 from phase_final import PhaseFinal
+from inscrire_arbitre import InscrireArbitre
 
 USER = USER
 modele_appli = ModeleAppli()
@@ -29,17 +30,23 @@ def home():
     competitions = modele_appli.get_competition_bd().get_all_competition(
     ) or []
     inscrit = []
+    arbitre = []
     if USER is not None and isinstance(USER, Escrimeur):
         inscription = modele_appli.get_inscrire_bd().get_all_inscrit_escrimeur(
             USER)
         for i in inscription:
             inscrit.append(i.get_id_competition())
-    print("USER ", USER)
+
+        if USER.get_arbitrage():
+            arbitrage = modele_appli.get_inscrire_arbitre_bd().get_all_compet_arbitre(USER.get_id())
+            for i in arbitrage:
+                arbitre.append(i)
+
     modele_appli.close_connexion()
     return render_template("home.html",
                            competitions=competitions,
                            user=USER,
-                           competitions_inscrit=inscrit)
+                           competitions_inscrit=inscrit,arbitrage=arbitre)
 
 
 
@@ -457,7 +464,7 @@ def modifier_escrimeur(id_escrimeur):
     from .form import escrimeur_form
     if USER is None:
         return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur):
+    if not isinstance(USER, Organisateur) or not isinstance(USER, Club):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
@@ -486,7 +493,7 @@ def update_escrimeur(id_escrimeur, type):
     from .form import escrimeur_form, escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur):
+    if not isinstance(USER, Organisateur) or not isinstance(USER, Club):
         return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
@@ -538,8 +545,6 @@ def ajouter_escrimeur():
     from .form import escrimeur_form2
     if USER is None:
         return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur):
-        return redirect(url_for('home'))
     form = escrimeur_form2()
     return render_template("Admin/Escrimeur/add_escrimeur.html",
                            user=USER,
@@ -990,5 +995,39 @@ def finir_match(id_match):
     modele = ModeleAppli()
     match_bd = modele.get_match_bd()
     match_bd.set_finis_match_2(id_match)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+
+@app.route("/gestion_club/<id_club>", methods=["GET", "POST"])
+def gestion_club(id_club):
+    if USER is None or not isinstance(USER, Club):
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    club = modele.get_club_bd().get_club_by_id(id_club)
+    escrimeurs = modele.get_escrimeur_bd().get_escrimeur_by_club(id_club)
+    modele.close_connexion()
+    return render_template("club/gestion_club.html", club=club, escrimeurs=escrimeurs)
+
+@app.route("/inscription_arbitre/<id_competition>")
+def inscription_arbitre(id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    try:
+        modele.get_inscrire_arbitre_bd().insert_arbitre(
+            InscrireArbitre(USER.get_id(), id_competition))
+    except Exception as e:
+        error = str(e.__cause__)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+@app.route("/desinscription_arbitre/<id_competition>")
+def desinscription_arbitre(id_competition):
+    if USER is None:
+        return redirect(url_for('choose_sign'))
+    modele = ModeleAppli()
+    modele.get_inscrire_arbitre_bd().delete_arbitre(
+        InscrireArbitre(USER.get_id(), id_competition))
     modele.close_connexion()
     return redirect(request.referrer)

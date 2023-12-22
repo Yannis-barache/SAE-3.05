@@ -1,0 +1,53 @@
+{% extends "base_home.html" %}
+{% block header %}
+    {{ super() }}
+{% endblock %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tableau.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="tableau" style="overflow-x: auto;">
+    <table >
+        <tr>
+            <th>Licence</th>
+            <th>Sexe</th>
+            <th>Catégorie</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Nom utilisateur</th>
+            <th>Classement</th>
+            <th>Arbitre</th>
+            <th colspan="2">Action</th>
+        </tr>
+    {% for escrimeur in escrimeurs %}
+        <tr>
+            <td>{{ escrimeur.get_licence() }}</td>
+            <td>{{ escrimeur.get_sexe() }}</td>
+            <td>{{ escrimeur.get_categorie().get_nom() }}</td>
+            <td>{{ escrimeur.get_nom() }}</td>
+            <td>{{ escrimeur.get_prenom() }}</td>
+            <td>{{ escrimeur.get_date_naissance() }}</td>
+            <td>{{ escrimeur.get_nom_utilisateur() }}</td>
+            <td>{{ escrimeur.get_classement() }}</td>
+            {% if escrimeur.get_arbitrage() == 1 %}
+                <td>Oui</td>
+            {% else %}
+                <td>Non</td>
+            {% endif %}
+            <td><a href="{{ url_for('modifier_escrimeur', id_escrimeur=escrimeur.get_id()) }}">Modifier</a></td>
+            <td><a href="{{ url_for('supprimer_escrimeur', id_escrimeur=escrimeur.get_id()) }}">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+    <div>
+        <button class="btn" onclick="window.location.href='{{ url_for('ajouter_escrimeur') }}'">
+            <span class="box">
+                <a href="{{ url_for('ajouter_escrimeur') }}" style="text-decoration: none;" > Ajouter un escrimeur</a>
+            </span>
+        </button>
+{% endblock %}
+```

@@ -30,10 +30,10 @@ class ConnexionBD:
             self.__database = "sae-escrime_sae"
         elif locale == "True":
             self.__connexion = None
-            self.__user = "barache"
-            self.__passwd = "barache"
+            self.__user = "chedeville"
+            self.__passwd = "chedeville"
             self.__host = "servinfo-maria"
-            self.__database = "DBbarache"
+            self.__database = "DBchedeville"
         else:
             raise AttributeError(
                 "Erreur de configuration de la base de données")

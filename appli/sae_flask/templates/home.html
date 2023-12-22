@@ -62,7 +62,11 @@
                 <td> <a href="{{ url_for('poule',id_competition= competition.get_id(),nb = 0) }}"> Voir les résultats </a></td>
                 {% endif %}
                 {% if user|is_arbitre %}
-                <td> <a href="{{ url_for('participants',id_competition= competition.get_id()) }}"> Participants </a></td>
+                    {% if competition.get_id() in arbitrage %}
+                    <td> <a href="{{ url_for('desinscription_arbitre',id_competition= competition.get_id()) }}"> Ne plus être arbitre </a></td>
+                    {% else %}
+                    <td> <a href="{{ url_for('inscription_arbitre',id_competition= competition.get_id()) }}"> Être arbitre </a></td>
+                    {% endif %}
                 {% endif %}
 
             </tr>
