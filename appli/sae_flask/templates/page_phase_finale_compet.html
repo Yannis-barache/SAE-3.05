@@ -28,22 +28,26 @@
                     <div class="split split-{{ tour }}">
                         <div class="round round-{{ tour }} current">
                             {% for i in range(0, les_matchs[tour-1]|length) %}
-                                <a href="">
-                                    <ul class="matchup">
-                                        {% if les_matchs[tour-1][i] %}
-                                            {% if les_matchs[tour-1][i].get_escrimeur2().get_nom() == "None" %}
-                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
-                                                <li class="team team-bottom">Exempt<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                {% if les_matchs[tour-1][i] %}
+                                    <a href=" {{ url_for('page_de_match', id_match=les_matchs[tour-1][i].get_id()) }} ">
+                                {% else %}
+                                    <a href="">
+                                {% endif %}
+                                        <ul class="matchup">
+                                            {% if les_matchs[tour-1][i] %}
+                                                {% if les_matchs[tour-1][i].get_escrimeur2().get_nom() == "None" %}
+                                                    <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                    <li class="team team-bottom">Exempt<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                                {% else %}
+                                                    <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
+                                                    <li class="team team-bottom">{{ les_matchs[tour-1][i].get_escrimeur2().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                                {% endif %}
                                             {% else %}
-                                                <li class="team team-top">{{ les_matchs[tour-1][i].get_escrimeur1().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche1() }}</span></li>
-                                                <li class="team team-bottom">{{ les_matchs[tour-1][i].get_escrimeur2().get_nom() }}<span class="score">{{ les_matchs[tour-1][i].get_affiche2() }}</span></li>
+                                                <li class="team team-top"><span class="score"></span></li>
+                                                <li class="team team-bottom"><span class="score"></span></li>
                                             {% endif %}
-                                        {% else %}
-                                            <li class="team team-top"><span class="score"></span></li>
-                                            <li class="team team-bottom"><span class="score"></span></li>
-                                        {% endif %}
-                                    </ul>
-                                </a>
+                                        </ul>
+                                    </a>
                             {% endfor %}
                         </div>
                     </div>
@@ -59,7 +63,11 @@
                     <div class="split split-{{ tour }}">
                         <div class="round round-{{ tour }} current">
                             {% for i in range(0, les_matchs[tour-1]|length) %}
-                                <a href="">
+                                {% if les_matchs[tour-1][i] %}
+                                    <a href=" {{ url_for('page_de_match', id_match=les_matchs[tour-1][i].get_id()) }} ">
+                                {% else %}
+                                    <a href="">
+                                {% endif %}
                                     <ul class="matchup">
                                         {% if les_matchs[tour-1][i] %}
                                             {% if les_matchs[tour-1][i].get_escrimeur2().get_nom() == "None" %}

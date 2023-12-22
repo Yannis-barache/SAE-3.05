@@ -77,7 +77,7 @@ class MatchBD:
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
-                match = Match(id_match, phase, escrimeur1, escrimeur2, arbitre,
+                match = Match(id_match, phase.get_id_phase(), escrimeur1, escrimeur2, arbitre,
                               heure, fini, piste)
                 return match
             return None
@@ -187,6 +187,24 @@ class MatchBD:
             else:
                 return None
 
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_type_phase(self, match: Match):
+        """
+        Fonction qui retourne le type de la phase du match
+        :param match : match
+        """
+        try:
+            query = text(
+                f"SELECT count(*) FROM POULE WHERE idPoule = {match.get_id_phase()}"
+            )
+            result = self.__connexion.execute(query)
+            if result.fetchone()[0] == 1:
+                return 1
+            else:
+                return 2
         except Exception as e:
             print(e)
             return None
