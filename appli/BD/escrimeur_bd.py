@@ -268,3 +268,34 @@ class EscrimeurBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_escrimeur_by_club(self, id_club : int):
+        """
+        Fonction qui retourne tous les escrimeurs d'un club
+        :param id_club: id du club
+        :return: liste d'escrimeur
+        """
+        try:
+            query = text(
+                'SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, '
+                'dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, '
+                'sexeEscrimeur, idClub, idCategorie, arbitrage FROM ESCRIMEUR WHERE idClub = ' + str(id_club))
+            result = self.__connexion.execute(query)
+            escrimeurs = []
+
+            for (id_escrimeur, nom, licence, prenom, date_naissance,
+                 nom_utilisateur, mdp, classement, sexe, id_club_bd, id_categorie,
+                 arbitrage) in result:
+                arbitrage = arbitrage == 1
+                club = ClubBD(self.__connexion).get_club_by_id(id_club_bd)
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+
+                escrimeurs.append(
+                    Escrimeur(id_escrimeur, nom, prenom, sexe, date_naissance,
+                              nom_utilisateur, mdp, licence, classement, club,
+                              categorie, arbitrage))
+            return escrimeurs
+        except Exception as e:
+            print(e)
+            return None

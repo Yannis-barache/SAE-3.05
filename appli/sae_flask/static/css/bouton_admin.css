@@ -68,3 +68,12 @@
     border: none;
     background: transparent;
   }
+
+  button a {
+    color: rgb(212, 8, 11);
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
+  }
