@@ -784,15 +784,15 @@ def participants(id_competition):
     except Exception as e:
         print(e)
         flask.abort(404)
-    finally:
-        modele.close_connexion()
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST':
         heure = form.heure.data
         type_form = form.type.data
-        if type_form == 1:
+        print("type_form", type_form)
+        print("heure", heure)
+        if int(type_form) == 1:
             return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
-        if type_form == 2:
+        if int(type_form) == 2:
             return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,

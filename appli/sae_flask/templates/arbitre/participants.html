@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="container">
-    {% if competition.get_etat() == "À venir" %}
+    {% if competition.get_etat() == "À venir" and not have_poule %}
         {% if inscrits|length <=0%}
             <div class="bouton">
                 <p>Il n'y a pas d'inscrits à cette compétition</p>
