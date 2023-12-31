@@ -269,7 +269,7 @@ class EscrimeurBD:
             print(e)
             return None
 
-    def get_escrimeur_by_club(self, id_club : int):
+    def get_escrimeur_by_club(self, id_club: int):
         """
         Fonction qui retourne tous les escrimeurs d'un club
         :param id_club: id du club
@@ -279,13 +279,14 @@ class EscrimeurBD:
             query = text(
                 'SELECT idEscrimeur, nomEscrimeur, licence, prenomEscrimeur, '
                 'dateNaissance, nomUtilisateurEscrimeur, mdpEscrimeur, classement, '
-                'sexeEscrimeur, idClub, idCategorie, arbitrage FROM ESCRIMEUR WHERE idClub = ' + str(id_club))
+                'sexeEscrimeur, idClub, idCategorie, arbitrage FROM ESCRIMEUR WHERE idClub = '
+                + str(id_club))
             result = self.__connexion.execute(query)
             escrimeurs = []
 
             for (id_escrimeur, nom, licence, prenom, date_naissance,
-                 nom_utilisateur, mdp, classement, sexe, id_club_bd, id_categorie,
-                 arbitrage) in result:
+                 nom_utilisateur, mdp, classement, sexe, id_club_bd,
+                 id_categorie, arbitrage) in result:
                 arbitrage = arbitrage == 1
                 club = ClubBD(self.__connexion).get_club_by_id(id_club_bd)
                 categorie = CategorieBD(

@@ -75,7 +75,7 @@ class PhaseFinaleBD:
             print(e)
             return None
 
-    def get_phase_finale_bd_by_id(self, id_phase_finalee: int):
+    def get_phase_finale_bd_by_id(self, id_phase_finale: int):
         """
         Fonction qui retourne la phase finale d'une compétition
         :param id_compet: id de la compétition
@@ -83,14 +83,14 @@ class PhaseFinaleBD:
         """
         try:
             query = text(
-                f'SELECT idPhaseFinale FROM PHASE_FINALE WHERE idPhaseFinale = {id_phase_finalee}'
+                f'SELECT idPhaseFinale FROM PHASE_FINALE WHERE idPhaseFinale = {id_phase_finale}'
             )
             result = self.__connexion.execute(query)
-            for (id_phase_finale, ) in result:
-                p = PhaseFinal(id_phase_finale)
+            for (id_phase_finale_bd, ) in result:
+                p = PhaseFinal(id_phase_finale_bd)
                 match_bd = MatchBD(self.__connexion)
                 toucher_bd = ToucheBD(self.__connexion)
-                les_matchs = match_bd.get_match_by_phase(id_phase_finale)
+                les_matchs = match_bd.get_match_by_phase(id_phase_finale_bd)
                 for m in les_matchs:
                     les_touches = toucher_bd.get_touches_by_id_match(
                         m.get_id())
@@ -142,7 +142,7 @@ class PhaseFinaleBD:
         """
         try:
             query = text(
-                f'SELECT idPhaseFinale FROM PHASE_FINALE JOiN PHASE on PHASE.idPhase = PHASE_FINALE.idPhaseFinale WHERE idCompetition = {id_compet}'
+                f'SELECT idPhaseFinale FROM PHASE_FINALE JOIN PHASE on PHASE.idPhase = PHASE_FINALE.idPhaseFinale WHERE idCompetition = {id_compet}'
             )
             result = self.__connexion.execute(query)
             return result.rowcount > 0
