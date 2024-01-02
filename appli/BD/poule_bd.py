@@ -70,13 +70,28 @@ class PouleBD:
             print(e)
             return None
 
-    def insert_poule(self):
+    def insert_poule(self, une_poule: Poule):
         """
         Fonction qui insère une poule
         :param poule: poule
         """
         try:
-            query = text("INSERT INTO POULE DEFAULT VALUES")
+            query = text("INSERT INTO POULE (idPoule) VALUES (" +
+                         str(une_poule.get_id()) + ")")
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_poule(self, une_poule: Poule):
+        """
+        Fonction qui supprime une poule
+        :param poule: poule
+        """
+        try:
+            query = text("DELETE FROM POULE WHERE idPoule = " +
+                         str(une_poule.get_id()))
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
