@@ -69,7 +69,7 @@ class ToucheBD:
             print(e)
             return None
 
-    def get_touches_by_id_match(self, id_matchh: int):
+    def get_touches_by_id_match(self, id_match: int):
         """
         Fonction qui retourne toutes les touches d'un match
 
@@ -78,12 +78,12 @@ class ToucheBD:
         """
         try:
             query = text(
-                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {id_matchh}"
+                f"SELECT idMatch, idEscrimeur, numTouche FROM TOUCHE WHERE idMatch = {id_match}"
             )
             result = self.__connexion.execute(query)
             touches = []
-            for (id_match, id_escrimeur, num) in result:
-                match = MatchBD(self.__connexion).get_match_by_id(id_match)
+            for (id_match_bd, id_escrimeur, num) in result:
+                match = MatchBD(self.__connexion).get_match_by_id(id_match_bd)
                 escrimeur = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_escrimeur)
                 touches.append(Touche(match, escrimeur, num))
@@ -171,11 +171,11 @@ class ToucheBD:
             # Handle the exception appropriately, e.g., log the error or raise it.
 
     def get_touche_by_id(self, id_match: int, num_touche: int):
-        """Function that returns a touch from the database.
+        """Fonction qui retourne une touche en fonction de son placement dans le match.
 
         Args:
-            id_match (int): Match ID
-            num_touche (int): Touch number
+            id_match (int): id du match
+            num_touche (int): numéro de la touche
         """
         try:
             query = text(
@@ -191,4 +191,25 @@ class ToucheBD:
                 return None
         except Exception as e:
             print(e)
-            # Handle the exception appropriately, e.g., log the error or raise it.
+            return None
+
+    def get_nb_touche_by_phase_and_escrimeur(self, id_phase: int,
+                                             id_escrimeur: int) -> int | None:
+        """Fonction qui retourne le nombre de touche d'un escrimeur dans une phase.
+
+        Args:
+            id_phase (int): id de la Phase
+            id_escrimeur (int): id de l'escrimeur
+        """
+        try:
+            query = text(
+                f"SELECT COUNT(*) FROM TOUCHE NATURAL JOIN MATCHS NATURAL JOIN PHASE WHERE idPhase = {id_phase} AND idEscrimeur = {id_escrimeur}"
+            )
+            result = self.__connexion.execute(query).fetchone()
+            if result is not None:
+                return int(result[0])
+            else:
+                return None
+        except Exception as e:
+            print(e)
+            return None

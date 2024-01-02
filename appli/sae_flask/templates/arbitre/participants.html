@@ -25,9 +25,6 @@
             {% endfor %}
 
         </div>
-
-
-
         <div class="box">
             <h3>Les arbitres</h3>
             {% if arbitres|length <=0 %}
@@ -38,9 +35,18 @@
             {% endfor %}
         </div>
     </div>
-
     <div class="container">
-    {% if competition.get_etat() == "À venir" %}
+    {% if competition.get_etat() == "À venir" and not have_poule %}
+        {% if inscrits|length <=0%}
+            <div class="bouton">
+                <p>Il n'y a pas d'inscrits à cette compétition</p>
+            </div>
+            {% if inscrits|length < arbitres|length %}
+                <div class="bouton">
+                    <p>Il y a trop d'arbitres. Veuillez contacter un organisateur.</p>
+                </div>
+            {% endif %}
+        {% else %}
         <form action="{{ url_for('participants',id_competition = competition.get_id()) }}" method="POST" role="form">
             {{ form.type(class="form-control",value = 1) }}
             <div class="form-group">
@@ -50,6 +56,7 @@
                 <button class="btn btn-primary" type="submit">Générer les poules</button>
             </div>
         </form>
+        {% endif %}
     {% endif %}
 
     {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
@@ -63,7 +70,8 @@
            <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
         </div>
     {% endif %}
-    {% if competition.get_etat() == "En cours" and fini == "True"%}
+
+    {% if fini == True and not have_phase_f == True %}
         <form method="post" action="{{ url_for('participants',id_competition = competition.get_id()) }}">
             {{ form.type(class="form-control",value = 2) }}
             <div class="form-group">
@@ -74,18 +82,17 @@
             </div>
         </form>
     {% else %}
-        {% if competition.get_etat() == "Terminé" %}
+        {% if have_phase_f == True %}
             <div class="bouton">
                 <button class="btn btn-primary" onclick="window.location.href='{{ url_for('phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
             </div>
         {% else %}
+            {% if have_poule == True %}
             <div class="bouton">
                 <p>Les poules ne sont pas terminées, il est impossible de faire la phase finale pour le moment</p>
             </div>
+            {% endif %}
         {% endif %}
-
-
-
     {% endif %}
     </div>
 
@@ -93,6 +100,5 @@
 
 {% block scripts %}
 {{ super() }}
-<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
 

@@ -49,7 +49,6 @@ def home():
                            competitions_inscrit=inscrit,arbitrage=arbitre)
 
 
-
 @app.route("/choix")
 def choose_sign():
     return render_template("connexion_inscription.html", user=USER)
@@ -58,11 +57,6 @@ def choose_sign():
 @app.route("/choisir_statut_connexion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template("choisir_statut_connexion.html", user=USER)
-
-
-@app.route("/choisir_statut_inscription")
-def choisir_statut_inscription():
-    return render_template("choisir_statut_inscription.html", )
 
 
 @app.route("/espace_personnel/")
@@ -764,7 +758,6 @@ def ajouter_competition():
 @app.route("/participants/<id_competition>", methods=["GET", "POST"])
 def participants(id_competition):
     from .form import heure_debut_form
-
     form = heure_debut_form()
     try:
         modele = ModeleAppli()
@@ -779,33 +772,37 @@ def participants(id_competition):
         for element in arbitrages:
             arbitres.append(modele.get_escrimeur_bd().get_escrimeur_by_id(element.get_id_escrimeur()))
         poules = modele.get_poule_bd().get_poules_by_compet(competition.get_id())
+
+        have_poule = poules is not None and len(poules) > 0
         fini = any(element.is_finis() for element in poules)
-        fini = True
+
+        phase_f = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+
+        have_phase_f = phase_f is not None
 
         modele.close_connexion()
     except Exception as e:
         print(e)
         flask.abort(404)
-    finally:
-        modele.close_connexion()
 
     if request.method == 'POST':
         heure = form.heure.data
-        type = form.type.data
-        if type == 1:
+        type_form = form.type.data
+        print("type_form", type_form)
+        print("heure", heure)
+        if int(type_form) == 1:
             return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
-        if type == 2:
+        if int(type_form) == 2:
             return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
-                           arbitres=arbitres, form=form, fini=fini)
+                           arbitres=arbitres, form=form, fini=fini, have_phase_f=have_phase_f, have_poule=have_poule ,poules=poules)
 
 @app.route("/generation_poule/<id_competition>/<heure_debut>")
 def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    print("competition", competition)
     modele.get_competition_bd().generate_poule_compet(competition.get_id(), heure_debut)
     modele.close_connexion()
     return redirect(url_for('poule', id_competition=id_competition, nb=0))
@@ -827,37 +824,58 @@ def arbitrage():
     return render_template("arbitre/acceuil_arbitre.html",
                            competitions=competitions)
 
-
-@app.route("/arbitrage/<id_competition>")
-def arbitrage_competition(id_competition):
-    modele = ModeleAppli()
-    competition = modele.get_competition_bd().get_competition_by_id(
-        id_competition)
-    poules = modele.get_poule_bd().get_poules_by_compet(competition)
-    modele.close_connexion()
-    return render_template("arbitre/arbitrage.html", competition=competition, poules=poules)
-
 @app.route("/arbitrage/<id_competition>/classement/<full>")
 def podium(id_competition, full):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition)
+    id_phase_finale = modele.get_phase_finale_bd().get_phase_finale_by_competition(competition.get_id())
+    phase_finale = modele.get_phase_finale_bd().get_phase_finale_bd_by_id(id_phase_finale)
+    fini = phase_finale.est_finis()
     if phase_finale is not None:
-        matchs = modele.get_match_bd().get_match_by_phase(phase_finale.get_id_phase_f())
+        matchs = modele.get_match_bd().get_match_by_phase(id_phase_finale)
         escrimeurs_matchs = []
+        dict_victoire = {}
         if matchs is not None:
             for match in matchs:
-                escrimeur_1 = modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur1())
-                escrimeur_2 = modele.get_escrimeur_bd().get_escrimeur_by_id(match.get_id_escrimeur2())
-                if escrimeur_1 is not None and escrimeur_1 not in escrimeurs_matchs:
+                match.set_touche(modele.get_touche_bd().get_by_match(match))
+                gagnant_match = match.get_gagnant()
+                if gagnant_match is None and match.est_finis():
+                    if match.get_escrimeur1().get_id() in dict_victoire:
+                        dict_victoire[match.get_escrimeur1().get_id()] += 1
+                    else:
+                        dict_victoire[match.get_escrimeur1().get_id()] = 1
+                    if match.get_escrimeur2().get_id() in dict_victoire:
+                        dict_victoire[match.get_escrimeur2().get_id()] += 1
+                    else:
+                        dict_victoire[match.get_escrimeur2().get_id()] = 1
+                else:
+                    if gagnant_match.get_id() in dict_victoire:
+                        dict_victoire[gagnant_match.get_id()] += 1
+                    else:
+                        dict_victoire[gagnant_match.get_id()] = 1
+
+            dict_victoire = sorted(dict_victoire.items(), key=lambda x: x[1], reverse=True)
+            print(dict_victoire)
+            escrimeurs_matchs.append(modele.get_escrimeur_bd().get_escrimeur_by_id(dict_victoire[0][0]))
+            if len(dict_victoire) > 1:
+                escrimeurs_matchs.append(modele.get_escrimeur_bd().get_escrimeur_by_id(dict_victoire[1][0]))
+            if len(dict_victoire) > 3:
+                escrimeur_1 = modele.get_escrimeur_bd().get_escrimeur_by_id(dict_victoire[2][0])
+                escrimeur_2 = modele.get_escrimeur_bd().get_escrimeur_by_id(dict_victoire[3][0])
+                toucher_1 = modele.get_touche_bd().get_nb_touche_by_phase_and_escrimeur(id_phase_finale, escrimeur_1.get_id())
+                toucher_2 = modele.get_touche_bd().get_nb_touche_by_phase_and_escrimeur(id_phase_finale, escrimeur_2.get_id())
+                print(toucher_1," ", toucher_2)
+                if toucher_1 > toucher_2:
                     escrimeurs_matchs.append(escrimeur_1)
-                if escrimeur_2 is not None and escrimeur_2 not in escrimeurs_matchs:
+                else:
                     escrimeurs_matchs.append(escrimeur_2)
+
 
     else:
         escrimeurs_matchs = None
+    modele.close_connexion()
 
-    return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full)
+    return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full,have_phase_f=phase_finale is not None, fini=fini)
 
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
