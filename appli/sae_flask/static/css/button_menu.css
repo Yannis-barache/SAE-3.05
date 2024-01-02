@@ -1,0 +1,136 @@
+.checkboxtoggler {
+    /* width: max-content; */
+    display: flex;
+    flex-direction: column;
+    width: 4vmax;
+    gap: 1vw;
+    cursor: pointer;
+    /* width: auto; */
+    /* height: 148%; */
+    /* height: 34px;*/
+    height: 3vw;
+}
+
+.line {
+    background: black;
+    position: relative;
+    height: 13%;
+    border-radius: 10em;
+    transition-duration: 500ms;
+}
+
+
+#toggleChecker {
+    height: 3em;
+    width: 100%;
+    display: none;
+}
+
+#toggleChecker:checked + #togglerLable .checkboxtoggler .line-1 {
+    -webkit-transform: rotate(405deg) translateY(0.1em) translateX(0.25em);
+    -ms-transform: rotate(405deg) translateY(0.1em) translateX(0.25em);
+    transform: rotate(405deg) translateY(0.1em) translateX(0.25em);
+    left: -2px;
+    top: 1vw;
+    @media only screen and (max-device-width: 400px) {
+        top: -0.5vw;
+    }
+}
+
+#toggleChecker:checked + #togglerLable .checkboxtoggler .line-2 {
+    -webkit-transform: rotate(-45deg) translateY(0em) translateX(0.1em);
+    -ms-transform: rotate(-45deg) translateY(0em) translateX(0.1em);
+    transform: rotate(-45deg) translateY(0em) translateX(0.1em);
+}
+
+#toggleChecker:checked + #togglerLable .checkboxtoggler .line-3 {
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+
+.dropdown-content2 {
+    display: none;
+    position: absolute;
+    background-color: white;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.dropdown-content2 a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    text-align: center;
+}
+
+.dropdown-content2 a:hover {
+    background-color: black;
+    text-decoration : none;
+    color : white;
+
+}
+
+.dropdown-content2 li:hover {
+    width : 100%;
+    background-color: red;
+}
+
+.menu-deroule {
+    margin: 4px 16px;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+}
+
+.show {
+    display: flex;
+}
+
+.b-menu2 {
+    margin: 7px 0 0 2%;
+    display: inline;
+    float: left;
+}
+
+.b-menu li {
+    width: 130%;
+
+}
+
+a.compet:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-top: 4px solid transparent;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    transform: translateX(-100%);
+  }
+  
+  a.compet:hover {
+    box-shadow: 0 5px 15px rgb(212, 8, 11);
+  }
+  
+  a.compet:hover:before {
+    border-color: rgb(212, 8, 11);;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .3s;
+  }
+  
+  a.compet:hover:after {
+    border-color: rgb(212, 8, 11);;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .5s;
+  }

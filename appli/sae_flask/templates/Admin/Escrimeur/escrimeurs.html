@@ -1,0 +1,70 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tab_adm.css')}}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="animation"> 
+    <h1 class="listecomp"> LISTE DES ESCRIMEURS</h1>
+    <img class= "match" src="{{ url_for('static', filename='../static/video/vestiaire.gif') }}" alt="video match escrime">
+</div>
+
+<div class="scroll-tableau" style="overflow-x: auto;">
+    <table class="tab">
+        <tr>
+            <th>Licence</th>
+            <th>Sexe</th>
+            <th>Catégorie</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Nom utilisateur</th>
+            <th>Classement</th>
+            <th>Club</th>
+            <th>Arbitre</th>
+            <th>Nombre matchs</th>
+            <th>Nombre compétitions</th>
+            <th>Action</th>
+        </tr>
+    {% for escrimeur in escrimeurs %}
+
+        <tr>
+            <td>{{ escrimeur[0].get_licence() }}</td>
+            <td>{{ escrimeur[0].get_sexe() }}</td>
+            <td>{{ escrimeur[0].get_categorie().get_nom() }}</td>
+            <td>{{ escrimeur[0].get_nom() }}</td>
+            <td>{{ escrimeur[0].get_prenom() }}</td>
+            <td>{{ escrimeur[0].get_date_naissance() }}</td>
+            <td>{{ escrimeur[0].get_nom_utilisateur() }}</td>
+            <td>{{ escrimeur[0].get_classement() }}</td>
+            <td>{{ escrimeur[0].get_club().get_nom() }}</td>
+            {% if escrimeur[0].get_arbitrage() == 1 %}
+                <td>Oui</td>
+            {% else %}
+                <td>Non</td>
+            {% endif %}
+            <td>{{ escrimeur[1] }}</td>
+            <td>{{ escrimeur[2] }}</td>
+            <td><a href="{{ url_for('modifier_escrimeur', id_escrimeur=escrimeur[0].get_id()) }}">Modifier</a>
+                <a href="{{ url_for('supprimer_escrimeur', id_escrimeur=escrimeur[0].get_id()) }}">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div>
+        <button class="btn" onclick="window.location.href='{{ url_for('ajouter_escrimeur') }}'">
+            <span class="box">
+                <a href="{{ url_for('ajouter_escrimeur') }}" style="text-decoration: none;" > Ajouter un escrimeur</a>
+            </span>
+        </button>
+
+    </div>
+</div>
+
+{% endblock %}

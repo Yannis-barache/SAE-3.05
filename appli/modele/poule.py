@@ -4,6 +4,7 @@ Module contenant la classe Poule
 
 from escrimeur import Escrimeur
 from match import Match
+from piste import Piste
 import constantes as const
 
 from reportlab.lib.pagesizes import letter
@@ -20,6 +21,9 @@ class Poule:
         self.__les_matchs = []
         self.__les_escrimeurs = []
         self.__dico: dict[Escrimeur, list[int, int, int]] = {}
+        self.__les_pistes: list[Piste] = []
+        self.__index_piste = 0
+        self.__heure = 0
 
     def get_id(self) -> int:
         """
@@ -34,8 +38,8 @@ class Poule:
         """
         Fonction qui retourne les matchs de la poule
 
-        Returns:
-            list[Match]: les matchs de la poule
+        Returns :
+            list[Match] : les matchs de la poule
         """
         return self.__les_matchs
 
@@ -47,6 +51,80 @@ class Poule:
             list[Escrimeur]: les escrimeurs de la poule
         """
         return self.__les_escrimeurs
+
+    def get_lettre_poule(self, nombre: int) -> str:
+        """
+        Fonction qui retourne la lettre de la poule
+
+        Args:
+            nombre (int): le numero de poules
+
+        Returns:
+            str: la lettre de la poule
+        """
+        if nombre == 1:
+            return "A"
+        elif nombre == 2:
+            return "B"
+        elif nombre == 3:
+            return "C"
+        elif nombre == 4:
+            return "D"
+        elif nombre == 5:
+            return "E"
+        elif nombre == 6:
+            return "F"
+        elif nombre == 7:
+            return "G"
+        elif nombre == 8:
+            return "H"
+        elif nombre == 9:
+            return "I"
+        elif nombre == 10:
+            return "J"
+        elif nombre == 11:
+            return "K"
+        elif nombre == 12:
+            return "L"
+        elif nombre == 13:
+            return "M"
+        elif nombre == 14:
+            return "N"
+        elif nombre == 15:
+            return "O"
+        elif nombre == 16:
+            return "P"
+        elif nombre == 17:
+            return "Q"
+        elif nombre == 18:
+            return "R"
+        elif nombre == 19:
+            return "S"
+        elif nombre == 20:
+            return "T"
+        elif nombre == 21:
+            return "U"
+        elif nombre == 22:
+            return "V"
+        elif nombre == 23:
+            return "W"
+        elif nombre == 24:
+            return "X"
+        elif nombre == 25:
+            return "Y"
+        elif nombre == 26:
+            return "Z"
+        else:
+            return "Erreur"
+
+    def get_les_pistes(self) -> list[Piste]:
+        """
+        Fonction qui retourne les pistes de la poule
+
+        Returns:
+            list[Piste]: les pistes de la poule
+        """
+        return self.__les_pistes
 
     def set_id(self, id_poule) -> None:
         """
@@ -67,49 +145,68 @@ class Poule:
         self.__les_matchs = les_matchs
         self.set_les_escrimeurs()
 
-    def generer_matchs(self, infos: tuple[Escrimeur, list[Escrimeur]],
+    def set_les_pistes(self, les_pistes: list[Piste]) -> None:
+        """
+        Fonction qui modifie les pistes de la poule
+
+        Args:
+            les_pistes (list[Piste]): les pistes de la poule
+        """
+        self.__les_pistes = les_pistes
+
+    def generer_matchs(self, infos: tuple[Escrimeur, list[Escrimeur]] | None,
                        heure_debut: float) -> list[Match]:
         """
         Fonction qui genere les matchs de la poule
 
         Args:
             infos (tuple[Escrimeur, list[Escrimeur]]): Les infos de la poule
+            heure_debut (float): l'heure de debut de la poule
 
         Returns:
             list[Match]: liste des matchs de la poule
         """
+        if infos is None:
+            return []
         les_matchs = []
         arbitre, les_escrimeurs = infos
+        self.__heure = heure_debut
         for escrimeur1 in les_escrimeurs:
             for escrimeur2 in les_escrimeurs:
                 if escrimeur1 != escrimeur2 and escrimeur1.get_id(
                 ) < escrimeur2.get_id():
                     les_matchs.append(
                         Match(-1, self.__id, escrimeur1, escrimeur2, arbitre,
-                              heure_debut, False))
-                    heure_debut += 0.05
-                    if heure_debut % 1 >= 0.6:
-                        heure_debut += 0.4
+                              heure_debut, False,
+                              self.__les_pistes[self.__index_piste]))
+                    self.__index_piste += 1
+                    if self.__index_piste == len(self.__les_pistes):
+                        self.__index_piste = 0
+                        self.__heure += 0.05
+                        if self.__heure % 1 >= 0.6:
+                            self.__heure += 0.4
+                        self.__heure = round(self.__heure, 2)
         self.__les_matchs = les_matchs
         self.set_les_escrimeurs()
         return les_matchs
 
     def get_match_by_escrimeurs(self, escrimeur1: Escrimeur,
-                                escrimeur2: Escrimeur) -> Match:
+                                escrimeur2: Escrimeur) -> Match | None:
         """
         Fonction qui retourne le match entre deux escrimeurs
 
-        Args:
+        Args :
             escrimeur1 (Escrimeur): le premier escrimeur
             escrimeur2 (Escrimeur): le deuxième escrimeur
 
-        Returns:
-            Match: le match entre les deux escrimeurs
+        Returns :
+            Match : le match entre les deux escrimeurs
         """
         for match in self.__les_matchs:
-            if match.get_escrimeur1() == escrimeur1 and match.get_escrimeur2(
-            ) == escrimeur2 or match.get_escrimeur1(
-            ) == escrimeur2 and match.get_escrimeur2() == escrimeur1:
+            if match.get_escrimeur1().get_id() == escrimeur1.get_id(
+            ) and match.get_escrimeur2().get_id() == escrimeur2.get_id(
+            ) or match.get_escrimeur1().get_id() == escrimeur2.get_id(
+            ) and match.get_escrimeur2().get_id() == escrimeur1.get_id():
                 return match
         return None
 
@@ -117,7 +214,8 @@ class Poule:
         """
         Fonction qui génère le PDF de la poule
         """
-        canva = canvas.Canvas('test.pdf', pagesize=letter)
+        canva = canvas.Canvas("poule_" + str(self.__id) + ".pdf",
+                              pagesize=letter)
         canva.setFont('Helvetica', 18)
         canva.drawCentredString(letter[0] / 2, 750,
                                 'Poule numéro ' + str(self.__id))
@@ -154,13 +252,14 @@ class Poule:
         """
         Fonction qui modifie les escrimeurs de la poule selon les matchs
         """
-        escrimeurs = []
+        id_escrimeur = []
         for match in self.__les_matchs:
-            if match.get_escrimeur1() not in escrimeurs:
-                escrimeurs.append(match.get_escrimeur1())
-            if match.get_escrimeur2() not in escrimeurs:
-                escrimeurs.append(match.get_escrimeur2())
-        self.__les_escrimeurs = escrimeurs
+            if match.get_escrimeur1().get_id() not in id_escrimeur:
+                self.__les_escrimeurs.append(match.get_escrimeur1())
+                id_escrimeur.append(match.get_escrimeur1().get_id())
+            if match.get_escrimeur2().get_id() not in id_escrimeur:
+                self.__les_escrimeurs.append(match.get_escrimeur2())
+                id_escrimeur.append(match.get_escrimeur2().get_id())
 
     def dessiner_noms(self, canva: canvas) -> int:
         """
@@ -321,8 +420,8 @@ class Poule:
                    fill=0)
         return largeur + 6
 
-    def gestion_match(self, le_match: Match, canva: canvas, i: int, j: int,
-                      hauteur: int, largeur: int) -> None:
+    def gestion_match(self, le_match: Match | None, canva: canvas, i: int,
+                      j: int, hauteur: int, largeur: int) -> None:
         """
         Fonction qui gere le match
 
@@ -334,7 +433,8 @@ class Poule:
         if le_match is not None and le_match.est_commencer():
 
             # Si le match est fini et que le gagnant est le premier escrimeur
-            if le_match.get_gagnant() == self.__les_escrimeurs[j - 1]:
+            if le_match.get_gagnant().get_id() == self.__les_escrimeurs[
+                    j - 1].get_id():
                 # Dessine un V dans la case
                 canva.drawString(const.DECALAGE_GAUCHE + largeur + 11.664,
                                  hauteur + 10, 'V')
@@ -475,6 +575,17 @@ class Poule:
             const.DECALAGE_GAUCHE, height, 'Arbitre de la poule : ' +
             self.__les_matchs[0].get_arbitre().get_nom())
 
+    def genere_dico(self) -> None:
+        """
+        Fonction qui genere le dictionnaire des escrimeurs
+        """
+        for escrimeur in self.__les_escrimeurs:
+            self.__dico[escrimeur] = [
+                self.get_nb_victoires(escrimeur),
+                self.get_nb_touche_marquee(escrimeur),
+                self.get_nb_touche_prise(escrimeur)
+            ]
+
     def classement_poule(self) -> dict[Escrimeur, int]:
         """
         Fonction qui retourne le classement de la poule
@@ -482,6 +593,7 @@ class Poule:
         Returns:
             dict[Escrimeur, int]: le classement de la poule
         """
+        self.genere_dico()
         classement = sorted(self.__dico.keys(), key=self.comparer_escrimeurs)
         return {
             escrimeur: position
@@ -492,6 +604,119 @@ class Poule:
         victoires, touche_marquee, touche_prise = self.__dico[escrimeur]
         indice = touche_marquee - touche_prise
         return (-victoires, -indice)  # Tri décroissant
+
+    def get_nb_victoires(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne le nombre de victoires d'un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: le nombre de victoires de l'escrimeur
+        """
+        cpt = 0
+        for match in self.__les_matchs:
+            if match.est_finis():
+                if match.get_gagnant().get_id() == escrimeur.get_id():
+                    cpt += 1
+        return cpt
+
+    def get_nb_escrimeurs(self) -> int:
+        """
+        Fonction qui retourne le nombre d'escrimeurs de la poule
+
+        Returns:
+            int: le nombre d'escrimeurs de la poule
+        """
+        return len(self.__les_escrimeurs)
+
+    def get_nb_matchs(self) -> int:
+        """
+        Fonction qui retourne le nombre de matchs de la poule
+
+        Returns:
+            int: le nombre de matchs de la poule
+        """
+        return len(self.__les_matchs)
+
+    def get_nb_touche_marquee(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne le nombre de touche marquée par un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: le nombre de touche marquée par l'escrimeur
+        """
+        cpt = 0
+        for match in self.__les_matchs:
+            if match.get_escrimeur1().get_id() == escrimeur.get_id():
+                cpt += match.get_nb_touche(escrimeur)
+            elif match.get_escrimeur2().get_id() == escrimeur.get_id():
+                cpt += match.get_nb_touche(escrimeur)
+        return cpt
+
+    def get_nb_touche_prise(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne le nombre de touche prise par un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: le nombre de touche prise par l'escrimeur
+        """
+        cpt = 0
+        for match in self.__les_matchs:
+            if match.get_escrimeur1().get_id() == escrimeur.get_id():
+                cpt += match.get_nb_touche(match.get_escrimeur2())
+            elif match.get_escrimeur2().get_id() == escrimeur.get_id():
+                cpt += match.get_nb_touche(match.get_escrimeur1())
+        return cpt
+
+    def get_indice(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne l'indice d'un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: l'indice de l'escrimeur
+        """
+        return self.get_nb_touche_marquee(
+            escrimeur) - self.get_nb_touche_prise(escrimeur)
+
+    def get_place(self, escrimeur: Escrimeur) -> int:
+        """
+        Fonction qui retourne la place d'un escrimeur
+
+        Args:
+            escrimeur (Escrimeur): l'escrimeur
+
+        Returns:
+            int: la place de l'escrimeur
+        """
+        cpt = 1
+        for escrimeur2 in self.classement_poule():
+            if escrimeur.get_id() == escrimeur2.get_id():
+                return cpt
+            cpt += 1
+        return -1
+
+    def is_finis(self) -> bool:
+        """
+        Fonction qui retourne si tous les matchs de la poule sont finis
+
+        Returns :
+            bool : si la poule est finis
+        """
+        for match in self.__les_matchs:
+            if not match.est_finis():
+                return False
+        return True
 
     def __str__(self):
         return f'Poule : {self.__id} |'

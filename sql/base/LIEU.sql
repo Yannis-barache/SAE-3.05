@@ -1,0 +1,15 @@
+insert into sae-escrime_sae.LIEU (idLieu, adresseLieu, descriptionLieu)
+values  (1, '3 Quai Saint-Bernard 75005 Paris', 'Salle d''escrime de Paris quai de seine'),
+        (2, '215 Rue Paul Bert, 69003 Lyon', 'Salle d''escrime de Lyon'),
+        (3, '33 Rue Crillon, 13005 Marseille', 'Salle d''escrime de Marseille'),
+        (4, '53 Rue Pauline Kergomard, 33800 Bordeaux', 'Salle d''escrime de Bordeaux'),
+        (5, '6 Rue Claudius Rougenet, 31500 Toulouse', 'Salle d''escrime de Toulouse'),
+        (6, 'Pl. Nouvelle Aventure, 59000 Lille', 'Salle d''escrime de Lille'),
+        (7, 'Rue Louis Joxe, 44200 Nantes', 'Salle d''escrime de Nantes'),
+        (8, '43 Av. du Rhin, 67100 Strasbourg', 'Salle d''escrime de Strasbourg'),
+        (9, '60 Pl. Jacques Mirouze, 34000 Montpellier', 'Salle d''escrime de Montpellier'),
+        (10, '8 Av. des Gayeulles, 35700 Rennes', 'Salle d''escrime de Rennes'),
+        (11, 'Imp. Léo Lagrange, 51100 Reims', 'Salle d''escrime de Reims'),
+        (12, 'Rue du Dr Paul Michelon, 42000 Saint-Étienne', 'Salle d''escrime de Saint-Etienne'),
+        (13, '25 Rue Lucien Joubert, 41000 Blois', 'Salle d''escrime de Blois'),
+        (270, 'test', 'test');

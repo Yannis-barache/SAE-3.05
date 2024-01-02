@@ -1,0 +1,51 @@
+{% extends "arbitre/base_arbitre.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/compet.css')}}"> 
+{% endblock %}
+{% block nav %}
+    {{  competition_nav(compet.get_id()) }}
+{% endblock %}
+{% block content %}
+
+
+    <div class="big-div">
+
+        <div class="grey-bg center">
+            <p>{{ compet.get_nom() }} du {{ compet.get_date() }}</p>
+        </div>
+
+        <div>
+            <p class="description">DESCRIPTION DE LA COMPÉTITION :</p>
+        </div>
+
+        <div class="center infos">
+            <div class="titre-info">
+
+                <p>TYPE D'ARME</p>
+                <p>SAISON</p>
+                <p>CATÉGORIE</p>
+                <p>FIN D'INSCRIPTION</p>
+                <p>COEFFICIENT</p>
+                <p>LIEU</p>
+                <p>ETAT</p>
+
+            </div>
+
+            <div class="reponse-info">
+
+                <p>:    {{ compet.get_arme().get_nom() }}</p>
+                <p>:    {{ compet.get_saison() }}</p>
+                <p>:    {{ compet.get_categorie().get_nom() }} - {{ compet.get_arme().get_sexe() }}</p>
+                <p>:    {{ compet.get_date_fin_inscription() }}</p>
+                <p>:    {{ compet.get_coefficient() }}</p>
+                <p>:    {{ compet.get_lieu().get_adresse() }}</p>
+                <p>:    {{ compet.get_etat() }}</p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

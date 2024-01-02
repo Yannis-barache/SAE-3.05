@@ -1,0 +1,49 @@
+{% extends "Admin/base_admin.html" %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bouton_admin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tab_adm.css')}}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="animation"> 
+    <h1 class="listecomp"> LISTE DES CLUBS</h1>
+    <img class= "match" src="{{ url_for('static', filename='../static/video/epee.gif') }}" alt="video match escrime">
+</div>
+
+<div class="scroll-tableau">
+    <table class="tab">
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Nombre d'escrimeurs</th>
+            <th>Action</th>
+        </tr>
+    {% for club in clubs %}
+
+        <tr>
+            <td>{{ club[0].get_nom() }}</td>
+            <td>{{ club[0].get_adresse() }}</td>
+            <td>{{ club[1] }}</td>
+            <td><a href="{{ url_for('modifier_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Modifier</a>
+                <a href="{{ url_for('supprimer_club', id_club=club[0].get_id()) }}" style="text-decoration: none;">Supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div>
+        <button class="btn" >
+        <span class="box">
+            <a href="{{ url_for('ajouter_club') }}" style="text-decoration: none;" > Ajouter un club</a>
+        </span>
+    </button>
+
+</div>
+</div>
+
+{% endblock %}

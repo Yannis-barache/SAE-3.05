@@ -58,8 +58,8 @@ INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateN
         (12, 'Fofana','Abdoulahi', '224224', '1999-01-01', 'abdoulahi', 'fofana', NULL, 12, 'H', 5, true),
         (13, 'Merit','Juliann', '963963', '1999-01-01', 'juliann', 'merit', NULL, 14, 'H', 5, false),
         (14, 'Chedeville','Baptiste', '33333333', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5, true),
-        (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'F', 5, false),
-        (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'F', 5, false),
+        (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'H', 5, false),
+        (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'H', 5, false),
         (17, 'Abada','Khalil','213213213','1999-01-01','khalil','abada',NULL,1,'H',5,false);
 
 INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
@@ -78,13 +78,13 @@ INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (13,'25 Rue Lucien Joubert, 41000 Blois','Salle d''escrime de Blois');
 
 INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCompetition, idArme, idCategorie, idLieu, dateFinInscription, coefficientCompetition) values
-        (1,'Championnat de France', '2023-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
-        (2,'Competition de Blois', '2023-02-20', 'été', 3, 3, 13, '2023-02-10', 0.6),
+        (1,'Championnat de France', '2024-03-15', 'hiver', 1, 2, 1, '2023-03-01', 0.8),
+        (2,'Competition de Blois', '2024-03-15', 'été', 3, 3, 13, '2023-12-10', 0.6),
         (3,'Competition de Lyon', '2023-02-25', 'automne', 1, 2, 2, '2023-02-15', 0.7),
-        (4,'Competition de Marseille', '2023-03-01', 'hiver', 2, 3, 3, '2023-02-20', 0.9),
-        (5,'Competition de Bordeaux', '2023-02-18', 'hiver', 3, 1, 4, '2023-02-08', 0.5),
-        (6,'Competition de Toulouse', '2023-02-22', 'été', 1, 3, 5, '2023-02-12', 0.6),
-        (7,'Competition de Lille', '2023-02-27', 'été', 2, 1, 6, '2023-02-17', 0.7),
+        (4,'Competition de Marseille', '2025-03-01', 'hiver', 2, 3, 3, '2025-02-20', 0.9),
+        (5,'Competition de Bordeaux', '2021-02-18', 'hiver', 3, 1, 4, '2021-02-08', 0.5),
+        (6,'Competition de Toulouse', '2023-11-10', 'été', 1, 3, 5, '2023-02-12', 0.6),
+        (7,'Competition de Lille', '2023-11-09', 'été', 2, 1, 6, '2023-02-17', 0.7),
         (8,'Competition de Nantes', '2023-03-03', 'printemps', 3, 2, 7, '2023-02-23', 0.8),
         (9,'Competition de Strasbourg', '2023-02-16', 'printemps', 1, 3, 8, '2023-02-06', 0.4),
         (10,'Competition de Montpellier', '2023-02-21', 'hiver', 2, 1, 9, '2023-02-11', 0.5),
@@ -133,6 +133,62 @@ INSERT INTO POULE(idPoule) VALUES
         (14);
 
 
+INSERT INTO PISTE(idPiste, idLieu,descriptionPiste) VALUES
+        (1, 1,'Piste 1'),
+        (2, 1,'Piste 2'),
+        (3, 1,'Piste 3'),
+        (4, 1,'Piste 4'),
+        (5,2,'Piste a'),
+        (6,2,'Piste b'),
+        (7,2,'Piste c'),
+        (8,2,'Piste d'),
+        (9,3,'Piste e'),
+        (10,3,'Piste f'),
+        (11,3,'Piste g'),
+        (12,3,'Piste h'),
+        (13,4,'Piste i'),
+        (14,4,'Piste j'),
+        (15,4,'Piste k'),
+        (16,4,'Piste l'),
+        (17,5,'Piste m'),
+        (18,5,'Piste n'),
+        (19,5,'Piste o'),
+        (20,5,'Piste p'),
+        (21,6,'Piste q'),
+        (22,6,'Piste r'),
+        (23,6,'Piste s'),
+        (24,6,'Piste t'),
+        (25,7,'Piste u'),
+        (26,7,'Piste v'),
+        (27,7,'Piste w'),
+        (28,7,'Piste x'),
+        (29,8,'Piste y'),
+        (30,8,'Piste z'),
+        (31,8,'Piste do'),
+        (32,8,'Piste re'),
+        (33,9,'Piste mi'),
+        (34,9,'Piste fa'),
+        (35,9,'Piste sol'),
+        (36,9,'Piste la'),
+        (37,10,'Piste si'),
+        (38,10,'Piste do#'),
+        (39,10,'Piste Marie Curie'),
+        (40,10,'Piste Albert Einstein'),
+        (41,11,'Piste Isaac Newton'),
+        (42,11,'Piste Galilée'),
+        (43,11,'Piste Charles Darwin'),
+        (44,11,'Piste Stephen Hawking'),
+        (45,12,'Piste IUT1'),
+        (46,12,'Piste IUT2'),
+        (47,12,'Piste  IUT3'),
+        (48,12,'Piste IUT4'),
+        (49,13,'Piste hehe'),
+        (50,13,'Piste hoho'),
+        (51,13,'Piste hihi'),
+        (52,13,'Piste haha');
+
+
+
 INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch, fini) VALUES
         (1, 1, 2, 1, 10, '10:20:00',false),
         (2, 3, 4, 1, 2, '23:00:00',false),
@@ -142,13 +198,19 @@ INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heure
         (6, 1, 3, 2, 6, '09:00:00',false),
         (7, 2, 4, 2, 7, '20:30:00',true),
         (8, 5, 7, 2, 8, '11:00:00',true),
-        (9, 6, 8, 2, 9, '12:45:00',false);
+        (9, 6, 8, 2, 9, '12:45:00',false),
+        (10, 1, 2, 6, 10, 1, '10:20:00',false);
 
 
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
         (1,1),
         (1,2),
-        (1,3);
+        (1,3),
+        (10,8),
+        (11,8),
+        (12,8),
+        (13,8),
+        (17,8);
 
 
 INSERT INTO ARBITRER(idEscrimeur, idCompetition) VALUES
@@ -161,7 +223,8 @@ INSERT INTO ARBITRER(idEscrimeur, idCompetition) VALUES
         (3,4),
         (3,5),
         (3,6),
-        (4,1);
+        (4,1),
+        (14, 8);
 
 
 INSERT INTO TOUCHE(idMatch, idEscrimeur, numTouche) VALUES

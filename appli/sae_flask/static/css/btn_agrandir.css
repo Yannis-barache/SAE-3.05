@@ -1,0 +1,35 @@
+.img_agrandir{
+    height: 20px;
+    width: auto;
+}
+
+.div-image-agrandir {
+    position : fixed ;
+    background-color : #EDEDED ;
+    width : 100% ;
+    height : 100% ;
+    left : 0 ;
+    top : 0 ;
+}
+
+
+html.active {
+    overflow: hidden;
+}
+
+.bouton-fermeture {
+    position : absolute ; /* Position absolute */
+    top : 10px ;
+    right : 3vw ;
+    /* positionnement du bouton */
+    cursor : zoom-out; /* Curseur en mode pointeur */
+    border-radius : 5px ; /* Les boutons ont les bords arrondis de 5 pixels */
+    transition : all .25s ease-in-out ; /* Transition pour le hover */
+    background-color : #EEEEEE ; /* La couleur du bouton */
+    width : 50px ; /* Largeur du bouton */
+    height : 50px ; /* Hauteur du bouton */
+}
+
+.bouton-fermeture:hover {
+    background-color : #CDCDCD ; /* Lors du survol le bouton change de couleur */
+}

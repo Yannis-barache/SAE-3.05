@@ -1,0 +1,65 @@
+{% extends "base_home.html" %}
+
+
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rec_match.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/button_menu.css')}}">
+<script src="{{ url_for('static', filename='js/button_menu.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1> Matches du {{ compet.get_nom() }} le {{ compet.get_date() }}  </h1>
+
+
+    <div >
+        {% for match in matchs %}
+            {% set i = loop.index %}
+            <div class="rec_match">
+
+                <div>
+                    <h2>
+                        Match n°{{ i }} : <span> {{ match.get_escrimeur1().get_prenom() }} </span> vs <span> {{ match.get_escrimeur2().get_prenom() }} </span> à <span> {{ match.get_heure() }} </span>
+        
+                        {% if match.est_commencer() %}
+                            <p> En cours </p>
+                        {% elif match.est_finis() %}
+                            <p> Terminé </p>
+                        {% else %}
+                            <p> ... </p>
+                        {% endif %}
+                    </h2>
+                </div>
+
+                <div class="les_boutons">
+                    <a>
+                        <img src="{{ url_for('static', filename='img/imprimante.png') }}" alt="Image Escrimeur 1">
+                    </a>
+                    
+                    {% if user != none and user.get_arbitrage() and match.get_arbitre().get_id() == user.get_id() %}
+                    <a href="{{ url_for('page_de_match', id_match=match.get_id(), id_competition=compet.get_id()) }}">
+                        <img src="{{ url_for('static', filename='img/stylo.png') }}" alt="Image Escrimeur 1">
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+</section>
+
+    
+
+
+
+
+
+{% endblock %}
+
+
+
+

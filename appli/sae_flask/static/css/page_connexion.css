@@ -1,0 +1,91 @@
+
+.infoconnecte{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+.b_connecter{
+
+    background-color: black;
+
+}
+
+.b_inscrire:hover {
+    color: red;
+    background-color: #1A1A1A;
+}
+
+.b_connecter:hover {
+    color: black;
+    background-color: #fff;
+}
+.b_inscrire{
+
+    background-color: #d2080a;
+
+}
+
+
+.carre-central{
+    margin: 10px;
+}
+
+
+.ou{
+    font-weight: bold;
+}
+
+.ligne-ou {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5%;
+  }
+  
+/*  .ou:after,
+  .ou:before{
+    content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+    text-decoration: line-through;
+  }
+*/
+
+.ligne{
+    /*Nous allons dessigner une ligne*/
+    border: 1px solid #000;
+    /*Nous allons définir la largeur de la ligne*/
+    width: 100%;
+    /*Nous allons définir la couleur de la ligne*/
+    color: #000;
+    /*Nous allons définir l'espacement entre les lignes*/
+    margin: 10px 6px;
+    /* Nous allons centrer la ligne*/
+    text-align: center;
+
+}
+  
+
+
+@media screen and (max-width: 450px) {
+    .rec-central{
+        min-width: 200px;
+    }
+    .petit-titre{
+        text-align: center;
+    }
+    body{
+        background-image: url(../img/background_droite.png);
+        background-size: 30vh;
+        background-position-y: bottom;
+        background-position: bottom,right;
+        background-position-x: center;
+    }
+
+    .le-back{
+        width: 100%;
+    }
+}

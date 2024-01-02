@@ -23,6 +23,7 @@ from phase_bd import PhaseBD
 from phase_finale_bd import PhaseFinaleBD
 from poule_bd import PouleBD
 from touche_bd import ToucheBD
+from piste_bd import PisteBD
 
 
 class ModeleAppli:
@@ -31,29 +32,31 @@ class ModeleAppli:
     """
 
     def __init__(self):
-        connexion = ConnexionBD()
-        self.__arme_bd = ArmeBD(connexion.get_connexion())
-        self.__categorie_bd = CategorieBD(connexion.get_connexion())
-        self.__club_bd = ClubBD(connexion.get_connexion())
-        self.__competition_bd = CompetitionBD(connexion.get_connexion())
-        self.__escrimeur_bd = EscrimeurBD(connexion.get_connexion())
+        self.__connexion = ConnexionBD()
+        self.__arme_bd = ArmeBD(self.__connexion.get_connexion())
+        self.__categorie_bd = CategorieBD(self.__connexion.get_connexion())
+        self.__club_bd = ClubBD(self.__connexion.get_connexion())
+        self.__competition_bd = CompetitionBD(self.__connexion.get_connexion())
+        self.__escrimeur_bd = EscrimeurBD(self.__connexion.get_connexion())
         self.__inscrire_arbitre_bd = InscrireArbitreBD(
-            connexion.get_connexion())
-        self.__inscrire_bd = InscrireBD(connexion.get_connexion())
-        self.__lieu_bd = LieuBD(connexion.get_connexion())
-        self.__match_bd = MatchBD(connexion.get_connexion())
-        self.__organisateur_bd = OrganisateurBD(connexion.get_connexion())
-        self.__phase_bd = PhaseBD(connexion.get_connexion())
-        self.__phase_final_bd = PhaseFinaleBD(connexion.get_connexion())
-        self.__poule_bd = PouleBD(connexion.get_connexion())
-        self.__touche_bd = ToucheBD(connexion.get_connexion())
+            self.__connexion.get_connexion())
+        self.__inscrire_bd = InscrireBD(self.__connexion.get_connexion())
+        self.__lieu_bd = LieuBD(self.__connexion.get_connexion())
+        self.__match_bd = MatchBD(self.__connexion.get_connexion())
+        self.__organisateur_bd = OrganisateurBD(
+            self.__connexion.get_connexion())
+        self.__phase_bd = PhaseBD(self.__connexion.get_connexion())
+        self.__phase_final_bd = PhaseFinaleBD(self.__connexion.get_connexion())
+        self.__poule_bd = PouleBD(self.__connexion.get_connexion())
+        self.__touche_bd = ToucheBD(self.__connexion.get_connexion())
+        self.__piste_bd = PisteBD(self.__connexion.get_connexion())
 
     def get_arme_bd(self) -> ArmeBD:
         """
         Retourne l'objet qui gère les interactions avec la table arme
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ArmeBD : l'objet qui gère les interactions avec la table arme
         """
         return self.__arme_bd
 
@@ -61,8 +64,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table categorie
 
-        Returns:
-            _type_: _description_
+        Returns :
+            CategorieBD : l'objet qui gère les interactions avec la table categorie
         """
         return self.__categorie_bd
 
@@ -70,8 +73,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table club
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ClubBD : l'objet qui gère les interactions avec la table club
         """
         return self.__club_bd
 
@@ -79,8 +82,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table competition
 
-        Returns:
-            _type_: _description_
+        Returns :
+            CompetitionBD : l'objet qui gère les interactions avec la table competition
         """
         return self.__competition_bd
 
@@ -88,8 +91,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table escrimeur
 
-        Returns:
-            _type_: _description_
+        Returns :
+            EscrimeurBD : l'objet qui gère les interactions avec la table escrimeur
         """
         return self.__escrimeur_bd
 
@@ -97,8 +100,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table inscrire_arbitre
 
-        Returns:
-            _type_: _description_
+        Returns :
+            InscrireArbitreBD : l'objet qui gère les interactions avec la table inscrire_arbitre
         """
         return self.__inscrire_arbitre_bd
 
@@ -106,8 +109,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table inscrire
 
-        Returns:
-            _type_: _description_
+        Returns :
+            InscrireBD : l'objet qui gère les interactions avec la table inscrire
         """
         return self.__inscrire_bd
 
@@ -115,8 +118,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table lieu
 
-        Returns:
-            _type_: _description_
+        Returns :
+            LieuBD : l'objet qui gère les interactions avec la table lieu
         """
         return self.__lieu_bd
 
@@ -124,8 +127,9 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table match
 
-        Returns:
-            _type_: _description_
+        Returns :
+            MatchBD : l'objet qui gère les interactions avec la table match
+
         """
         return self.__match_bd
 
@@ -133,8 +137,9 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table organisateur
 
-        Returns:
-            _type_: _description_
+        Returns :
+            OrganisateurBD : l'objet qui gère les interactions avec la table organisateur
+
         """
         return self.__organisateur_bd
 
@@ -142,8 +147,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table phase
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PhaseBD : l'objet qui gère les interactions avec la table phase
         """
         return self.__phase_bd
 
@@ -151,8 +156,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table phase_finale
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PhaseFinaleBD : l'objet qui gère les interactions avec la table phase_finale
         """
         return self.__phase_final_bd
 
@@ -160,8 +165,8 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table poule
 
-        Returns:
-            _type_: _description_
+        Returns :
+            PouleBD : l'objet qui gère les interactions avec la table poule
         """
         return self.__poule_bd
 
@@ -169,7 +174,28 @@ class ModeleAppli:
         """
         Retourne l'objet qui gère les interactions avec la table touche
 
-        Returns:
-            _type_: _description_
+        Returns :
+            ToucheBD : l'objet qui gère les interactions avec la table touche
         """
         return self.__touche_bd
+
+    def get_piste_bd(self) -> PisteBD:
+        """
+        Retourne l'objet qui gère les interactions avec la table piste
+
+        Returns :
+            PisteBD : l'objet qui gère les interactions avec la table piste
+        """
+        return self.__piste_bd
+
+    def ouvrir_connexion(self):
+        """
+        ddd
+        """
+        self.__connexion.ouvrir_connexion()
+
+    def close_connexion(self):
+        """
+        Ferme la connexion à la base de données
+        """
+        self.__connexion.fermer_connexion()

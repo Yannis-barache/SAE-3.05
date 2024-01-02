@@ -1,0 +1,331 @@
+.enflex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.circle{
+    margin:10px;
+    width:64px;
+    background:#2E2E2E;
+    height:64px;
+    text-align:center;
+    border-radius:100px;
+    line-height: 54px; /* 100 - 10 */
+    font-weight: bold;
+    color: white;
+}
+
+
+.ligne{
+    width: 50%;
+    color: #000;
+    margin: 10px 6px;
+    text-align: center;
+    height: 8px;
+    background-color: black;
+
+}
+
+.circle-button {
+    height: 36px;
+    border-radius: 50%;
+    /* border-block: 7px; */
+    background-color: transparent;
+    color: #000;
+    font-size: 24px;
+    /* border: none; */
+    font-size: xx-large;
+    cursor: pointer;
+    line-height: 20px;
+    transition: transform 0.3s ease;
+    border: 4px solid black;
+}
+
+.circle-button[disabled]:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.rotate {
+    transform: rotate(45deg);
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.button-{
+    background-image: url(../img/atest.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+    width: 28%;
+    height: 100%;
+}
+
+
+
+/* ... Autres styles ... */
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}
+
+.white{
+    background-color: white;
+}
+
+
+.buttonterm {
+    --color: #0077ff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #171717;
+    padding: 1em 2em;
+    border: none;
+    border-radius: .6rem;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.buttonterm::before {
+    position: absolute;
+    content: "";
+    background: var(--color);
+    width: 150px;
+    height: 200px;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.buttonterm:hover {
+    color: red;
+}
+
+
+.match{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+
+
+.big-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grey-bg{
+    flex-basis: 100%;
+    background-color: #EDEDED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grey-bg > p{
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+
+main{
+    margin-top: 3%;
+    margin-right: 0%;
+    margin-bottom: 3%;
+    margin-left: 0%;
+}
+
+.big-div > div{
+    flex-basis: 100%;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+}
+
+.infos{
+    font-style: bold;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.infos p{
+    flex-basis: 100%;
+    text-align: center;
+    margin: 0px;
+}
+
+.infos .num{
+    margin-bottom: 20px;
+}
+
+.infos .arbitre{
+    margin-top: 20px;
+}
+
+.name{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.escrimeur p{
+    font-size: 20px;
+    margin: 0px;
+}
+
+.name p{
+    font-size: 30px;
+}
+
+.right{
+    text-align: right;
+}
+
+.left{
+    text-align: left;
+}
+
+.score{
+    font-size: 30px;
+    font-style: bold;
+}
+
+.carre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border : 2px solid black;
+    margin: 10px;
+}
+
+.cercle{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.name-right{
+    justify-content: flex-end;
+}
+
+.name-left{
+    justify-content: flex-start;
+}
+
+.infos p{
+    font-size: 25px;
+}
+
+.infos{
+    margin-bottom: 10px;
+}
+
+.touche{
+    margin-top: 40px;
+}
+
+.touches-line .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 5px;
+    border: 3px solid #000;
+}
+
+.div-dow{
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top : 10px;
+    flex-basis: 100%;
+}
+
+.dow-a{
+    color: black;
+    padding-top: 10px;
+    display: block;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    text-decoration: none;
+}
+
+.dow{
+    height: 30px;
+    width: 30px;
+    padding-right: 5px;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.dow-a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.btn-icon{
+    height: 60px;
+    width: auto;
+}
+
+.btns{
+    justify-content: space-around;
+}
+
+
+.bouton{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 1%;
+}
+
+.btn-primary {
+    background-color: #d2080a;
+    border-color: #000000;
+    border-radius: 1em;
+}
+
+.btn-primary:hover {
+    background-color: #000000;
+}
+

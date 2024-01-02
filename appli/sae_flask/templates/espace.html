@@ -1,0 +1,99 @@
+{% extends "base_home.html" %}
+{% block styles %}
+{{ super() }}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/espace.css') }}">
+{% endblock %}
+{% block content %}
+<table>
+            {% if user|is_escrimeur%}
+                <tr>
+                    <td class="left">N° de licence</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_licence() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Prénom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_prenom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Sexe</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_sexe() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Date de naissance</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_date_naissance() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+                </tr>
+
+                <tr>
+                    <td class="left">Catégorie</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_categorie().get_nom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Classement</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_classement() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Club</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_club().get_nom() }}</td>
+                </tr>
+            {% elif user|is_club %}
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+
+                </tr>
+
+                <tr>
+                    <td class="left">Adresse</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_adresse() }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="left">Nom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_nom() }}</td>
+                    <td rowspan="4" class="image-td"><img class="image-back" src="{{ url_for('static', filename='../static/img/background_droite.png') }}" alt="image d'un escrimeur en noir"></td>
+
+                </tr>
+
+                <tr>
+                    <td class="left">Prénom</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_prenom() }}</td>
+                </tr>
+
+                <tr>
+                    <td class="left">Adresse Mail</td>
+                    <td>:</td>
+                    <td class="right">{{ user.get_adresse_mail() }}</td>
+                </tr>
+
+            {% endif %}
+        </table>
+    </div>
+</div>
+{% endblock %}

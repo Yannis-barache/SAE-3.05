@@ -1,0 +1,94 @@
+header {
+    background-image: url(../img/baniere.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.top_header {
+    display : inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 12vw;
+    margin: 1rem;
+}
+
+.user {
+    width: 5vw;
+    float: right;
+    margin: 1rem 1rem 1rem 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+main {
+    margin: 3%;
+
+}
+
+footer {
+    background-color: black;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.insta {
+    width: 2%;
+    min-width: 30px;
+}
+
+.youtube {
+    width: 2%;
+    min-width: 30px;
+}
+
+.twitter {
+    width: 2%;
+    min-width: 30px;
+}
+
+.facebook {
+    width: 2%;
+    min-width: 30px;
+}
+
+footer > p {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1vh;
+
+}
+
+.paragfin {
+    font-size: 0.8em;
+    padding-top: 2vh;
+    margin-bottom: 0;
+}
+
+.intro p {
+    padding-bottom: 1em;
+}
+
+.tableau {
+    overflow-x: auto;
+}
+
+.pas {
+    display :none;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}

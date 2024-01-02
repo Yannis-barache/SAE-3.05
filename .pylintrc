@@ -148,7 +148,10 @@ disable=abstract-method,
         zip-builtin-not-iterating,
         protected-access,
         wrong-import-position,
-        inconsistent-quotes
+        inconsistent-quotes,
+        broad-exception-caught,
+        line-too-long,
+        redefined-outer-name
 
 [REPORTS]
 
