@@ -367,8 +367,19 @@ class CompetitionBD:
                 print(e)
                 return None
 
-if __name__ == "__main__":
-    from modele_appli import ModeleAppli
-    model = ModeleAppli()
-    comp_bd = model.get_competition_bd()
-    comp_bd.generate_phase_finale(14, 10)
+    def get_competition_by_phase(self, id_phase) -> Competition:
+        """
+        Fonction qui retourne une compétition en fonction de la phase
+        :param id_phase: id de la phase
+        :return: compétition
+        """
+        try:
+            query = text(
+                f'SELECT idCompetition FROM PHASE WHERE idPhase = {id_phase}')
+            result = self.__connexion.execute(query)
+            for (id_competition, ) in result:
+                return self.get_competition_by_id(id_competition)
+        except Exception as e:
+            print(e)
+            return None
+

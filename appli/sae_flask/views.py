@@ -885,14 +885,20 @@ def phase_finale(id_competition):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     poule_bd = modele.get_poule_bd()
+    equipe_bd = modele.get_equipe_bd()
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
-    les_poules = poule_bd.get_poules_by_compet(id_competition)
-    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    if not competition.get_is_equipe():
+        les_poules = poule_bd.get_poules_by_compet(id_competition)
+        nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    else :
+        les_equipes = equipe_bd.get_all_equipe_by_competition(id_competition)
+        nb_escrimeur = len(les_equipes)
     nombre = competition.get_puissance_sup(nb_escrimeur)
     modele.close_connexion()
     liste_match_by_tour: list[list] = []
     cpt = 0
+    print(nombre)
     for i in range(nombre):
         un_tour = []
         for match in range(cpt, cpt + nb_escrimeur // 2):

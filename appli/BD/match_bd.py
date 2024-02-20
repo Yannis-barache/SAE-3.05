@@ -5,6 +5,11 @@ Fichier qui contient les requêtes SQL pour la table MATCHS
 import sys
 import os
 from sqlalchemy import text
+from arme_bd import ArmeBD
+from categorie_bd import CategorieBD
+from competition import Competition
+from equipe_bd import EquipeBD
+from lieu_bd import LieuBD
 from phase_bd import PhaseBD
 from escrimeur_bd import EscrimeurBD
 from inscrire_arbitre_bd import InscrireArbitreBD
@@ -85,6 +90,49 @@ class MatchBD:
             print(e)
             return None
 
+    def get_competition_by_phase(self, id_phase) -> Competition:
+        """
+        Fonction qui retourne une compétition en fonction de la phase
+        :param id_phase: id de la phase
+        :return: compétition
+        """
+        try:
+            query = text(
+                f'SELECT idCompetition FROM PHASE WHERE idPhase = {id_phase}')
+            result = self.__connexion.execute(query)
+            for (id_competition, ) in result:
+                return self.get_competition_by_id(id_competition)
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_competition_by_id(self, id_c: int):
+        """
+        Fonction qui retourne une competition en fonction de son id
+        :param id_c: id de la competition
+        :return: competition
+        """
+        try:
+            query = text(
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION '
+                'WHERE idCompetition =' + str(id_c))
+            result = self.__connexion.execute(query)
+            for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
+                 id_categorie, coefficient, is_equipe) in result:
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+                lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
+                arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
+                return Competition(id_competition, nom, date, date_fin, saison,
+                                   lieu, arme, categorie, coefficient,
+                                   is_equipe)
+            return None
+        except Exception as e:
+            print(e)
+            return None
+
     def get_match_by_phase(self, id_p: int):
         '''
         Fonction qui retourne les matchs en fonction de la phase
@@ -92,6 +140,7 @@ class MatchBD:
         :return: liste de match
         '''
         try:
+            comp = self.get_competition_by_phase(id_p)
             query = text(
                 'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
                 'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
@@ -102,10 +151,14 @@ class MatchBD:
                  id_piste, heure, fini) in result:
                 fini = fini == 1
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
-                escrimeur1 = EscrimeurBD(
-                    self.__connexion).get_escrimeur_by_id(id_escrimeur1)
-                escrimeur2 = EscrimeurBD(
-                    self.__connexion).get_escrimeur_by_id(id_escrimeur2)
+                if not comp.get_is_equipe() :
+                    escrimeur1 = EscrimeurBD(
+                        self.__connexion).get_escrimeur_by_id(id_escrimeur1)
+                    escrimeur2 = EscrimeurBD(
+                        self.__connexion).get_escrimeur_by_id(id_escrimeur2)
+                else:
+                    escrimeur1 = EquipeBD(self.__connexion).get_equipe_by_id(id_escrimeur1)
+                    escrimeur2 = EquipeBD(self.__connexion).get_equipe_by_id(id_escrimeur2)
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)

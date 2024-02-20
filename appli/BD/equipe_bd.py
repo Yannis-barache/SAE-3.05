@@ -23,6 +23,21 @@ class EquipeBD:
     def __init__(self, connexion):
         self.__connexion = connexion
 
+    def get_equipe_by_id(self, id_equipe) -> Equipe:
+        """
+        Fonction qui retourne une équipe par son id
+        :param id_equipe: id de l'équipe
+        :return: équipe
+        """
+        try:
+            query = text(f'SELECT idEquipe, nomEquipe, idCompetition FROM EQUIPE WHERE idEquipe = {id_equipe}')
+            result = self.__connexion.execute(query)
+            for (id_equipe, nom_equipe, id_competition, ) in result:
+                return Equipe(id_competition, id_equipe, nom_equipe)
+        except Exception as e:
+            print(e)
+            return None
+
     def get_escrimeur_by_equipe(self, id_equipe) -> list[Escrimeur]:
         """
         Fonction qui retourne tous les escrimeurs d'une équipe
