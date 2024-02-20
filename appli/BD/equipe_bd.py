@@ -1,0 +1,114 @@
+"""
+Fichier qui contient les requêtes SQL pour la table EQUIPE
+"""
+
+import sys
+import os
+from sqlalchemy.sql.expression import text
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
+sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
+from equipe import Equipe
+
+
+class EquipeBD:
+    """
+        Classe EquipeBD
+
+        Methods:
+            __init__(self, connexion)
+            get_all_equipe(self)
+            get_equipe_by_id(self, id_equipe: int)
+            get_equipe_by_id_comp(self, id_comp: int)
+            get_nb_equipe(self, id_comp: int)
+            insert_equipe(self, id_comp: int, nom_equipe: str)
+            delete_equipe(self, id_equipe: int)
+            update_equipe(self, id_equipe: int, nom_equipe: str)
+    """
+
+    def __init__(self, connexion):
+        """
+        Constructeur de la classe EquipeBD
+        :param connexion: connexion à la base de données
+        """
+        self.__connexion = connexion
+
+    def get_all_equipe(self):
+        """
+        Fonction qui retourne toutes les équipes
+        :return: liste d'équipe
+        """
+        try:
+            query = text('SELECT idCompetition, idEquipe, nomEquipe FROM EQUIPE')
+            result = self.__connexion.execute(query)
+            equipes = []
+            for id_comp, id_equipe, nom_equipe in result:
+                equipes.append(Equipe(id_comp, id_equipe, nom_equipe))
+            return equipes
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_equipe_by_id(self, id_equipe: int):
+        """
+        Fonction qui retourne une équipe en fonction de son id
+        :param id_equipe: id de l'équipe
+        :return: équipe
+        """
+        try:
+            query = text('SELECT idCompetition, idEquipe, nomEquipe FROM EQUIPE '
+                         'WHERE idEquipe =' + str(id_equipe))
+            result = self.__connexion.execute(query)
+            for id_comp, id_equipe, nom_equipe in result:
+                return Equipe(id_comp, id_equipe, nom_equipe)
+            return None
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_equipe_by_id_comp(self, id_comp: int):
+        """
+        Fonction qui retourne une équipe en fonction de son id de competition
+
+        Parameters :
+            id_comp(int) id de la competition
+
+        Returns :
+            list : liste des équipes dans la competition
+
+        """
+        try:
+            query = text('SELECT idCompetition, idEquipe, nomEquipe FROM EQUIPE '
+                         'WHERE idCompetition =' + str(id_comp))
+            result = self.__connexion.execute(query)
+            equipes = []
+            for id_comp, id_equipe, nom_equipe in result:
+                equipes.append(Equipe(id_comp, id_equipe, nom_equipe))
+            return equipes
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_nb_equipe(self, id_comp: int):
+        """
+        Fonction qui retourne le nombre d'équipes d'une competition
+
+        Parameters :
+            id_comp (int) : id de la competition
+        Returns :
+            int : nombre d'équipes dans la competition
+        """
+
+        try:
+            query = text('SELECT count(*) FROM EQUIPE WHERE idCompetition =' + str(id_comp))
+            result = self.__connexion.execute(query)
+            for nb in result:
+                return nb[0]
+        except Exception as e:
+            print(e)
+            return None
+
+
+
+

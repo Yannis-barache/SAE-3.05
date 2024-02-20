@@ -1053,10 +1053,31 @@ def desinscription_arbitre(id_competition):
 
 @app.route("/admin/equipe")
 def admin_equipe():
-    if USER is None or not isinstance(USER,Organisateur):
-        return redirect(url_for('choose_sign'))
+    nb_equipe=[]
+    modele = ModeleAppli()
+    competitions = modele.get_competition_bd().get_competition_equipe()
+    for competition in competitions:
+        nb_equipe.append(modele.get_equipe_bd().get_nb_equipe(competition.get_id()))
+    modele.close_connexion()
+    print(nb_equipe)
+    competitions.append(Competition(1, "test", "2021-01-01", 'hiver',"2021-01-01", "test", None, None, None, 1))
+    nb_equipe.append(0)
+    return render_template("Admin/equipe/comp_equipe.html",
+                           competitions=competitions, nb_equipe=nb_equipe)
+
+@app.route("/admin/equipe/<id_competition>", methods=["GET", "POST"])
+def modif_equipe(id_competition):
+    if request.method == "POST":
+        if request.form['submit'] == "Ajouter":
+            return redirect(url_for('ajouter_equipe', id_competition=id_competition))
+        else:
+            return redirect(url_for('modifier_equipe', id_competition=id_competition))
 
     modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    equipes = modele.get_equipe_bd().get_equipe_by_competition(id_competition)
     modele.close_connexion()
-    return redirect(url_for('home_admin'))
+    return render_template("Admin/equipe/modif_equipe.html",
+                           competition=competition, equipes=equipes)
+
 
