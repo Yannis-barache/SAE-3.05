@@ -1049,3 +1049,14 @@ def desinscription_arbitre(id_competition):
         InscrireArbitre(USER.get_id(), id_competition))
     modele.close_connexion()
     return redirect(request.referrer)
+
+
+@app.route("/admin/equipe")
+def admin_equipe():
+    if USER is None or not isinstance(USER,Organisateur):
+        return redirect(url_for('choose_sign'))
+
+    modele = ModeleAppli()
+    modele.close_connexion()
+    return redirect(url_for('home_admin'))
+
