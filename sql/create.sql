@@ -143,6 +143,22 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
+CREATE TABLE EQUIPE(
+    idEquipe INT(10) NOT NULL ,
+    nomEquipe VARCHAR(150) NOT NULL,
+    idCompetition INT(10) NOT NULL ,
+    PRIMARY KEY (idEquipe,idCompetition),
+    FOREIGN KEY (idCompetition) REFERENCES COMPETITION(idCompetition)
+);
+
+CREATE TABLE FAIT_PARTIE(
+    idEquipe INT(10) NOT NULL,
+    idEscrimeur INT(10) NOT NULL ,
+    role VARCHAR(40) NOT NULL ,
+    PRIMARY KEY (idEquipe,idEscrimeur),
+    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur),
+    FOREIGN KEY (idEquipe) REFERENCES EQUIPE(idEquipe)
+);
 
 -- TRIGGER
 
@@ -424,7 +440,7 @@ delimiter ;
 -- Création de la procédure stockée pour tuer les sessions en sommeil
 DELIMITER //
 
-CREATE PROCEDURE TuerConnexionsEnSommeil()
+CREATE or replace PROCEDURE TuerConnexionsEnSommeil()
 BEGIN
     DECLARE termine INT DEFAULT 0;
     DECLARE requete_a_tuer VARCHAR(255);
