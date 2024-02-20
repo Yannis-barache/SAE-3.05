@@ -27,7 +27,7 @@ class Equipe:
         """
         return self.__id_comp
 
-    def get_id_equipe(self) -> int:
+    def get_id(self) -> int:
         """
         Fonction qui retourne l'id de l'equipe
 

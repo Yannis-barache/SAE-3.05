@@ -40,3 +40,20 @@ class EquipeBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_all_equipe_by_competition(self, id_competition) -> list[Equipe]:
+        """
+        Fonction qui retourne toutes les équipes d'une compétition
+        :param id_competition: id de la compétition
+        :return: liste d'équipes
+        """
+        try:
+            query = text(f'SELECT idEquipe, nomEquipe, idCompetition FROM EQUIPE WHERE idCompetition = {id_competition}')
+            result = self.__connexion.execute(query)
+            equipes = []
+            for (id_equipe, nom_equipe, id_competitio, ) in result:
+                equipes.append(Equipe(id_competitio, id_equipe, nom_equipe))
+            return equipes
+        except Exception as e:
+            print(e)
+            return None

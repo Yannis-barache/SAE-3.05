@@ -759,9 +759,9 @@ def ajouter_competition():
 def participants(id_competition):
     from .form import heure_debut_form
     form = heure_debut_form()
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     try:
-        modele = ModeleAppli()
-        competition = modele.get_competition_bd().get_competition_by_id(id_competition)
         inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
         if not competition.get_is_equipe():
             inscrits = []
@@ -770,7 +770,7 @@ def participants(id_competition):
         else:
             inscrits = {}
             for i in inscription:
-                inscrits[i] = modele.get_equipe_bd().get_escrimeur_by_equipe(i.get_id_equipe())
+                inscrits[i] = modele.get_equipe_bd().get_escrimeur_by_equipe(i.get_id())
 
         arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
         arbitres = []
@@ -874,8 +874,6 @@ def podium(id_competition, full):
                     escrimeurs_matchs.append(escrimeur_1)
                 else:
                     escrimeurs_matchs.append(escrimeur_2)
-
-
     else:
         escrimeurs_matchs = None
     modele.close_connexion()
@@ -885,8 +883,8 @@ def podium(id_competition, full):
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
-    poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    poule_bd = modele.get_poule_bd()
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
     les_poules = poule_bd.get_poules_by_compet(id_competition)
@@ -906,7 +904,7 @@ def phase_finale(id_competition):
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
     return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase,
-                           les_matchs=liste_match_by_tour)
+                        les_matchs=liste_match_by_tour)
 
 
 @app.route("/arbitre/phase_finale/<id_competition>", methods=["GET", "POST"])

@@ -5,7 +5,9 @@ Fichier qui contient les requêtes SQL pour la table COMPETITION
 import sys
 import os
 from sqlalchemy.sql.expression import text
+
 from categorie_bd import CategorieBD
+from equipe_bd import EquipeBD
 from lieu_bd import LieuBD
 from arme_bd import ArmeBD
 from inscrire_bd import InscrireBD
@@ -309,29 +311,64 @@ class CompetitionBD:
         Returns:
             int: id de la phase finale
         """
-        try:
-            escrimeur_bd = EscrimeurBD(self.__connexion)
-            les_poules = PouleBD(
-                self.__connexion).get_poules_by_compet(id_compet)
-            les_inscriptions_arbitres = InscrireArbitreBD(
-                self.__connexion).get_arbitre_by_id_competition(id_compet)
-            les_arbitres = []
-            for inscrire in les_inscriptions_arbitres:
-                les_arbitres.append(
-                    escrimeur_bd.get_escrimeur_by_id(
-                        inscrire.get_id_escrimeur()))
-            les_pistes = PisteBD(
-                self.__connexion).get_pistes_by_id_competition(id_compet)
-            phase_finale, les_matchs = Competition.generer_phase_finale(
-                les_poules, les_arbitres, heure_debut, les_pistes)
-            phase = Phase(-1, id_compet)
-            id_phase = PhaseBD(self.__connexion).insert_phase(phase)
-            phase_finale.set_id_phase_f(id_phase)
-            PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
-            for match in les_matchs:
-                match.set_id_phase(id_phase)
-                MatchBD(self.__connexion).insert_match(match)
-            return id_phase
-        except Exception as e:
-            print(e)
-            return None
+        comp = self.get_competition_by_id(id_compet)
+        if not comp.get_is_equipe():
+            try:
+                escrimeur_bd = EscrimeurBD(self.__connexion)
+                les_poules = PouleBD(
+                    self.__connexion).get_poules_by_compet(id_compet)
+                les_inscriptions_arbitres = InscrireArbitreBD(
+                    self.__connexion).get_arbitre_by_id_competition(id_compet)
+                les_arbitres = []
+                for inscrire in les_inscriptions_arbitres:
+                    les_arbitres.append(
+                        escrimeur_bd.get_escrimeur_by_id(
+                            inscrire.get_id_escrimeur()))
+                les_pistes = PisteBD(
+                    self.__connexion).get_pistes_by_id_competition(comp.get_lieu().get_id())
+                phase_finale, les_matchs = Competition.generer_phase_finale(
+                    les_poules, les_arbitres, heure_debut, les_pistes)
+                phase = Phase(-1, id_compet)
+                id_phase = PhaseBD(self.__connexion).insert_phase(phase)
+                phase_finale.set_id_phase_f(id_phase)
+                PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
+                for match in les_matchs:
+                    match.set_id_phase(id_phase)
+                    MatchBD(self.__connexion).insert_match(match)
+                return id_phase
+            except Exception as e:
+                print(e)
+                return None
+        else:
+            try:
+                escrimeur_bd = EscrimeurBD(self.__connexion)
+                equipe_bd = EquipeBD(self.__connexion)
+                les_equipes = equipe_bd.get_all_equipe_by_competition(id_compet)
+                les_inscriptions_arbitres = InscrireArbitreBD(
+                    self.__connexion).get_arbitre_by_id_competition(id_compet)
+                les_arbitres = []
+                for inscrire in les_inscriptions_arbitres:
+                    les_arbitres.append(
+                        escrimeur_bd.get_escrimeur_by_id(
+                            inscrire.get_id_escrimeur()))
+                les_pistes = PisteBD(
+                    self.__connexion).get_pistes_by_id_competition(comp.get_lieu().get_id())
+                phase_finale, les_matchs = Competition.generer_phase_finale_equipe(
+                    les_equipes, les_arbitres, heure_debut, les_pistes)
+                phase = Phase(-1, id_compet)
+                id_phase = PhaseBD(self.__connexion).insert_phase(phase)
+                phase_finale.set_id_phase_f(id_phase)
+                PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
+                for match in les_matchs:
+                    match.set_id_phase(id_phase)
+                    MatchBD(self.__connexion).insert_match(match)
+                return id_phase
+            except Exception as e:
+                print(e)
+                return None
+
+if __name__ == "__main__":
+    from modele_appli import ModeleAppli
+    model = ModeleAppli()
+    comp_bd = model.get_competition_bd()
+    comp_bd.generate_phase_finale(14, 10)

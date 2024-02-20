@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="container">
-    {% if competition.get_etat() == "À venir" and not have_poule %}
+    {% if competition.get_etat() == "À venir" and not have_poule and not competition.get_is_equipe() %}
         {% if inscrits|length <=0%}
             <div class="bouton">
                 <p>Il n'y a pas d'inscrits à cette compétition</p>
@@ -95,7 +95,7 @@
         </div>
     {% endif %}
 
-    {% if fini == True and not have_phase_f == True %}
+    {% if fini == True and not have_phase_f == True or competition.get_is_equipe() and not have_phase_f %}
         <form method="post" action="{{ url_for('participants',id_competition = competition.get_id()) }}">
             {{ form.type(class="form-control",value = 2) }}
             <div class="form-group">
