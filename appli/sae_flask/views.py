@@ -763,9 +763,14 @@ def participants(id_competition):
         modele = ModeleAppli()
         competition = modele.get_competition_bd().get_competition_by_id(id_competition)
         inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-        inscrits = []
-        for i in inscription:
-            inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+        if not competition.get_is_equipe():
+            inscrits = []
+            for i in inscription:
+                inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+        else:
+            inscrits = {}
+            for i in inscription:
+                inscrits[i] = modele.get_equipe_bd().get_escrimeur_by_equipe(i.get_id_equipe())
 
         arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
         arbitres = []

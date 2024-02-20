@@ -16,13 +16,33 @@
 
     <div class="container">
         <div class="box">
-            <h3>Les escrimeurs</h3>
-            {% if inscrits|length <=0 %}
-                <p>Aucun escrimeur n'est inscrit à cette compétition</p>
+            {% if competition.get_is_equipe() %}
+            <!-- inscrits{Equipe} = [Escrimeur] -->
+
+
+                <h3>Les équipes</h3>
+                {% if inscrits|length <=0 %}
+                    <p>Aucune équipe n'est inscrite à cette compétition</p>
+                {% endif %}
+                {% for equipe in inscrits %}
+                    {% set escrimeurs = inscrits[equipe] %}
+                    <p>{{ equipe.get_nom() }}</p>
+                    <ul>
+                        {% for escrimeur in escrimeurs %}
+                            <li>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</li>
+                        {% endfor %}
+
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <h3>Les escrimeurs</h3>
+                {% if inscrits|length <=0 %}
+                    <p>Aucun escrimeur n'est inscrit à cette compétition</p>
+                {% endif %}
+                {% for escrimeur in inscrits %}
+                    <p>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
+                {% endfor %}
             {% endif %}
-            {% for escrimeur in inscrits %}
-                <p>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
-            {% endfor %}
 
         </div>
         <div class="box">
@@ -59,7 +79,7 @@
         {% endif %}
     {% endif %}
 
-    {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
+    {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" and not competition.get_is_equipe() %}
         <div class="bouton">
             <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
         </div>
@@ -67,7 +87,11 @@
 
     {% if competition.get_etat() == "Inscription ouverte" %}
         <div class="bouton">
-           <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
+            {% if competition.get_is_equipe() %}
+                <p>Les inscriptions sont ouvertes, il est impossible de faire les phases finales pour le moment</p> 
+            {% else %}
+            <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
+            {% endif %}
         </div>
     {% endif %}
 

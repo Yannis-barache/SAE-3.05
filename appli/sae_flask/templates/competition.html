@@ -51,7 +51,7 @@
         </div>
 
         <div class="div-btn center">
-            {% if poule > 0 %}
+            {% if poule > 0 and not compet.get_is_equipe() %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
                     <button type="submit" class="btn-active">voir les poules</button>
                 </form>
