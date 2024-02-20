@@ -94,12 +94,21 @@ INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCo
         (14, 'Competition en equipe','2024-05-23','hiver',2,3,12,'2024-05-15',0.7,true);
 
 
-INSERT INTO PHASE(idPhase, idCompetition) VALUES
+INSERT INTO PHASE (idPhase, idCompetition)
+values  (-10, 1),
         (1, 1),
         (2, 1),
         (3, 1),
         (4, 1),
         (5, 1),
+        (113, 1),
+        (135, 1),
+        (139, 1),
+        (140, 1),
+        (141, 1),
+        (146, 1),
+        (151, 1),
+        (162, 1),
         (6, 2),
         (7, 2),
         (8, 2),
@@ -112,7 +121,18 @@ INSERT INTO PHASE(idPhase, idCompetition) VALUES
         (15, 3),
         (16, 3),
         (17, 3),
-        (18, 3);
+        (18, 3),
+        (123, 4),
+        (60, 8),
+        (163, 8),
+        (164, 8),
+        (165, 8),
+        (166, 8),
+        (167, 8),
+        (168, 8),
+        (170, 8),
+        (171, 8),
+        (-11, 13);
 
 INSERT INTO PHASE_FINALE(idPhaseFinale) VALUES
         (1),
@@ -190,17 +210,15 @@ INSERT INTO PISTE(idPiste, idLieu,descriptionPiste) VALUES
 
 
 
-INSERT INTO MATCHS(idMatch,idEscrimeur1, idEscrimeur2, idPhase, idArbitre, heureMatch, fini) VALUES
-        (1, 1, 2, 1, 10, '10:20:00',false),
-        (2, 3, 4, 1, 2, '23:00:00',false),
-        (3, 5, 6, 1, 3, '08:20:00',false),
-        (4, 7, 8, 1, 4, '10:34:00',true),
-        (5, 9, 10, 1, 5, '16:21:00',true),
-        (6, 1, 3, 2, 6, '09:00:00',false),
-        (7, 2, 4, 2, 7, '20:30:00',true),
-        (8, 5, 7, 2, 8, '11:00:00',true),
-        (9, 6, 8, 2, 9, '12:45:00',false),
-        (10, 1, 2, 6, 10, 1, '10:20:00',false);
+INSERT INTO MATCHS (idMatch, idEscrimeur1, idEscrimeur2, idPhase, idArbitre, idPiste, heureMatch, fini)
+values  (1, 1, 2, 1, 10, 1, '10:20:00', 0),
+        (2, 3, 4, 1, 2, 2, '23:00:00', 0),
+        (4, 7, 8, 1, 4, 4, '10:34:00', 0),
+        (5, 9, 10, 1, 5, 1, '16:21:00', 0),
+        (6, 1, 3, 2, 6, 1, '09:00:00', 0),
+        (7, 2, 4, 2, 7, 2, '20:30:00', 0),
+        (8, 5, 7, 2, 8, 3, '11:00:00', 0),
+        (9, 6, 8, 2, 9, 4, '12:45:00', 0);
 
 
 INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
@@ -235,12 +253,7 @@ INSERT INTO TOUCHE(idMatch, idEscrimeur, numTouche) VALUES
         (1,2,4),
         (1,1,5),
         (1,2,6),
-        (1,1,7),
-        (1,2,8),
-        (1,1,9),
         (2,4,1),
         (2,3,2),
         (2,4,3),
-        (2,3,4),
-        (2,4,5),
-        (2,3,6);
+        (2,3,4);
