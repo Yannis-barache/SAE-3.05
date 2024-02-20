@@ -25,6 +25,7 @@ from poule_bd import PouleBD
 from touche_bd import ToucheBD
 from piste_bd import PisteBD
 from equipe_bd import EquipeBD
+from fait_partie_bd import FaitPartieBD
 
 
 class ModeleAppli:
@@ -52,6 +53,7 @@ class ModeleAppli:
         self.__touche_bd = ToucheBD(self.__connexion.get_connexion())
         self.__piste_bd = PisteBD(self.__connexion.get_connexion())
         self.__equipe_bd = EquipeBD(self.__connexion.get_connexion())
+        self.__fait_partie_bd = FaitPartieBD(self.__connexion.get_connexion())
 
     def get_arme_bd(self) -> ArmeBD:
         """
@@ -198,6 +200,15 @@ class ModeleAppli:
             EquipeBD : l'objet qui gère les interactions avec la table equipe
         """
         return self.__equipe_bd
+
+    def get_fait_partie_bd(self) -> FaitPartieBD:
+        """
+        Retourne l'objet qui gère les interactions avec la table fait_partie
+
+        Returns :
+            FaitPartieBD : l'objet qui gère les interactions avec la table fait_partie
+        """
+        return self.__fait_partie_bd
 
 
     def ouvrir_connexion(self):
