@@ -41,19 +41,21 @@ class CompetitionBD:
             query = text(
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
-                'idCategorie, coefficientCompetition FROM COMPETITION')
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION'
+            )
 
             result = self.__connexion.execute(query)
             competitions = []
+            print(result)
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
-                 id_categorie, coefficient) in result:
+                 id_categorie, coefficient, is_equipe) in result:
                 categorie = CategorieBD(
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 competitions.append(
                     Competition(id_competition, nom, date, date_fin, saison,
-                                lieu, arme, categorie, coefficient))
+                                lieu, arme, categorie, coefficient, is_equipe))
             return competitions
         except Exception as e:
             print(e)
@@ -68,17 +70,18 @@ class CompetitionBD:
             query = text(
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
-                'idCategorie, coefficientCompetition FROM COMPETITION')
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION'
+            )
             result = self.__connexion.execute(query)
             competitions = []
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
-                 id_categorie, coefficient) in result:
+                 id_categorie, coefficient, is_equipe) in result:
                 categorie = CategorieBD(
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 nombre_escrimeurs = InscrireBD(
-                    self.__connexion).get_nb_escrimeurs_competition(
+                    self.__connexion).get_nb_escsrimeurs_competition(
                         id_competition)
                 nombre_arbitres = InscrireArbitreBD(
                     self.__connexion).get_nb_arbitres_competition(
@@ -89,8 +92,8 @@ class CompetitionBD:
                     self.__connexion).exist_phase_finale(id_competition)
                 competitions.append(
                     (Competition(id_competition, nom, date, date_fin, saison,
-                                 lieu, arme, categorie,
-                                 coefficient), nombre_escrimeurs,
+                                 lieu, arme, categorie, coefficient,
+                                 is_equipe), nombre_escrimeurs,
                      nombre_arbitres, nombre_poule, exist_phase_final))
             return competitions
         except Exception as e:
@@ -107,17 +110,18 @@ class CompetitionBD:
             query = text(
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
-                'idCategorie, coefficientCompetition FROM COMPETITION '
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION '
                 'WHERE idCompetition =' + str(id_c))
             result = self.__connexion.execute(query)
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
-                 id_categorie, coefficient) in result:
+                 id_categorie, coefficient, is_equipe) in result:
                 categorie = CategorieBD(
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 return Competition(id_competition, nom, date, date_fin, saison,
-                                   lieu, arme, categorie, coefficient)
+                                   lieu, arme, categorie, coefficient,
+                                   is_equipe)
             return None
         except Exception as e:
             print(e)
@@ -133,20 +137,20 @@ class CompetitionBD:
             query = text(
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
-                'idCategorie, coefficientCompetition '
+                'idCategorie, coefficientCompetition, isEquipe '
                 'FROM COMPETITION NATURAL JOIN ARBITRER '
                 'WHERE idEscrimeur =' + str(id_e))
             result = self.__connexion.execute(query)
             competitions = []
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
-                 id_categorie, coefficient) in result:
+                 id_categorie, coefficient, is_equipe) in result:
                 categorie = CategorieBD(
                     self.__connexion).get_categorie_by_id(id_categorie)
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 competitions.append(
                     Competition(id_competition, nom, date, date_fin, saison,
-                                lieu, arme, categorie, coefficient))
+                                lieu, arme, categorie, coefficient, is_equipe))
             return competitions
         except Exception as e:
             print(e)
@@ -162,13 +166,14 @@ class CompetitionBD:
             query = text(
                 'SELECT idCompetition, nomCompetition, dateCompetition, '
                 'dateFinInscription, saisonCompetition,idLieu, idArme, '
-                'idCategorie, coefficientCompetition FROM COMPETITION '
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION '
                 'WHERE idCompetition =' + str(id_c))
             result = self.__connexion.execute(query)
             for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
-                 id_categorie, coefficient) in result:
+                 id_categorie, coefficient, is_equipe) in result:
                 return Competition(id_competition, nom, date, date_fin, saison,
-                                   id_lieu, id_arme, id_categorie, coefficient)
+                                   id_lieu, id_arme, id_categorie, coefficient,
+                                   is_equipe)
             return None
         except Exception as e:
             print(e)
@@ -184,12 +189,12 @@ class CompetitionBD:
             query = text(
                 f"INSERT INTO COMPETITION (nomCompetition, dateCompetition, "
                 f"dateFinInscription, saisonCompetition,idLieu, idArme, "
-                f"idCategorie, coefficientCompetition) VALUES "
+                f"idCategorie, coefficientCompetition, isEquipe) VALUES "
                 f"('{competition_nom}', '{competition.get_date()}', "
                 f"'{competition.get_date_fin_inscription()}', "
                 f"'{competition.get_saison()}', {competition.get_lieu().get_id()}, "
                 f"{competition.get_arme().get_id()}, "
-                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()})"
+                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()}, {competition.get_is_equipe()}"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()
@@ -225,7 +230,8 @@ class CompetitionBD:
                 f"idLieu = {competition.get_lieu().get_id()}, "
                 f"idArme = {competition.get_arme().get_id()}, "
                 f"idCategorie = {competition.get_categorie().get_id()}, "
-                f"coefficientCompetition = {competition.get_coefficient()} "
+                f"coefficientCompetition = {competition.get_coefficient()}, "
+                f"isEquipe = {competition.get_is_equipe()}"
                 f"WHERE idCompetition = {competition.get_id()}")
             self.__connexion.execute(query)
             self.__connexion.commit()

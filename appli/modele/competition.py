@@ -23,7 +23,8 @@ class Competition:
 
     def __init__(self, id_comp: int, nom: str, date_comp: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
-                 arme: Arme, categorie: Categorie, coefficient: float):
+                 arme: Arme, categorie: Categorie, coefficient: float,
+                 is_equipe: bool):
         """
         Constructeur de la classe Competition
 
@@ -46,7 +47,26 @@ class Competition:
         self.__arme = arme
         self.__categorie = categorie
         self.__coefficient = coefficient
+        self.__is_equipe = is_equipe
         self.__phase_final: PhaseFinal | None = None
+
+    def get_is_equipe(self) -> bool:
+        """
+        Fonction qui retourne si la competition est une competition par equipe
+
+        Returns :
+            bool : True si la competition est une competition par equipe, False sinon
+        """
+        return self.__is_equipe
+
+    def set_is_equipe(self, is_equipe: bool) -> None:
+        """
+        Fonction qui modifie si la competition est une competition par equipe
+
+        Args :
+            is_equipe (bool) : True si la competition est une competition par equipe, False sinon
+        """
+        self.__is_equipe = is_equipe
 
     def get_id(self) -> int:
         """
