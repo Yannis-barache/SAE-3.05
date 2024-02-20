@@ -91,7 +91,7 @@ INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCo
         (11,'Competition de Rennes', '2023-02-26', 'printemps', 3, 2, 10, '2023-02-16', 0.6, false),
         (12,'Competition de Reims', '2023-03-02', 'hiver', 1, 1, 11, '2023-02-22', 0.7, false),
         (13,'Competition de Saint-Etienne', '2023-02-23', 'hiver', 2, 3, 12, '2023-02-13', 0.8, false),
-        (14, 'Competition en equipe','2024-05-23','hiver',2,3,12,'2024-05-15',0.7,true);
+        (14, 'Competition en Equipe','2024-05-23','hiver',2,3,12,'2024-05-15',0.7,true);
 
 
 INSERT INTO PHASE (idPhase, idCompetition)

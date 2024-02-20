@@ -1062,7 +1062,7 @@ def admin_equipe():
     print(nb_equipe)
     competitions.append(Competition(1, "test", "2021-01-01", 'hiver',"2021-01-01", "test", None, None, None, 1))
     nb_equipe.append(0)
-    return render_template("Admin/equipe/comp_equipe.html",
+    return render_template("Admin/Equipe/comp_equipe.html",
                            competitions=competitions, nb_equipe=nb_equipe)
 
 @app.route("/admin/equipe/<id_competition>", methods=["GET", "POST"])
@@ -1075,9 +1075,9 @@ def modif_equipe(id_competition):
 
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    equipes = modele.get_equipe_bd().get_equipe_by_competition(id_competition)
+    equipes = modele.get_equipe_bd().get_equipe_by_id_comp(id_competition)
     modele.close_connexion()
-    return render_template("Admin/equipe/modif_equipe.html",
+    return render_template("Admin/Equipe/modif_equipe.html",
                            competition=competition, equipes=equipes)
 
 

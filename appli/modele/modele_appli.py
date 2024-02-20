@@ -194,10 +194,10 @@ class ModeleAppli:
 
     def get_equipe_bd(self) -> EquipeBD:
         """
-        Retourne l'objet qui gère les interactions avec la table equipe
+        Retourne l'objet qui gère les interactions avec la table Equipe
 
         Returns :
-            EquipeBD : l'objet qui gère les interactions avec la table equipe
+            EquipeBD : l'objet qui gère les interactions avec la table Equipe
         """
         return self.__equipe_bd
 

@@ -52,19 +52,19 @@ class Competition:
 
     def get_is_equipe(self) -> bool:
         """
-        Fonction qui retourne si la competition est une competition par equipe
+        Fonction qui retourne si la competition est une competition par Equipe
 
         Returns :
-            bool : True si la competition est une competition par equipe, False sinon
+            bool : True si la competition est une competition par Equipe, False sinon
         """
         return self.__is_equipe
 
     def set_is_equipe(self, is_equipe: bool) -> None:
         """
-        Fonction qui modifie si la competition est une competition par equipe
+        Fonction qui modifie si la competition est une competition par Equipe
 
         Args :
-            is_equipe (bool) : True si la competition est une competition par equipe, False sinon
+            is_equipe (bool) : True si la competition est une competition par Equipe, False sinon
         """
         self.__is_equipe = is_equipe
 

@@ -1,0 +1,31 @@
+.rectangle-rouge {
+    background-color: #FF0000;
+    border-radius : 10px;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+}
+
+.equipes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap : wrap;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.equipe {
+    display:flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    background: black;
+    border-radius : 10px;
+    color: white;
+    text-align: center;
+}
+

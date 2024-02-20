@@ -1,0 +1,21 @@
+{% extends "Admin/base_admin.html" %}
+
+<div class="rectangle-rouge">
+    <h1>Page de modification des équipes</h1>
+    <div class="equipes">
+        {% for equipe in equipes %}
+            <div class="equipe">
+                <h2>{{ equipe.nom }}</h2>
+                <form action="/admin/equipes/modifier" method="post">
+                    <input type="hidden" name="id" value="{{ equipe.id }}">
+                    <input type="text" name="nom" value="{{ equipe.nom }}">
+                    <input type="submit" value="Modifier">
+                </form>
+                <form action="/admin/equipes/supprimer" method="post">
+                    <input type="hidden" name="id" value="{{ equipe.id }}">
+                    <input type="submit" value="Supprimer">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
