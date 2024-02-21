@@ -9,10 +9,22 @@
     <div class="equipes">
         {% for equipe in equipes %}
             <div class="equipe">
-                <form action="/admin/equipes/modifier" method="post">
+                <form action="{{ url_for('modif_equipe',id_competition= equipe.get_id_comp()) }}" method="post">
                     <input type="hidden" name="id" value="{{ equipe.get_id() }}">
                     <input type="text" name="nom" value="{{ equipe.get_nom_equipe() }}">
-                    <input type="submit" value="Modifier">
+                    <input type="submit" value="Modifier le nom">
+                    <div class="membres">
+                        {% for escrimeur in membres[loop.index-1] %}
+                            <details>
+                                <summary>{{ escrimeur.get_nom() }}</summary>
+                                <article>
+                                    <ul>
+                                        <li></li>
+                                    </ul>
+                                </article>
+                            </details>
+                        {% endfor %}
+                    </div>
                 </form>
                 <form action="{{ url_for('supprimer_equipe', id_equipe=equipe.get_id()) }}" method="post">
                     <input type="hidden" name="id" value="{{ equipe.get_id() }}">
