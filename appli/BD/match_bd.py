@@ -90,6 +90,43 @@ class MatchBD:
             print(e)
             return None
 
+    def get_match_by_id_equipe(self, id_m: int):
+        '''
+        Fonction qui retourne un match en fonction de son id
+        :param id_m: id du match
+        :return: match
+        '''
+        try:
+            query = text(
+                'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
+                'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
+                'WHERE idMatch = ' + str(id_m))
+            result = self.__connexion.execute(query)
+            for (id_match, id_phase, id_escrimeur1, id_escrimeur2, id_arbitre,
+                 id_piste, heure, fini) in result:
+                fini = fini == 1
+                phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
+                escrimeur1 = EquipeBD(
+                    self.__connexion).get_equipe_by_id(id_escrimeur1)
+                escrimeur1.set_les_escrimeurs(
+                    EquipeBD(self.__connexion).get_escrimeur_by_equipe(
+                        id_escrimeur1))
+                escrimeur2 = EquipeBD(
+                    self.__connexion).get_equipe_by_id(id_escrimeur2)
+                escrimeur2.set_les_escrimeurs(
+                    EquipeBD(self.__connexion).get_escrimeur_by_equipe(
+                        id_escrimeur2))
+                arbitre = EscrimeurBD(
+                    self.__connexion).get_escrimeur_by_id(id_arbitre)
+                piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
+                match = Match(id_match, phase.get_id_phase(), escrimeur1,
+                              escrimeur2, arbitre, heure, fini, piste)
+                return match
+            return None
+        except Exception as e:
+            print(e)
+            return None
+
     def get_competition_by_phase(self, id_phase) -> Competition:
         """
         Fonction qui retourne une compétition en fonction de la phase

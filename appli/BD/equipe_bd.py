@@ -33,7 +33,9 @@ class EquipeBD:
             query = text(f'SELECT idEquipe, nomEquipe, idCompetition FROM EQUIPE WHERE idEquipe = {id_equipe}')
             result = self.__connexion.execute(query)
             for (id_equipe, nom_equipe, id_competition, ) in result:
-                return Equipe(id_competition, id_equipe, nom_equipe)
+                equipe = Equipe(id_competition, id_equipe, nom_equipe)
+                equipe.set_les_escrimeurs(self.get_escrimeur_by_equipe(id_equipe))
+                return equipe
         except Exception as e:
             print(e)
             return None

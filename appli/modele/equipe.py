@@ -17,6 +17,25 @@ class Equipe:
         self.__id_comp = id_comp
         self.__id = id_equipe
         self.__nom_equipe = nom_equipe
+        self.__escrimeurs = []
+
+    def set_les_escrimeurs(self, escrimeurs: list):
+        """
+        Fonction qui modifie la liste des escrimeurs
+
+        Parameters :
+            escrimeurs : list : liste des escrimeurs
+        """
+        self.__escrimeurs = escrimeurs
+
+    def get_les_escrimeurs(self) -> list:
+        """
+        Fonction qui retourne la liste des escrimeurs
+
+        Returns :
+            list : liste des escrimeurs
+        """
+        return self.__escrimeurs
 
     def get_id_comp(self) -> int:
         """

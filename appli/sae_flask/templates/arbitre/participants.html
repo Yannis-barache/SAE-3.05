@@ -108,7 +108,7 @@
     {% else %}
         {% if have_phase_f == True %}
             <div class="bouton">
-                <button class="btn btn-primary" onclick="window.location.href='{{ url_for('phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
+                <button class="btn btn-primary" onclick="window.location.href='{{ url_for('arbitre_phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
             </div>
         {% else %}
             {% if have_poule == True %}
