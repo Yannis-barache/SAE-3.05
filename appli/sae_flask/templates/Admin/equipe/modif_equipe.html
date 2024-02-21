@@ -1,21 +1,26 @@
 {% extends "Admin/base_admin.html" %}
-
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modif_equipe.css')}}">
+{% endblock %}
+{% block content %}
 <div class="rectangle-rouge">
-    <h1>Page de modification des équipes</h1>
+    <h1>Page de gestion des équipes</h1>
     <div class="equipes">
         {% for equipe in equipes %}
             <div class="equipe">
-                <h2>{{ equipe.nom }}</h2>
                 <form action="/admin/equipes/modifier" method="post">
-                    <input type="hidden" name="id" value="{{ equipe.id }}">
-                    <input type="text" name="nom" value="{{ equipe.nom }}">
+                    <input type="hidden" name="id" value="{{ equipe.get_id() }}">
+                    <input type="text" name="nom" value="{{ equipe.get_nom_equipe() }}">
                     <input type="submit" value="Modifier">
                 </form>
-                <form action="/admin/equipes/supprimer" method="post">
-                    <input type="hidden" name="id" value="{{ equipe.id }}">
+
+                <form action="{{ url_for('supprimer_equipe', id_equipe=equipe.get_id()) }}" method="post">
+                    <input type="hidden" name="id" value="{{ equipe.get_id() }}">
                     <input type="submit" value="Supprimer">
                 </form>
             </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}

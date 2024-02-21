@@ -1081,3 +1081,13 @@ def modif_equipe(id_competition):
                            competition=competition, equipes=equipes)
 
 
+@app.route("/admin/supprimer/equipe/<id_equipe>", methods=["GET", "POST"])
+def supprimer_equipe(id_equipe):
+    modele = ModeleAppli()
+    modele.get_equipe_bd().delete_equipe(id_equipe)
+    modele.close_connexion()
+    return redirect(request.referrer)
+
+
+
+

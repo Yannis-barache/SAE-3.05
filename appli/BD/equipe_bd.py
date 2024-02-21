@@ -109,6 +109,31 @@ class EquipeBD:
             print(e)
             return None
 
+    def insert_equipe(self, id_comp: int, nom_equipe: str):
+        """
+        Fonction qui insère une équipe dans la base de données
 
+        Parameters :
+            id_comp (int) : id de la competition
+            nom_equipe (str) : nom de l'équipe
+        """
+        try:
+            query = text('INSERT INTO EQUIPE (idCompetition, nomEquipe) VALUES ()')
+            self.__connexion.execute(query, id_comp=id_comp, nom_equipe=nom_equipe)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
 
+    def delete_equipe(self, id_equipe: int):
+        """
+        Fonction qui supprime une équipe de la base de données
 
+        Parameters :
+            id_equipe (int) : id de l'équipe
+        """
+        try:
+            query = text('DELETE FROM EQUIPE WHERE idEquipe = :id_equipe')
+            self.__connexion.execute(query, {'id_equipe': id_equipe})
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
