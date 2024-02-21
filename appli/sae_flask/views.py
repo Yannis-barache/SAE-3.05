@@ -1067,18 +1067,28 @@ def admin_equipe():
 
 @app.route("/admin/equipe/<id_competition>", methods=["GET", "POST"])
 def modif_equipe(id_competition):
-    if request.method == "POST":
-        if request.form['submit'] == "Ajouter":
-            return redirect(url_for('ajouter_equipe', id_competition=id_competition))
-        else:
-            return redirect(url_for('modifier_equipe', id_competition=id_competition))
-
     modele = ModeleAppli()
+    if request.method == "POST":
+        nom = request.form['nom']
+        equipe_id = request.form['id']
+        modele.get_equipe_bd().update_equipe(equipe_id, nom)
+
+
+    membres= [] # liste des escrimeurs
+
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     equipes = modele.get_equipe_bd().get_equipe_by_id_comp(id_competition)
+    for equipe in equipes:
+        id_escrimeurs_equipe = modele.get_equipe_bd().get_membres_equipe(equipe.get_id())
+        ligne = []
+        for id_escrimeur in id_escrimeurs_equipe:
+            ligne.append(modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur))
+
+        membres.append(ligne)
+    print(membres)
     modele.close_connexion()
     return render_template("Admin/Equipe/modif_equipe.html",
-                           competition=competition, equipes=equipes)
+                           competition=competition, equipes=equipes,membres = membres)
 
 
 @app.route("/admin/supprimer/equipe/<id_equipe>", methods=["GET", "POST"])
@@ -1087,6 +1097,16 @@ def supprimer_equipe(id_equipe):
     modele.get_equipe_bd().delete_equipe(id_equipe)
     modele.close_connexion()
     return redirect(request.referrer)
+
+@app.route("/admin/modif/equipe/<id_competition>", methods=["GET", "POST"])
+def modif_nom_equipe(id_competition):
+    if request.method == "POST":
+        nom = request.form['nom']
+        modele = ModeleAppli()
+        equipe = Equipe(1, nom, id_competition)
+        modele.get_equipe_bd().insert_equipe(equipe)
+        modele.close_connexion()
+        return redirect(request.referrer)
 
 
 

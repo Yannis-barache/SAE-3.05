@@ -137,3 +137,35 @@ class EquipeBD:
             self.__connexion.commit()
         except Exception as e:
             print(e)
+
+    def get_membres_equipe(self,id_equipe :int) -> list | None:
+        """
+        Fonction qui retourne les id des tireurs qui font partie d'une équipe
+        :param id_equipe: id de l'équipe
+        :return: liste d'id de tireurs
+        """
+        try:
+            query = text('SELECT idEscrimeur FROM FAIT_PARTIE WHERE idEquipe =' + str(id_equipe))
+            result = self.__connexion.execute(query)
+            id_escrimeurs = []
+            for id_escrimeur in result:
+                id_escrimeurs.append(id_escrimeur[0])
+            return id_escrimeurs
+        except Exception as e:
+            print(e)
+            return None
+
+    def update_equipe(self, id_equipe: int, nom_equipe: str):
+        """
+        Fonction qui met à jour le nom d'une équipe
+
+        Parameters :
+            id_equipe (int) : id de l'équipe
+            nom_equipe (str) : nom de l'équipe
+        """
+        try:
+            query = text('UPDATE EQUIPE SET nomEquipe = :nom_equipe WHERE idEquipe = :id_equipe')
+            self.__connexion.execute(query, {'id_equipe': id_equipe, 'nom_equipe': nom_equipe})
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
