@@ -353,6 +353,34 @@ end |
 delimiter ;
 
 
+-- Trigger qui supprime les inscriptions d'un escrimeur si il est supprimé
+delimiter |
+CREATE OR REPLACE trigger supprime_inscription before delete on ESCRIMEUR
+for each row
+begin
+    delete from INSCRIRE where idEscrimeur=old.idEscrimeur;
+end |
+delimiter ;
+
+-- Trigger qui supprime dans FAIT_PARTIE si un escrimeur est supprimé
+delimiter |
+CREATE OR REPLACE trigger supprime_fait_partie before delete on ESCRIMEUR
+for each row
+begin
+    delete from FAIT_PARTIE where idEscrimeur=old.idEscrimeur;
+end |
+
+-- Trigger qui supprime dans FAIT_PARTIE si une équipe est supprimée
+delimiter |
+CREATE OR REPLACE trigger supprime_fait_partie2 before delete on EQUIPE
+for each row
+begin
+    delete from FAIT_PARTIE where idEquipe=old.idEquipe;
+end |
+
+
+
+
 -- PROCEDURE
 
 

@@ -2,6 +2,7 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/modif_equipe.css')}}">
+<script src="{{ url_for('static', filename='js/ajouter_equipe.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="rectangle-rouge">
@@ -9,7 +10,7 @@
     <div class="equipes">
         {% for equipe in equipes %}
             <div class="equipe">
-                <form action="{{ url_for('modif_equipe',id_competition= equipe.get_id_comp()) }}" method="post">
+                <form action="{{ url_for('modif_equipe',id_competition= id_comp) }}" method="post">
                     <input type="hidden" name="id" value="{{ equipe.get_id() }}">
                     <input type="text" name="nom" value="{{ equipe.get_nom_equipe() }}">
                     <input type="submit" value="Modifier le nom">
@@ -32,6 +33,17 @@
                 </form>
             </div>
         {% endfor %}
+    </div>
+    <button onclick="createAddTeamForm()">Ajout Equipe</button>
+    <div id="formContainer">
+        <form method="post" action="{{ url_for('modif_equipe',id_competition = id_comp) }}">
+            <input type="hidden" name="id" value="-1">
+            <label>
+                <input type="text" name="nom" placeholder="Nom de la nouvelle équipe">
+            </label>
+            <input type="submit" value="Ajouter une équipe">
+        </form>
+
     </div>
 </div>
 {% endblock %}

@@ -5,7 +5,6 @@ import os
 from .app import app
 from flask import render_template, redirect, url_for, request
 
-
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 from escrimeur import Escrimeur
@@ -1068,10 +1067,14 @@ def admin_equipe():
 @app.route("/admin/equipe/<id_competition>", methods=["GET", "POST"])
 def modif_equipe(id_competition):
     modele = ModeleAppli()
-    if request.method == "POST":
+    if request.method == "POST" and "id" in request.form:
         nom = request.form['nom']
         equipe_id = request.form['id']
-        modele.get_equipe_bd().update_equipe(equipe_id, nom)
+        if equipe_id == "-1":
+            modele.get_equipe_bd().insert_equipe(id_competition, nom)
+        else:
+            modele.get_equipe_bd().update_equipe(equipe_id, nom)
+
 
 
     membres= [] # liste des escrimeurs
@@ -1088,7 +1091,7 @@ def modif_equipe(id_competition):
     print(membres)
     modele.close_connexion()
     return render_template("Admin/Equipe/modif_equipe.html",
-                           competition=competition, equipes=equipes,membres = membres)
+                           competition=competition, equipes=equipes,membres = membres,id_comp=id_competition)
 
 
 @app.route("/admin/supprimer/equipe/<id_equipe>", methods=["GET", "POST"])
