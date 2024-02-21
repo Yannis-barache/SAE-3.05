@@ -54,14 +54,14 @@ class EquipeBD:
         """
         Fonction qui retourne une équipe en fonction de son id
         :param id_equipe: id de l'équipe
-        :return: équipe
+        :return: L'équipe avec l'id correspondant
         """
         try:
             query = text('SELECT idCompetition, idEquipe, nomEquipe FROM EQUIPE '
                          'WHERE idEquipe =' + str(id_equipe))
             result = self.__connexion.execute(query)
-            for id_comp, id_equipe, nom_equipe in result:
-                return Equipe(id_comp, id_equipe, nom_equipe)
+            for id_comp, id_equipe_local, nom_equipe in result:
+                return Equipe(id_comp, id_equipe_local, nom_equipe)
             return None
         except Exception as e:
             print(e)
@@ -83,8 +83,8 @@ class EquipeBD:
                          'WHERE idCompetition =' + str(id_comp))
             result = self.__connexion.execute(query)
             equipes = []
-            for id_comp, id_equipe, nom_equipe in result:
-                equipes.append(Equipe(id_comp, id_equipe, nom_equipe))
+            for id_comp_local, id_equipe, nom_equipe in result:
+                equipes.append(Equipe(id_comp_local, id_equipe, nom_equipe))
             return equipes
         except Exception as e:
             print(e)
