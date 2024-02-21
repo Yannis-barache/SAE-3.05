@@ -200,14 +200,20 @@ def page_de_match(id_match):
         le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    if la_competition.get_is_equipe():
+        le_match = modele.get_match_bd().get_match_by_id_equipe(id_match)
+    else:
+        le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     phase_match = match_bd.get_type_phase(le_match)
-    if phase_match == 1:
-        nombre_touche_max = 9
+    if la_competition.get_is_equipe():
+        nombre_touche_max = 45
     else:
-        nombre_touche_max = 29
+        if phase_match == 1:
+            nombre_touche_max = 9
+        else:
+            nombre_touche_max = 29
     modele.close_connexion()
     return render_template("page_de_match.html",
                            match=le_match,
