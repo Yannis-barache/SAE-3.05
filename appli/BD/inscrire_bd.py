@@ -53,7 +53,8 @@ class InscrireBD:
                 result = self.__connexion.execute(query)
                 inscrires = []
                 for (id_escrimeur, ) in result:
-                    inscrires.append(Inscrire(competition.get_id(), id_escrimeur))
+                    inscrires.append(
+                        Inscrire(competition.get_id(), id_escrimeur))
                 return inscrires
             else:
                 query = text(
@@ -61,8 +62,12 @@ class InscrireBD:
                 )
                 result = self.__connexion.execute(query)
                 inscrires = []
-                for (id_equipe, nom_equipe, ) in result:
-                    inscrires.append(Equipe(competition.get_id(), id_equipe, nom_equipe))
+                for (
+                        id_equipe,
+                        nom_equipe,
+                ) in result:
+                    inscrires.append(
+                        Equipe(competition.get_id(), id_equipe, nom_equipe))
                 return inscrires
         except Exception as e:
             print(e)

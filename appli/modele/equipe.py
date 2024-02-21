@@ -4,6 +4,8 @@ Module contenant la classe Equipe
 import sys
 import os
 
+from escrimeur import Escrimeur
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
@@ -17,9 +19,9 @@ class Equipe:
         self.__id_comp = id_comp
         self.__id = id_equipe
         self.__nom_equipe = nom_equipe
-        self.__escrimeurs = []
+        self.__escrimeurs: list[Escrimeur] | None = []
 
-    def set_les_escrimeurs(self, escrimeurs: list):
+    def set_les_escrimeurs(self, escrimeurs: list[Escrimeur] | None):
         """
         Fonction qui modifie la liste des escrimeurs
 
@@ -28,7 +30,7 @@ class Equipe:
         """
         self.__escrimeurs = escrimeurs
 
-    def get_les_escrimeurs(self) -> list:
+    def get_les_escrimeurs(self) -> list[Escrimeur] | None:
         """
         Fonction qui retourne la liste des escrimeurs
 

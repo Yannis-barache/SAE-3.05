@@ -131,8 +131,8 @@ class PhaseFinal:
         return liste_matchs
 
     def generer_les_matchs_equipe(self, liste_equipes: list[Equipe],
-                                    liste_arbitres: list[Escrimeur],
-                                    heure_debut: float) -> list[Match]:
+                                  liste_arbitres: list[Escrimeur],
+                                  heure_debut: float) -> list[Match]:
         """
         Fonction qui génère les matchs de la phase finale pour les équipes
 
@@ -153,7 +153,8 @@ class PhaseFinal:
             arbitre = random.choice(liste_arbitres)
             liste_matchs.append(
                 Match(-1, self.__id_phase_f, equipe1, equipe2, arbitre,
-                      heure_debut, False, self.__les_pistes[self.__index_piste]))
+                      heure_debut, False,
+                      self.__les_pistes[self.__index_piste]))
             self.__index_piste += 1
             if self.__index_piste == len(self.__les_pistes):
                 self.__index_piste = 0

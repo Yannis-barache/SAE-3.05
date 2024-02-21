@@ -108,14 +108,20 @@ class MatchBD:
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
                 escrimeur1 = EquipeBD(
                     self.__connexion).get_equipe_by_id(id_escrimeur1)
-                escrimeur1.set_les_escrimeurs(
-                    EquipeBD(self.__connexion).get_escrimeur_by_equipe(
-                        id_escrimeur1))
+                if escrimeur1 is not None:
+                    escrimeur1.set_les_escrimeurs(
+                        EquipeBD(self.__connexion).get_escrimeur_by_equipe(
+                            id_escrimeur1))
+                else:
+                    return None
                 escrimeur2 = EquipeBD(
                     self.__connexion).get_equipe_by_id(id_escrimeur2)
-                escrimeur2.set_les_escrimeurs(
-                    EquipeBD(self.__connexion).get_escrimeur_by_equipe(
-                        id_escrimeur2))
+                if escrimeur2 is not None:
+                    escrimeur2.set_les_escrimeurs(
+                        EquipeBD(self.__connexion).get_escrimeur_by_equipe(
+                            id_escrimeur2))
+                else:
+                    return None
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)
@@ -127,7 +133,7 @@ class MatchBD:
             print(e)
             return None
 
-    def get_competition_by_phase(self, id_phase) -> Competition:
+    def get_competition_by_phase(self, id_phase) -> Competition | None:
         """
         Fonction qui retourne une compétition en fonction de la phase
         :param id_phase: id de la phase
@@ -139,6 +145,7 @@ class MatchBD:
             result = self.__connexion.execute(query)
             for (id_competition, ) in result:
                 return self.get_competition_by_id(id_competition)
+            return None
         except Exception as e:
             print(e)
             return None
@@ -178,6 +185,8 @@ class MatchBD:
         '''
         try:
             comp = self.get_competition_by_phase(id_p)
+            if comp is None:
+                return None
             query = text(
                 'SELECT idMatch, idPhase, idEscrimeur1, idEscrimeur2, '
                 'idArbitre, idPiste, heureMatch, fini FROM MATCHS '
@@ -188,14 +197,16 @@ class MatchBD:
                  id_piste, heure, fini) in result:
                 fini = fini == 1
                 phase = PhaseBD(self.__connexion).get_phase_by_id(id_phase)
-                if not comp.get_is_equipe() :
+                if not comp.get_is_equipe():
                     escrimeur1 = EscrimeurBD(
                         self.__connexion).get_escrimeur_by_id(id_escrimeur1)
                     escrimeur2 = EscrimeurBD(
                         self.__connexion).get_escrimeur_by_id(id_escrimeur2)
                 else:
-                    escrimeur1 = EquipeBD(self.__connexion).get_equipe_by_id(id_escrimeur1)
-                    escrimeur2 = EquipeBD(self.__connexion).get_equipe_by_id(id_escrimeur2)
+                    escrimeur1 = EquipeBD(
+                        self.__connexion).get_equipe_by_id(id_escrimeur1)
+                    escrimeur2 = EquipeBD(
+                        self.__connexion).get_equipe_by_id(id_escrimeur2)
                 arbitre = EscrimeurBD(
                     self.__connexion).get_escrimeur_by_id(id_arbitre)
                 piste = PisteBD(self.__connexion).get_piste_by_id(id_piste)

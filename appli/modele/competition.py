@@ -436,7 +436,8 @@ class Competition:
         return phase_finale, les_matchs
 
     @staticmethod
-    def generer_phase_finale_equipe(les_equipes, les_arbitres, heure_debut, les_pistes) -> tuple[PhaseFinal, list]:
+    def generer_phase_finale_equipe(les_equipes, les_arbitres, heure_debut,
+                                    les_pistes) -> tuple[PhaseFinal, list]:
         """
         Fonction qui genere la phase finale de la competition par equipe
 
@@ -451,9 +452,9 @@ class Competition:
         """
         phase_finale = PhaseFinal(-1)
         phase_finale.set_les_pistes(les_pistes)
-        les_matchs = phase_finale.generer_les_matchs_equipe(les_equipes, les_arbitres, heure_debut)
+        les_matchs = phase_finale.generer_les_matchs_equipe(
+            les_equipes, les_arbitres, heure_debut)
         return phase_finale, les_matchs
-
 
     def get_nombre_escrimeur_phase_finale(self, les_poules) -> int:
         """

@@ -325,13 +325,15 @@ class CompetitionBD:
                         escrimeur_bd.get_escrimeur_by_id(
                             inscrire.get_id_escrimeur()))
                 les_pistes = PisteBD(
-                    self.__connexion).get_pistes_by_id_competition(comp.get_lieu().get_id())
+                    self.__connexion).get_pistes_by_id_competition(
+                        comp.get_lieu().get_id())
                 phase_finale, les_matchs = Competition.generer_phase_finale(
                     les_poules, les_arbitres, heure_debut, les_pistes)
                 phase = Phase(-1, id_compet)
                 id_phase = PhaseBD(self.__connexion).insert_phase(phase)
                 phase_finale.set_id_phase_f(id_phase)
-                PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
+                PhaseFinaleBD(
+                    self.__connexion).insert_phase_finale(phase_finale)
                 for match in les_matchs:
                     match.set_id_phase(id_phase)
                     MatchBD(self.__connexion).insert_match(match)
@@ -343,7 +345,8 @@ class CompetitionBD:
             try:
                 escrimeur_bd = EscrimeurBD(self.__connexion)
                 equipe_bd = EquipeBD(self.__connexion)
-                les_equipes = equipe_bd.get_all_equipe_by_competition(id_compet)
+                les_equipes = equipe_bd.get_all_equipe_by_competition(
+                    id_compet)
                 les_inscriptions_arbitres = InscrireArbitreBD(
                     self.__connexion).get_arbitre_by_id_competition(id_compet)
                 les_arbitres = []
@@ -352,13 +355,15 @@ class CompetitionBD:
                         escrimeur_bd.get_escrimeur_by_id(
                             inscrire.get_id_escrimeur()))
                 les_pistes = PisteBD(
-                    self.__connexion).get_pistes_by_id_competition(comp.get_lieu().get_id())
+                    self.__connexion).get_pistes_by_id_competition(
+                        comp.get_lieu().get_id())
                 phase_finale, les_matchs = Competition.generer_phase_finale_equipe(
                     les_equipes, les_arbitres, heure_debut, les_pistes)
                 phase = Phase(-1, id_compet)
                 id_phase = PhaseBD(self.__connexion).insert_phase(phase)
                 phase_finale.set_id_phase_f(id_phase)
-                PhaseFinaleBD(self.__connexion).insert_phase_finale(phase_finale)
+                PhaseFinaleBD(
+                    self.__connexion).insert_phase_finale(phase_finale)
                 for match in les_matchs:
                     match.set_id_phase(id_phase)
                     MatchBD(self.__connexion).insert_match(match)
@@ -367,7 +372,7 @@ class CompetitionBD:
                 print(e)
                 return None
 
-    def get_competition_by_phase(self, id_phase) -> Competition:
+    def get_competition_by_phase(self, id_phase) -> Competition | None:
         """
         Fonction qui retourne une compétition en fonction de la phase
         :param id_phase: id de la phase
@@ -379,7 +384,7 @@ class CompetitionBD:
             result = self.__connexion.execute(query)
             for (id_competition, ) in result:
                 return self.get_competition_by_id(id_competition)
+            return None
         except Exception as e:
             print(e)
             return None
-
