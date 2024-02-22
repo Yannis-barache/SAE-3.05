@@ -140,7 +140,7 @@ class EquipeBD:
         except Exception as e:
             print(e)
 
-    def get_membres_equipe(self,id_equipe :int) -> list | None:
+    def get_membres_equipe(self, id_equipe: int) -> list | None:
         """
         Fonction qui retourne les id des tireurs qui font partie d'une équipe
         :param id_equipe: id de l'équipe
@@ -157,7 +157,7 @@ class EquipeBD:
             print(e)
             return None
 
-    def update_equipe(self, id_equipe: int, nom_equipe: str):
+    def update_equipe(self, id_equipe: int, nom_equipe: str) -> None:
         """
         Fonction qui met à jour le nom d'une équipe
 
@@ -171,6 +171,7 @@ class EquipeBD:
             self.__connexion.commit()
         except Exception as e:
             print(e)
+            return None
 
     def get_max_id(self) -> int:
         """
@@ -180,19 +181,26 @@ class EquipeBD:
         try:
             query = text('SELECT MAX(idEquipe) FROM EQUIPE')
             result = self.__connexion.execute(query)
-            for id_equipe in result:
-                return id_equipe[0]
+            return result.fetchone()[0]
         except Exception as e:
             print(e)
-            return None
+            return 0
 
+    def supprimer_composition(self, id_equipe: int) -> bool:
+        """
+        Fonction qui supprime la composition d'une équipe
 
-    def supprimer_composition(self, id_equipe : int):
+        Parameters :
+            id_equipe (int) : id de l'équipe
+        Returns :
+            bool : True si la suppression a réussi, False sinon
+
+        """
         try:
             query = text('DELETE FROM FAIT_PARTIE WHERE idEquipe = :id_equipe')
             self.__connexion.execute(query, {'id_equipe': id_equipe})
             self.__connexion.commit()
+            return True
         except Exception as e:
             print(e)
-
-
+            return False
