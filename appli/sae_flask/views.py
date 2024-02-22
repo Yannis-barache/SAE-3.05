@@ -1078,6 +1078,7 @@ def modif_equipe(id_competition):
 
 
     membres= [] # liste des escrimeurs
+    escrimeurs = modele.get_escrimeur_bd().get_all_escrimeur()
 
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     equipes = modele.get_equipe_bd().get_equipe_by_id_comp(id_competition)
@@ -1088,10 +1089,13 @@ def modif_equipe(id_competition):
             ligne.append(modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur))
 
         membres.append(ligne)
-    print(membres)
+
+    membres_id = [[membre.get_id() for membre in liste] for liste in membres]
+    print(membres_id)
     modele.close_connexion()
     return render_template("Admin/Equipe/modif_equipe.html",
-                           competition=competition, equipes=equipes,membres = membres,id_comp=id_competition)
+                           competition=competition, equipes=equipes,membres = membres,id_comp=id_competition,
+                           escrimeurs=escrimeurs,membres_ids=membres_id)
 
 
 @app.route("/admin/supprimer/equipe/<id_equipe>", methods=["GET", "POST"])
@@ -1108,6 +1112,16 @@ def modif_nom_equipe(id_competition):
         modele = ModeleAppli()
         equipe = Equipe(1, nom, id_competition)
         modele.get_equipe_bd().insert_equipe(equipe)
+        modele.close_connexion()
+        return redirect(request.referrer)
+
+@app.route("/admin/equipe/modification_composition/<id_equipe>", methods=["GET", "POST"])
+def modif_compo(id_equipe):
+    if request.method == "POST":
+        print(request.form)
+        id_escrimeur = request.form['id_escrimeur']
+        modele = ModeleAppli()
+        modele.get_equipe_bd().insert_membre(id_equipe, id_escrimeur)
         modele.close_connexion()
         return redirect(request.referrer)
 
