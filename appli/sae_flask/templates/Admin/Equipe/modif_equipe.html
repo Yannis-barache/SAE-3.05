@@ -18,18 +18,28 @@
                     <input type="submit" value="Modifier le nom">
 
                 </form>
-                <form action="{{ url_for('modif_compo',id_equipe=equipe.get_id()) }}" method="post">
-                    <div class="membres">
-                        {% for i in range(4) %}
-                            <h2>Escrimeur {{ i+1 }}</h2>
-                            <select name="escrimeur{{ i+1 }}" required>
-                                <option value="-1">Aucun</option>
-                                {% for escrimeur in escrimeurs %}
-                                    <option value="{{ escrimeur.get_id() }}" {% if escrimeur.get_id() == membres_ids_local[i] %} selected {% endif %}>{{ escrimeur.get_nom() }}</option>
+                <details>
+                    <summary>Composition</summary>
+                        <form id="compo" action="{{ url_for('modif_compo',id_equipe=equipe.get_id()) }}" method="post">
+                            <input type="hidden" name="id" value="{{ equipe.get_id() }}">
+                            <div class="membres">
+                                {% for i in range(4) %}
+                                    <h2>Escrimeur {{ i+1 }}</h2>
+                                    <select name="escrimeur{{ i+1 }}" required>
+                                        <option value="-1">Aucun</option>
+                                        {% for escrimeur in escrimeurs %}
+                                            <option value="{{ escrimeur.get_id() }}" {% if escrimeur.get_id() == membres_ids_local[i] %} selected {% endif %}>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</option>
+                                        {% endfor %}
+                                    </select>
                                 {% endfor %}
-                            </select>
-                        {% endfor %}
-                    </div>
+                            </div>
+
+                            <div>
+                                <input type="submit" value="Modifier la composition">
+                            </div>
+                        </form>
+                </details>
+
 
                 <form action="{{ url_for('supprimer_equipe', id_equipe=equipe.get_id()) }}" method="post">
                     <input type="hidden" name="id" value="{{ equipe.get_id() }}">
