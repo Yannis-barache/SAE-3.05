@@ -105,6 +105,10 @@ footer{
 .list-footer{
     float: right;
     font-weight: bold;
+    display: flex
+    justify-content: center;
+    align-items: center;
+    align-content: center;
    
 }
 
@@ -115,7 +119,7 @@ footer{
 
 
 .univ, .iut{
-    width: 12%;
+    width: 10%;
     margin-top: 1.5em;
 }
 
@@ -124,5 +128,9 @@ footer{
 }
 
 .logo-escrime-blanc{
-    width: 15%;
+    width: 10%;
+}
+
+.num{
+    margin-top:1em;
 }
