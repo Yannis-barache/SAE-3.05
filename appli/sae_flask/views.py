@@ -284,8 +284,12 @@ def telecharger_pdf_phase(id_compet, id_phase):
 @app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
 def telecharger_pdf_match(id_match):
     modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id_match(id_match)
     match_bd = modele.get_match_bd()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    if not competition.get_is_equipe():
+        le_match = modele.get_match_bd().get_match_by_id(id_match)
+    else:
+        le_match = modele.get_match_bd().get_match_by_id_equipe(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     phase_match = match_bd.get_type_phase(le_match)
@@ -293,7 +297,7 @@ def telecharger_pdf_match(id_match):
         le_match.set_type_phase("Poule")
     else:
         le_match.set_type_phase("Phase finale")
-    le_match.generer_pdf()
+    le_match.generer_pdf(competition.get_is_equipe())
     modele.close_connexion()
     return redirect(request.referrer)
 

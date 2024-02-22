@@ -34,6 +34,24 @@ class CompetitionBD:
     def __init__(self, connexion):
         self.__connexion = connexion
 
+    def get_competition_by_id_match(self, id_match: int):
+        """
+        Fonction qui retourne une competition en fonction de l'id d'un match
+        :param id_match: id du match
+        :return: competition
+        """
+        try:
+            query = text(
+                f'SELECT idCompetition FROM PHASE natural join MATCHS WHERE idMatch = {id_match}'
+            )
+            result = self.__connexion.execute(query)
+            for (id_competition, ) in result:
+                return self.get_competition_by_id(id_competition)
+            return None
+        except Exception as e:
+            print(e)
+            return None
+
     def get_all_competition(self):
         """
         Fonction qui retourne toutes les competitions
