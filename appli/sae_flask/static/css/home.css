@@ -104,4 +104,21 @@ footer{
 
 .list-footer{
     float: right;
+    font-weight: bold;
+   
+}
+
+.list-footer a{
+     text-decoration: none;
+     color : white;
+}
+
+
+.univ, .iut{
+    width: 12%;
+    margin-top: 1.5em;
+}
+
+.univ{
+    margin-left: 2em;
 }
