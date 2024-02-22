@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     selects.forEach((select, index) => {
         select.addEventListener('change', (event) => {
+            // Si l'option sélectionnée est "Aucun", ne faites rien
+            if (event.target.value === 'Aucun') {
+                return;
+            }
+
             // Réactivez toutes les options dans tous les champs de sélection
             selects.forEach((s) => {
                 for (let option of s.options) {
@@ -34,7 +39,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             selects.forEach((s) => {
                 if (s !== event.target) {
                     for (let option of s.options) {
-                        if (option.value === event.target.value) {
+                        // Si l'option est "Aucun", ne la désactivez pas
+                        if (option.value !== 'Aucun' && option.value === event.target.value) {
                             option.disabled = true;
                         }
                     }

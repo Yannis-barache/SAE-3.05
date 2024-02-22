@@ -43,3 +43,18 @@ class FaitPartieBD:
         except Exception as e:
             print(e)
             return None
+
+    def modif_composition(self, id_equipe: int, id_tireur: int, role: str):
+        """
+        Fonction qui modifie la composition d'une équipe
+        :param id_equipe: id de l'équipe
+        :param id_tireur: id du tireur
+        """
+        try:
+            query = text('INSERT INTO FAIT_PARTIE (idEquipe, idEscrimeur,role) VALUES (:id_equipe, :id_tireur, :role)')
+            self.__connexion.execute(query, {'id_equipe': id_equipe, 'id_tireur': id_tireur, 'role': role})
+            self.__connexion.commit()
+            print("Ajouté")
+        except Exception as e:
+            print(e)
+            return None

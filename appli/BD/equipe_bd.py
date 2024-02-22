@@ -185,3 +185,14 @@ class EquipeBD:
         except Exception as e:
             print(e)
             return None
+
+
+    def supprimer_composition(self, id_equipe : int):
+        try:
+            query = text('DELETE FROM FAIT_PARTIE WHERE idEquipe = :id_equipe')
+            self.__connexion.execute(query, {'id_equipe': id_equipe})
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+
+
