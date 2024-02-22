@@ -118,10 +118,10 @@ class EquipeBD:
             nom_equipe (str) : nom de l'équipe
         """
         try:
-            id = self.get_max_id() + 1
+            id_max = self.get_max_id() + 1
             query = text('INSERT INTO EQUIPE (idEquipe,idCompetition, nomEquipe) '
                          'VALUES (:id_equipe, :id_comp, :nom_equipe)')
-            self.__connexion.execute(query, {'id_equipe': id, 'id_comp': id_comp, 'nom_equipe': nom_equipe})
+            self.__connexion.execute(query, {'id_equipe': id_max, 'id_comp': id_comp, 'nom_equipe': nom_equipe})
             self.__connexion.commit()
         except Exception as e:
             print(e)
