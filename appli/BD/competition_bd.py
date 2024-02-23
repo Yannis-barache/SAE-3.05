@@ -406,3 +406,28 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_competition_equipe(self):
+        try:
+            query = text(
+                'SELECT idCompetition, nomCompetition, dateCompetition, '
+                'dateFinInscription, saisonCompetition,idLieu, idArme, '
+                'idCategorie, coefficientCompetition, isEquipe FROM COMPETITION'
+                ' where isEquipe=1'
+            )
+
+            result = self.__connexion.execute(query)
+            competitions = []
+            for (id_competition, nom, date, date_fin, saison, id_lieu, id_arme,
+                 id_categorie, coefficient, is_equipe) in result:
+                categorie = CategorieBD(
+                    self.__connexion).get_categorie_by_id(id_categorie)
+                lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
+                arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
+                competition =Competition(id_competition, nom, date, date_fin, saison,
+                                lieu, arme, categorie, coefficient, is_equipe)
+                competitions.append(competition)
+            return competitions
+        except Exception as e:
+            print(e)
+            return None

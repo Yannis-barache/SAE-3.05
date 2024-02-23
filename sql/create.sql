@@ -47,6 +47,7 @@ CREATE TABLE COMPETITION(
     idLieu INT(10) NOT NULL,
     dateFinInscription DATE,
     coefficientCompetition decimal(3,3),
+    isEquipe bool,
     PRIMARY KEY (idCompetition),
     FOREIGN KEY (idArme) REFERENCES ARMES(idArme),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie),
@@ -142,6 +143,22 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
+CREATE TABLE EQUIPE(
+    idEquipe INT(10) NOT NULL ,
+    nomEquipe VARCHAR(150) NOT NULL,
+    idCompetition INT(10) NOT NULL ,
+    PRIMARY KEY (idEquipe,idCompetition),
+    FOREIGN KEY (idCompetition) REFERENCES COMPETITION(idCompetition)
+);
+
+CREATE TABLE FAIT_PARTIE(
+    idEquipe INT(10) NOT NULL,
+    idEscrimeur INT(10) NOT NULL ,
+    role VARCHAR(40) NOT NULL ,
+    PRIMARY KEY (idEquipe,idEscrimeur),
+    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur),
+    FOREIGN KEY (idEquipe) REFERENCES EQUIPE(idEquipe)
+);
 
 -- TRIGGER
 
@@ -341,6 +358,34 @@ end |
 delimiter ;
 
 
+-- Trigger qui supprime les inscriptions d'un escrimeur si il est supprimé
+delimiter |
+CREATE OR REPLACE trigger supprime_inscription before delete on ESCRIMEUR
+for each row
+begin
+    delete from INSCRIRE where idEscrimeur=old.idEscrimeur;
+end |
+delimiter ;
+
+-- Trigger qui supprime dans FAIT_PARTIE si un escrimeur est supprimé
+delimiter |
+CREATE OR REPLACE trigger supprime_fait_partie before delete on ESCRIMEUR
+for each row
+begin
+    delete from FAIT_PARTIE where idEscrimeur=old.idEscrimeur;
+end |
+
+-- Trigger qui supprime dans FAIT_PARTIE si une équipe est supprimée
+delimiter |
+CREATE OR REPLACE trigger supprime_fait_partie2 before delete on EQUIPE
+for each row
+begin
+    delete from FAIT_PARTIE where idEquipe=old.idEquipe;
+end |
+
+
+
+
 -- PROCEDURE
 
 
@@ -428,7 +473,7 @@ delimiter ;
 -- Création de la procédure stockée pour tuer les sessions en sommeil
 DELIMITER //
 
-CREATE PROCEDURE TuerConnexionsEnSommeil()
+CREATE or replace PROCEDURE TuerConnexionsEnSommeil()
 BEGIN
     DECLARE termine INT DEFAULT 0;
     DECLARE requete_a_tuer VARCHAR(255);
