@@ -162,6 +162,20 @@ class Match:
         else:
             return None
 
+    def get_perdant(self):
+        """
+        Fonction qui retourne le perdant du match
+
+        Returns :
+            Escrimeur | None : perdant du match
+        """
+        gagant = self.get_gagnant()
+        if gagant is None:
+            return None
+        if gagant.get_id() == self.__escrimeur1.get_id():
+            return self.__escrimeur2
+        return self.__escrimeur1
+
     def get_piste(self) -> Piste:
         """
         Fonction qui retourne la piste du match

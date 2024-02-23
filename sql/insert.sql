@@ -257,3 +257,27 @@ INSERT INTO TOUCHE(idMatch, idEscrimeur, numTouche) VALUES
         (2,3,2),
         (2,4,3),
         (2,3,4);
+
+INSERT INTO EQUIPE (idEquipe, nomEquipe, idCompetition) VALUES
+        (1, "Equipe A", 14),
+        (2, "Equipe B", 14),
+        (3, "Equipe C", 14),
+        (4, "Equipe D", 14);
+
+INSERT INTO FAIT_PARTIE (idEscrimeur, idEquipe, role) VALUES
+        (1, 1, "Tireur"),
+        (2, 1, "Tireur"),
+        (3, 1, "Tireur"),
+        (4, 1, "Remplacent"),
+        (5, 2, "Tireur"),
+        (6, 2, "Tireur"),
+        (7, 2, "Tireur"),
+        (8, 2, "Remplacent"),
+        (9, 3, "Tireur"),
+        (10, 3, "Tireur"),
+        (11, 3, "Tireur"),
+        (12, 3, "Remplacent"),
+        (13, 4, "Tireur"),
+        (14, 4, "Tireur"),
+        (15, 4, "Tireur"),
+        (16, 4, "Remplacent");
