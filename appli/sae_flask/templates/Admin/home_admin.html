@@ -14,7 +14,6 @@
 {% block content %}
 
 <div class="ligne1">
-
     <button id="auteurs" class="btn-groupe">
         <a href="{{ url_for('admin_competition') }}">
             <p>Compétitions</p>
@@ -36,26 +35,17 @@
             <img class="img" src="{{ url_for('static', filename='img/club.png')}}" alt="user">
         </a>
     </button>
+    </div>
 
+    <div class="ligne2">
+        <button class="btn-groupe">
+            <a href="{{ url_for('admin_lieu') }}">
+                <p>Lieux</p>
+                <img class="img" src="{{ url_for('static', filename='img/lieu.png')}}" alt="eval">
+            </a>
+        </button>
 
-    <button class="btn-groupe">
-        <a href="{{ url_for('admin_lieu') }}">
-            <p>Lieux</p>
-            <img class="img" src="{{ url_for('static', filename='img/lieu.png')}}" alt="eval">
-        </a>
-    </button>
-
-    <button class="btn-groupe">
-        <a href="{{ url_for('admin_equipe') }}">
-            <p>Les équipes</p>
-            <img class="img" src="{{ url_for('static', filename='img/team.png') }}" alt="equipe">
-        </a>
-    </button>
-
-</div>
-
-
-
+    </div>
 
 
 {% endblock %}

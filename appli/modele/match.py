@@ -15,8 +15,9 @@ class Match:
     Classe Match
     """
 
-    def __init__(self, id_match: int, id_phase: int, escrimeur1, escrimeur2,
-                 arbitre: Escrimeur, heure: float, finis: bool, piste: Piste):
+    def __init__(self, id_match: int, id_phase: int, escrimeur1: Escrimeur,
+                 escrimeur2: Escrimeur, arbitre: Escrimeur, heure: float,
+                 finis: bool, piste: Piste):
         self.__id = id_match
         self.__id_phase = id_phase
         self.__escrimeur1 = escrimeur1
@@ -302,7 +303,7 @@ class Match:
         """
         self.__piste = piste
 
-    def generer_pdf(self, is_equipe) -> None:
+    def generer_pdf(self) -> None:
         """
         Fonction qui génère le pdf du match
         """
@@ -319,14 +320,14 @@ class Match:
             letter[0] / 2, 720, 'Arbitre : ' + str(self.__arbitre.get_nom()) +
             ' ' + str(self.__arbitre.get_prenom()))
         canva.setFont('Helvetica', 18)
-        self.dessiner_escrimeur1(canva, is_equipe)
-        self.dessiner_escrimeur2(canva, is_equipe)
+        self.dessiner_escrimeur1(canva)
+        self.dessiner_escrimeur2(canva)
         self.dessiner_score(canva)
-        self.dessinner_touche(canva, is_equipe)
+        self.dessinner_touche(canva)
         canva.showPage()
         canva.save()
 
-    def dessiner_escrimeur1(self, canva, is_equipe) -> None:
+    def dessiner_escrimeur1(self, canva) -> None:
         """
         Fonction qui dessine l'escrimeur 1
 
@@ -334,15 +335,12 @@ class Match:
             canva (canvas): canvas
         """
         canva.setFont('Helvetica', 15)
-        if not is_equipe:
-            classement = self.__escrimeur1.get_classement()
-            if classement is None:
-                classement2 = 'NC'
-            else:
-                classement2 = "n°" + str(classement)
-            canva.drawString(75, 680, "Escrimeur rouge")
+        classement = self.__escrimeur1.get_classement()
+        if classement is None:
+            classement2 = 'NC'
         else:
-            canva.drawString(75, 680, "Equipe rouge")
+            classement2 = "n°" + str(classement)
+        canva.drawString(75, 680, "Escrimeur rouge")
 
         rayon_rond = 5
         x_centre_rond = 65
@@ -355,43 +353,28 @@ class Match:
                      fill=1)
         canva.setFillColor(black)
 
-        if not is_equipe:
-            canva.drawString(
-                60, 660,
-                str(self.__escrimeur1.get_nom()) + ' ' +
-                str(self.__escrimeur1.get_prenom() + ' - ' + str(classement2)))
-            canva.drawString(60, 640,
-                             str(self.__escrimeur1.get_club().get_nom()))
-            canva.drawString(60, 620,
-                             str(self.__escrimeur1.get_categorie().get_nom()))
-        else:
-            canva.drawString(60, 660, str(self.__escrimeur1.get_nom()))
-            x = 660 - 20
-            for escrimeur in self.__escrimeur1.get_les_escrimeurs():
-                print(escrimeur.get_nom())
-                canva.drawString(
-                    60, x,
-                    str(escrimeur.get_nom() + ' ' + escrimeur.get_prenom()))
-                x -= 20
+        canva.drawString(
+            60, 660,
+            str(self.__escrimeur1.get_nom()) + ' ' +
+            str(self.__escrimeur1.get_prenom() + ' - ' + str(classement2)))
+        canva.drawString(60, 640, str(self.__escrimeur1.get_club().get_nom()))
+        canva.drawString(60, 620,
+                         str(self.__escrimeur1.get_categorie().get_nom()))
 
-    def dessiner_escrimeur2(self, canva, is_equipe) -> None:
+    def dessiner_escrimeur2(self, canva) -> None:
         """
         Fonction qui dessine l'escrimeur 2
 
         Args:
             canva (canvas): canvas
         """
-        if not is_equipe:
-            classement = self.__escrimeur2.get_classement()
-            if classement is None:
-                classement2 = 'NC'
-            else:
-                classement2 = "n°" + str(classement)
-            width = canva.stringWidth("Escrimeur vert", 'Helvetica', 15)
-            canva.drawString(610 - width - 70 - 15, 680, "Escrimeur vert")
+        classement = self.__escrimeur2.get_classement()
+        if classement is None:
+            classement2 = 'NC'
         else:
-            width = canva.stringWidth("Equipe verte", 'Helvetica', 15)
-            canva.drawString(610 - width - 70 - 15, 680, "Equipe verte")
+            classement2 = "n°" + str(classement)
+        width = canva.stringWidth("Escrimeur vert", 'Helvetica', 15)
+        canva.drawString(610 - width - 70 - 15, 680, "Escrimeur vert")
         rayon_rond = 5
         x_centre_rond = 610 - 70 - 5
         y_centre_rond = 680 + 4
@@ -402,39 +385,22 @@ class Match:
                      stroke=0,
                      fill=1)
         canva.setFillColor(black)
-        if not is_equipe:
-            width = canva.stringWidth(
-                str(self.__escrimeur2.get_nom()) + ' ' +
-                str(self.__escrimeur2.get_prenom() + ' - ' + str(classement2)),
-                'Helvetica', 15)
-            canva.drawString(
-                610 - width - 70, 660,
-                str(self.__escrimeur2.get_nom()) + ' ' +
-                str(self.__escrimeur2.get_prenom() + ' - ' + str(classement2)))
-        else:
-            width = canva.stringWidth(str(self.__escrimeur2.get_nom()),
-                                      'Helvetica', 15)
-            canva.drawString(610 - width - 70, 660,
-                             str(self.__escrimeur2.get_nom()))
-            x = 660 - 20
-            for escrimeur in self.__escrimeur2.get_les_escrimeurs():
-                width = canva.stringWidth(
-                    str(escrimeur.get_nom() + ' ' + escrimeur.get_prenom()),
-                    'Helvetica', 15)
-                canva.drawString(
-                    610 - width - 70, x,
-                    str(escrimeur.get_nom() + ' ' + escrimeur.get_prenom()))
-                x -= 20
-        if not is_equipe:
-            width = canva.stringWidth(
-                str(self.__escrimeur2.get_club().get_nom()), 'Helvetica', 15)
-            canva.drawString(610 - width - 70, 640,
-                             str(self.__escrimeur2.get_club().get_nom()))
-            width = canva.stringWidth(
-                str(self.__escrimeur2.get_categorie().get_nom()), 'Helvetica',
-                15)
-            canva.drawString(610 - width - 70, 620,
-                             str(self.__escrimeur2.get_categorie().get_nom()))
+        width = canva.stringWidth(
+            str(self.__escrimeur2.get_nom()) + ' ' +
+            str(self.__escrimeur2.get_prenom() + ' - ' + str(classement2)),
+            'Helvetica', 15)
+        canva.drawString(
+            610 - width - 70, 660,
+            str(self.__escrimeur2.get_nom()) + ' ' +
+            str(self.__escrimeur2.get_prenom() + ' - ' + str(classement2)))
+        width = canva.stringWidth(str(self.__escrimeur2.get_club().get_nom()),
+                                  'Helvetica', 15)
+        canva.drawString(610 - width - 70, 640,
+                         str(self.__escrimeur2.get_club().get_nom()))
+        width = canva.stringWidth(
+            str(self.__escrimeur2.get_categorie().get_nom()), 'Helvetica', 15)
+        canva.drawString(610 - width - 70, 620,
+                         str(self.__escrimeur2.get_categorie().get_nom()))
 
     def dessiner_score(self, canva) -> None:
         """
@@ -472,7 +438,7 @@ class Match:
                 return touche.get_escrimeur()
         return None
 
-    def dessinner_touche(self, canva, is_equipe) -> None:
+    def dessinner_touche(self, canva) -> None:
         """
         Fonction qui dessine les touches
 
@@ -480,45 +446,36 @@ class Match:
             canva (canvas): canvas
         """
         cpt = 0
-        h = 500
-        if not is_equipe:
-            if self.__type_phase == 'Poule':
-                debut = 230
-                cpt = 9
-            else:
-                debut = 40
-                cpt = 29
+        if self.__type_phase == 'Poule':
+            debut = 230
+            cpt = 9
         else:
-            cpt = 45
             debut = 40
+            cpt = 29
         for i in range(cpt):
-            # Apres 29 touches dessiné les 16 autres touches sur une autre ligne
-            if i == 29:
-                debut = -400
-                h = 475
             if self.get_escrimeur_touche(i + 1) and self.get_escrimeur_touche(
                     i + 1).get_id() == self.__escrimeur1.get_id():
                 canva.setFillColor(red)
-                canva.circle(debut + 14 * i + i * 5, h, 7, stroke=1, fill=1)
+                canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)
             elif self.get_escrimeur_touche(
                     i + 1) and self.get_escrimeur_touche(
                         i + 1).get_id() == self.__escrimeur2.get_id():
                 canva.setFillColor(green)
-                canva.circle(debut + 14 * i + i * 5, h, 7, stroke=1, fill=1)
+                canva.circle(debut + 14 * i + i * 5, 500, 7, stroke=1, fill=1)
                 canva.setFillColor(black)
             else:
                 if self.est_finis():
                     canva.circle(debut + 14 * i + i * 5,
-                                 h,
+                                 500,
                                  7,
                                  stroke=1,
                                  fill=0)
-                    canva.line(debut + 14 * i + i * 5 - 7 + 2, h - 7 + 2,
-                               debut + 14 * i + i * 5 + 7 - 2, h + 7 - 2)
+                    canva.line(debut + 14 * i + i * 5 - 7 + 2, 500 - 7 + 2,
+                               debut + 14 * i + i * 5 + 7 - 2, 500 + 7 - 2)
                 else:
                     canva.circle(debut + 14 * i + i * 5,
-                                 h,
+                                 500,
                                  7,
                                  stroke=1,
                                  fill=0)

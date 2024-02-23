@@ -2,7 +2,6 @@
 Module contenant la classe PhaseFinal
 """
 
-from equipe import Equipe
 from match import Match
 from escrimeur import Escrimeur
 from piste import Piste
@@ -120,41 +119,6 @@ class PhaseFinal:
                     Match(-1, self.__id_phase_f, escrimeur1, escrimeur2,
                           arbitre, heure_debut, False,
                           self.__les_pistes[self.__index_piste]))
-            self.__index_piste += 1
-            if self.__index_piste == len(self.__les_pistes):
-                self.__index_piste = 0
-                self.__heure += 0.25
-                if self.__heure % 1 >= 0.6:
-                    self.__heure += 0.4
-            cpt += 1
-        self.__les_matchs = liste_matchs
-        return liste_matchs
-
-    def generer_les_matchs_equipe(self, liste_equipes: list[Equipe],
-                                  liste_arbitres: list[Escrimeur],
-                                  heure_debut: float) -> list[Match]:
-        """
-        Fonction qui génère les matchs de la phase finale pour les équipes
-
-        Args:
-            liste_equipes (list): liste des équipes
-            liste_arbitres (list): liste des arbitres
-            heure_debut (float): heure de début
-
-        Returns:
-            list: liste des matchs
-        """
-        self.__heure = heure_debut
-        cpt = 0
-        liste_matchs = []
-        while cpt < len(liste_equipes) / 2:
-            equipe1 = liste_equipes[cpt]
-            equipe2 = liste_equipes[-(cpt + 1)]
-            arbitre = random.choice(liste_arbitres)
-            liste_matchs.append(
-                Match(-1, self.__id_phase_f, equipe1, equipe2, arbitre,
-                      heure_debut, False,
-                      self.__les_pistes[self.__index_piste]))
             self.__index_piste += 1
             if self.__index_piste == len(self.__les_pistes):
                 self.__index_piste = 0

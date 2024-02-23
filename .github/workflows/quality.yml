@@ -21,9 +21,6 @@ jobs:
     - name: Unit tests and coverage check
       run: |
         make coverage
-    - name : Coveralls GitHub Action
-      uses: coverallsapp/github-action@v2.2.3
-
   quality_check:
     runs-on: ubuntu-latest
     strategy:
@@ -45,5 +42,3 @@ jobs:
     - name: Analysing the code with mypy
       run: |
         make typehint
-
-

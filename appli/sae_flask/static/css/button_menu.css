@@ -41,7 +41,6 @@
     -webkit-transform: rotate(-45deg) translateY(0em) translateX(0.1em);
     -ms-transform: rotate(-45deg) translateY(0em) translateX(0.1em);
     transform: rotate(-45deg) translateY(0em) translateX(0.1em);
-    /*transform: rotate(-45deg) translateY(-0.17em) translateX(0.2em);*/
 }
 
 #toggleChecker:checked + #togglerLable .checkboxtoggler .line-3 {
@@ -134,14 +133,4 @@ a.compet:after {
     height: 100%;
     transform: translateX(0);
     transition: .3s transform linear, .3s height linear .5s;
-  }
-
-
-  @media screen and (max-width : 420px) {
-
-    .checkboxtoggler{
-        height: 4vh;
-        margin: 0;
-    }
-    
   }

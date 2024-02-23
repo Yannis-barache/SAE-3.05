@@ -11,3 +11,6 @@ echo "FLASK_DEBUG=True" >> .flaskenv
 # On décompresse les images
 cd appli/sae_flask/static/img
 unzip Images
+
+
+

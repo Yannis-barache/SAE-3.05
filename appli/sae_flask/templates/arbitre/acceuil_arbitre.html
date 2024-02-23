@@ -10,37 +10,30 @@
 {% block content %}
 <h2>Tableau de bord arbitrage</h2>
 
-
-
-<div style="overflow-x: auto;" >
-
-    <table class="tableau">
+<table class="tableau">
+    <tr>
+        <th>NOM COMPETITION</th>
+        <th>LIEU</th>
+        <th>STATUT</th>
+        <th>Actions</th>
+    </tr>
+    {% for competition in competitions %}
+        {% if competition.get_etat() != "Terminée" %}
         <tr>
-            <th>NOM COMPETITION</th>
-            <th>LIEU</th>
-            <th>STATUT</th>
-            <th>Actions</th>
+            <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
+                {% set lieu = competition.get_lieu() %}
+                {% set lien = "https://www.google.fr/maps/place/" + lieu.get_adresse() + "/" %}
+
+                <td> <a href="{{ lien }}">{{ lieu.get_adresse() }}</a> </td>
+            <td>{{ competition.get_etat() }}</td>
+
+            <td>
+                <a href="{{ url_for('participants', id_competition=competition.get_id()) }}" class="btn">Arbitrer</a>
+            </td>
         </tr>
-        {% for competition in competitions %}
-            {% if competition.get_etat() != "Terminée" %}
-            <tr>
-                <td> <a href="{{ url_for('competition',id_competition= competition.get_id()) }}"> {{ competition.get_nom() }}</a></td>
-                    {% set lieu = competition.get_lieu() %}
-                    {% set lien = "https://www.google.fr/maps/place/" + lieu.get_adresse() + "/" %}
-    
-                    <td> <a href="{{ lien }}">{{ lieu.get_adresse() }}</a> </td>
-                <td>{{ competition.get_etat() }}</td>
-    
-                <td>
-                    <a href="{{ url_for('participants', id_competition=competition.get_id()) }}" class="btn">Arbitrer</a>
-                </td>
-            </tr>
-            {% endif %}
-        {% endfor %}
-    
-    </table>
+        {% endif %}
+    {% endfor %}
 
-</div>
-
+</table>
 {% endblock %}
 

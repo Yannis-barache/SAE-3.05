@@ -23,7 +23,6 @@
         <div class="center infos">
             <div class="titre-info">
 
-                <p>TYPE DE COMPÉTITION</p>
                 <p>TYPE D'ARME</p>
                 <p>SAISON</p>
                 <p>CATÉGORIE</p>
@@ -35,12 +34,6 @@
             </div>
 
             <div class="reponse-info">
-
-                {% if compet.get_is_equipe() %}
-                    <p>:    En équipe</p>
-                {% else %}
-                    <p>:    Individuelle</p>
-                {% endif %}
 
                 <p>:    {{ compet.get_arme().get_nom() }}</p>
                 <p>:    {{ compet.get_saison() }}</p>

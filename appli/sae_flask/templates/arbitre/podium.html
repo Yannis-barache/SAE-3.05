@@ -47,21 +47,11 @@
             </div>
             <div class="podium__content__escrimeur__info">
                 <div class="podium__content__escrimeur__info__name">
-                    {% if not competition.get_is_equipe() %}
-                        <h3>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom()}}</h3>
-                    {% else %}
-                        <h3>{{ escrimeur.get_nom() }}</h3>
-                    {% endif %}
+                    <h3>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom()}}</h3>
                 </div>
                 <div class="podium__content__escrimeur__info__club">
-                    {% if not competition.get_is_equipe() %}
-                        {% if escrimeur.get_club() != None %}
-                            <h4>{{ escrimeur.get_club().get_nom() }}</h4>
-                        {% endif %}
-                    {% else %}
-                        {% for es in escrimeur.get_les_escrimeurs() %}
-                            <h4>{{ es.get_nom() }} {{ es.get_prenom() }}</h4>
-                        {% endfor %}
+                    {% if escrimeur.get_club() != None %}
+                    <h4>{{ escrimeur.get_club().get_nom() }}</h4>
                     {% endif %}
                 </div>
             </div>
