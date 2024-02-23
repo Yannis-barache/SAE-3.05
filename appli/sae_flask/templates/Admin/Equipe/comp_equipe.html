@@ -7,7 +7,7 @@
         <ul>
             <li>Nombre d'équipes : {{ nb_equipe[loop.index-1] }}</li>
             <li>Nombre de participants : {{ nb_equipe[loop.index-1]*4}}</li>
-            <li><button onclick="">Modifier les équipes</button></li>
+            <li><button onclick="window.location.href = '{{ url_for('modif_equipe',id_competition= competition.get_id())}}'">Modifier les équipes</button></li>
         </ul>
     </article>
 </details>
