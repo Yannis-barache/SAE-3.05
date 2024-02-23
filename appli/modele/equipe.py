@@ -50,19 +50,19 @@ class Equipe:
 
     def get_id(self) -> int:
         """
-        Fonction qui retourne l'id de l'equipe
+        Fonction qui retourne l'id de l'Equipe
 
         Returns :
-            int : id de l'equipe
+            int : id de l'Equipe
         """
         return self.__id
 
     def get_nom(self) -> str:
         """
-        Fonction qui retourne le nom de l'equipe
+        Fonction qui retourne le nom de l'Equipe
 
         Returns :
-            str : nom de l'equipe
+            str : nom de l'Equipe
         """
         return self.__nom_equipe
 
@@ -77,10 +77,10 @@ class Equipe:
 
     def set_nom_equipe(self, nom_equipe: str):
         """
-        Fonction qui modifie le nom de l'equipe
+        Fonction qui modifie le nom de l'Equipe
 
         Parameters :
-            nomEquipe : str : nom de l'equipe
+            nomEquipe : str : nom de l'Equipe
         """
         self.__nom_equipe = nom_equipe
 

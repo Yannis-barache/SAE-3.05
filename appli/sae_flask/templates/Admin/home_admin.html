@@ -14,6 +14,7 @@
 {% block content %}
 
 <div class="ligne1">
+
     <button id="auteurs" class="btn-groupe">
         <a href="{{ url_for('admin_competition') }}">
             <p>Compétitions</p>
@@ -43,7 +44,16 @@
         </a>
     </button>
 
-    </div>
+
+    <button class="btn-groupe">
+        <a href="{{ url_for('admin_equipe') }}">
+            <p>Les équipes</p>
+            <img class="img" src="{{ url_for('static', filename='img/team.png') }}" alt="equipe">
+        </a>
+    </button>
+
+
+</div>
 
 
 
