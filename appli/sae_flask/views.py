@@ -19,7 +19,7 @@ from organisateur import Organisateur
 from phase_final import PhaseFinal
 from inscrire_arbitre import InscrireArbitre
 
-USER = USER
+USER = Escrimeur(14, "", "", "", "", "", "", "", 1, None, None, True)
 modele_appli = ModeleAppli()
 
 
@@ -200,14 +200,20 @@ def page_de_match(id_match):
         le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    if la_competition.get_is_equipe():
+        le_match = modele.get_match_bd().get_match_by_id_equipe(id_match)
+    else:
+        le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     phase_match = match_bd.get_type_phase(le_match)
-    if phase_match == 1:
-        nombre_touche_max = 9
+    if la_competition.get_is_equipe():
+        nombre_touche_max = 45
     else:
-        nombre_touche_max = 29
+        if phase_match == 1:
+            nombre_touche_max = 9
+        else:
+            nombre_touche_max = 29
     modele.close_connexion()
     return render_template("page_de_match.html",
                            match=le_match,
@@ -280,8 +286,12 @@ def telecharger_pdf_phase(id_compet, id_phase):
 @app.route('/telecharger_pdf_match/<int:id_match>', methods=["GET", "POST"])
 def telecharger_pdf_match(id_match):
     modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id_match(id_match)
     match_bd = modele.get_match_bd()
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    if not competition.get_is_equipe():
+        le_match = modele.get_match_bd().get_match_by_id(id_match)
+    else:
+        le_match = modele.get_match_bd().get_match_by_id_equipe(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     phase_match = match_bd.get_type_phase(le_match)
@@ -289,7 +299,7 @@ def telecharger_pdf_match(id_match):
         le_match.set_type_phase("Poule")
     else:
         le_match.set_type_phase("Phase finale")
-    le_match.generer_pdf()
+    le_match.generer_pdf(competition.get_is_equipe())
     modele.close_connexion()
     return redirect(request.referrer)
 
@@ -762,13 +772,18 @@ def ajouter_competition():
 def participants(id_competition):
     from .form import heure_debut_form
     form = heure_debut_form()
+    modele = ModeleAppli()
+    competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     try:
-        modele = ModeleAppli()
-        competition = modele.get_competition_bd().get_competition_by_id(id_competition)
         inscription = modele.get_inscrire_bd().get_all_inscrit_compet(competition)
-        inscrits = []
-        for i in inscription:
-            inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+        if not competition.get_is_equipe():
+            inscrits = []
+            for i in inscription:
+                inscrits.append(modele.get_escrimeur_bd().get_escrimeur_by_id(i.get_id_escrimeur()))
+        else:
+            inscrits = {}
+            for i in inscription:
+                inscrits[i] = modele.get_equipe_bd().get_escrimeur_by_equipe(i.get_id())
 
         arbitrages = modele.get_inscrire_arbitre_bd().get_arbitre_by_competition(competition)
         arbitres = []
@@ -877,29 +892,39 @@ def podium(id_competition, full):
                     escrimeurs_matchs.append(escrimeur_1)
                 else:
                     escrimeurs_matchs.append(escrimeur_2)
-
-
     else:
         escrimeurs_matchs = None
+    if competition.get_is_equipe() and escrimeurs_matchs is not None:
+        equipe = []
+        for escrimeur in escrimeurs_matchs:
+            print(escrimeur.get_id())
+            equipe.append(modele.get_equipe_bd().get_equipe_by_id(escrimeur.get_id()))
+        escrimeurs_matchs = equipe
     modele.close_connexion()
 
     return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full,
                            have_phase_f=phase_finale is not None, fini=fini)
-
-
+  
+  
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
-    poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
+    poule_bd = modele.get_poule_bd()
+    equipe_bd = modele.get_equipe_bd()
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
-    les_poules = poule_bd.get_poules_by_compet(id_competition)
-    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    if not competition.get_is_equipe():
+        les_poules = poule_bd.get_poules_by_compet(id_competition)
+        nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    else :
+        les_equipes = equipe_bd.get_all_equipe_by_competition(id_competition)
+        nb_escrimeur = len(les_equipes)
     nombre = competition.get_puissance_sup(nb_escrimeur)
     modele.close_connexion()
     liste_match_by_tour: list[list] = []
     cpt = 0
+    print(nombre)
     for i in range(nombre):
         un_tour = []
         for match in range(cpt, cpt + nb_escrimeur // 2):
@@ -911,7 +936,7 @@ def phase_finale(id_competition):
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
     return render_template("page_phase_finale_compet.html", compet=competition, phase=la_phase,
-                           les_matchs=liste_match_by_tour)
+                        les_matchs=liste_match_by_tour)
 
 
 @app.route("/arbitre/phase_finale/<id_competition>", methods=["GET", "POST"])
@@ -919,12 +944,19 @@ def arbitre_phase_finale(id_competition):
     if USER is None:
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
+    equipe_bd = modele.get_equipe_bd()
     poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
     liste_match = la_phase.get_les_matchs()
-    les_poules = poule_bd.get_poules_by_compet(id_competition)
-    nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+
+    if not competition.get_is_equipe():
+        les_poules = poule_bd.get_poules_by_compet(id_competition)
+        nb_escrimeur = competition.get_nombre_escrimeur_phase_finale(les_poules)
+    else :
+        les_equipes = equipe_bd.get_all_equipe_by_competition(id_competition)
+        nb_escrimeur = len(les_equipes)
+
     nombre = competition.get_puissance_sup(nb_escrimeur)
     modele.close_connexion()
     liste_match_by_tour: list[list] = []
@@ -981,15 +1013,22 @@ def arbitre_page_de_match(id_match, id_competition):
         le_match)
     la_competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    le_match = modele.get_match_bd().get_match_by_id(id_match)
+    if la_competition.get_is_equipe():
+        le_match = modele.get_match_bd().get_match_by_id_equipe(id_match)
+    else:
+        le_match = modele.get_match_bd().get_match_by_id(id_match)
     les_touches = modele.get_touche_bd().get_by_match(le_match)
     le_match.set_touche(les_touches)
     phase_match = match_bd.get_type_phase(le_match)
-    if phase_match == 1:
-        nombre_touche_max = 9
+    if not la_competition.get_is_equipe():
+        if phase_match == 1:
+            nombre_touche_max = 9
+        else:
+            nombre_touche_max = 29
     else:
-        nombre_touche_max = 29
+        nombre_touche_max = 45
     modele.close_connexion()
+    print(le_match.get_escrimeur1())
     return render_template("arbitre/arbitre-page_de_match.html",
                            match=le_match,
                            user=USER,

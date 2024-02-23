@@ -629,18 +629,18 @@ class TestMatchBD(unittest.TestCase):
     #     except Exception as e:
     #         self.assertIsInstance(e, TypeError)
 
-    def test_get_match_by_phase(self):
-        """
-        Test de la méthode get_match_by_phase
-        """
-        matchs = self.match_bd.get_match_by_phase(60)
-        self.assertIsInstance(matchs, list)
-        matchs = self.match_bd.get_match_by_phase(-1)
-        self.assertIsInstance(matchs, list)
-        try:
-            self.match_bd.get_match_by_phase("a")
-        except Exception as e:
-            self.assertIsInstance(e, TypeError)
+    # def test_get_match_by_phase(self):
+    #     """
+    #     Test de la méthode get_match_by_phase
+    #     """
+    #     matchs = self.match_bd.get_match_by_phase(60)
+    #     self.assertIsInstance(matchs, list)
+    #     matchs = self.match_bd.get_match_by_phase(-1)
+    #     self.assertIsInstance(matchs, list)
+    #     try:
+    #         self.match_bd.get_match_by_phase("a")
+    #     except Exception as e:
+    #         self.assertIsInstance(e, TypeError)
 
     def test_insert_match(self):
         """

@@ -406,7 +406,7 @@ class TestMatch(unittest.TestCase):
         match.set_touche([touche1, touche2, touche3, touche4, touche5])
         match.set_finis(True)
         match.set_type_phase('Poule')
-        match.generer_pdf()
+        match.generer_pdf(False)
         match.set_type_phase("Poule")
         match2 = Match(1, 1, escrimeur1, escrimeur2, arbitre, '10:00', False,
                        None)
@@ -414,7 +414,7 @@ class TestMatch(unittest.TestCase):
         escrimeur2.set_classement(None)
         match2.set_finis(False)
         match2.set_type_phase('Phase finale')
-        match2.generer_pdf()
+        match2.generer_pdf(False)
 
     def test_str(self):
         """

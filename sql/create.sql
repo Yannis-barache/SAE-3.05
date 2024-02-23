@@ -301,11 +301,16 @@ CREATE OR REPLACE trigger update_fini after insert on TOUCHE
 for each row
 begin
     declare nbTouchePhase int;
-    if ((select count(*) from MATCHS natural join PHASE natural join POULE)>0) then
-        set nbTouchePhase= 5;
-    else
-        set nbTouchePhase= 15;
-    end if;
+    -- Si la compet est une compet en équipe alors le nombre de touche est de 45
+        if ((select isEquipe from COMPETITION where idCompetition=(select idCompetition from PHASE natural join MATCHS where idMatch=new.idMatch))=true) then
+            set nbTouchePhase= 23;
+        else
+            if ((select count(*) from MATCHS natural join PHASE natural join POULE)>0) then
+                set nbTouchePhase= 5;
+            else
+                set nbTouchePhase= 15;
+            end if;
+        end if;
 
     if ((select count(*) from TOUCHE where idMatch=new.idMatch and idEscrimeur=new.idEscrimeur)=nbTouchePhase) then
         update MATCHS set fini=true where idMatch=new.idMatch;

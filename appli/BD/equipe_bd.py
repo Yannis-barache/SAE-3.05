@@ -6,10 +6,14 @@ import sys
 import os
 from sqlalchemy.sql.expression import text
 
+
+from escrimeur_bd import EscrimeurBD
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from equipe import Equipe
+from escrimeur import Escrimeur
 
 
 class EquipeBD:
@@ -46,23 +50,52 @@ class EquipeBD:
             for id_comp, id_equipe, nom_equipe in result:
                 equipes.append(Equipe(id_comp, id_equipe, nom_equipe))
             return equipes
+
+    def __init__(self, connexion):
+        self.__connexion = connexion
+
+    def get_equipe_by_id(self, id_equipe) -> Equipe | None:
+        """
+        Fonction qui retourne une équipe par son id
+        :param id_equipe: id de l'équipe
+        :return: équipe
+        """
+        try:
+            query = text(
+                f'SELECT idEquipe, nomEquipe, idCompetition FROM EQUIPE WHERE idEquipe = {id_equipe}'
+            )
+            result = self.__connexion.execute(query)
+            for (
+                    id_equipee,
+                    nom_equipe,
+                    id_competition,
+            ) in result:
+                equipe = Equipe(id_competition, id_equipee, nom_equipe)
+                equipe.set_les_escrimeurs(
+                    self.get_escrimeur_by_equipe(id_equipee))
+                return equipe
+            return None
         except Exception as e:
             print(e)
             return None
-
-    def get_equipe_by_id(self, id_equipe: int):
+          
+    def get_escrimeur_by_equipe(self, id_equipe) -> list[Escrimeur] | None:
         """
-        Fonction qui retourne une équipe en fonction de son id
+        Fonction qui retourne tous les escrimeurs d'une équipe
         :param id_equipe: id de l'équipe
-        :return: L'équipe avec l'id correspondant
+        :return: liste d'escrimeurs
         """
         try:
-            query = text('SELECT idCompetition, idEquipe, nomEquipe FROM EQUIPE '
-                         'WHERE idEquipe =' + str(id_equipe))
+            query = text(
+                f'SELECT idEscrimeur FROM FAIT_PARTIE WHERE idEquipe = {id_equipe}'
+            )
             result = self.__connexion.execute(query)
-            for id_comp, id_equipe_local, nom_equipe in result:
-                return Equipe(id_comp, id_equipe_local, nom_equipe)
-            return None
+            escrimeurs = []
+            escrimeur_db = EscrimeurBD(self.__connexion)
+            for (id_escrimeur, ) in result:
+                escrimeurs.append(
+                    escrimeur_db.get_escrimeur_by_id(id_escrimeur))
+            return escrimeurs
         except Exception as e:
             print(e)
             return None
@@ -85,10 +118,31 @@ class EquipeBD:
             equipes = []
             for id_comp_local, id_equipe, nom_equipe in result:
                 equipes.append(Equipe(id_comp_local, id_equipe, nom_equipe))
+
+    def get_all_equipe_by_competition(self,
+                                      id_competition) -> list[Equipe] | None:
+        """
+        Fonction qui retourne toutes les équipes d'une compétition
+        :param id_competition: id de la compétition
+        :return: liste d'équipes
+        """
+        try:
+            query = text(
+                f'SELECT idEquipe, nomEquipe, idCompetition FROM EQUIPE WHERE idCompetition = {id_competition}'
+            )
+            result = self.__connexion.execute(query)
+            equipes = []
+            for (
+                    id_equipe,
+                    nom_equipe,
+                    id_competitio,
+            ) in result:
+                equipes.append(Equipe(id_competitio, id_equipe, nom_equipe))
             return equipes
         except Exception as e:
             print(e)
             return None
+
 
     def get_nb_equipe(self, id_comp: int):
         """

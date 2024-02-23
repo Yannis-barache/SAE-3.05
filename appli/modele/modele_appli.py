@@ -55,6 +55,15 @@ class ModeleAppli:
         self.__equipe_bd = EquipeBD(self.__connexion.get_connexion())
         self.__fait_partie_bd = FaitPartieBD(self.__connexion.get_connexion())
 
+    def get_equipe_bd(self) -> EquipeBD:
+        """
+        Retourne l'objet qui gère les interactions avec la table equipe
+
+        Returns :
+            EquipeBD : l'objet qui gère les interactions avec la table equipe
+        """
+        return self.__equipe_bd
+
     def get_arme_bd(self) -> ArmeBD:
         """
         Retourne l'objet qui gère les interactions avec la table arme
