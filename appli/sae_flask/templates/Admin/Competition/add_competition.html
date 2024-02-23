@@ -1,5 +1,11 @@
 {% extends "Admin/base_admin.html" %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/formV2.css')}}">
+{% endblock %}
+
+
 {% block content %}
 <h1>{{ title }}</h1>
 <form role="form" method ="POST" action="{{ url_for('update_competition', id_competition=0, type=2)}}">
@@ -13,7 +19,7 @@
             {{ form.date.label }} {{ form.date(size =50) }}
         </div>
         <div style="flex-basis: 100%;">
-            {{ form.date_fin_inscripiton.label }} {{ form.date_fin_inscripiton(size =50) }}
+            {{ form.date_fin_inscription.label }} {{ form.date_fin_inscription(size =50) }}
         </div>
         <div style="flex-basis: 100%;">
             {{ form.categorie.label }} {{ form.categorie }}
