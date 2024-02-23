@@ -6,7 +6,6 @@ import sys
 import os
 from sqlalchemy.sql.expression import text
 
-
 from escrimeur_bd import EscrimeurBD
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
@@ -50,9 +49,9 @@ class EquipeBD:
             for id_comp, id_equipe, nom_equipe in result:
                 equipes.append(Equipe(id_comp, id_equipe, nom_equipe))
             return equipes
-
-    def __init__(self, connexion):
-        self.__connexion = connexion
+        except Exception as e:
+            print(e)
+            return None
 
     def get_equipe_by_id(self, id_equipe) -> Equipe | None:
         """
@@ -78,7 +77,7 @@ class EquipeBD:
         except Exception as e:
             print(e)
             return None
-          
+
     def get_escrimeur_by_equipe(self, id_equipe) -> list[Escrimeur] | None:
         """
         Fonction qui retourne tous les escrimeurs d'une équipe
@@ -92,7 +91,7 @@ class EquipeBD:
             result = self.__connexion.execute(query)
             escrimeurs = []
             escrimeur_db = EscrimeurBD(self.__connexion)
-            for (id_escrimeur, ) in result:
+            for (id_escrimeur,) in result:
                 escrimeurs.append(
                     escrimeur_db.get_escrimeur_by_id(id_escrimeur))
             return escrimeurs
@@ -118,6 +117,10 @@ class EquipeBD:
             equipes = []
             for id_comp_local, id_equipe, nom_equipe in result:
                 equipes.append(Equipe(id_comp_local, id_equipe, nom_equipe))
+            return equipes
+        except Exception as e:
+            print(e)
+            return None
 
     def get_all_equipe_by_competition(self,
                                       id_competition) -> list[Equipe] | None:
@@ -142,7 +145,6 @@ class EquipeBD:
         except Exception as e:
             print(e)
             return None
-
 
     def get_nb_equipe(self, id_comp: int):
         """

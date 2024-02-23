@@ -201,15 +201,6 @@ class ModeleAppli:
         """
         return self.__piste_bd
 
-    def get_equipe_bd(self) -> EquipeBD:
-        """
-        Retourne l'objet qui gère les interactions avec la table Equipe
-
-        Returns :
-            EquipeBD : l'objet qui gère les interactions avec la table Equipe
-        """
-        return self.__equipe_bd
-
     def get_fait_partie_bd(self) -> FaitPartieBD:
         """
         Retourne l'objet qui gère les interactions avec la table fait_partie
