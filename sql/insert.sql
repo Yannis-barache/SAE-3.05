@@ -60,7 +60,8 @@ INSERT INTO ESCRIMEUR(idEscrimeur, nomEscrimeur, prenomEscrimeur, licence, dateN
         (14, 'Chedeville','Baptiste', '33333333', '1999-01-01', 'baptiste', 'chedeville', NULL, 12, 'H', 5, true),
         (15, 'Elkasmi','Hajar', '212212212', '1999-01-01', 'hajar', 'elkasmi', NULL, 11, 'H', 5, false),
         (16, 'Doe', 'Jane', '87654', '1999-01-01', 'janedoe', 'password', NULL, 2, 'H', 5, false),
-        (17, 'Abada','Khalil','213213213','1999-01-01','khalil','abada',NULL,1,'H',5,false);
+        (17, 'Abada','Khalil','213213213','1999-01-01','khalil','abada',NULL,1,'H',5,false),
+        (308, 'None', '0', 'None', '0000-00-00', 'None', '6eef6648406c333a4035cd5e60d0bf2ecf2606d7', null, 1, 'N', 5, 0);
 
 INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (1,'3 Quai Saint-Bernard 75005 Paris','Salle d''escrime de Paris quai de seine'),
@@ -78,7 +79,7 @@ INSERT INTO LIEU(idLieu, adresseLieu, descriptionLieu) values
         (13,'25 Rue Lucien Joubert, 41000 Blois','Salle d''escrime de Blois');
 
 INSERT INTO COMPETITION(idCompetition, nomCompetition, dateCompetition, saisonCompetition, idArme, idCategorie, idLieu, dateFinInscription, coefficientCompetition, isEquipe) values
-        (8,'Competition de Nantes', '2024-05-23', 'printemps', 3, 2, 7, '2024-05-15', 0.8, false),
+        (8,'Competition de Nantes', '2024-05-23', 'printemps', 3, 2, 7, '2024-02-22', 0.8, false),
         (14, 'Competition en Equipe','2024-05-23','hiver',2,3,12,'2024-05-15',0.7,true);
 
 INSERT INTO PISTE(idPiste, idLieu,descriptionPiste) VALUES
@@ -141,8 +142,7 @@ INSERT INTO INSCRIRE(idEscrimeur, idCompetition) VALUES
         (10,8),
         (11,8),
         (12,8),
-        (13,8),
-        (17,8);
+        (13,8);
 
 
 INSERT INTO EQUIPE (idEquipe, nomEquipe, idCompetition) VALUES

@@ -20,7 +20,7 @@ from organisateur import Organisateur
 from phase_final import PhaseFinal
 from inscrire_arbitre import InscrireArbitre
 
-USER = Escrimeur(14, "Baptiste", "", "", "", "", "", "", 1, None, None, True)
+USER = USER
 modele_appli = ModeleAppli()
 
 
@@ -54,7 +54,7 @@ def choose_sign():
     return render_template("connexion_inscription.html", user=USER)
 
 
-@app.route("/choisir_statut_connexion", methods=["GET", "POST"])
+@app.route("/choisir_statut_conneInscrireBDxion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template("choisir_statut_connexion.html", user=USER)
 
@@ -812,7 +812,7 @@ def participants(id_competition):
         if int(type_form) == 1:
             return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
         if int(type_form) == 2:
-            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
+            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=int(heure)))
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini, have_phase_f=have_phase_f, have_poule=have_poule,
@@ -824,9 +824,9 @@ def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    modele.get_competition_bd().generate_poule_compet(competition.get_id(), heure_debut)
+    modele.get_competition_bd().generate_poule_compet(competition.get_id(), int(heure_debut))
     modele.close_connexion()
-    return redirect(url_for('poule', id_competition=id_competition, nb=0))
+    return redirect(url_for('participants', id_competition=id_competition))
 
 
 @app.route("/arbitrage")
@@ -1005,7 +1005,7 @@ def generation_phase_finale(id_competition, heure_debut):
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    modele.get_competition_bd().generate_phase_finale(competition.get_id(), heure_debut)
+    modele.get_competition_bd().generate_phase_finale(competition.get_id(), int(heure_debut))
     modele.close_connexion()
     print('Phase finale générée')
     return redirect(url_for('participants', id_competition=id_competition))

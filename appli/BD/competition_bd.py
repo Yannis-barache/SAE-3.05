@@ -101,7 +101,7 @@ class CompetitionBD:
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 nombre_escrimeurs = InscrireBD(
-                    self.__connexion).get_nb_escsrimeurs_competition(
+                    self.__connexion).get_nb_escrimeurs_competition(
                         id_competition)
                 nombre_arbitres = InscrireArbitreBD(
                     self.__connexion).get_nb_arbitres_competition(
@@ -431,3 +431,9 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
+
+if __name__ == "__main__":
+    from modele_appli import ModeleAppli
+    modele = ModeleAppli()
+    competitions = modele.get_competition_bd()
+    competitions.generate_poule_compet(8, 10)
