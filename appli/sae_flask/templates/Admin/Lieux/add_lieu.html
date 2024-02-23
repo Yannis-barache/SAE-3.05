@@ -1,5 +1,12 @@
 {% extends "Admin/base_admin.html" %}
 
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css')}}">
+{% endblock %}
+
+
 {% block content %}
 <h1>{{ title }}</h1>
 <form role="form" method ="POST" action="{{ url_for('update_lieu', id_lieu=0, type=2)}}">
