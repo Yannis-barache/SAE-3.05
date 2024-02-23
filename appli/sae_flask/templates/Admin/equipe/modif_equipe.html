@@ -14,7 +14,7 @@
             <div class="equipe">
                 <form action="{{ url_for('modif_equipe',id_competition= id_comp) }}" method="post">
                     <input type="hidden" name="id" value="{{ equipe.get_id() }}">
-                    <input type="text" name="nom" value="{{ equipe.get_nom_equipe() }}">
+                    <input type="text" name="nom" value="{{ equipe.get_nom() }}">
                     <input type="submit" value="Modifier le nom">
 
                 </form>
