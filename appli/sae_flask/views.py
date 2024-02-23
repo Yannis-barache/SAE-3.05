@@ -7,6 +7,7 @@ from flask import render_template, redirect, url_for, request
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from club import Club
@@ -19,7 +20,7 @@ from organisateur import Organisateur
 from phase_final import PhaseFinal
 from inscrire_arbitre import InscrireArbitre
 
-USER = Escrimeur(14, "", "", "", "", "", "", "", 1, None, None, True)
+USER = Escrimeur(14, "Baptiste", "", "", "", "", "", "", 1, None, None, True)
 modele_appli = ModeleAppli()
 
 
@@ -860,6 +861,7 @@ def podium(id_competition, full):
             for match in matchs:
                 match.set_touche(modele.get_touche_bd().get_by_match(match))
                 gagnant_match = match.get_gagnant()
+                perdant_match = match.get_perdant()
                 if gagnant_match is None and match.est_finis():
                     if match.get_escrimeur1().get_id() in dict_victoire:
                         dict_victoire[match.get_escrimeur1().get_id()] += 1
@@ -874,6 +876,10 @@ def podium(id_competition, full):
                         dict_victoire[gagnant_match.get_id()] += 1
                     else:
                         dict_victoire[gagnant_match.get_id()] = 1
+                    if perdant_match.get_id() in dict_victoire:
+                        dict_victoire[perdant_match.get_id()] += 0
+                    else:
+                        dict_victoire[perdant_match.get_id()] = 0
 
             dict_victoire = sorted(dict_victoire.items(), key=lambda x: x[1], reverse=True)
             print(dict_victoire)
@@ -901,11 +907,10 @@ def podium(id_competition, full):
             equipe.append(modele.get_equipe_bd().get_equipe_by_id(escrimeur.get_id()))
         escrimeurs_matchs = equipe
     modele.close_connexion()
-
+    print(escrimeurs_matchs)
     return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full,
                            have_phase_f=phase_finale is not None, fini=fini)
-  
-  
+
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
@@ -948,6 +953,8 @@ def arbitre_phase_finale(id_competition):
     poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    if la_phase is None:
+        return redirect(url_for('participants', id_competition=id_competition))
     liste_match = la_phase.get_les_matchs()
 
     if not competition.get_is_equipe():
@@ -971,6 +978,8 @@ def arbitre_phase_finale(id_competition):
             cpt += 1
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
+
+    print(la_phase.tour_finnis())
     return render_template("arbitre/arbitre-page_phase_finale_compet.html", compet=competition, phase=la_phase,
                            les_matchs=liste_match_by_tour)
 
@@ -999,7 +1008,7 @@ def generation_phase_finale(id_competition, heure_debut):
     modele.get_competition_bd().generate_phase_finale(competition.get_id(), heure_debut)
     modele.close_connexion()
     print('Phase finale générée')
-    return redirect(url_for('phase_finale', id_competition=id_competition))
+    return redirect(url_for('participants', id_competition=id_competition))
 
 
 @app.route("/arbitre/arbitre_page_de_match/<id_competition>/<id_match>", methods=["GET", "POST"])

@@ -46,12 +46,14 @@
                 {% if user == None %}
                 {% set lien = url_for('choisir_statut_connexion') %}
                 {% endif %}
-                {% if competition.get_etat() == 'Inscription ouverte' %}
+                {% if competition.get_etat() == 'Inscription ouverte' and competition.get_is_equipe() == False %}
                     {% if competition.get_id() in competitions_inscrit %}
                         <td> <a href="{{ url_for('desinscription_competition',id_competition= competition.get_id()) }}"> SE DESINSCRIRE </a></td>
                     {% else %}
                         <td> <a href="{{ lien }}"> S'INSCRIRE </a></td>
                     {% endif %}
+                {% elif competition.get_is_equipe() %}
+                    <td>Compétition en équipe</td>
                 {% else %}
                     <td> Inscription terminée </td>
                 {% endif %}

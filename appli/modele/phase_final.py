@@ -199,6 +199,19 @@ class PhaseFinal:
                 return False
         return True
 
+    def phase_finis(self) -> bool:
+        """
+        Fonction qui vérifie si la phase finale est finis
+
+        Returns:
+            bool: True si la phase finale est finis, False sinon
+        """
+        if len(self.__les_matchs) == 0:
+            return False
+        if len(self.__les_matchs) % 2 == 1:
+            return True
+        return False
+
     def generer_tour_suivant(self, liste_arbitres: list[Escrimeur],
                              heure_debut: float):
         """
