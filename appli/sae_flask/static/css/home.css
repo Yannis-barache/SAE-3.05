@@ -105,16 +105,15 @@ footer{
 .list-footer{
     float: right;
     font-weight: bold;
-    display: flex
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+    padding-right: 20em;
+   
    
 }
 
 .list-footer a{
      text-decoration: none;
      color : white;
+    padding: 3em;
 }
 
 
@@ -134,3 +133,6 @@ footer{
 .num{
     margin-top:1em;
 }
+
+
+
