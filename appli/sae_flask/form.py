@@ -40,6 +40,7 @@ def competition_form2():
         arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in modele.get_arme_bd().get_all_arme()], validators=[DataRequired()])
         lieu = SelectField('Lieu', choices=[(lieu.get_id(), lieu.get_adresse()) for lieu in modele.get_lieu_bd().get_all_lieu()], validators=[DataRequired()])
         coefficient = FloatField('Coefficient', validators=[DataRequired()])
+        en_equipe = SelectField('En équipe', choices=["Oui", "Non"], validators=[DataRequired()])
         title = HiddenField('title')
         modele.close_connexion()
     return CompetitionForm2()

@@ -101,7 +101,7 @@ class CompetitionBD:
                 lieu = LieuBD(self.__connexion).get_lieu_by_id(id_lieu)
                 arme = ArmeBD(self.__connexion).get_arme_by_id(id_arme)
                 nombre_escrimeurs = InscrireBD(
-                    self.__connexion).get_nb_escsrimeurs_competition(
+                    self.__connexion).get_nb_escrimeurs_competition(
                         id_competition)
                 nombre_arbitres = InscrireArbitreBD(
                     self.__connexion).get_nb_arbitres_competition(
@@ -214,7 +214,7 @@ class CompetitionBD:
                 f"'{competition.get_date_fin_inscription()}', "
                 f"'{competition.get_saison()}', {competition.get_lieu().get_id()}, "
                 f"{competition.get_arme().get_id()}, "
-                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()}, {competition.get_is_equipe()}"
+                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()}, {competition.get_is_equipe()})"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()

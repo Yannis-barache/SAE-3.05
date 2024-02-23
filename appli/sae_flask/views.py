@@ -748,8 +748,14 @@ def update_competition(id_competition, type):
         arme = modele.get_arme_bd().get_arme_by_id(form.arme.data)
         lieu = modele.get_lieu_bd().get_lieu_by_id(form.lieu.data)
         coefficient = form.coefficient.data
+        is_equipe = form.en_equipe.data
+        if is_equipe == "Oui":
+            is_equipe = "1"
+        else:
+            is_equipe = "0"
+
         competition = Competition(1, nom, date, date_fin_inscription, saison,
-                                  lieu, arme, categorie, coefficient)
+                                  lieu, arme, categorie, coefficient,is_equipe)
         modele.get_competition_bd().insert_competition(competition)
     modele.close_connexion()
     return redirect(url_for('admin_competition'))
