@@ -431,9 +431,3 @@ class CompetitionBD:
         except Exception as e:
             print(e)
             return None
-
-if __name__ == "__main__":
-    from modele_appli import ModeleAppli
-    modele = ModeleAppli()
-    competitions = modele.get_competition_bd()
-    competitions.generate_poule_compet(8, 10)
