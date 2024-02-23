@@ -36,36 +36,21 @@
 
         <div class="match enflex">
 
-            {% if not compet.get_is_equipe() %}
-                <div class="escrimeur1 escrimeur">
-                    <div class="name name-left">
-                        <p>Escrimeur rouge</p>
-                        <div class="cercle red"></div>
-                    </div>
-                    <div>
-                        {% if match.get_escrimeur1().get_classement() %}
-                            <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - {{ match.get_escrimeur1().get_classement() }}</p>
-                        {% else %}
-                            <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - NC</p>
-                        {% endif %}
-                        <p class="left">{{ match.get_escrimeur1().get_club().get_nom() }} </p>
-                        <p class="left">{{ match.get_escrimeur1().get_categorie().get_nom( ) }} </p>
-                    </div>
+            <div class="escrimeur1 escrimeur">
+                <div class="name name-left">
+                    <p>Escrimeur rouge</p>
+                    <div class="cercle red"></div>
                 </div>
-            {% else %}
-                <div class="escrimeur1 escrimeur">
-                    <div class="name name-left">
-                        <p>Équipe rouge</p>
-                        <div class="cercle red"></div>
-                    </div>
-                    <div>
-                        <p class="left">{{ match.get_escrimeur1().get_nom() }} </p>
-                        {% for escrimeur in match.get_escrimeur1().get_les_escrimeurs() %}
-                            <p class="left">{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
-                        {% endfor %}
-                    </div>
+                <div>
+                    {% if match.get_escrimeur1().get_classement() %}
+                        <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - {{ match.get_escrimeur1().get_classement() }}</p>
+                    {% else %}
+                        <p class="left">{{ match.get_escrimeur1().get_nom() }} {{ match.get_escrimeur1().get_prenom() }} - NC</p>
+                    {% endif %}
+                    <p class="left">{{ match.get_escrimeur1().get_club().get_nom() }} </p>
+                    <p class="left">{{ match.get_escrimeur1().get_categorie().get_nom( ) }} </p>
                 </div>
-            {% endif %}
+            </div>
 
 
             <div class="score enflex">
@@ -75,36 +60,21 @@
             </div>
 
 
-            {% if not compet.get_is_equipe() %}
-                <div class="escrimeur2 escrimeur">
-                    <div class="name name-right">
-                        <div class="cercle green"></div>
-                        <p>Escrimeur vert</p>
-                    </div>
-                    <div>
-                        {% if match.get_escrimeur2().get_classement() %}
-                            <p class="right">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - {{ match.get_escrimeur2().get_classement() }}</p>
-                        {% else %}
-                            <p class="right">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - NC</p>
-                        {% endif %}
-                        <p class="right">{{ match.get_escrimeur2().get_club().get_nom() }} </p>
-                        <p class="right">{{ match.get_escrimeur2().get_categorie().get_nom( ) }} </p>
-                    </div>
+            <div class="escrimeur2 escrimeur">
+                <div class="name name-right">
+                    <div class="cercle green"></div>
+                    <p>Escrimeur vert</p>
                 </div>
-            {% else %}
-                <div class="escrimeur2 escrimeur">
-                    <div class="name name-right">
-                        <div class="cercle green"></div>
-                        <p>Équipe verte</p>
-                    </div>
-                    <div>
-                        <p class="right">{{ match.get_escrimeur2().get_nom() }} </p>
-                        {% for escrimeur in match.get_escrimeur2().get_les_escrimeurs() %}
-                            <p class="right">{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
-                        {% endfor %}
-                    </div>
+                <div>
+                    {% if match.get_escrimeur2().get_classement() %}
+                        <p class="left">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - {{ match.get_escrimeur2().get_classement() }}</p>
+                    {% else %}
+                        <p class="left">{{ match.get_escrimeur2().get_nom() }} {{ match.get_escrimeur2().get_prenom() }} - NC</p>
+                    {% endif %}
+                    <p class="right">{{ match.get_escrimeur2().get_club().get_nom() }} </p>
+                    <p class="right">{{ match.get_escrimeur2().get_categorie().get_nom( ) }} </p>
                 </div>
-            {% endif %}
+            </div>
         </div>
 
         <div class="enflex touches-line touche">

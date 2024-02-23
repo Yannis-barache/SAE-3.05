@@ -23,8 +23,7 @@ class Competition:
 
     def __init__(self, id_comp: int, nom: str, date_comp: str,
                  date_fin_inscription: str, saison: str, lieu: Lieu,
-                 arme: Arme, categorie: Categorie, coefficient: float,
-                 is_equipe: bool):
+                 arme: Arme, categorie: Categorie, coefficient: float):
         """
         Constructeur de la classe Competition
 
@@ -47,26 +46,7 @@ class Competition:
         self.__arme = arme
         self.__categorie = categorie
         self.__coefficient = coefficient
-        self.__is_equipe = is_equipe
         self.__phase_final: PhaseFinal | None = None
-
-    def get_is_equipe(self) -> bool:
-        """
-        Fonction qui retourne si la competition est une competition par Equipe
-
-        Returns :
-            bool : True si la competition est une competition par Equipe, False sinon
-        """
-        return self.__is_equipe
-
-    def set_is_equipe(self, is_equipe: bool) -> None:
-        """
-        Fonction qui modifie si la competition est une competition par Equipe
-
-        Args :
-            is_equipe (bool) : True si la competition est une competition par Equipe, False sinon
-        """
-        self.__is_equipe = is_equipe
 
     def get_id(self) -> int:
         """
@@ -433,27 +413,6 @@ class Competition:
         phase_finale.set_les_pistes(liste_pistes)
         les_matchs = phase_finale.generer_les_matchs(liste_escrimeur,
                                                      les_arbitres, heure_debut)
-        return phase_finale, les_matchs
-
-    @staticmethod
-    def generer_phase_finale_equipe(les_equipes, les_arbitres, heure_debut,
-                                    les_pistes) -> tuple[PhaseFinal, list]:
-        """
-        Fonction qui genere la phase finale de la competition par equipe
-
-        Args :
-            les_equipes (list[Equipe]) : La liste des equipes de la competition
-            les_arbitres (list[Escrimeur]) : La liste des arbitres de la competition
-            heure_debut (float) : L'heure de debut de la competition
-
-        Returns :
-            PhaseFinal : La phase finale de la competition
-            list[Match] : La liste des matchs de la phase finale de la competition
-        """
-        phase_finale = PhaseFinal(-1)
-        phase_finale.set_les_pistes(les_pistes)
-        les_matchs = phase_finale.generer_les_matchs_equipe(
-            les_equipes, les_arbitres, heure_debut)
         return phase_finale, les_matchs
 
     def get_nombre_escrimeur_phase_finale(self, les_poules) -> int:

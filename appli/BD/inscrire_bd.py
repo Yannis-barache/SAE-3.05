@@ -11,7 +11,6 @@ sys.path.append(os.path.join(ROOT, 'appli/modele'))
 
 from inscrire import Inscrire
 from escrimeur import Escrimeur
-from equipe import Equipe
 
 
 class InscrireBD:
@@ -46,29 +45,14 @@ class InscrireBD:
             competition (Competition): compétition
         """
         try:
-            if not competition.get_is_equipe():
-                query = text(
-                    f'SELECT idEscrimeur FROM INSCRIRE WHERE idCompetition = {competition.get_id()}'
-                )
-                result = self.__connexion.execute(query)
-                inscrires = []
-                for (id_escrimeur, ) in result:
-                    inscrires.append(
-                        Inscrire(competition.get_id(), id_escrimeur))
-                return inscrires
-            else:
-                query = text(
-                    f'SELECT idEquipe, nomEquipe FROM EQUIPE WHERE idCompetition = {competition.get_id()}'
-                )
-                result = self.__connexion.execute(query)
-                inscrires = []
-                for (
-                        id_equipe,
-                        nom_equipe,
-                ) in result:
-                    inscrires.append(
-                        Equipe(competition.get_id(), id_equipe, nom_equipe))
-                return inscrires
+            query = text(
+                f'SELECT idEscrimeur FROM INSCRIRE WHERE idCompetition = {competition.get_id()}'
+            )
+            result = self.__connexion.execute(query)
+            inscrires = []
+            for (id_escrimeur, ) in result:
+                inscrires.append(Inscrire(competition.get_id(), id_escrimeur))
+            return inscrires
         except Exception as e:
             print(e)
             return None

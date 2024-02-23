@@ -47,7 +47,6 @@ CREATE TABLE COMPETITION(
     idLieu INT(10) NOT NULL,
     dateFinInscription DATE,
     coefficientCompetition decimal(3,3),
-    isEquipe bool,
     PRIMARY KEY (idCompetition),
     FOREIGN KEY (idArme) REFERENCES ARMES(idArme),
     FOREIGN KEY (idCategorie) REFERENCES CATEGORIE(idCategorie),
@@ -143,22 +142,6 @@ CREATE TABLE INSCRIRE(
     FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur)
 );
 
-CREATE TABLE EQUIPE(
-    idEquipe INT(10) NOT NULL ,
-    nomEquipe VARCHAR(150) NOT NULL,
-    idCompetition INT(10) NOT NULL ,
-    PRIMARY KEY (idEquipe,idCompetition),
-    FOREIGN KEY (idCompetition) REFERENCES COMPETITION(idCompetition)
-);
-
-CREATE TABLE FAIT_PARTIE(
-    idEquipe INT(10) NOT NULL,
-    idEscrimeur INT(10) NOT NULL ,
-    role VARCHAR(40) NOT NULL ,
-    PRIMARY KEY (idEquipe,idEscrimeur),
-    FOREIGN KEY (idEscrimeur) references ESCRIMEUR(idEscrimeur),
-    FOREIGN KEY (idEquipe) REFERENCES EQUIPE(idEquipe)
-);
 
 -- TRIGGER
 
@@ -301,16 +284,11 @@ CREATE OR REPLACE trigger update_fini after insert on TOUCHE
 for each row
 begin
     declare nbTouchePhase int;
-    -- Si la compet est une compet en équipe alors le nombre de touche est de 45
-        if ((select isEquipe from COMPETITION where idCompetition=(select idCompetition from PHASE natural join MATCHS where idMatch=new.idMatch))=true) then
-            set nbTouchePhase= 23;
-        else
-            if ((select count(*) from MATCHS natural join PHASE natural join POULE)>0) then
-                set nbTouchePhase= 5;
-            else
-                set nbTouchePhase= 15;
-            end if;
-        end if;
+    if ((select count(*) from MATCHS natural join PHASE natural join POULE)>0) then
+        set nbTouchePhase= 5;
+    else
+        set nbTouchePhase= 15;
+    end if;
 
     if ((select count(*) from TOUCHE where idMatch=new.idMatch and idEscrimeur=new.idEscrimeur)=nbTouchePhase) then
         update MATCHS set fini=true where idMatch=new.idMatch;
@@ -356,34 +334,6 @@ begin
     set new.mdpClub=sha1(new.mdpClub);
 end |
 delimiter ;
-
-
--- Trigger qui supprime les inscriptions d'un escrimeur si il est supprimé
-delimiter |
-CREATE OR REPLACE trigger supprime_inscription before delete on ESCRIMEUR
-for each row
-begin
-    delete from INSCRIRE where idEscrimeur=old.idEscrimeur;
-end |
-delimiter ;
-
--- Trigger qui supprime dans FAIT_PARTIE si un escrimeur est supprimé
-delimiter |
-CREATE OR REPLACE trigger supprime_fait_partie before delete on ESCRIMEUR
-for each row
-begin
-    delete from FAIT_PARTIE where idEscrimeur=old.idEscrimeur;
-end |
-
--- Trigger qui supprime dans FAIT_PARTIE si une équipe est supprimée
-delimiter |
-CREATE OR REPLACE trigger supprime_fait_partie2 before delete on EQUIPE
-for each row
-begin
-    delete from FAIT_PARTIE where idEquipe=old.idEquipe;
-end |
-
-
 
 
 -- PROCEDURE
@@ -473,7 +423,7 @@ delimiter ;
 -- Création de la procédure stockée pour tuer les sessions en sommeil
 DELIMITER //
 
-CREATE or replace PROCEDURE TuerConnexionsEnSommeil()
+CREATE PROCEDURE TuerConnexionsEnSommeil()
 BEGIN
     DECLARE termine INT DEFAULT 0;
     DECLARE requete_a_tuer VARCHAR(255);
