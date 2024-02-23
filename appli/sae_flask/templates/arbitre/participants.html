@@ -78,11 +78,11 @@
         </form>
         {% endif %}
     {% endif %}
-
-    {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" and not competition.get_is_equipe() %}
-        <div class="bouton">
-            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
-        </div>
+    
+    {% if have_poule == True %}
+    <div class="bouton">
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
+    </div>
     {% endif %}
 
     {% if competition.get_etat() == "Inscription ouverte" %}
@@ -111,11 +111,9 @@
                 <button class="btn btn-primary" onclick="window.location.href='{{ url_for('arbitre_phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
             </div>
         {% else %}
-            {% if have_poule == True %}
             <div class="bouton">
-                <p>Les poules ne sont pas terminées, il est impossible de faire la phase finale pour le moment</p>
+                <p>Il n'y a pas de phase finale pour le moment</p>
             </div>
-            {% endif %}
         {% endif %}
     {% endif %}
     </div>

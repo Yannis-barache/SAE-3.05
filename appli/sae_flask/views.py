@@ -7,6 +7,7 @@ from flask import render_template, redirect, url_for, request
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../..')
 sys.path.append(os.path.join(ROOT, 'appli/modele'))
+
 from escrimeur import Escrimeur
 from modele_appli import ModeleAppli
 from club import Club
@@ -19,7 +20,7 @@ from organisateur import Organisateur
 from phase_final import PhaseFinal
 from inscrire_arbitre import InscrireArbitre
 
-USER = Escrimeur(14, "", "", "", "", "", "", "", 1, None, None, True)
+USER = USER
 modele_appli = ModeleAppli()
 
 
@@ -53,7 +54,7 @@ def choose_sign():
     return render_template("connexion_inscription.html", user=USER)
 
 
-@app.route("/choisir_statut_connexion", methods=["GET", "POST"])
+@app.route("/choisir_statut_conneInscrireBDxion", methods=["GET", "POST"])
 def choisir_statut_connexion():
     return render_template("choisir_statut_connexion.html", user=USER)
 
@@ -747,8 +748,14 @@ def update_competition(id_competition, type):
         arme = modele.get_arme_bd().get_arme_by_id(form.arme.data)
         lieu = modele.get_lieu_bd().get_lieu_by_id(form.lieu.data)
         coefficient = form.coefficient.data
+        is_equipe = form.en_equipe.data
+        if is_equipe == "Oui":
+            is_equipe = "1"
+        else:
+            is_equipe = "0"
+
         competition = Competition(1, nom, date, date_fin_inscription, saison,
-                                  lieu, arme, categorie, coefficient)
+                                  lieu, arme, categorie, coefficient,is_equipe)
         modele.get_competition_bd().insert_competition(competition)
     modele.close_connexion()
     return redirect(url_for('admin_competition'))
@@ -811,7 +818,7 @@ def participants(id_competition):
         if int(type_form) == 1:
             return redirect(url_for('generation_poule', id_competition=id_competition, heure_debut=heure))
         if int(type_form) == 2:
-            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=heure))
+            return redirect(url_for('generation_phase_finale', id_competition=id_competition, heure_debut=int(heure)))
 
     return render_template("arbitre/participants.html", competition=competition, inscrits=inscrits,
                            arbitres=arbitres, form=form, fini=fini, have_phase_f=have_phase_f, have_poule=have_poule,
@@ -823,9 +830,9 @@ def generation_poule(id_competition, heure_debut):
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
-    modele.get_competition_bd().generate_poule_compet(competition.get_id(), heure_debut)
+    modele.get_competition_bd().generate_poule_compet(competition.get_id(), int(heure_debut))
     modele.close_connexion()
-    return redirect(url_for('poule', id_competition=id_competition, nb=0))
+    return redirect(url_for('participants', id_competition=id_competition))
 
 
 @app.route("/arbitrage")
@@ -860,6 +867,7 @@ def podium(id_competition, full):
             for match in matchs:
                 match.set_touche(modele.get_touche_bd().get_by_match(match))
                 gagnant_match = match.get_gagnant()
+                perdant_match = match.get_perdant()
                 if gagnant_match is None and match.est_finis():
                     if match.get_escrimeur1().get_id() in dict_victoire:
                         dict_victoire[match.get_escrimeur1().get_id()] += 1
@@ -874,6 +882,10 @@ def podium(id_competition, full):
                         dict_victoire[gagnant_match.get_id()] += 1
                     else:
                         dict_victoire[gagnant_match.get_id()] = 1
+                    if perdant_match.get_id() in dict_victoire:
+                        dict_victoire[perdant_match.get_id()] += 0
+                    else:
+                        dict_victoire[perdant_match.get_id()] = 0
 
             dict_victoire = sorted(dict_victoire.items(), key=lambda x: x[1], reverse=True)
             print(dict_victoire)
@@ -901,11 +913,10 @@ def podium(id_competition, full):
             equipe.append(modele.get_equipe_bd().get_equipe_by_id(escrimeur.get_id()))
         escrimeurs_matchs = equipe
     modele.close_connexion()
-
+    print(escrimeurs_matchs)
     return render_template("arbitre/podium.html", competition=competition, escrimeurs=escrimeurs_matchs, full=full,
                            have_phase_f=phase_finale is not None, fini=fini)
-  
-  
+
 @app.route("/phase_finale/<id_competition>", methods=["GET", "POST"])
 def phase_finale(id_competition):
     modele = ModeleAppli()
@@ -948,6 +959,8 @@ def arbitre_phase_finale(id_competition):
     poule_bd = modele.get_poule_bd()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
     la_phase = modele.get_phase_finale_bd().get_phase_finale_by_compet(id_competition)
+    if la_phase is None:
+        return redirect(url_for('participants', id_competition=id_competition))
     liste_match = la_phase.get_les_matchs()
 
     if not competition.get_is_equipe():
@@ -971,6 +984,8 @@ def arbitre_phase_finale(id_competition):
             cpt += 1
         nb_escrimeur = nb_escrimeur // 2
         liste_match_by_tour.append(un_tour)
+
+    print(la_phase.tour_finnis())
     return render_template("arbitre/arbitre-page_phase_finale_compet.html", compet=competition, phase=la_phase,
                            les_matchs=liste_match_by_tour)
 
@@ -996,10 +1011,10 @@ def generation_phase_finale(id_competition, heure_debut):
         return redirect(url_for('choose_sign'))
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(id_competition)
-    modele.get_competition_bd().generate_phase_finale(competition.get_id(), heure_debut)
+    modele.get_competition_bd().generate_phase_finale(competition.get_id(), int(heure_debut))
     modele.close_connexion()
     print('Phase finale générée')
-    return redirect(url_for('phase_finale', id_competition=id_competition))
+    return redirect(url_for('participants', id_competition=id_competition))
 
 
 @app.route("/arbitre/arbitre_page_de_match/<id_competition>/<id_match>", methods=["GET", "POST"])
@@ -1115,9 +1130,6 @@ def admin_equipe():
     for competition in competitions:
         nb_equipe.append(modele.get_equipe_bd().get_nb_equipe(competition.get_id()))
     modele.close_connexion()
-    print(nb_equipe)
-    competitions.append(Competition(1, "test", "2021-01-01", 'hiver', "2021-01-01", "test", None, None, None, 1))
-    nb_equipe.append(0)
     return render_template("Admin/Equipe/comp_equipe.html",
                            competitions=competitions, nb_equipe=nb_equipe)
 
@@ -1147,7 +1159,6 @@ def modif_equipe(id_competition):
         membres.append(ligne)
 
     membres_id = [[membre.get_id() for membre in liste] for liste in membres]
-    print(membres_id)
     modele.close_connexion()
     return render_template("Admin/Equipe/modif_equipe.html",
                            competition=competition, equipes=equipes, membres=membres, id_comp=id_competition,
