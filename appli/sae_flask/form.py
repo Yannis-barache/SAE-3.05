@@ -35,7 +35,7 @@ def competition_form2():
         modele = ModeleAppli()
         name = StringField('Nom', validators=[DataRequired()])
         date = DateField('Date', validators=[DataRequired()])
-        date_fin_inscripiton = DateField('Date fin inscription', validators=[DataRequired()])
+        date_fin_inscription = DateField('Date fin inscription', validators=[DataRequired()])
         categorie = SelectField('Catégorie', choices=[(categorie.get_id(), categorie.get_nom()) for categorie in modele.get_categorie_bd().get_all_categorie()], validators=[DataRequired()])
         saison = SelectField('Saison', choices=['été', 'hiver', 'printemps', 'automne'], validators=[DataRequired()])
         arme = SelectField('Arme', choices=[(arme.get_id(), arme.get_nom()) for arme in modele.get_arme_bd().get_all_arme()], validators=[DataRequired()])

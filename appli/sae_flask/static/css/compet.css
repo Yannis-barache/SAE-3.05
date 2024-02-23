@@ -45,6 +45,7 @@ main{
     flex-wrap: nowrap;
     align-items: center;
     margin: 10px 0px;
+    margin-left: 2vw;
 }
 
 .titre-info{
@@ -109,4 +110,12 @@ button:hover {
     background-color: #d2080a;
     color: white;
     cursor: not-allowed;
+}
+
+@media screen and (max-width : 450px) {
+
+    div.grey-bg p{
+        text-align: center;
+    }
+
 }

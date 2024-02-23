@@ -88,6 +88,22 @@ footer a {
 }
 
 
+@media screen and (max-width : 427px) {
+    .intro h1 {
+        text-align: center;
+    }
+    .user{
+        width: 10vw;
+    }
+}
+
+
+
+@media screen and (max-width : 1020px) {
+    .resize{
+        width: 67vw;
+    }
+}
 footer{
     display: flex;
     background-color: black;
@@ -151,5 +167,6 @@ footer{
 .num{
     margin-top:1em;
 }
+
 
 
