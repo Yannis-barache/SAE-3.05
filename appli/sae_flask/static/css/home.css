@@ -36,12 +36,7 @@ main {
 
 }
 
-footer {
-    background-color: black;
-    text-align: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
+
 
 .insta {
     width: 2%;
@@ -91,4 +86,53 @@ footer > p {
 footer a {
     text-decoration: none;
     color: white;
+    margin-left:2em;
 }
+
+
+footer{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    padding-top: 2em;
+    padding-bottom: 4em;
+    padding-left: 2em;
+    padding-right: 2em;
+   
+}
+
+
+.list-footer{
+    float: right;
+    font-weight: bold;
+    padding-right: 20em;
+   
+   
+}
+
+.list-footer a{
+     text-decoration: none;
+     color : white;
+    padding: 3em;
+}
+
+
+.univ, .iut{
+    width: 10%;
+    margin-top: 1.5em;
+}
+
+.univ{
+    margin-left: 2em;
+}
+
+.logo-escrime-blanc{
+    width: 10%;
+}
+
+.num{
+    margin-top:1em;
+}
+
+
+
