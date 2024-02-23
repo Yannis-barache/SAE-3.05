@@ -1130,9 +1130,6 @@ def admin_equipe():
     for competition in competitions:
         nb_equipe.append(modele.get_equipe_bd().get_nb_equipe(competition.get_id()))
     modele.close_connexion()
-    print(nb_equipe)
-    competitions.append(Competition(1, "test", "2021-01-01", 'hiver', "2021-01-01", "test", None, None, None, 1))
-    nb_equipe.append(0)
     return render_template("Admin/Equipe/comp_equipe.html",
                            competitions=competitions, nb_equipe=nb_equipe)
 
@@ -1162,7 +1159,6 @@ def modif_equipe(id_competition):
         membres.append(ligne)
 
     membres_id = [[membre.get_id() for membre in liste] for liste in membres]
-    print(membres_id)
     modele.close_connexion()
     return render_template("Admin/Equipe/modif_equipe.html",
                            competition=competition, equipes=equipes, membres=membres, id_comp=id_competition,
