@@ -1,7 +1,8 @@
 .ligne1{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     text-align: center;
+    justify-content: center;
 }
 
 
@@ -24,7 +25,7 @@
 }
 
 .btn-groupe{
-    width: 33%;
+    width: 28vw;
     height: 300px;
     font-size: 32px;
     font-family: "IcebergRegular", sans-serif; /* You may need to import the font */
@@ -59,12 +60,17 @@ body{
 .animation{
     display: flex;
     position: relative;
+    overflow-x: auto;
 }
 
 .animation img{
 
     width: 100%;
     height: 25em;
+}
+
+.scroll-tableau{
+    overflow-x: auto;
 }
 
 .listecomp {
@@ -79,4 +85,22 @@ h1{
     font-weight: bolder;
     font-family: Arial, Helvetica, sans-serif;
     opacity: 0.8;
+}
+
+@media screen and (max-width: 770px) {
+    .btn-groupe{
+        width: 43vw;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .btn-groupe{
+        width: 70vw;
+    }
+
+    .listecomp{
+        left: 0;
+        text-align: center;
+    }
 }

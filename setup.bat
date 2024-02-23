@@ -8,3 +8,6 @@ pip install -r requirements.txt
 
 call echo FLASK_APP=appli/sae_flask > .flaskenv
 call echo FLASK_DEBUG=True >> .flaskenv
+
+cd appli/sae_flask/static/img
+tar -xf Images.zip
