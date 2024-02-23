@@ -21,6 +21,7 @@
         <div class="center infos">
             <div class="titre-info">
 
+                <p>TYPE DE COMPÉTITION</p>
                 <p>TYPE D'ARME</p>
                 <p>SAISON</p>
                 <p>CATÉGORIE</p>
@@ -33,6 +34,12 @@
 
             <div class="reponse-info">
 
+                {% if compet.get_is_equipe() %}
+                    <p>:    En équipe</p>
+                {% else %}
+                    <p>:    Individuelle</p>
+                {% endif %}
+
                 <p>:    {{ compet.get_arme().get_nom() }}</p>
                 <p>:    {{ compet.get_saison() }}</p>
                 <p>:    {{ compet.get_categorie().get_nom() }} - {{ compet.get_arme().get_sexe() }}</p>
@@ -44,7 +51,7 @@
         </div>
 
         <div class="div-btn center">
-            {% if poule > 0 %}
+            {% if poule > 0 and not compet.get_is_equipe() %}
                 <form role="form" method="post" action="{{ url_for('poule', id_competition=compet.get_id(), nb = 0) }}" >
                     <button type="submit" class="btn-active">voir les poules</button>
                 </form>
