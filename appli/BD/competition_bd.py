@@ -214,7 +214,7 @@ class CompetitionBD:
                 f"'{competition.get_date_fin_inscription()}', "
                 f"'{competition.get_saison()}', {competition.get_lieu().get_id()}, "
                 f"{competition.get_arme().get_id()}, "
-                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()}, {competition.get_is_equipe()}"
+                f"{competition.get_categorie().get_id()}, {competition.get_coefficient()}, {competition.get_is_equipe()})"
             )
             self.__connexion.execute(query)
             self.__connexion.commit()

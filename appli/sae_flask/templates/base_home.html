@@ -109,42 +109,49 @@
     </main>
     <footer>
         {% block footer %}
-        <img class="logo-escrime-blanc" src="{{ url_for('static', filename='../static/img/logo_fond_blanc.jpg') }}" alt=" image logo clun d'escrime de blois ">
-        <a href="https://blois-escrime.fr/">
-            <img class="insta" src="{{ url_for('static', filename='../static/img/planete.png') }}" alt=" image insta ">
-        </a>
+        <div class="footer">
+            <div class="gauche">
+                <img class="logo-escrime-blanc" src="{{ url_for('static', filename='../static/img/logo_fond_blanc.jpg') }}" alt=" image logo clun d'escrime de blois ">
+                <a href="https://blois-escrime.fr/">
+                    <img class="insta" src="{{ url_for('static', filename='../static/img/planete.png') }}" alt=" image insta ">
+                </a>
 
-        <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=blois.escrime@wanadoo.fr">
-            <img class="insta" src="{{ url_for('static', filename='../static/img/mail.png') }}" alt="image enveloppe mail">
-        </a>
-            
-        <a href="https://twitter.com/villedeblois">
-            <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
-        </a>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=blois.escrime@wanadoo.fr">
+                    <img class="insta" src="{{ url_for('static', filename='../static/img/mail.png') }}" alt="image enveloppe mail">
+                </a>
 
-        <a href="https://www.facebook.com/profile.php?id=100070077406734&locale=fr_FR">
-            <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
-        </a>
-       
-        <p class="paragfin"> @ Cette page a été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi, 
-            <br> Merit Juliann, Chédeville Baptiste </p>
-        <p class="num">Contactez-nous au 02 54 42 15 28</p>
-        
-        <img class="iut" src="{{ url_for('static', filename='../static/img/iuto.png') }}" alt=" image iut ">
-        <img class="univ" src="{{ url_for('static', filename='../static/img/univO.png') }}" alt=" image univ ">
+                <a href="https://twitter.com/villedeblois">
+                    <img class="twitter" src="{{ url_for('static', filename='../static/img/Twitter.png') }}" alt="image logo twitter">
+                </a>
 
+                <a href="https://www.facebook.com/profile.php?id=100070077406734&locale=fr_FR">
+                    <img class="facebook" src="{{ url_for('static', filename='../static/img/Facebook.png') }}" alt="image logo youtube">
+                </a>
 
-        <div class="list-footer">
-            <a href="">Qui somme-nous</a>
-            <a href="">Accessibilité</a>
-            <a href="">Nous contacter</a> <br>
-            <a href="">Protection des données</a>
-            <a href=""> Légal </a>
-            <a href=""> Sécurité et confidentialité</a>
+                <p class="paragfin"> @ Cette page a été réalisé par El Kasmi Hajar, Barache Yannis, Fofana Abdoulahi,
+                    <br> Merit Juliann, Chédeville Baptiste </p>
+                <p class="num">Contactez-nous au 02 54 42 15 28</p>
 
+                <img class="iut" src="{{ url_for('static', filename='../static/img/iuto.png') }}" alt=" image iut ">
+                <img class="univ" src="{{ url_for('static', filename='../static/img/univO.png') }}" alt=" image univ ">
+            </div>
+
+            <div class="list-footer">
+                <div class="ligne">
+                    <div class="footer-link"><a href="">Qui somme-nous</a></div>
+                    <div class="footer-link"><a href="">Accessibilité</a></div>
+                </div>
+                <div class="ligne">
+                    <div class="footer-link"><a href="">Nous contacter</a></div>
+                    <div class="footer-link"><a href="">Protection des données</a></div>
+                </div>
+                <div class="ligne">
+                    <div class="footer-link"><a href=""> Légal </a></div>
+                    <div class="footer-link"><a href=""> Sécurité et confidentialité</a></div>
+                </div>
+            </div>
         </div>
         {% endblock %}
-
     </footer>
 
 </body>
