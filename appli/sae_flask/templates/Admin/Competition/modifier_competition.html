@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/formV2.css')}}">
 {% endblock %}
 
+
 {% block content %}
 <h1>{{ title }}</h1>
 <form class="admin-form" role="form" method="POST" action="{{ url_for('update_competition', id_competition=competition.get_id(), type=1) }}">
@@ -19,8 +20,8 @@
         {{ form.date(size=50, class="form-input") }}
     </div>
     <div class="form-group">
-        <label class="form-label">{{ form.date_fin_inscripiton.label }}</label>
-        {{ form.date_fin_inscripiton(size=50, class="form-input") }}
+        <label class="form-label">{{ form.date_fin_inscription.label }}</label>
+        {{ form.date_fin_inscription(size=50, class="form-input") }}
     </div>
     <div class="form-group">
         <label class="form-label">{{ form.categorie.label }}</label>
@@ -41,6 +42,10 @@
     <div class="form-group">
         <label class="form-label">{{ form.lieu.label }}</label>
         {{ form.lieu(class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.en_equipe.label }}</label>
+        {{ form.en_equipe(class="form-input") }}
     </div>
 
     {% if form.name.errors %}

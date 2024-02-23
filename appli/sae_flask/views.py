@@ -682,22 +682,20 @@ def supprimer_competition(id_competition):
            methods=["GET", "POST"])
 def modifier_competition(id_competition):
     from .form import competition_form
-    if USER is None:
-        return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur):
-        return redirect(url_for('home'))
+
     modele = ModeleAppli()
     competition = modele.get_competition_bd().get_competition_by_id(
         id_competition)
     form = competition_form()
     form.name.data = competition.get_nom()
     form.date.data = competition.get_date()
-    form.date_fin_inscripiton.data = competition.get_date_fin_inscription()
+    form.date_fin_inscription.data = competition.get_date_fin_inscription()
     form.categorie.process_data(competition.get_categorie().get_id())
     form.saison.process_data(competition.get_saison())
     form.arme.process_data(competition.get_arme().get_id())
     form.lieu.process_data(competition.get_lieu().get_id())
     form.coefficient.data = competition.get_coefficient()
+    form.en_equipe.process_data("Oui" if competition.get_is_equipe() else "Non")
     modele.close_connexion()
     return render_template("Admin/Competition/modifier_competition.html",
                            user=USER,
@@ -710,10 +708,10 @@ def modifier_competition(id_competition):
            methods=["GET", "POST"])
 def update_competition(id_competition, type):
     from .form import competition_form, competition_form2
-    if USER is None:
-        return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur):
-        return redirect(url_for('home'))
+    #if USER is None:
+     #   return redirect(url_for('choose_sign'))
+   # if not isinstance(USER, Organisateur):
+    #    return redirect(url_for('home'))
     modele = ModeleAppli()
     if type == 1:
         form = competition_form()
@@ -721,7 +719,7 @@ def update_competition(id_competition, type):
             id_competition)
         nom = form.name.data
         date = form.date.data
-        date_fin_inscription = form.date_fin_inscripiton.data
+        date_fin_inscription = form.date_fin_inscription.data
         categorie = modele.get_categorie_bd().get_categorie_by_id(
             form.categorie.data)
         saison = form.saison.data
@@ -736,6 +734,7 @@ def update_competition(id_competition, type):
         competition.set_arme(arme)
         competition.set_lieu(lieu)
         competition.set_coefficient(coefficient)
+        competition.set_is_equipe(form.en_equipe.data == "Oui")
         modele.get_competition_bd().update_competition(competition)
     else:
         form = competition_form2()

@@ -252,7 +252,7 @@ class CompetitionBD:
                 f"idCategorie = {competition.get_categorie().get_id()}, "
                 f"coefficientCompetition = {competition.get_coefficient()}, "
                 f"isEquipe = {competition.get_is_equipe()}"
-                f"WHERE idCompetition = {competition.get_id()}")
+                f" WHERE idCompetition = {competition.get_id()}")
             self.__connexion.execute(query)
             self.__connexion.commit()
         except Exception as e:
