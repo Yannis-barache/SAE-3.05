@@ -241,11 +241,9 @@ class Poule:
         width = 0
         for match in self.__les_matchs:
             texte = match.get_escrimeur1().get_nom()
-            if canva.stringWidth(texte, 'Helvetica', 12) + 15 > width:
-                width = canva.stringWidth(texte, 'Helvetica', 12) + 15
+            width = max(width, canva.stringWidth(texte, 'Helvetica', 12) + 15)
             texte = match.get_escrimeur2().get_nom()
-            if canva.stringWidth(texte, 'Helvetica', 12) + 15 > width:
-                width = canva.stringWidth(texte, 'Helvetica', 12) + 15
+            width = max(width, canva.stringWidth(texte, 'Helvetica', 12) + 15)
         return width
 
     def set_les_escrimeurs(self) -> None:
@@ -304,11 +302,9 @@ class Poule:
         width = 0
         for match in self.__les_matchs:
             texte = match.get_escrimeur1().get_club().get_nom()
-            if canva.stringWidth(texte, 'Helvetica', 12) + 15 > width:
-                width = canva.stringWidth(texte, 'Helvetica', 12) + 15
+            width = max(width, canva.stringWidth(texte, 'Helvetica', 12) + 15)
             texte = match.get_escrimeur2().get_club().get_nom()
-            if canva.stringWidth(texte, 'Helvetica', 12) + 15 > width:
-                width = canva.stringWidth(texte, 'Helvetica', 12) + 15
+            width = max(width, canva.stringWidth(texte, 'Helvetica', 12) + 15)
         return width
 
     def dessiner_clubs(self, canva: canvas, width_nom: int) -> int:
