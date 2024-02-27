@@ -277,7 +277,7 @@ class TestCompetitionBD(unittest.TestCase):
         arme = Arme(1, "test", "test")
         lieu = Lieu(1, "test", "test")
         competition = Competition(-1, "test", "test", "test", "test", lieu,
-                                  arme, categorie, 0.5)
+                                  arme, categorie, 0.5, False)
         self.competition_bd.insert_competition(competition)
         try:
             self.competition_bd.insert_competition("a")
@@ -289,7 +289,7 @@ class TestCompetitionBD(unittest.TestCase):
         Test de la méthode delete_competition_by_name
         """
         competition = Competition(-1, "test", "test", "test", "test", None,
-                                  None, None, 0.5)
+                                  None, None, 0.5,False)
         self.competition_bd.delete_competition_by_name(competition)
         try:
             self.competition_bd.delete_competition_by_name("a")
@@ -429,7 +429,7 @@ class TestInscrireArbitreBD(unittest.TestCase):
         Test de la méthode get_arbitre_by_competition
         """
         compet = Competition(8, "test", "test", "test", "test", None, None,
-                             None, 0.5)
+                             None, 0.5,False)
         inscrire_arbitre = self.inscrire_arbitre_bd.get_arbitre_by_competition(
             compet)
         self.assertIsInstance(inscrire_arbitre, list)
@@ -509,7 +509,7 @@ class TestInscrireBD(unittest.TestCase):
         Test de la méthode get_all_inscrit_compet
         """
         competition = Competition(1, "test", "test", "test", "test", None,
-                                  None, None, 0.5)
+                                  None, None, 0.5, False)
         inscrires = self.inscrire_bd.get_all_inscrit_compet(competition)
         self.assertIsInstance(inscrires, list)
         try:
