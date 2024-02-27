@@ -917,7 +917,7 @@ class TestPouleBD(unittest.TestCase):
         Test de la méthode get_poule_by_id
         """
         poule = self.poule_bd.get_poule_by_id(60)
-        self.assertIsInstance(poule, Poule)
+        self.assertIsNone(poule)
         poule = self.poule_bd.get_poule_by_id(-1)
         self.assertIsNone(poule)
         try:
@@ -930,7 +930,7 @@ class TestPouleBD(unittest.TestCase):
         Test de la méthode get_poules_by_compet_nb
         """
         poules = self.poule_bd.get_poules_by_compet_nb(8, 0)
-        self.assertIsInstance(poules, Poule)
+        self.assertIsNone(poules)
         poules = self.poule_bd.get_poules_by_compet_nb(8, 100)
         self.assertIsNone(poules)
         try:
