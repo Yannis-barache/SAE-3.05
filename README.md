@@ -33,6 +33,7 @@
 | [MCD de la base de données](#mcd-de-la-base-de-données)                                                           |
 | [Diagramme de cas d'utilisation](#diagramme-de-cas-dutilisation)                                                  |
 | [Liste des tâches réalisées lors de la première semaine](#liste-des-tâches-réalisées-lors-de-la-première-semaine) |
+
 </div>
 
 ## Membres du groupe
@@ -45,6 +46,12 @@
 [![Abdoulahi Fofana](https://img.shields.io/badge/Abdoulahi%20Fofana-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Abdwuu)
 [![Yannis Barache](https://img.shields.io/badge/Yannis%20Barache-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Yannis-barache)
 
+
+# Rendu final 
+
+Le rendu final est disponible dans le dossier `Rendu` du projet.
+Vous pourrez y trouver le MCD, le diagramme de cas d'utilisation, les maquettes, les scénarios conceptuels et descriptifs, etc.
+Les fiches individuelles de chaque membre du groupe sont également disponibles dans le dossier `Rendu/Fiches individuelles`.
 
 ## Description du projet
 
@@ -214,8 +221,3 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 - Implémentation des tests unitaires pour tester les classes de la base de données avec un coverage de à hauteur de 95%
 
 
-## Rendu final 
-
-Le rendu final est disponible dans le dossier `Rendu` du projet.
-Vous pourrez y trouver le MCD, le diagramme de cas d'utilisation, les maquettes, les scénarios conceptuels et descriptifs, etc.
-Les fiches individuelles de chaque membre du groupe sont également disponibles dans le dossier `Rendu/Fiches individuelles`.
