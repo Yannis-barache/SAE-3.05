@@ -472,7 +472,8 @@ def modifier_escrimeur(id_escrimeur):
     from .form import escrimeur_form
     if USER is None:
         return redirect(url_for('choose_sign'))
-    if not isinstance(USER, Organisateur) or not isinstance(USER, Club):
+    if not isinstance(USER, Organisateur) and not isinstance(USER, Club):
+
         return redirect(url_for('home'))
     modele = ModeleAppli()
     escrimeur = modele.get_escrimeur_bd().get_escrimeur_by_id(id_escrimeur)
@@ -740,7 +741,7 @@ def update_competition(id_competition, type):
         form = competition_form2()
         nom = form.name.data
         date = form.date.data
-        date_fin_inscription = form.date_fin_inscripiton.data
+        date_fin_inscription = form.date_fin_inscription.data
         categorie = modele.get_categorie_bd().get_categorie_by_id(
             form.categorie.data)
         saison = form.saison.data
