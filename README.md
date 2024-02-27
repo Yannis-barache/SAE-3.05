@@ -212,3 +212,10 @@ Nous nous sommes ensuite répartis les tâches à réaliser pour la première se
 - Implémentation des tests unitaires pour tester l'ensemble du modele avec un coverage de 100% sur le modèle
 - Implémentation de la liaison entre les classes de la base de données avec le modele
 - Implémentation des tests unitaires pour tester les classes de la base de données avec un coverage de à hauteur de 95%
+
+
+## Rendu final 
+
+Le rendu final est disponible dans le dossier `Rendu` du projet.
+Vous pourrez y trouver le MCD, le diagramme de cas d'utilisation, les maquettes, les scénarios conceptuels et descriptifs, etc.
+Les fiches individuelles de chaque membre du groupe sont également disponibles dans le dossier `Rendu/Fiches individuelles`.
