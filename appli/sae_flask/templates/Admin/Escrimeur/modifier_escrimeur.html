@@ -1,52 +1,65 @@
 {% extends "Admin/base_admin.html" %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/formV2.css')}}">
+{% endblock %}
+
+
 {% block content %}
 <h1>{{ title }}</h1>
-<form role="form" method ="POST" action="{{ url_for('update_escrimeur', id_escrimeur=escrimeur.get_id(), type=1)}}">
+<form class="admin-form" role="form" method="POST" action="{{ url_for('update_escrimeur', id_escrimeur=escrimeur.get_id(), type=1) }}">
     
     {{ form.hidden_tag() }}
-    <div style="display:flex; flex-wrap: wrap;">
-        <div style="flex-basis: 100%;">
-            {{ form.name.label }} {{ form.name(size =50) }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.prenom.label }} {{ form.prenom(size =50) }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.date_naissance.label }} {{ form.date_naissance(size =50) }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.sexe.label }} {{ form.sexe }} 
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.categorie.label }} {{ form.categorie }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.club.label }} {{ form.club }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.arbitrage.label }} {{ form.arbitrage }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.licence.label }} {{ form.licence(size =50) }}
-        </div>
-        <div style="flex-basis: 100%;">
-            {{ form.nom_utilisateur.label }} {{ form.nom_utilisateur(size =50) }}
-        </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.name.label }}</label>
+        {{ form.name(size=50, class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.prenom.label }}</label>
+        {{ form.prenom(size=50, class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.date_naissance.label }}</label>
+        {{ form.date_naissance(size=50, class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.sexe.label }}</label>
+        {{ form.sexe(class="form-input") }} 
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.categorie.label }}</label>
+        {{ form.categorie(class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.club.label }}</label>
+        {{ form.club(class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.arbitrage.label }}</label>
+        {{ form.arbitrage(class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.licence.label }}</label>
+        {{ form.licence(size=50, class="form-input") }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">{{ form.nom_utilisateur.label }}</label>
+        {{ form.nom_utilisateur(size=50, class="form-input") }}
+    </div>
 
-    </div >
     {% if form.name.errors %}
     <ul class="list-group">
         {% for e in form.name.errors %}
-        <li>{{ e }}</li >
+        <li>{{ e }}</li>
         {% endfor %}
     </ul>
     {% endif %}
     
-    <a href="{{url_for('admin_escrimeur')}}" style="text-decoration: none;">
-        <input type="button" value="Annuler">
+    <a href="{{ url_for('admin_escrimeur') }}" class="button-link">
+        <input type="button" value="Annuler" class="button-cancel">
     </a>
 
-    <input type="submit" value="Enregistrer">
-</form >
+    <input type="submit" value="Enregistrer" class="button-submit">
+</form>
 {% endblock %}

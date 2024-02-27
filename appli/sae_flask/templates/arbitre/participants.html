@@ -16,13 +16,33 @@
 
     <div class="container">
         <div class="box">
-            <h3>Les escrimeurs</h3>
-            {% if inscrits|length <=0 %}
-                <p>Aucun escrimeur n'est inscrit à cette compétition</p>
+            {% if competition.get_is_equipe() %}
+            <!-- inscrits{Equipe} = [Escrimeur] -->
+
+
+                <h3>Les équipes</h3>
+                {% if inscrits|length <=0 %}
+                    <p>Aucune équipe n'est inscrite à cette compétition</p>
+                {% endif %}
+                {% for equipe in inscrits %}
+                    {% set escrimeurs = inscrits[equipe] %}
+                    <p>{{ equipe.get_nom() }}</p>
+                    <ul>
+                        {% for escrimeur in escrimeurs %}
+                            <li>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</li>
+                        {% endfor %}
+
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <h3>Les escrimeurs</h3>
+                {% if inscrits|length <=0 %}
+                    <p>Aucun escrimeur n'est inscrit à cette compétition</p>
+                {% endif %}
+                {% for escrimeur in inscrits %}
+                    <p>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
+                {% endfor %}
             {% endif %}
-            {% for escrimeur in inscrits %}
-                <p>{{ escrimeur.get_nom() }} {{ escrimeur.get_prenom() }}</p>
-            {% endfor %}
 
         </div>
         <div class="box">
@@ -36,7 +56,7 @@
         </div>
     </div>
     <div class="container">
-    {% if competition.get_etat() == "À venir" and not have_poule %}
+    {% if competition.get_etat() == "À venir" and not have_poule and not competition.get_is_equipe() %}
         {% if inscrits|length <=0%}
             <div class="bouton">
                 <p>Il n'y a pas d'inscrits à cette compétition</p>
@@ -58,20 +78,24 @@
         </form>
         {% endif %}
     {% endif %}
-
-    {% if competition.get_etat() == "En cours" or competition.get_etat() == "Terminé" %}
-        <div class="bouton">
-            <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
-        </div>
+    
+    {% if have_poule == True %}
+    <div class="bouton">
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_for('poule_arbitre',id_competition = competition.get_id(),nb = 0)}}'">Afficher les poules</button>
+    </div>
     {% endif %}
 
     {% if competition.get_etat() == "Inscription ouverte" %}
         <div class="bouton">
-           <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
+            {% if competition.get_is_equipe() %}
+                <p>Les inscriptions sont ouvertes, il est impossible de faire les phases finales pour le moment</p> 
+            {% else %}
+            <p>Les inscriptions sont ouvertes, il est impossible de faire les poules pour le moment</p>
+            {% endif %}
         </div>
     {% endif %}
 
-    {% if fini == True and not have_phase_f == True %}
+    {% if fini == True and not have_phase_f == True or competition.get_is_equipe() and not have_phase_f %}
         <form method="post" action="{{ url_for('participants',id_competition = competition.get_id()) }}">
             {{ form.type(class="form-control",value = 2) }}
             <div class="form-group">
@@ -84,14 +108,12 @@
     {% else %}
         {% if have_phase_f == True %}
             <div class="bouton">
-                <button class="btn btn-primary" onclick="window.location.href='{{ url_for('phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
+                <button class="btn btn-primary" onclick="window.location.href='{{ url_for('arbitre_phase_finale',id_competition = competition.get_id()) }}'">Afficher la phase finale</button>
             </div>
         {% else %}
-            {% if have_poule == True %}
             <div class="bouton">
-                <p>Les poules ne sont pas terminées, il est impossible de faire la phase finale pour le moment</p>
+                <p>Il n'y a pas de phase finale pour le moment</p>
             </div>
-            {% endif %}
         {% endif %}
     {% endif %}
     </div>

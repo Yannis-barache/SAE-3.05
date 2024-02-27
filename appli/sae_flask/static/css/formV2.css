@@ -1,0 +1,48 @@
+.admin-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button-link {
+    text-decoration: none;
+}
+
+.button-cancel,
+.button-submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-cancel {
+    background-color: #ccc;
+    color: #333;
+    margin-right: 10px;
+}
+
+.button-submit {
+    background-color: #007bff;
+    color: #fff;
+}

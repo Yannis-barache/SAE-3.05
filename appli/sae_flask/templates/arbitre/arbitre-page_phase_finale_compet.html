@@ -60,7 +60,7 @@
         </section>
     </div>
 
-    {% if phase.tour_finnis() %}
+    {% if phase.tour_finnis() and not phase.phase_finis() %}
         <form action="{{ url_for('generer_prochain_tour', id_competition=compet.get_id(), id_phase=phase.get_id_phase_f()) }}" method="POST" role="form">
             <div class="bouton">
                 <button class="btn btn-primary" type="submit">Générer tour suivant</button>
